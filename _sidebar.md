@@ -3,6 +3,7 @@
 - Articles
   - [C/CPP]
     - [纯C实现常见的数据结构](/articles/ccpp/basic_data_struct.md)
+    - [在C语言中保存英文句子的几种数据结构](/articles/ccpp/how_to_save_words.md)
     - [IO多路复用](/articles/ccpp/io_multiplexing_tech.md)
     - [C和C++在内存管理上面的差异](/articles/ccpp/mem_management.md)
   - [Networking]
