@@ -1,6 +1,10 @@
 <!-- 侧边栏 docs/_sidebar.md -->
 
 - Articles
+  - [AI]
+  - [Cloud]
+  - [Python]
+    - [Python装饰器的用法和使用场景](/articles/python/python_decorator.md)
   - [C/CPP]
     - [纯C实现常见的数据结构](/articles/ccpp/basic_data_struct.md)
     - [在C语言中保存英文句子的几种数据结构](/articles/ccpp/how_to_save_words.md)
