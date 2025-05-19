@@ -1,0 +1,102 @@
+在 Kubernetes 中，探针（Probes）用于监控容器的健康状态，并根据配置执行相应操作。常见的探针类型包括存活探针（Liveness Probe）、就绪探针（Readiness Probe）和启动探针（Startup Probe）。以下是它们的用法和配置示例：
+
+### 1. 存活探针（Liveness Probe）
+存活探针用于检测容器是否处于运行状态。如果存活探针失败，Kubernetes 会重启容器。
+
+#### 配置方式：
+- **HTTP 请求**：
+  ```yaml
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8080
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  ```
+  每 5 秒向容器的 `/healthz` 接口发起 HTTP GET 请求，返回状态码为 200-399 时认为容器健康。
+
+- **TCP 检查**：
+  ```yaml
+  livenessProbe:
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 15
+    periodSeconds: 10
+  ```
+  每 10 秒尝试连接容器的 8080 端口，连接成功则认为容器健康。
+
+- **命令执行**：
+  ```yaml
+  livenessProbe:
+    exec:
+      command: ["cat", "/tmp/healthy"]
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  ```
+  每 5 秒在容器内执行 `cat /tmp/healthy` 命令，返回值为 0 时认为容器健康。
+
+### 2. 就绪探针（Readiness Probe）
+就绪探针用于检测容器是否准备好接收流量。如果就绪探针失败，Pod 会被标记为未就绪，不会接收来自服务的流量。
+
+#### 配置方式：
+- **HTTP 请求**：
+  ```yaml
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  ```
+  每 10 秒向容器的 `/ready` 接口发起 HTTP GET 请求，返回状态码为 200-399 时认为容器就绪。
+
+- **TCP 检查**：
+  ```yaml
+  readinessProbe:
+    tcpSocket:
+      port: 3306
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  ```
+  每 10 秒尝试连接容器的 3306 端口，连接成功则认为容器就绪。
+
+- **命令执行**：
+  ```yaml
+  readinessProbe:
+    exec:
+      command: ["cat", "/tmp/healthy"]
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  ```
+  每 10 秒在容器内执行 `cat /tmp/healthy` 命令，返回值为 0 时认为容器就绪。
+
+### 3. 启动探针（Startup Probe）
+启动探针用于检查容器是否启动成功。它通常用于启动时间较长的应用，避免存活探针过早触发。
+
+#### 配置方式：
+```yaml
+startupProbe:
+  httpGet:
+    path: /startup
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 5
+```
+每 5 秒向容器的 `/startup` 接口发起 HTTP GET 请求，允许 30 次失败（总等待时间为 150 秒），适用于启动时间较长的应用。
+
+### 探针的常见配置字段
+| 配置项 | 说明 | 默认值 |
+| --- | --- | --- |
+| `initialDelaySeconds` | 初始延迟时间（秒），容器启动后等待多少秒才开始探测 | `0` |
+| `periodSeconds` | 探测间隔时间（秒），多久探测一次 | `10` |
+| `timeoutSeconds` | 探测超时时间（秒），探测请求最多等待多久 | `1` |
+| `failureThreshold` | 连续探测失败多少次才认为容器异常 | `3` |
+| `successThreshold` | 连续探测成功多少次才认为容器恢复正常 | `1` |
+
+### 探针优化建议
+- **使用 Startup 探针防止误判**：对于启动时间较长的应用（如 JVM 应用），应使用 `startupProbe`，避免 Kubernetes 误判启动失败。
+- **适当调整 `failureThreshold`**：业务容器可能偶尔超时，适当增加 `failureThreshold` 可减少不必要的重启。
+- **超时时间适配应用**：确保超时时间足够应用响应探测请求，避免因网络延迟导致误判。
+- **避免探测过于频繁**：`periodSeconds` 不宜设置过小，否则会增加探测压力。
+
+通过合理配置和使用探针，可以有效提升 Kubernetes 应用的可靠性和稳定性。

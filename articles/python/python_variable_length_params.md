@@ -1,0 +1,99 @@
+在 Python 中，变长参数（也称为可变参数）允许函数接收任意数量的参数。这在编写通用函数时非常有用，尤其是当你不确定调用者会传递多少参数时。变长参数分为两种类型：位置参数（`*args`）和关键字参数（`**kwargs`）。
+
+### 1. **位置参数（`*args`）**
+位置参数允许函数接收任意数量的位置参数。这些参数在函数内部会被封装成一个元组（`tuple`）。
+
+#### 示例代码
+```python
+def my_function(*args):
+    print("Received arguments:", args)
+    for arg in args:
+        print(arg)
+
+my_function(1, 2, 3, "hello", [4, 5, 6])
+```
+
+#### 输出
+```
+Received arguments: (1, 2, 3, 'hello', [4, 5, 6])
+1
+2
+3
+hello
+[4, 5, 6]
+```
+
+#### 如何获取所有位置参数
+在函数内部，`args` 是一个元组，包含了所有传递给函数的位置参数。你可以通过索引或循环来访问这些参数。
+
+### 2. **关键字参数（`**kwargs`）**
+关键字参数允许函数接收任意数量的关键字参数。这些参数在函数内部会被封装成一个字典（`dict`）。
+
+#### 示例代码
+```python
+def my_function(**kwargs):
+    print("Received keyword arguments:", kwargs)
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+my_function(name="Alice", age=30, city="New York")
+```
+
+#### 输出
+```
+Received keyword arguments: {'name': 'Alice', 'age': 30, 'city': 'New York'}
+name: Alice
+age: 30
+city: New York
+```
+
+#### 如何获取所有关键字参数
+在函数内部，`kwargs` 是一个字典，包含了所有传递给函数的关键字参数。你可以通过字典的键值对来访问这些参数。
+
+### 3. **同时使用位置参数和关键字参数**
+你可以在同一个函数中同时使用 `*args` 和 `**kwargs`，但 `*args` 必须在 `**kwargs` 之前。
+
+#### 示例代码
+```python
+def my_function(*args, **kwargs):
+    print("Positional arguments:", args)
+    print("Keyword arguments:", kwargs)
+
+my_function(1, 2, 3, name="Alice", age=30)
+```
+
+#### 输出
+```
+Positional arguments: (1, 2, 3)
+Keyword arguments: {'name': 'Alice', 'age': 30}
+```
+
+### 4. **如何传递变长参数**
+如果你已经有一个元组或字典，并希望将它们作为变长参数传递给函数，可以使用 `*` 和 `**` 解包操作符。
+
+#### 示例代码
+```python
+def my_function(*args, **kwargs):
+    print("Positional arguments:", args)
+    print("Keyword arguments:", kwargs)
+
+# 使用元组和字典
+args = (1, 2, 3)
+kwargs = {"name": "Alice", "age": 30}
+
+my_function(*args, **kwargs)
+```
+
+#### 输出
+```
+Positional arguments: (1, 2, 3)
+Keyword arguments: {'name': 'Alice', 'age': 30}
+```
+
+### 总结
+- **位置参数（`*args`）**：用于接收任意数量的位置参数，内部是一个元组。
+- **关键字参数（`**kwargs`）**：用于接收任意数量的关键字参数，内部是一个字典。
+- **同时使用**：`*args` 必须在 `**kwargs` 之前。
+- **传递变长参数**：使用 `*` 和 `**` 解包操作符可以将元组或字典作为变长参数传递给函数。
+
+通过合理使用变长参数，可以编写更加灵活和通用的函数。
