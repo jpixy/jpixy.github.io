@@ -9,8 +9,9 @@
     - [[C]纯C实现常见的数据结构](/articles/ccpp/[C]纯C实现常见的数据结构.md)
     - [[Cpp]C和C++在内存管理上的对比](/articles/ccpp/[Cpp]C和C++在内存管理上的对比.md)
   - [cloud]
-    - [[Cloud]Kubernetes CNI 和 CSI 详解](/articles/cloud/[Cloud]Kubernetes CNI 和 CSI 详解.md)
+    - [[Cloud]KubernetesCNI和CSI详解](/articles/cloud/[Cloud]KubernetesCNI和CSI详解.md)
     - [[Cloud]Kubernetes污点Taints详解与最佳实践](/articles/cloud/[Cloud]Kubernetes污点Taints详解与最佳实践.md)
+    - [[Cloud]k8s中如果遇到基于namespace加svc的域名无法访问的情况](/articles/cloud/[Cloud]k8s中如果遇到基于namespace加svc的域名无法访问的情况.md)
     - [[Cloud]k8s探针详解](/articles/cloud/[Cloud]k8s探针详解.md)
     - [[Cloud]将多个节点上的日志汇总到同一个文件服务器](/articles/cloud/[Cloud]将多个节点上的日志汇总到同一个文件服务器.md)
   - [container]
