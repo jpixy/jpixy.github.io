@@ -4,7 +4,7 @@
     - [大模型文件有哪些格式保存了什么信息](/articles/ai/大模型文件有哪些格式保存了什么信息.md)
     - [大模型训练为什么GPU比CPU更合适](/articles/ai/大模型训练为什么GPU比CPU更合适.md)
   - [ccpp]
-    - [basic_data_struct](/articles/ccpp/basic_data_struct.md)
+    - [[C]纯C实现常见的数据结构](/articles/ccpp/[C]纯C实现常见的数据结构.md)
     - [how_to_save_words](/articles/ccpp/how_to_save_words.md)
     - [io_multiplexing_tech](/articles/ccpp/io_multiplexing_tech.md)
     - [mem_management](/articles/ccpp/mem_management.md)
