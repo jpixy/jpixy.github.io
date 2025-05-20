@@ -1,6 +1,6 @@
 /* 设置侧边栏的宽度 */
 .sidebar {
-  width: 250px; /* 你可以根据需要调整这个值 */
+  width: 400px; /* 你可以根据需要调整这个值 */
   max-width: 100%;
   overflow-x: hidden;
 }
