@@ -2,6 +2,8 @@
 
 - Articles
   - [AI]
+    - [为什么GPU比CPU更适合大模型训练](/articles/ai/llm_why_gpu.md)
+    - [大模型文件都有什么格式里面有什么](/articles/ai/llm_files.md)
   - [Cloud]
     - [K8S的节点上logs汇集到一个server上](/articles/cloud/k8s_merge_logs_into_one_server.md)
     - [K8S的Probe用法和应用场景](/articles/cloud/k8s_probes.md)
