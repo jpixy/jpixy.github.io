@@ -10,11 +10,11 @@
     - [[Cpp]C和C++在内存管理上的对比](/articles/ccpp/[Cpp]C和C++在内存管理上的对比.md)
   - [cloud]
     - [[Cloud]Kubernetes CNI 和 CSI 详解](/articles/cloud/[Cloud]Kubernetes CNI 和 CSI 详解.md)
-    - [[Cloud]Kubernetes 污点(Taints)详解与最佳实践](/articles/cloud/[Cloud]Kubernetes 污点(Taints)详解与最佳实践.md)
+    - [[Cloud]Kubernetes污点Taints详解与最佳实践](/articles/cloud/[Cloud]Kubernetes污点Taints详解与最佳实践.md)
     - [[Cloud]k8s探针详解](/articles/cloud/[Cloud]k8s探针详解.md)
     - [[Cloud]将多个节点上的日志汇总到同一个文件服务器](/articles/cloud/[Cloud]将多个节点上的日志汇总到同一个文件服务器.md)
   - [container]
-    - [[Container]为什么Docker 容器删除后内部的日志或文件会随之消失](/articles/container/[Container]为什么Docker 容器删除后内部的日志或文件会随之消失.md)
+    - [[Container]为什么Docker容器删除后内部的日志或文件会随之消失](/articles/container/[Container]为什么Docker容器删除后内部的日志或文件会随之消失.md)
   - [networking]
     - [[Networking]DPDK详解](/articles/networking/[Networking]DPDK详解.md)
     - [[Networking]Ethernet相关](/articles/networking/[Networking]Ethernet相关.md)
@@ -22,14 +22,14 @@
     - [[Networking]eBPF详解](/articles/networking/[Networking]eBPF详解.md)
     - [[Networking]如何实现可靠的UDP](/articles/networking/[Networking]如何实现可靠的UDP.md)
   - [python]
-    - [[Python]Python 的上下文管理器（Context Manager）](/articles/python/[Python]Python 的上下文管理器（Context Manager）.md)
-    - [[Python]Python 装饰器和类装饰器详解](/articles/python/[Python]Python 装饰器和类装饰器详解.md)
     - [[Python]Python变长参数](/articles/python/[Python]Python变长参数.md)
     - [[Python]Python固定长度类型](/articles/python/[Python]Python固定长度类型.md)
     - [[Python]Python常见高难度面试问题](/articles/python/[Python]Python常见高难度面试问题.md)
     - [[Python]Python的with最佳实践](/articles/python/[Python]Python的with最佳实践.md)
-    - [[Python]Python的元类（Metaclass）和元编程（Metaprogramming）](/articles/python/[Python]Python的元类（Metaclass）和元编程（Metaprogramming）.md)
+    - [[Python]Python的上下文管理器ContextManager](/articles/python/[Python]Python的上下文管理器ContextManager.md)
+    - [[Python]Python的元类Metaclass和元编程Metaprogramming](/articles/python/[Python]Python的元类Metaclass和元编程Metaprogramming.md)
     - [[Python]Python的高级技巧](/articles/python/[Python]Python的高级技巧.md)
     - [[Python]Python类中的特殊方法](/articles/python/[Python]Python类中的特殊方法.md)
+    - [[Python]Python装饰器和类装饰器详解](/articles/python/[Python]Python装饰器和类装饰器详解.md)
     - [[Python]Python面向对象编程详解](/articles/python/[Python]Python面向对象编程详解.md)
-    - [[Python]pytest 标签(marker)详解与使用指南](/articles/python/[Python]pytest 标签(marker)详解与使用指南.md)
+    - [[Python]pytest标签marker详解与使用指南](/articles/python/[Python]pytest标签marker详解与使用指南.md)
