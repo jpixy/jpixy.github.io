@@ -14,7 +14,7 @@
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-defaults.css"> -->
   <!-- Theme: Simple -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-  <link rel="stylesheet" href="https://unpkg.com/docsify-toc@1.0.0/dist/toc.css">
+  <link rel="stylesheet" href="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/light.css">
 
   <link rel="shortcut icon" href="images/engineer_johnny.jpeg">
   <style>
@@ -52,14 +52,14 @@
       // subMaxLevel: 3,    //If there is Chinese, it won't work
       // 复制样式
       copyCode: {
-          buttonText: 'Copy',
-          errorText: 'Error',
-          successText: 'OK!'
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'OK!'
       },
       toc: {
-          scope: '.markdown-section',
-          headings: 'h1, h2, h3, h4, h5, h6',
-          title: 'Table of Contents',
+        tocMaxLevel: 5,
+        target: 'h2, h3, h4, h5, h6',
+        ignoreHeaders:  ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
       },
       // 页脚
       footer: {
@@ -119,7 +119,8 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
   <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="https://unpkg.com/docsify-toc@1.0.0/dist/toc.js"></script>
+  <script src="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/docsify-plugin-toc.min.js"></script>
+
 
   <!-- 访问量统计 -->
   <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
