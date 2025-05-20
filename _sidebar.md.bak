@@ -1,0 +1,34 @@
+<!-- 侧边栏 docs/_sidebar.md -->
+
+- Articles
+  - [AI]
+    - [为什么GPU比CPU更适合大模型训练](/articles/ai/大模型训练为什么GPU比CPU更合适.md)
+    - [大模型文件都有什么格式里面有什么](/articles/ai/大模型文件有哪些格式保存了什么信息.md)
+  - [Cloud]
+    - [K8S的节点上logs汇集到一个server上](/articles/cloud/k8s_merge_logs_into_one_server.md)
+    - [K8S的Probe用法和应用场景](/articles/cloud/k8s_probes.md)
+  - [Container]
+    - [为什么docker容器内的文件也随着删除容器而消失](/articles/container/why_files_disappear_when_container_deleted.md)
+  - [Python]
+    - [Python的高级用法](/articles/python/python_advance.md)
+    - [Python类的默认方法](/articles/python/python_class_methods.md)
+    - [Python的上下文](/articles/python/python_context_with.md.md)
+    - [Python的with的最佳实践](/articles/python/python_with_best_practice.md)
+    - [Python装饰器的用法和使用场景](/articles/python/python_decorator.md)
+    - [Python不可变类型](/articles/python/python_fixed_types.md)
+    - [Python的元类和元编程](/articles/python/python_class_methods.md)
+    - [Python的面向对象](/articles/python/python_oop.md)
+    - [Python变长参数函数](/articles/python/python_variable_length_params.md)
+    - [Python面试问题](/articles/python/python_interview_questions.md)
+  - [C/CPP]
+    - [纯C实现常见的数据结构](/articles/ccpp/basic_data_struct.md)
+    - [在C语言中保存英文句子的几种数据结构](/articles/ccpp/how_to_save_words.md)
+    - [IO多路复用](/articles/ccpp/io_multiplexing_tech.md)
+    - [C和C++在内存管理上面的差异](/articles/ccpp/mem_management.md)
+  - [Networking]
+    - [如何实现可靠的UDP](/articles/networking/stable_udp.md)
+    - [Ethernet相关](/articles/networking/ethernet.md)
+    - [DPDK相关](/articles/networking/dpdk.md)
+    - [eBPF相关](/articles/networking/ebpf.md)
+    - [Open vSwitch相关](/articles/networking/ovs.md)
+<!-- 以下略 -->
