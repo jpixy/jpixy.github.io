@@ -1,50 +1,51 @@
-# Johnny
-
--------------
+# Johnny (Jing Peng 景 鹏)
 
 ## Summary
 
-As a Senior Software Engineer at IBM China Development Lab. Engaged in IT work since 2011, with extensive front-line R&D experience and the capability to design and implement architectures.
+Extensive hands-on R&D and management experience. Capable of architectural design and implementation. Led development teams to complete several software development projects from scratch.
 
-- Over a decade of experience in software development, with strong programming skills, responsible for the development and maintenance of core modules.
-- Experience in C development under Linux, with understanding and practice in select, epoll, I/O multiplexing, and multi-threading programming.
-- Familiar with Linux kernel customization and porting, uboot, busybox, and have experience in operating Linux system optimizations.
-- Good understanding and mastery of data structures and algorithms.
-- Capable of writing Makefiles and using gdb for debugging.
-- Proficient in Shell and Python script development.
-- Have a certain level of understanding and mastery of computer operating systems, such as memory management, process management, scheduling algorithms, file systems, network I/O, etc.
-- Have a certain level of understanding and mastery of computer networks, familiar with common network protocols.
-- Have a certain level of understanding of database kernels, have studied the principles of MySQL (MariaDB), Redis, and have some understanding of some database kernel engines.
-- Primarily focused on server-side development, well-versed in C, Go, Java, and start to learn and try Rust.
-- Have practical experience with Kubernetes, understand its main components and concepts, and have written Helm Charts.
-- Have practical experience with containers, proficient in using Podman, Docker, writing Dockerfiles, and maintaining image repositories.
-- Have practical experience with CI/CD, writing Jenkinsfiles, Travis, and Tekton scripts.
-- Have practical experience with QEMU, KVM.
-- Have participated in the architectural design and implementation of medium-sized Web projects and was responsible for developing their core module functionalities.
-- Familiar with server setup, such as setting up RAID, LVM, and various common servers, such as Web, load balancers, DNS, DHCP servers, etc. Familiar with IBM x3650 series servers.
-- Proficient in Linux system operations, have been using Linux as the sole operating system for daily use and work environment since the first year of college in 2007, also familiar with BSD-derived systems, such as FreeBSD, OpenBSD.
-- Possess a broad technical perspective and sensitivity.
-- Strong communication and expression skills, enjoy teamwork.
-- Strong English reading, writing, speaking, and listening abilities, can participate in English communication meetings without barriers.
+- Over a decade of software development experience with strong coding skills. Served primarily as a Technical Team Leader, Architect, and Core Developer.
+- Extensive hands-on experience in the cloud computing field for years. Proficient in virtualization and containerization technologies, distributed computing frameworks (MapReduce, Spark, Flink), resource scheduling (YARN), message queues (Kafka), service governance (Consul), state management (distributed locks, distributed transactions), distributed networking (Open vSwitch, DPDK, VXLAN), distributed storage (HDFS, GlusterFS, Ceph, Etcd), and in-memory databases (Etcd, MongoDB).
+- Proficient in AI-related skills with experience in PyTorch, TensorFlow, Keras, and other frameworks. Designed systematic Prompt engineering solutions and built RAG (Retrieval-Augmented Generation) systems. Fine-tuned large language models (LLMs) and optimized Prompts, enhanced knowledge retrieval through RAG architecture, developed AI Agents for automated decision-making, and improved system controllability via the MCP (Model-Controller-Policy) framework. Capable of data preprocessing, model training & optimization, and system deployment tasks.
+- Proficient in Linux systems, familiar with BSD-derived systems such as FreeBSD and OpenBSD. Skilled in Linux system optimization, kernel trimming, tuning, compilation, and porting. Have practical experience with U-Boot and BusyBox.
+- Proficient in C/C++ development on Linux. Have a good understanding and practice of network programming and multithreading on Linux. Familiar with toolchains like GCC, GDB, CMake, and Makefile.
+- Proficient in Go, Python, and Shell programming languages. Have some practical experience with Rust.
+- Proficient in data structures and algorithms.
+- Proficient in Kubernetes practice, understand its main components and concepts, and skilled in using its main command-line tools such as kubectl and kubeadm. Familiar with Helm Charts.
+- Proficient in container practice, skilled in using Podman and Docker, and proficient in Dockerfile. Have experience maintaining image repositories.
+- Proficient in CI/CD practice, skilled in writing Jenkinsfiles and using Travis and Tekton scripts.
+- Advanced knowledge of computer operating systems, including memory management, process management, scheduling algorithms, file systems, and network I/O.
+- Advanced knowledge of computer network systems, familiar with common network protocols such as TCP, UDP, and IP.
+- Familiar with database kernels, have some understanding of the internal principles of relational databases like MySQL and PostgreSQL, and have practical experience in building clusters, optimization, backup, and recovery.
+- Have led development teams through the entire product development process from scratch, participated in the architecture design and implementation of medium-sized web projects, and was responsible for developing their core modules.
+- Have a broad technical perspective and sensitivity to new technologies. Strong communication skills, enjoy teamwork, and have leadership abilities.
+- Fluent in English reading, writing, speaking, and listening, capable of working in an all-English environment, such as attending English meetings, communicating over the phone, and writing emails.
+
 
 ## Experience
 
-- _2013 - Present_  **Senior Software Engineer. China Development Lab (CDL) IBM**
+- _2017/05 - 2024/11_ : **Staff Software Engineer**, _China Development Lab_, **IBM**
 
-- _2011 - 2013_  **Software Engineer. FinTech Corporation**
+- _2013/05 - 2017/05_ : **Development Team Leader**, _GTS_, **IBM**
+
+- _2011/07 - 2013/05_ : **Software Engineer**, _Product Department_, **Gaotime Ltd.**
+
 
 ## Skills
 
-- _**Programming**_ > C, Go, Java, Python, Shell etc.
-- _**Cloud & Container**_ > Kubernetes, OpenShift, Podman, Docker
+- _**Programming**_ > C/Cpp, Rust, Go, Java, Python, Shell etc.
+- _**AI**_ > PyTorch, TensorFlow, HuggingFace, LangChain, LlamaIndex, OpenAI API, Milvus/FAISS, AutoGPT, Kaggle, etc.
+- _**Cloud & Container**_ > Kubernetes, OpenShift, Podman, Docker, Hadoop MapReduce, Apache Spark, Flink, YARN, Kafka, Consul, HDFS, GlusterFS, Ceph
 - _**Virtualization**_ > KVM, QEMU, Libvirt
-- _**Networking**_ > WireGuard, OpenVPN, Strongswan, IPSec, TCP/IP
+- _**Networking**_ > Open vSwitch, VXLan, DPDK, WireGuard, OpenVPN, Strongswan, IPSec, TCP/IP
 - _**Operation System**_ > Most of Linux distributions (includes ArchLinux, Gentoo, Redhat, CentOS, Rocky, Debian), FreeBSD, OpenBSD, AIX etc.
 - _**Tools**_ > Ansible, RAID, LVM, KVM, Maven, Web Servers (Jetty, Tomcat, Nginx, Apache), Squid, HAProxy, KeepAlive etc.
 - _**Others**_ > Git, SVN, Vim/Emacs, Byobu/Tmux/Screen
 - _**Language**_ > English, Mandarin
 
+
 ## Education
 
-- **Fudan University** _**(TOP 50 World University Rankings)**_, Software Engineering, Master of Engineering.
-- **East China University of Science and Technology**, Computer Science and Technology, Bachelor of Engineering.
+- _2016/03 - 2020/07_ : **Fudan University** _**(TOP 50 World University Rankings)**_,  Software Engineering, Master of Engineering.
+- _2007/09 - 2011/07_ : **East China University of Science and Technology**, Computer Science and Technology, Bachelor of Engineering.
+
