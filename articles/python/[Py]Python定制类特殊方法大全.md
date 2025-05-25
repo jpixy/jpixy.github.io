@@ -1,0 +1,270 @@
+# Python 定制类特殊方法大全
+Python 通过特殊方法（也称为魔术方法或双下方法）允许我们自定义类的行为。这些方法以双下划线开头和结尾（如 `__init__`），在特定情况下会被 Python 自动调用。
+
+## 一、基础特殊方法
+### 1. `__init__` 和 `__new__`
++ `__init__(self, [...])`: 构造器方法，在实例创建后初始化
++ `__new__(cls, [...])`: 真正的构造方法，实际创建实例
+
+```python
+class MyClass:
+    def __new__(cls, *args, **kwargs):
+        print("Creating instance")
+        instance = super().__new__(cls)
+        return instance
+    
+    def __init__(self, value):
+        print("Initializing instance")
+        self.value = value
+
+obj = MyClass(10)
+```
+
+### 2. `__del__`
++ 析构器方法，在对象被垃圾回收前调用
+
+```python
+class MyClass:
+    def __del__(self):
+        print("Object is being destroyed")
+```
+
+## 二、对象表示方法
+### 1. `__str__`
++ 定义 `str(obj)` 和 `print(obj)` 的行为
++ 应该返回一个用户友好的字符串
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        return f"Point({self.x}, {self.y})"
+
+p = Point(3, 4)
+print(p)  # 输出: Point(3, 4)
+```
+
+### 2. `__repr__`
++ 定义对象的官方字符串表示
++ 通常用于调试，应该包含重建对象所需的信息
++ `eval(repr(obj))` 应该能重建对象
+
+```python
+class Point:
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
+p = Point(3, 4)
+print(repr(p))  # 输出: Point(3, 4)
+```
+
+## 三、属性访问控制
+### 1. `__getattr__` 和 `__setattr__`
++ `__getattr__(self, name)`: 当访问不存在的属性时调用
++ `__setattr__(self, name, value)`: 设置属性时调用
+
+```python
+class DynamicAttributes:
+    def __getattr__(self, name):
+        print(f"Getting unknown attribute: {name}")
+        return None
+    
+    def __setattr__(self, name, value):
+        print(f"Setting attribute {name} = {value}")
+        super().__setattr__(name, value)
+
+obj = DynamicAttributes()
+obj.x = 10  # 触发 __setattr__
+print(obj.y)  # 触发 __getattr__
+```
+
+### 2. `__getattribute__`
++ 访问任何属性时都会调用（包括存在的属性）
++ 使用时要小心无限递归
+
+```python
+class LoggingAccess:
+    def __getattribute__(self, name):
+        print(f"Accessing attribute: {name}")
+        return super().__getattribute__(name)
+```
+
+### 3. `__slots__`
++ 限制类实例可以拥有的属性
++ 节省内存（不需要 `__dict__`）
++ 不能动态添加新属性
+
+```python
+class Restricted:
+    __slots__ = ['x', 'y']
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+r = Restricted(1, 2)
+# r.z = 3  # 会报错，因为z不在__slots__中
+```
+
+## 四、容器类型方法
+### 1. `__len__`
++ 定义 `len(obj)` 的行为
+
+```python
+class MyCollection:
+    def __init__(self, items):
+        self.items = items
+    
+    def __len__(self):
+        return len(self.items)
+
+coll = MyCollection([1, 2, 3])
+print(len(coll))  # 输出: 3
+```
+
+### 2. `__getitem__`, `__setitem__`, `__delitem__`
++ 实现类似字典或列表的访问
+
+```python
+class MyList:
+    def __init__(self, items):
+        self.items = list(items)
+    
+    def __getitem__(self, index):
+        return self.items[index]
+    
+    def __setitem__(self, index, value):
+        self.items[index] = value
+    
+    def __delitem__(self, index):
+        del self.items[index]
+
+lst = MyList([1, 2, 3])
+print(lst[1])  # 2
+lst[1] = 20
+del lst[0]
+```
+
+### 3. `__iter__` 和 `__next__`
++ 使对象可迭代
+
+```python
+class CountUpTo:
+    def __init__(self, max):
+        self.max = max
+    
+    def __iter__(self):
+        self.n = 0
+        return self
+    
+    def __next__(self):
+        if self.n < self.max:
+            self.n += 1
+            return self.n
+        else:
+            raise StopIteration
+
+for num in CountUpTo(5):
+    print(num)  # 输出 1 2 3 4 5
+```
+
+## 五、运算符重载
+### 1. 算术运算符
+```python
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+    
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+v3 = v1 + v2
+v4 = v1 * 3
+```
+
+### 2. 比较运算符
+```python
+class Book:
+    def __init__(self, title, pages):
+        self.title = title
+        self.pages = pages
+    
+    def __lt__(self, other):
+        return self.pages < other.pages
+    
+    def __eq__(self, other):
+        return self.title == other.title and self.pages == other.pages
+
+b1 = Book("Python", 300)
+b2 = Book("Java", 400)
+print(b1 < b2)  # True
+```
+
+## 六、可调用对象 (`__call__`)
++ 使实例可以像函数一样被调用
+
+```python
+class Adder:
+    def __init__(self, n):
+        self.n = n
+    
+    def __call__(self, x):
+        return self.n + x
+
+add5 = Adder(5)
+print(add5(10))  # 15
+```
+
+## 七、上下文管理 (`__enter__`, `__exit__`)
++ 实现 `with` 语句支持
+
+```python
+class ManagedFile:
+    def __init__(self, filename):
+        self.filename = filename
+    
+    def __enter__(self):
+        self.file = open(self.filename, 'r')
+        return self.file
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.file:
+            self.file.close()
+
+with ManagedFile('example.txt') as f:
+    content = f.read()
+```
+
+## 八、完整特殊方法列表
+| 类别 | 方法 | 描述 |
+| --- | --- | --- |
+| 构造/析构 | `__new__`, `__init__`, `__del__` | 对象生命周期管理 |
+| 表示 | `__str__`, `__repr__`, `__format__` | 字符串表示 |
+| 属性 | `__getattr__`, `__setattr__`, `__delattr__`, `__getattribute__`, `__slots__` | 属性访问控制 |
+| 容器 | `__len__`, `__getitem__`, `__setitem__`, `__delitem__`, `__iter__`, `__next__`, `__contains__` | 容器行为 |
+| 数值运算 | `__add__`, `__sub__`, `__mul__`, `__truediv__`, `__floordiv__`, `__mod__`, `__pow__` | 算术运算 |
+| 比较 | `__eq__`, `__ne__`, `__lt__`, `__le__`, `__gt__`, `__ge__` | 比较操作 |
+| 调用 | `__call__` | 使对象可调用 |
+| 上下文 | `__enter__`, `__exit__` | 上下文管理 |
+| 描述符 | `__get__`, `__set__`, `__delete__` | 描述符协议 |
+| 其他 | `__hash__`, `__bool__`, `__dir__` | 其他行为 |
+
+
+## 九、最佳实践
+1. **仅在需要时实现特殊方法**：不是所有类都需要所有特殊方法
+2. **保持一致性**：如果实现了 `__eq__`，通常也应该实现 `__hash__`
+3. **遵循预期行为**：如 `__str__` 应该返回用户友好字符串，`__repr__` 应该返回可执行的表达式
+4. **注意性能**：像 `__getattribute__` 这样的方法会影响性能
+5. **文档化行为**：明确说明你的特殊方法实现了什么行为
+
+通过合理使用这些特殊方法，你可以创建行为与内置类型高度一致的自定义类，使你的代码更加 Pythonic。
+
