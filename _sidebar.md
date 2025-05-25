@@ -35,6 +35,7 @@
     - [[CS]理解编程中的栈和堆](/articles/python/[CS]理解编程中的栈和堆.md)
     - [[Py]Python变长参数](/articles/python/[Py]Python变长参数.md)
     - [[Py]Python固定长度类型](/articles/python/[Py]Python固定长度类型.md)
+    - [[Py]Python垃圾回收机制与内存泄漏防范](/articles/python/[Py]Python垃圾回收机制与内存泄漏防范.md)
     - [[Py]Python定制类特殊方法大全](/articles/python/[Py]Python定制类特殊方法大全.md)
     - [[Py]Python常见高难度面试问题](/articles/python/[Py]Python常见高难度面试问题.md)
     - [[Py]Python并发模型性能与安全性深度分析](/articles/python/[Py]Python并发模型性能与安全性深度分析.md)
