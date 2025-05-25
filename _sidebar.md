@@ -9,11 +9,20 @@
     - [[C]纯C实现常见的数据结构](/articles/ccpp/[C]纯C实现常见的数据结构.md)
     - [[Cpp]C和C++在内存管理上的对比](/articles/ccpp/[Cpp]C和C++在内存管理上的对比.md)
   - [cloud]
+    - [[K8S]K8S的基础知识面试题汇总](/articles/cloud/[K8S]K8S的基础知识面试题汇总.md)
+    - [[K8S]K8S的高级知识面试题汇总](/articles/cloud/[K8S]K8S的高级知识面试题汇总.md)
     - [[K8S]KubernetesCNI和CSI详解](/articles/cloud/[K8S]KubernetesCNI和CSI详解.md)
+    - [[K8S]KubernetesCNI详解](/articles/cloud/[K8S]KubernetesCNI详解.md)
+    - [[K8S]KubernetesCSI详解](/articles/cloud/[K8S]KubernetesCSI详解.md)
+    - [[K8S]Kubernetes架构与关键组件详解](/articles/cloud/[K8S]Kubernetes架构与关键组件详解.md)
     - [[K8S]Kubernetes污点Taints详解与最佳实践](/articles/cloud/[K8S]Kubernetes污点Taints详解与最佳实践.md)
+    - [[K8S]PV和PVC的详解](/articles/cloud/[K8S]PV和PVC的详解.md)
+    - [[K8S]Pod生命周期及Pending问题排查指南](/articles/cloud/[K8S]Pod生命周期及Pending问题排查指南.md)
     - [[K8S]k8s中如果遇到基于namespace加svc的域名无法访问的情况](/articles/cloud/[K8S]k8s中如果遇到基于namespace加svc的域名无法访问的情况.md)
     - [[K8S]k8s探针详解](/articles/cloud/[K8S]k8s探针详解.md)
+    - [[K8S]kube-proxy详解](/articles/cloud/[K8S]kube-proxy详解.md)
     - [[K8S]将多个节点上的日志汇总到同一个文件服务器](/articles/cloud/[K8S]将多个节点上的日志汇总到同一个文件服务器.md)
+    - [[helm]HelmChart面试题汇总](/articles/cloud/[helm]HelmChart面试题汇总.md)
   - [container]
     - [[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失](/articles/container/[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失.md)
   - [networking]
