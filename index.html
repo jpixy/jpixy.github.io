@@ -15,6 +15,7 @@
   <!-- Theme: Simple -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
   <link rel="stylesheet" href="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/light.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-share@latest/dist/style.min.css">
   <link rel="stylesheet" href="custom.css"> <!-- 引入自定义 CSS -->
 
   <link rel="shortcut icon" href="images/engineer_johnny.jpeg">
@@ -83,7 +84,12 @@
               umami.trackView(window.location.pathname + window.location.hash);
             }
           });
-        }
+        },
+        window.DocsifyShare.default({
+          socials: ['weibo', 'wechat', 'qq', 'qzone', 'douban', 'twitter'],
+          wechatQrcodeTitle: '微信扫一扫',
+          wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>分享到朋友圈</p>'
+        })
       ],
       // // Search完整配置参数
       // search: {
@@ -136,6 +142,7 @@
   <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/docsify-plugin-toc.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-share@latest"></script>
 
 
   <!-- 访问量统计 -->
