@@ -9,6 +9,7 @@
     - [[C]纯C实现常见的数据结构](/articles/ccpp/[C]纯C实现常见的数据结构.md)
     - [[Cpp]C和C++在内存管理上的对比](/articles/ccpp/[Cpp]C和C++在内存管理上的对比.md)
   - [cloud]
+    - [[K8S]Istio多区域部署Multi-Zone和存储复制StorageReplication](/articles/cloud/[K8S]Istio多区域部署Multi-Zone和存储复制StorageReplication.md)
     - [[K8S]K8S的基础知识面试题汇总](/articles/cloud/[K8S]K8S的基础知识面试题汇总.md)
     - [[K8S]K8S的高级知识面试题汇总](/articles/cloud/[K8S]K8S的高级知识面试题汇总.md)
     - [[K8S]KubernetesCNI和CSI详解](/articles/cloud/[K8S]KubernetesCNI和CSI详解.md)
@@ -25,6 +26,11 @@
     - [[helm]HelmChart面试题汇总](/articles/cloud/[helm]HelmChart面试题汇总.md)
   - [container]
     - [[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失](/articles/container/[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失.md)
+  - [english]
+    - [[Eng]AI相关英文](/articles/english/[Eng]AI相关英文.md)
+    - [[Eng]Interview相关英文](/articles/english/[Eng]Interview相关英文.md)
+    - [[Eng]QA相关英文](/articles/english/[Eng]QA相关英文.md)
+    - [[K8S]K8S相关英语](/articles/english/[K8S]K8S相关英语.md)
   - [networking]
     - [[Net]DPDK详解](/articles/networking/[Net]DPDK详解.md)
     - [[Net]Ethernet相关](/articles/networking/[Net]Ethernet相关.md)
@@ -33,6 +39,7 @@
     - [[Net]如何实现可靠的UDP](/articles/networking/[Net]如何实现可靠的UDP.md)
   - [python]
     - [[CS]理解编程中的栈和堆](/articles/python/[CS]理解编程中的栈和堆.md)
+    - [[Py]Python单例模式](/articles/python/[Py]Python单例模式.md)
     - [[Py]Python变长参数](/articles/python/[Py]Python变长参数.md)
     - [[Py]Python固定长度类型](/articles/python/[Py]Python固定长度类型.md)
     - [[Py]Python垃圾回收机制与内存泄漏防范](/articles/python/[Py]Python垃圾回收机制与内存泄漏防范.md)
