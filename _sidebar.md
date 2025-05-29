@@ -29,6 +29,8 @@
   - [english]
     - [[Eng]AI相关英文](/articles/english/[Eng]AI相关英文.md)
     - [[Eng]Interview相关英文](/articles/english/[Eng]Interview相关英文.md)
+    - [[Eng]Py基础知识英文面试](/articles/english/[Eng]Py基础知识英文面试.md)
+    - [[Eng]Py高级知识英文面试](/articles/english/[Eng]Py高级知识英文面试.md)
     - [[Eng]QA相关英文](/articles/english/[Eng]QA相关英文.md)
     - [[Eng]缺点当成优点表达](/articles/english/[Eng]缺点当成优点表达.md)
     - [[K8S]K8S相关英语](/articles/english/[K8S]K8S相关英语.md)
