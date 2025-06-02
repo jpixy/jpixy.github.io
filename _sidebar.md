@@ -7,6 +7,7 @@
     - [[C]IO多路复用的例子](/articles/ccpp/[C]IO多路复用的例子.md)
     - [[C]在C语言中保存英文句子的几种数据结构](/articles/ccpp/[C]在C语言中保存英文句子的几种数据结构.md)
     - [[C]纯C实现常见的数据结构](/articles/ccpp/[C]纯C实现常见的数据结构.md)
+    - [[Cpp]Cpp基础和高级面试题汇总](/articles/ccpp/[Cpp]Cpp基础和高级面试题汇总.md)
     - [[Cpp]C和C++在内存管理上的对比](/articles/ccpp/[Cpp]C和C++在内存管理上的对比.md)
   - [cloud]
     - [[K8S]Istio多区域部署Multi-Zone和存储复制StorageReplication](/articles/cloud/[K8S]Istio多区域部署Multi-Zone和存储复制StorageReplication.md)
