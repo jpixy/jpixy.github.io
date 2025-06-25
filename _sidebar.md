@@ -27,6 +27,8 @@
     - [[helm]HelmChart面试题汇总](/articles/cloud/[helm]HelmChart面试题汇总.md)
   - [container]
     - [[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失](/articles/container/[Dkr]为什么Docker容器删除后内部的日志或文件会随之消失.md)
+  - [devops]
+    - [[DevOps]如何添加新硬盘扩展LVM](/articles/devops/[DevOps]如何添加新硬盘扩展LVM.md)
   - [english]
     - [[Eng]AI相关英文](/articles/english/[Eng]AI相关英文.md)
     - [[Eng]Interview相关英文](/articles/english/[Eng]Interview相关英文.md)
