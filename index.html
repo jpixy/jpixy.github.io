@@ -20,10 +20,6 @@
   <link rel="shortcut icon" href="images/engineer_johnny.jpeg">
 
 
-  <!-- Umami 跟踪代码 -->
-  <script async defer src="http://144.202.83.173:3000/script.js" data-website-id="4d5b2c75-7fe5-490f-aeab-0e03a2f5fedc"></script>
-
-
   <style>
     body { font-family: "Courier Prime", "Courier", "Courier New", "Roboto Mono", serif !important; }
     /* body { font-family:"Courier New bold", serif; !important; } */
@@ -70,20 +66,11 @@
       // 页脚
       footer: {
         // copy: '<span id="sitetime"></span> <br> <span>Total click: <span id="busuanzi_value_site_pv"></span> times | Total visitors: <span id="busuanzi_value_site_uv"></span> people</span> <br> <span>Copyright &copy; 2024 - Now &nbsp</span>',
-        copy: '<span id="sitetime"></span> <br> <span>Copyright &copy; 2024 - ' + new Date().getFullYear() + '. This Website is monitored by Umami</span>',
+        copy: '<span id="sitetime"></span> <br> <span>Copyright &copy; 2024 - ' + new Date().getFullYear() + '</span>',
         auth: ' <strong><a href="https://blog.jpixy.com" target="_blank">Hi, this is Johnny</a></strong>',
         pre: '<hr/>',
         style: 'text-align: center;',
       },
-      plugins: [
-        function(hook) {
-          hook.doneEach(function() {
-            if (window.umami) {
-              umami.trackView(window.location.pathname + window.location.hash);
-            }
-          });
-        }
-      ],
       // Search configuration
       search: {
         maxAge: 86400000,
