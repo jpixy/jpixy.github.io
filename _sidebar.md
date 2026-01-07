@@ -37,6 +37,21 @@
     - [eng-QA相关英文](/articles/english/eng-QA相关英文.md)
     - [eng-缺点当成优点表达](/articles/english/eng-缺点当成优点表达.md)
     - [k8s-K8S相关英语](/articles/english/k8s-K8S相关英语.md)
+  - [insights]
+    - [insights-AI应用技术栈全景与实践指南](/articles/insights/insights-AI应用技术栈全景与实践指南.md)
+    - [insights-Kubernetes平台工程与云原生应用管理学习路线](/articles/insights/insights-Kubernetes平台工程与云原生应用管理学习路线.md)
+    - [insights-Staff级别面试项目选择与技术亮点分析](/articles/insights/insights-Staff级别面试项目选择与技术亮点分析.md)
+    - [insights-企业级云VPN服务架构设计与技术深度解析](/articles/insights/insights-企业级云VPN服务架构设计与技术深度解析.md)
+    - [insights-网络是计算存储网络三大件的瓶颈吗](/articles/insights/insights-网络是计算存储网络三大件的瓶颈吗.md)
+    - [insights-高性能网络与协议栈优化技术全景](/articles/insights/insights-高性能网络与协议栈优化技术全景.md)
+  - [interview]
+    - [interview-如何设计一个下载功能](/articles/interview/interview-如何设计一个下载功能.md)
+    - [interview-如何设计一个推荐系统](/articles/interview/interview-如何设计一个推荐系统.md)
+    - [interview-如何设计一个类似Kafka的消息队列](/articles/interview/interview-如何设计一个类似Kafka的消息队列.md)
+    - [interview-如何设计一个订单系统](/articles/interview/interview-如何设计一个订单系统.md)
+    - [interview-如何设计一个限流器](/articles/interview/interview-如何设计一个限流器.md)
+    - [interview-如何设计一个高性能定时器系统](/articles/interview/interview-如何设计一个高性能定时器系统.md)
+    - [interview-如何设计多线程消费消息模型](/articles/interview/interview-如何设计多线程消费消息模型.md)
   - [networking]
     - [net-DPDK详解](/articles/networking/net-DPDK详解.md)
     - [net-Ethernet相关](/articles/networking/net-Ethernet相关.md)
