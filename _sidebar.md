@@ -47,6 +47,7 @@
   - [interview]
     - [interview-如何设计一个下载功能](/articles/interview/interview-如何设计一个下载功能.md)
     - [interview-如何设计一个推荐系统](/articles/interview/interview-如何设计一个推荐系统.md)
+    - [interview-如何设计一个电商系统](/articles/interview/interview-如何设计一个电商系统.md)
     - [interview-如何设计一个类似Kafka的消息队列](/articles/interview/interview-如何设计一个类似Kafka的消息队列.md)
     - [interview-如何设计一个订单系统](/articles/interview/interview-如何设计一个订单系统.md)
     - [interview-如何设计一个限流器](/articles/interview/interview-如何设计一个限流器.md)
