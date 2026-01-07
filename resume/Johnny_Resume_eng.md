@@ -1,4 +1,4 @@
-# Johnny (Jing Peng)
+# Johnny
 
 14 years in software engineering. 10+ years working in multinational teams at global tech companies. Fluent in English.
 
@@ -14,7 +14,7 @@
 
 | Company | Title | Duration |
 |---------|-------|----------|
-| NVIDIA | Staff Software Engineer | < 1 year |
+| NVIDIA | Staff Software Engineer | < 1 year, working here currently |
 | Startup | Technology Manager | 2 years |
 | IBM China Development Lab | Staff Software Engineer / Architect / Tech Lead | 12 years |
 
@@ -28,7 +28,7 @@
 
 <br><br><br>
 
-# Johnny (景鹏)
+# Johnny
 
 14年软件工程经验。外企大厂跨国团队工作十多年。英语流利。
 
@@ -44,7 +44,7 @@
 
 | 公司 | 职位 | 年限 |
 |------|------|------|
-| NVIDIA | 资深软件工程师 | 不到1年 |
+| NVIDIA | 资深软件工程师 | 不到1年,当前在这里 |
 | 创业公司 | 技术经理 | 2年 |
 | IBM中国开发实验室 | 资深软件工程师 / 架构师 / 技术负责人 | 12年 |
 
