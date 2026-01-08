@@ -45,6 +45,8 @@
     - [insights-网络是计算存储网络三大件的瓶颈吗](/articles/insights/insights-网络是计算存储网络三大件的瓶颈吗.md)
     - [insights-高性能网络与协议栈优化技术全景](/articles/insights/insights-高性能网络与协议栈优化技术全景.md)
   - [interview]
+    - [interview-Kafka为什么这么快](/articles/interview/interview-Kafka为什么这么快.md)
+    - [interview-Redis为什么这么快](/articles/interview/interview-Redis为什么这么快.md)
     - [interview-如何设计一个下载功能](/articles/interview/interview-如何设计一个下载功能.md)
     - [interview-如何设计一个推荐系统](/articles/interview/interview-如何设计一个推荐系统.md)
     - [interview-如何设计一个电商系统](/articles/interview/interview-如何设计一个电商系统.md)
