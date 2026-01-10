@@ -1,0 +1,25 @@
+# Zola build output
+public/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+
+# Python cache (if running scripts)
+__pycache__/
+*.pyc
+
+# Temporary files
+*.tmp
+*.temp

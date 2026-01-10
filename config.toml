@@ -1,0 +1,33 @@
+base_url = "https://blog.jpixy.com"
+
+title = "Hi! This is Johnny"
+description = "Johnny's Tech Blog"
+default_language = "en"
+
+compile_sass = true
+minify_html = true
+build_search_index = true
+generate_feeds = true
+feed_filenames = ["rss.xml"]
+
+[search]
+include_title = true
+include_description = true
+include_path = true
+include_content = true
+
+[markdown]
+highlight_code = true
+highlight_theme = "base16-ocean-dark"
+smart_punctuation = true
+
+[link_checker]
+internal_level = "warn"
+skip_anchor_prefixes = ["#"]
+
+generate_sitemap = true
+generate_robots_txt = false
+
+[extra]
+author = "Johnny"
+github = "https://github.com/jpixy"

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+
+{% block description %}{{ page.description | default(value=config.description) }}{% endblock %}
+
+{% block content %}
+<article class="post">
+    {% if page.date or page.taxonomies.tags %}
+    <header class="post-header">
+        {% if page.date %}
+        <time class="post-date">{{ page.date | date(format="%Y-%m-%d") }}</time>
+        {% endif %}
+        {% if page.taxonomies.tags %}
+        <div class="post-tags">
+            {% for tag in page.taxonomies.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+    {% endif %}
+    
+    <div class="post-content">
+        {{ page.content | safe }}
+    </div>
+    
+    <nav class="post-nav">
+        {% if page.earlier %}
+        <a href="{{ page.earlier.permalink }}" class="prev">← {{ page.earlier.title }}</a>
+        {% endif %}
+        {% if page.later %}
+        <a href="{{ page.later.permalink }}" class="next">{{ page.later.title }} →</a>
+        {% endif %}
+    </nav>
+</article>
+{% endblock %}
+
+{% block toc %}
+{% if page.toc %}
+<nav class="toc-nav">
+    <h3>Table of Contents</h3>
+    <ul>
+    {% for h in page.toc %}
+        <li>
+            <a href="#{{ h.id }}">{{ h.title }}</a>
+            {% if h.children %}
+            <ul>
+            {% for child in h.children %}
+                <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

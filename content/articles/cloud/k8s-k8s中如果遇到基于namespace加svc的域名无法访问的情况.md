@@ -1,0 +1,74 @@
++++
+title = "k8s k8s中如果遇到基于namespace加svc的域名无法访问的情况"
+slug = "k8s-k8s中如果遇到基于namespace加svc的域名无法访问的情况"
++++
+
+# k8s k8s中如果遇到基于namespace加svc的域名无法访问的情况
+
+在 Kubernetes (k8s) 中，如果遇到基于 `namespace` 加上 `service` 名字的域名无法访问的情况，通常需要按照以下步骤来定位问题并解决：
+
+### 1. 检查 DNS 解析
+Kubernetes 通常使用 CoreDNS 来提供集群内的 DNS 服务。首先，检查 DNS 解析是否正常工作。
+
++ 使用 `kubectl get pods -n kube-system` 查看 CoreDNS Pod 是否正在运行。
++ 进入一个正在运行的 Pod，尝试解析有问题的域名：
+
+```bash
+kubectl run -it --rm --restart=Never busybox --image=busybox --namespace=<your-namespace> -- sh
+nslookup <service-name>.<namespace>.svc.cluster.local
+```
+
+### 2. 检查 Service 定义
+确保 `service` 资源定义正确。
+
++ 使用 `kubectl get svc <service-name> -n <namespace> -o yaml` 查看 `service` 的定义。
++ 确保 `selector` 标签与后端 Pod 的标签匹配。
++ 检查 `service` 类型（ClusterIP、NodePort、LoadBalancer 等）是否符合预期。
+
+### 3. 检查 Pod 状态
+确保后端的 Pod 正常运行，并且符合 `service` 的选择器。
+
++ 使用 `kubectl get pods -n <namespace>` 查看 Pod 状态。
++ 使用 `kubectl describe pod <pod-name> -n <namespace>` 查看 Pod 详细信息，包括事件和状态。
+
+### 4. 检查网络策略
+如果集群中启用了网络策略，确保没有策略阻止了流量。
+
++ 使用 `kubectl get networkpolicies -n <namespace>` 查看命名空间中的网络策略。
++ 检查是否有入站或出站规则阻止了流量。
+
+### 5. 检查防火墙和安全组
+如果集群运行在云环境（如 AWS、GCP、Azure）中，检查防火墙和安全组规则是否允许流量。
+
++ 确保入站和出站端口在防火墙和安全组中开放。
+
+### 6. 检查 Ingress 和 Ingress Controller
+如果使用 Ingress 资源来暴露服务，确保 Ingress 配置正确。
+
++ 使用 `kubectl get ingress -n <namespace>` 查看 Ingress 资源。
++ 检查 Ingress Controller 的日志，查看是否有错误信息。
+
+### 7. 检查 CoreDNS 日志
+查看 CoreDNS 的日志，了解是否有 DNS 解析问题。
+
++ 使用 `kubectl logs <coredns-pod-name> -n kube-system` 查看 CoreDNS 日志。
+
+### 8. 使用 `telnet` 或 `curl` 测试
+尝试使用 `telnet` 或 `curl` 直接连接到 `service` 的 IP 和端口，检查是否能够访问。
+
++ 使用 `kubectl get svc <service-name> -n <namespace>` 获取 `service` 的 ClusterIP。
++ 使用 `telnet <service-ip> <port>` 或 `curl http://<service-ip>:<port>` 测试连接。
+
+### 9. 检查服务发现
+确保客户端 Pod 能够正确发现服务。
+
++ 在客户端 Pod 中，尝试使用 `service` 名称和命名空间进行 DNS 解析。
++ 确保客户端 Pod 的 DNS 配置正确，指向 CoreDNS。
+
+### 10. 重启相关组件
+如果以上步骤都无法解决问题，尝试重启相关的 Kubernetes 组件。
+
++ 重启 CoreDNS Pod：`kubectl delete pod <coredns-pod-name> -n kube-system`
++ 重启后端 Pod：`kubectl delete pod <pod-name> -n <namespace>`
+
+通过以上步骤，你应该能够定位并解决 Kubernetes 中基于 `namespace` 加上 `service` 名字的域名无法访问的问题。如果问题仍然存在，可能需要更详细地检查集群配置或寻求社区的帮助。
