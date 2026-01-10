@@ -74,7 +74,7 @@ void processPacket(hls::stream<Packet>& input,
 
 ### 2.1 XDP (eXpress Data Path)
 
-XDP 允许在网卡驱动层处理数据包，绑过内核网络栈。
+XDP 允许在网卡驱动层处理数据包，绕过内核网络栈。
 
 ```
 传统路径: NIC -> Driver -> Kernel Stack -> Socket -> App
