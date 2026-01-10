@@ -109,11 +109,48 @@
     </div>
     
     <script>
-        document.querySelectorAll('.section-title').forEach(title => {
-            title.addEventListener('click', () => {
-                title.parentElement.classList.toggle('collapsed');
+        // 侧边栏状态持久化
+        (function() {
+            const STORAGE_KEY = 'sidebar_state';
+            
+            // 从 localStorage 加载状态
+            function loadState() {
+                try {
+                    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+            
+            // 保存状态到 localStorage
+            function saveState(state) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            }
+            
+            const state = loadState();
+            
+            document.querySelectorAll('.section-item').forEach((item, index) => {
+                const title = item.querySelector('.section-title');
+                const sectionName = title.textContent.trim();
+                
+                // 恢复保存的状态（如果有）
+                if (state[sectionName] !== undefined) {
+                    if (state[sectionName]) {
+                        item.classList.remove('collapsed');
+                    } else {
+                        item.classList.add('collapsed');
+                    }
+                }
+                
+                // 点击时切换并保存状态
+                title.addEventListener('click', () => {
+                    item.classList.toggle('collapsed');
+                    const isOpen = !item.classList.contains('collapsed');
+                    state[sectionName] = isOpen;
+                    saveState(state);
+                });
             });
-        });
+        })();
 
         function siteTime() {
             const startDate = new Date('2024-10-10T00:00:00');
