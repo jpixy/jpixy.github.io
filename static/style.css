@@ -95,6 +95,7 @@ code, pre, .code, kbd, samp {
     display: flex;
     align-items: center;
     gap: 2rem;
+    padding-right: 80px; /* Space for GitHub corner */
 }
 
 .nav > a,
