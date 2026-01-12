@@ -3,7 +3,11 @@ title = "如何添加新硬盘扩展LVM"
 slug = "devops-如何添加新硬盘扩展LVM"
 +++
 
-# 或直接使用整块磁盘（无分区）：
+# 如何添加新硬盘扩展LVM
+
+## 查看当前磁盘状态
+
+或直接使用整块磁盘（无分区）：
 
 ```plain
 [14:23:30] johnny :: johnny-ThinkPad-X1-Extreme  ➜  ~ » df -lhT
