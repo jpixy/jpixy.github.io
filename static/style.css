@@ -141,8 +141,15 @@ code, pre, .code, kbd, samp {
 }
 
 .dropdown-toggle::after {
-    content: " ▾";
-    font-size: 0.6em;
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    vertical-align: middle;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
 }
 
 .dropdown-menu {
