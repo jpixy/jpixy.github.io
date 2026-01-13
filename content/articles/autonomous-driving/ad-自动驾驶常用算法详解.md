@@ -1,0 +1,439 @@
++++
+title = "自动驾驶常用算法详解"
+date = 2025-01-13
+description = "深入解析自动驾驶系统中的核心算法，包括控制算法（PID/MPC/LQR）、感知算法、规划算法和定位算法"
+[taxonomies]
+tags = ["autonomous-driving", "algorithm", "control", "pid", "mpc", "planning", "perception"]
++++
+
+# 自动驾驶常用算法详解
+
+自动驾驶系统涉及多个技术领域的算法，本文从控制、感知、规划、定位等维度，详细解析各类核心算法的原理、优缺点和应用场景。
+
+---
+
+## 一、控制算法（Control Algorithms）
+
+控制算法是自动驾驶的"执行大脑"，负责将规划出的轨迹转化为实际的油门、刹车、转向操作。
+
+### 1.1 PID 控制器
+
+**PID（Proportional-Integral-Derivative）是自动驾驶中最基础、最常用的控制算法之一。**
+
+#### 1.1.1 PID 基本原理
+
+PID 由三个部分组成：
+
+```
+u(t) = Kp·e(t) + Ki·∫e(t)dt + Kd·de(t)/dt
+```
+
+| 分量 | 名称 | 作用 | 特点 |
+|------|------|------|------|
+| **P** | 比例项 | 当前误差的响应 | 响应快，但存在稳态误差 |
+| **I** | 积分项 | 累积误差的响应 | 消除稳态误差，但易引起超调 |
+| **D** | 微分项 | 误差变化率的响应 | 预测趋势，抑制超调 |
+
+#### 1.1.2 PID 在自动驾驶中的应用
+
+| 应用场景 | 控制目标 | 备注 |
+|----------|----------|------|
+| **纵向速度控制** | 跟踪目标速度 | 油门/刹车控制 |
+| **横向转向控制** | 跟踪目标航向角 | 方向盘控制 |
+| **ACC 自适应巡航** | 保持跟车距离 | 速度+距离双环控制 |
+| **AEB 紧急制动** | 快速响应 | P 控制为主 |
+
+#### 1.1.3 PID 代码示例
+
+```python
+class PIDController:
+    def __init__(self, kp, ki, kd, dt=0.01):
+        self.kp = kp  # 比例系数
+        self.ki = ki  # 积分系数
+        self.kd = kd  # 微分系数
+        self.dt = dt  # 采样时间
+        
+        self.prev_error = 0
+        self.integral = 0
+        self.integral_limit = 100  # 积分限幅，防止积分饱和
+    
+    def compute(self, target, current):
+        error = target - current
+        
+        # 比例项
+        p_term = self.kp * error
+        
+        # 积分项（带限幅）
+        self.integral += error * self.dt
+        self.integral = max(-self.integral_limit, 
+                           min(self.integral_limit, self.integral))
+        i_term = self.ki * self.integral
+        
+        # 微分项
+        d_term = self.kd * (error - self.prev_error) / self.dt
+        self.prev_error = error
+        
+        return p_term + i_term + d_term
+
+# 速度控制示例
+speed_pid = PIDController(kp=1.0, ki=0.1, kd=0.05)
+throttle = speed_pid.compute(target_speed=60, current_speed=55)
+```
+
+#### 1.1.4 PID 调参方法
+
+| 方法 | 描述 | 适用场景 |
+|------|------|----------|
+| **Ziegler-Nichols** | 经典调参法，先找临界增益 | 工业控制 |
+| **试错法** | 手动调整，观察响应 | 快速原型 |
+| **遗传算法** | 自动搜索最优参数 | 复杂系统 |
+| **强化学习** | 在线自适应调参 | 变工况场景 |
+
+#### 1.1.5 PID 的优缺点
+
+| 优点 | 缺点 |
+|------|------|
+| ✅ 原理简单，易于实现 | ❌ 难以处理非线性系统 |
+| ✅ 计算量小，实时性好 | ❌ 无法预测未来状态 |
+| ✅ 工业应用成熟 | ❌ 参数需要针对性调优 |
+| ✅ 不需要精确模型 | ❌ 多约束场景处理困难 |
+
+#### 1.1.6 PID 在自动驾驶中是否常见？
+
+**答案：非常常见，但通常作为底层控制或简单场景使用。**
+
+| 级别 | PID 使用情况 |
+|------|-------------|
+| **L1-L2 ADAS** | 广泛使用，ACC/LKA 主力算法 |
+| **L3-L4** | 底层执行层使用，上层用 MPC |
+| **L5** | 辅助作用，MPC/RL 为主 |
+
+实际工程中的典型架构：
+
+```
+┌─────────────────────────────────────────┐
+│           上层：MPC/RL 规划控制          │  ← 轨迹规划+运动控制
+├─────────────────────────────────────────┤
+│           中层：路径跟踪控制器            │  ← Stanley/Pure Pursuit
+├─────────────────────────────────────────┤
+│           底层：PID 执行控制器            │  ← 油门/刹车/转向
+└─────────────────────────────────────────┘
+```
+
+---
+
+### 1.2 MPC 模型预测控制
+
+**MPC（Model Predictive Control）是 L4+ 自动驾驶的主流控制算法。**
+
+#### 1.2.1 MPC 基本原理
+
+MPC 的核心思想：**滚动优化 + 模型预测**
+
+```
+在每个控制周期：
+1. 建立车辆动力学模型
+2. 预测未来 N 步的状态
+3. 优化求解最优控制序列
+4. 只执行第一个控制量
+5. 滚动到下一周期重复
+```
+
+#### 1.2.2 车辆运动学模型
+
+```python
+# 自行车模型（Bicycle Model）
+def vehicle_model(state, control, dt):
+    x, y, theta, v = state
+    delta, a = control  # 转向角, 加速度
+    L = 2.9  # 轴距
+    
+    x_next = x + v * np.cos(theta) * dt
+    y_next = y + v * np.sin(theta) * dt
+    theta_next = theta + v * np.tan(delta) / L * dt
+    v_next = v + a * dt
+    
+    return [x_next, y_next, theta_next, v_next]
+```
+
+#### 1.2.3 MPC 优化问题
+
+```
+min  Σ (状态误差权重·状态误差² + 控制量权重·控制量²)
+s.t. 状态方程约束
+     控制量约束（转向角限制、加速度限制）
+     状态约束（速度限制、位置边界）
+```
+
+#### 1.2.4 MPC vs PID 对比
+
+| 维度 | PID | MPC |
+|------|-----|-----|
+| **预测能力** | 无 | 预测未来 N 步 |
+| **约束处理** | 难以处理 | 天然支持约束 |
+| **计算复杂度** | O(1) | O(N³) 或更高 |
+| **模型需求** | 不需要 | 需要精确模型 |
+| **非线性处理** | 差 | 支持（NMPC） |
+| **多目标优化** | 不支持 | 支持 |
+
+---
+
+### 1.3 LQR 线性二次调节器
+
+**LQR（Linear Quadratic Regulator）是一种最优控制算法。**
+
+#### 1.3.1 LQR 基本形式
+
+```
+状态方程：x(k+1) = A·x(k) + B·u(k)
+代价函数：J = Σ (x'Qx + u'Ru)
+最优控制：u = -K·x
+```
+
+其中 K 通过求解 Riccati 方程获得。
+
+#### 1.3.2 LQR 特点
+
+| 优点 | 缺点 |
+|------|------|
+| ✅ 全局最优（线性系统） | ❌ 仅适用于线性系统 |
+| ✅ 在线计算量小 | ❌ 离线需求解 Riccati |
+| ✅ 稳定性有理论保证 | ❌ 无法直接处理约束 |
+
+---
+
+### 1.4 Pure Pursuit 纯跟踪算法
+
+**几何路径跟踪算法，简单高效。**
+
+#### 1.4.1 核心公式
+
+```python
+def pure_pursuit(current_pos, lookahead_point, L):
+    """
+    L: 轴距
+    ld: 前视距离
+    alpha: 车辆朝向与前视点连线的夹角
+    """
+    dx = lookahead_point[0] - current_pos[0]
+    dy = lookahead_point[1] - current_pos[1]
+    ld = np.sqrt(dx**2 + dy**2)
+    alpha = np.arctan2(dy, dx) - current_pos[2]  # 减去航向角
+    
+    # 转向角计算
+    delta = np.arctan2(2 * L * np.sin(alpha), ld)
+    return delta
+```
+
+#### 1.4.2 前视距离选择
+
+| 速度 | 前视距离 | 效果 |
+|------|----------|------|
+| 低速 | 较小 | 跟踪精确，易震荡 |
+| 高速 | 较大 | 平滑，但切弯 |
+
+通常采用：`ld = k * v + ld_min`
+
+---
+
+### 1.5 Stanley 控制器
+
+**斯坦福大学自动驾驶汽车 Stanley 使用的前轮反馈控制器。**
+
+#### 1.5.1 控制律
+
+```python
+def stanley_control(state, ref_point, k=2.5):
+    """
+    theta_e: 航向误差
+    e: 横向误差（到最近路径点的距离）
+    k: 增益系数
+    v: 当前速度
+    """
+    theta_e = ref_point[2] - state[2]  # 航向误差
+    e = compute_cross_track_error(state, ref_point)
+    v = state[3]
+    
+    # Stanley 控制律
+    delta = theta_e + np.arctan2(k * e, v + 0.001)
+    return delta
+```
+
+#### 1.5.2 Stanley vs Pure Pursuit
+
+| 维度 | Stanley | Pure Pursuit |
+|------|---------|--------------|
+| **误差类型** | 横向误差+航向误差 | 仅几何关系 |
+| **收敛性** | 指数收敛 | 渐近收敛 |
+| **低速表现** | 较好 | 可能震荡 |
+| **实现复杂度** | 中等 | 简单 |
+
+---
+
+## 二、感知算法（Perception Algorithms）
+
+### 2.1 目标检测算法演进
+
+| 阶段 | 算法 | 速度 | 精度 |
+|------|------|------|------|
+| **两阶段** | Faster R-CNN | 慢 | 高 |
+| **单阶段** | YOLO 系列 | 快 | 中 |
+| **Anchor-Free** | CenterNet | 快 | 高 |
+| **Transformer** | DETR | 中 | 高 |
+
+### 2.2 3D 点云处理
+
+| 算法 | 类型 | 特点 |
+|------|------|------|
+| **PointNet** | 点处理 | 直接处理原始点云 |
+| **PointPillars** | 柱体化 | 快速，工业常用 |
+| **VoxelNet** | 体素化 | 精度高 |
+| **PV-RCNN** | 混合 | 点+体素融合 |
+
+### 2.3 BEV 感知
+
+```
+Camera Images → Backbone → View Transform → BEV Feature → Detection
+                                ↑
+                   LSS / BEVFormer / BEVDet
+```
+
+---
+
+## 三、规划算法（Planning Algorithms）
+
+### 3.1 全局路径规划
+
+| 算法 | 类型 | 复杂度 | 特点 |
+|------|------|--------|------|
+| **Dijkstra** | 图搜索 | O(V²) | 最短路径，无启发 |
+| **A*** | 图搜索 | O(E) | 启发式，常用 |
+| **RRT** | 采样 | 随机 | 高维空间有效 |
+| **RRT*** | 采样 | 随机 | 渐近最优 |
+
+### 3.2 A* 算法
+
+```python
+def a_star(start, goal, grid):
+    open_set = [(0, start)]
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    
+    while open_set:
+        _, current = heapq.heappop(open_set)
+        
+        if current == goal:
+            return reconstruct_path(came_from, current)
+        
+        for neighbor in get_neighbors(current, grid):
+            tentative_g = g_score[current] + distance(current, neighbor)
+            
+            if tentative_g < g_score.get(neighbor, float('inf')):
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g
+                f_score[neighbor] = tentative_g + heuristic(neighbor, goal)
+                heapq.heappush(open_set, (f_score[neighbor], neighbor))
+    
+    return None
+```
+
+### 3.3 局部轨迹规划
+
+| 方法 | 特点 | 应用 |
+|------|------|------|
+| **多项式曲线** | 平滑，计算快 | 换道轨迹 |
+| **贝塞尔曲线** | 可视化直观 | 路径平滑 |
+| **样条曲线** | 过控制点 | 路径拟合 |
+| **Lattice Planner** | 结构化采样 | Apollo |
+
+---
+
+## 四、定位算法（Localization Algorithms）
+
+### 4.1 卡尔曼滤波（EKF）
+
+```python
+def ekf_update(state, P, z, H, R):
+    """扩展卡尔曼滤波更新步骤"""
+    # 预测残差
+    y = z - H @ state
+    
+    # 卡尔曼增益
+    S = H @ P @ H.T + R
+    K = P @ H.T @ np.linalg.inv(S)
+    
+    # 状态更新
+    state = state + K @ y
+    P = (np.eye(len(state)) - K @ H) @ P
+    
+    return state, P
+```
+
+### 4.2 粒子滤波
+
+| 步骤 | 操作 |
+|------|------|
+| **预测** | 根据运动模型传播粒子 |
+| **更新** | 根据观测计算权重 |
+| **重采样** | 根据权重筛选粒子 |
+
+### 4.3 图优化 SLAM
+
+| 框架 | 特点 |
+|------|------|
+| **g2o** | 通用图优化 |
+| **GTSAM** | 因子图优化 |
+| **Ceres** | 非线性优化 |
+
+---
+
+## 五、预测算法（Prediction Algorithms）
+
+### 5.1 轨迹预测方法
+
+| 类型 | 算法 | 特点 |
+|------|------|------|
+| **物理模型** | 匀速/匀加速 | 简单，短期有效 |
+| **深度学习** | Social LSTM | 考虑社会交互 |
+| **图神经网络** | VectorNet | 地图感知 |
+| **Transformer** | Wayformer | 多模态输出 |
+
+### 5.2 意图识别
+
+```
+历史轨迹 + 地图信息 + 交互关系 → 网络 → 多个可能轨迹 + 概率
+```
+
+---
+
+## 六、算法选型指南
+
+### 6.1 控制算法选型
+
+| 场景 | 推荐算法 | 理由 |
+|------|----------|------|
+| **低速泊车** | Pure Pursuit + PID | 简单可靠 |
+| **高速巡航** | MPC | 预测+约束 |
+| **紧急制动** | PID (P为主) | 响应快 |
+| **复杂路况** | MPC + RL | 自适应 |
+
+### 6.2 工程实践建议
+
+1. **分层设计**：上层 MPC 规划，底层 PID 执行
+2. **参数自适应**：根据工况切换参数
+3. **故障降级**：MPC 失效时切换 PID
+4. **仿真验证**：先仿真，后实车
+
+---
+
+## 七、总结
+
+| 模块 | 核心算法 | 发展趋势 |
+|------|----------|----------|
+| **控制** | PID → MPC → RL | 自适应、端到端 |
+| **感知** | CNN → Transformer → BEV | 多模态融合 |
+| **规划** | A* → RRT* → Learning | 数据驱动 |
+| **定位** | EKF → 图优化 → 神经网络 | 端到端 |
+
+**PID 依然是自动驾驶的基石算法**，虽然高级自动驾驶系统使用更复杂的 MPC/RL 算法，但 PID 在底层执行控制、ADAS 功能、快速原型开发中仍然广泛使用。理解 PID 是理解所有控制算法的基础。
