@@ -58,20 +58,16 @@ pip install torch transformers
 
 ### 1.3 核心能力
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Notebook 执行 Agent                      │
-├─────────────────────────────────────────────────────────┤
-│  ✓ 参数化执行（Parameterized Execution）                  │
-│  ✓ 错误自动修复（Auto Error Recovery）                    │
-│  ✓ 执行进度追踪（Progress Tracking）                      │
-│  ✓ HTML 报告生成（Report Generation）                     │
-│  ✓ 执行日志记录（Execution Logging）                      │
-│  ✓ 超时与资源控制（Timeout & Resource Control）           │
-│  ✓ 人工指令自动识别（Human Instruction Detection）  🆕   │
-│  ✓ 人工指令自动执行（Human Instruction Execution）  🆕   │
-└─────────────────────────────────────────────────────────┘
-```
+| Notebook 执行 Agent 核心能力 |
+|------------------------------|
+| ✓ 参数化执行（Parameterized Execution） |
+| ✓ 错误自动修复（Auto Error Recovery） |
+| ✓ 执行进度追踪（Progress Tracking） |
+| ✓ HTML 报告生成（Report Generation） |
+| ✓ 执行日志记录（Execution Logging） |
+| ✓ 超时与资源控制（Timeout & Resource Control） |
+| ✓ 人工指令自动识别（Human Instruction Detection）🆕 |
+| ✓ 人工指令自动执行（Human Instruction Execution）🆕 |
 
 ---
 
