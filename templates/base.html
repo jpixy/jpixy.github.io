@@ -157,13 +157,18 @@
             const now = new Date();
             const diff = now - startDate;
             
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const years = Math.floor(totalDays / 365);
+            const days = totalDays % 365;
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
-            document.getElementById('sitetime').textContent = 
-                `This Website runs for ${days} days ${hours} hours ${minutes} mins ${seconds} secs`;
+            let timeStr = 'This Website runs for ';
+            if (years > 0) timeStr += `${years} year${years > 1 ? 's' : ''} `;
+            timeStr += `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''} ${seconds} sec${seconds !== 1 ? 's' : ''}`;
+            
+            document.getElementById('sitetime').textContent = timeStr;
         }
         siteTime();
         setInterval(siteTime, 1000);
