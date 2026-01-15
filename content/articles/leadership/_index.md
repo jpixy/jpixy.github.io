@@ -1,5 +1,5 @@
 +++
-title = "管理与领导力"
+title = "Leadership & Management"
 sort_by = "title"
 template = "section.html"
 +++

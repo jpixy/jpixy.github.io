@@ -1,5 +1,5 @@
 +++
-title = "量化交易"
+title = "Quantitative Trading"
 sort_by = "title"
 template = "section.html"
 +++
