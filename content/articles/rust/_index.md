@@ -1,5 +1,5 @@
 +++
-title = "Rust语言"
+title = "Rust"
 sort_by = "title"
 +++
 

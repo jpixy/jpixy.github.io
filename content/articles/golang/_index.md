@@ -1,5 +1,5 @@
 +++
-title = "Go语言"
+title = "Golang"
 sort_by = "title"
 +++
 

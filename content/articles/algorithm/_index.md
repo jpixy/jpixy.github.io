@@ -1,5 +1,5 @@
 +++
-title = "算法与数据结构"
+title = "Algorithm & Data Structures"
 sort_by = "title"
 +++
 
