@@ -2,23 +2,7 @@
 
 {% block title %}{{ config.title }}{% endblock %}
 
-{% block sidebar %}
-{# 首页只显示 section 列表，不展开文章 #}
-{% set articles = get_section(path="articles/_index.md") %}
-<nav class="sidebar-nav">
-    <ul>
-    {% for subsection in articles.subsections %}
-        {% set section = get_section(path=subsection) %}
-        <li class="section-item collapsed">
-            <span class="section-title">{{ section.title }}</span>
-            <ul class="section-pages">
-                <li><a href="{{ section.permalink }}">Browse {{ section.pages | length }} articles →</a></li>
-            </ul>
-        </li>
-    {% endfor %}
-    </ul>
-</nav>
-{% endblock %}
+{# 首页使用 base.html 的默认 sidebar，显示完整目录 #}
 
 {% block content %}
 <div class="home">
