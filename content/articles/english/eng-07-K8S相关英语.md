@@ -479,7 +479,7 @@ parameters:
     - Tool: Use **Terraform** + **EKS/GKE Terraform modules** to deploy nodes across zones.  
     - Example:  
 
-```plain
+```
 module "eks" {
   cluster_version = "1.28"
   vpc_id         = aws_vpc.main.id
@@ -631,7 +631,7 @@ volumeBindingMode: WaitForFirstConsumer
 3. **Application-Level Handling**:  
     - Use `ReadWriteMany` volumes (e.g., NFS) or design for eventual consistency.
 
-```plain
+```
 
 #### **Q2: How do you validate RPO (Recovery Point Objective) and RTO (Recovery Time Objective) for storage replication?**  
 **Validation Approach**:  

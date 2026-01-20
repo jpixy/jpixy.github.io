@@ -5,29 +5,29 @@ description = "Johnny's Tech Blog"
 default_language = "en"
 
 compile_sass = true
-minify_html = true
-build_search_index = true
+minify_html = false  # 开发时关闭，减少构建时间
+build_search_index = false  # 暂时禁用，显著提升构建速度
 generate_feeds = true
 feed_filenames = ["rss.xml"]
 
 taxonomies = [
-    { name = "tags", feed = true },
+    { name = "tags", feed = false },  # 关闭tag feed
 ]
 
-[search]
-include_title = true
-include_description = true
-include_path = true
-include_content = true
+# [search]  # 暂时禁用搜索
+# include_title = true
+# include_description = true
+# include_path = true
+# include_content = true
 
 [markdown]
 highlight_code = true
 highlight_theme = "base16-ocean-dark"
 smart_punctuation = true
 
-[link_checker]
-internal_level = "warn"
-skip_anchor_prefixes = ["#"]
+# [link_checker]  # 暂时禁用，加速构建
+# internal_level = "warn"
+# skip_anchor_prefixes = ["#"]
 
 generate_sitemap = true
 generate_robots_txt = false

@@ -9,21 +9,6 @@ slug = "insights-Kubernetes平台工程与云原生应用管理学习路线"
 
 ---
 
-## 目录
-
-1. [Kubernetes API 机制与语义](#一kubernetes-api-机制与语义)
-2. [Go 语言控制器与 Operator 开发](#二go-语言控制器与-operator-开发)
-3. [CRD 与 Webhooks](#三crd-与-webhooks)
-4. [Pod 与运行时语义](#四pod-与运行时语义)
-5. [扩缩容系统](#五扩缩容系统)
-6. [联合与多集群管理](#六联合与多集群管理)
-7. [分布式系统基础](#七分布式系统基础)
-8. [可观测性与数据工程](#八可观测性与数据工程)
-9. [平台工程最佳实践](#九平台工程最佳实践)
-10. [业界新技术与趋势](#十业界新技术与趋势)
-
----
-
 ## 一、Kubernetes API 机制与语义
 
 ### 1.1 Server-Side Apply (SSA)

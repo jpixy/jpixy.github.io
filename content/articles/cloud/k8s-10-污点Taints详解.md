@@ -10,7 +10,7 @@ slug = "k8s-Kubernetes污点Taints详解与最佳实践"
 ### 污点的组成
 每个污点由三部分组成：
 
-```plain
+```
 key=value:effect
 ```
 

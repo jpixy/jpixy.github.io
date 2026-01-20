@@ -140,7 +140,7 @@ jobs:
 
 ## 七、常见问题解决
 ### 1. 未注册标记警告
-```plain
+```
 PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?
 ```
 

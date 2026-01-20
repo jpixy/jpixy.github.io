@@ -21,7 +21,7 @@ tags = ["网络", "HTTP", "协议"]
 ### 请求与响应
 
 **请求格式**：
-```http
+```
 GET /api/users HTTP/1.1
 Host: example.com
 User-Agent: Mozilla/5.0
@@ -32,7 +32,7 @@ Authorization: Bearer token123
 ```
 
 **响应格式**：
-```http
+```
 HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 123
@@ -72,7 +72,7 @@ Cache-Control: max-age=3600
 **HTTP/1.0**：每个请求新建连接
 **HTTP/1.1**：默认Keep-Alive，连接复用
 
-```http
+```
 Connection: keep-alive
 Keep-Alive: timeout=5, max=100
 ```
@@ -90,7 +90,7 @@ Keep-Alive: timeout=5, max=100
 ### 分块传输
 
 动态内容，不知道Content-Length时使用：
-```http
+```
 Transfer-Encoding: chunked
 
 7\r\n
@@ -260,7 +260,7 @@ Stream 3: 请求C
 ### 缓存控制头
 
 **Cache-Control**：
-```http
+```
 # 公共缓存，1小时
 Cache-Control: public, max-age=3600
 
@@ -285,7 +285,7 @@ Cache-Control: no-store
 ### 条件请求
 
 **基于时间**：
-```http
+```
 # 响应
 Last-Modified: Wed, 21 Oct 2025 07:28:00 GMT
 
@@ -296,7 +296,7 @@ If-Modified-Since: Wed, 21 Oct 2025 07:28:00 GMT
 ```
 
 **基于内容**：
-```http
+```
 # 响应
 ETag: "33a64df551425fcc55e4d42a148795d9"
 
@@ -309,13 +309,13 @@ If-None-Match: "33a64df551425fcc55e4d42a148795d9"
 ### 缓存策略
 
 **静态资源**：
-```http
+```
 # 长期缓存 + 文件名带版本
 Cache-Control: public, max-age=31536000, immutable
 ```
 
 **动态内容**：
-```http
+```
 # 每次验证
 Cache-Control: no-cache
 

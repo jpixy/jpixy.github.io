@@ -349,7 +349,7 @@ kube-hunter --remote --report yaml > security-report.yaml
 
 ## 四、多环境部署策略
 ### 1. 使用 Values 文件管理环境差异
-```plain
+```
 my-chart/
 ├── values.yaml       # 基础配置
 ├── values.dev.yaml   # 开发环境覆盖
@@ -703,7 +703,7 @@ metadata:
 ```
 
 ## **九、完整示例结构**
-```plain
+```
 ha-chart/
 ├── Chart.yaml
 ├── values.yaml
@@ -809,7 +809,7 @@ spec:
 
 **目录结构****：**
 
-```plain
+```
 charts/
   stable-resources/  # 包含需要保留的资源
   app-logic/         # 包含频繁变更的资源
@@ -940,7 +940,7 @@ kubectl delete pvc/my-pvc --cascade=orphan
 
 ## **二、基于 Deployment 的实现方案**
 ### **1. 基础架构设计**
-```mermaid
+```
 graph TD
     A[Service] --> B[Stable Deployment v1]
     A --> C[Canary Deployment v2]
@@ -948,7 +948,7 @@ graph TD
 
 ### **2. 具体实施步骤**
 #### **(1) 准备基础 Chart 结构**
-```plain
+```
 myapp/
 ├── Chart.yaml
 ├── templates/
@@ -1219,7 +1219,7 @@ kubeVersion: ">=1.20.0-0 <1.28.0-0"  # 明确支持的K8S版本范围
 
 **（2）安装时强制版本检查**
 
-```shell
+```bash
 helm install --kube-version $(kubectl version --short | awk '/Server/{print $3}') my-release .
 ```
 

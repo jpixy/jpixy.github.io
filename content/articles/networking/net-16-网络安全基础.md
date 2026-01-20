@@ -312,7 +312,7 @@ nft add rule inet filter input tcp dport 22 accept
 - HSTS头部
 - 禁用不安全协议
 
-```http
+```
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 ```
 

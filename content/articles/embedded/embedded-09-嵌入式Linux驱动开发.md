@@ -318,7 +318,7 @@ MODULE_LICENSE("GPL");
 
 ### 5.1 设备树基础
 
-```dts
+```c
 // 设备树片段
 / {
     compatible = "vendor,board";

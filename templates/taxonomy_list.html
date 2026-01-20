@@ -2,6 +2,22 @@
 
 {% block title %}{{ taxonomy.name | title }} | {{ config.title }}{% endblock %}
 
+{% block sidebar %}
+{# Taxonomy 页面简化侧边栏 #}
+<nav class="sidebar-nav">
+    <ul>
+        <li class="section-item">
+            <span class="section-title">{{ taxonomy.name | title }}</span>
+            <ul class="section-pages">
+            {% for term in terms | slice(end=20) %}
+                <li><a href="{{ term.permalink }}">{{ term.name }} ({{ term.pages | length }})</a></li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
+
 {% block content %}
 <article class="taxonomy-list">
     <h1>{{ taxonomy.name | title }}</h1>

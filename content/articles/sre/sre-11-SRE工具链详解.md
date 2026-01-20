@@ -43,7 +43,7 @@ http_requests_total{method="GET", status="200", path="/api/users"}
 ### PromQL查询
 
 **基础查询**：
-```promql
+```
 # 当前值
 http_requests_total
 
@@ -55,7 +55,7 @@ http_requests_total{path=~"/api/.*"}
 ```
 
 **范围查询与函数**：
-```promql
+```
 # 过去5分钟的数据
 http_requests_total[5m]
 
@@ -67,7 +67,7 @@ increase(http_requests_total[1h])
 ```
 
 **聚合操作**：
-```promql
+```
 # 按status求和
 sum by (status) (rate(http_requests_total[5m]))
 
@@ -156,7 +156,7 @@ Query: label_values(up, job)
 ```
 
 **在查询中使用**：
-```promql
+```
 rate(http_requests_total{job="$service"}[5m])
 ```
 
@@ -358,7 +358,7 @@ scrape_configs:
 ```
 
 **LogQL查询**：
-```logql
+```
 # 查看错误日志
 {app="payment"} |= "error"
 

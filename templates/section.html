@@ -2,6 +2,22 @@
 
 {% block title %}{{ section.title }} | {{ config.title }}{% endblock %}
 
+{% block sidebar %}
+{# Section 页面只显示当前 section 的文章列表 #}
+<nav class="sidebar-nav">
+    <ul>
+        <li class="section-item">
+            <span class="section-title">{{ section.title }}</span>
+            <ul class="section-pages">
+            {% for p in section.pages | sort(attribute="title") %}
+                <li><a href="{{ p.permalink }}">{{ p.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
+
 {% block content %}
 <article class="section-content">
     {% if section.description %}

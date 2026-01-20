@@ -87,7 +87,7 @@ with MyResource() as resource:
 
 输出：
 
-```plain
+```
 Resource opened
 Using resource
 Exception occurred: Something went wrong

@@ -158,7 +158,7 @@ model_repository/
 
 config.pbtxt 示例：
 ```
-```protobuf
+```
 name: "my_model"
 platform: "onnxruntime_onnx"
 max_batch_size: 32

@@ -529,7 +529,7 @@ ansible all -m shell -a "uptime"
 
 ### 8.2 Terraform
 
-```hcl
+```
 # main.tf
 provider "aws" {
   region = "us-east-1"
@@ -606,7 +606,7 @@ scrape_configs:
 ```
 
 **常用 PromQL**：
-```promql
+```
 # CPU 使用率
 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
 

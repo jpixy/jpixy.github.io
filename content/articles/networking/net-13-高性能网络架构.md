@@ -60,7 +60,7 @@ tags = ["网络", "高性能", "架构"]
 
 ### 健康检查
 
-```nginx
+```
 upstream backend {
     server 192.168.1.1:8080 weight=5;
     server 192.168.1.2:8080 weight=3;
@@ -104,7 +104,7 @@ upstream backend {
 ### 缓存策略
 
 **缓存控制头**：
-```http
+```
 Cache-Control: max-age=86400
 Cache-Control: no-cache
 Cache-Control: private

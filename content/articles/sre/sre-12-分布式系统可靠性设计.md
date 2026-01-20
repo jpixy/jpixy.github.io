@@ -321,7 +321,7 @@ else:
 ### 限流响应
 
 **拒绝请求**：
-```http
+```
 HTTP/1.1 429 Too Many Requests
 Retry-After: 60
 ```

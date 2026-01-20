@@ -9,7 +9,7 @@ slug = "devops-如何添加新硬盘扩展LVM"
 
 或直接使用整块磁盘（无分区）：
 
-```plain
+```
 [14:23:30] johnny :: johnny-ThinkPad-X1-Extreme  ➜  ~ » df -lhT
 Filesystem                        Type      Size  Used Avail Use% Mounted on
 tmpfs                             tmpfs     3.1G  2.7M  3.1G   1% /run
@@ -75,7 +75,7 @@ sudo parted /dev/nvme0n1
 
 在 `parted` 交互界面中执行：
 
-```plain
+```
 mklabel gpt
 mkpart primary 0% 100%
 set 1 lvm on

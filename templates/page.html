@@ -2,6 +2,31 @@
 
 {% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
+{% block sidebar %}
+{# 文章页面使用简化侧边栏，避免遍历所有文章 #}
+{% if page.ancestors %}
+{% set parent_path = page.ancestors | last %}
+{% set parent = get_section(path=parent_path) %}
+<nav class="sidebar-nav">
+    <div class="current-section">
+        <a href="{{ parent.permalink }}" class="section-back">← {{ parent.title }}</a>
+    </div>
+    <ul>
+        <li class="section-item">
+            <span class="section-title">{{ parent.title }}</span>
+            <ul class="section-pages">
+            {% for p in parent.pages | sort(attribute="title") %}
+                <li{% if p.permalink == page.permalink %} class="active"{% endif %}>
+                    <a href="{{ p.permalink }}">{{ p.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+
 {% block description %}{{ page.description | default(value=config.description) }}{% endblock %}
 
 {% block content %}
