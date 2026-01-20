@@ -27,6 +27,7 @@
         s.parentNode.insertBefore(hm, s);
     })();
     </script>
+    {% block sidebar_data %}{% endblock %}
 </head>
 <body>
     <a href="{{ config.extra.github }}" class="github-corner" aria-label="View source on GitHub" target="_blank" title="GitHub">
@@ -69,28 +70,11 @@
                     <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
                     <div id="search-results"></div>
                 </div>
-                {% block sidebar %}
-                {% set articles = get_section(path="articles/_index.md") %}
-                {% set sections_data = [] %}
-                {% for subsection in articles.subsections %}
-                    {% set section = get_section(path=subsection) %}
-                    {% set_global sections_data = sections_data | concat(with=[section]) %}
-                {% endfor %}
-                <nav class="sidebar-nav">
-                    <ul>
-                    {% for section in sections_data | sort(attribute="title") %}
-                        <li class="section-item collapsed">
-                            <span class="section-title">{{ section.title }}</span>
-                            <ul class="section-pages">
-                            {% for page in section.pages | sort(attribute="title") %}
-                                <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
+                <nav class="sidebar-nav" id="sidebar-nav">
+                    <ul id="sidebar-list">
+                        <li class="loading">Loading...</li>
                     </ul>
                 </nav>
-                {% endblock %}
             </aside>
             
             <main class="content">
@@ -109,11 +93,11 @@
     </div>
     
     <script>
-        // 侧边栏状态持久化
+        // 侧边栏渲染和状态持久化
         (function() {
             const STORAGE_KEY = 'sidebar_state';
+            const CACHE_KEY = 'sidebar_data_cache';
             
-            // 从 localStorage 加载状态
             function loadState() {
                 try {
                     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -122,34 +106,62 @@
                 }
             }
             
-            // 保存状态到 localStorage
             function saveState(state) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             }
             
-            const state = loadState();
+            function getSidebarData() {
+                // 优先使用页面内嵌数据（首页）
+                if (window.SIDEBAR_DATA && window.SIDEBAR_DATA.length) {
+                    return window.SIDEBAR_DATA;
+                }
+                // 否则从 localStorage 读取
+                try {
+                    const cached = localStorage.getItem(CACHE_KEY);
+                    if (cached) return JSON.parse(cached);
+                } catch (e) {}
+                return null;
+            }
             
-            document.querySelectorAll('.section-item').forEach((item, index) => {
-                const title = item.querySelector('.section-title');
-                const sectionName = title.textContent.trim();
+            function renderSidebar() {
+                const sections = getSidebarData();
+                const state = loadState();
+                const list = document.getElementById('sidebar-list');
                 
-                // 恢复保存的状态（如果有）
-                if (state[sectionName] !== undefined) {
-                    if (state[sectionName]) {
-                        item.classList.remove('collapsed');
-                    } else {
-                        item.classList.add('collapsed');
-                    }
+                if (!sections || !sections.length) {
+                    list.innerHTML = '<li><a href="/">Visit homepage to load sidebar</a></li>';
+                    return;
                 }
                 
-                // 点击时切换并保存状态
-                title.addEventListener('click', () => {
-                    item.classList.toggle('collapsed');
-                    const isOpen = !item.classList.contains('collapsed');
-                    state[sectionName] = isOpen;
-                    saveState(state);
+                list.innerHTML = sections.map(section => {
+                    const isOpen = state[section.title] || false;
+                    const collapsedClass = isOpen ? '' : 'collapsed';
+                    const pagesHtml = section.pages.map(page => 
+                        `<li><a href="${page.url}">${page.title}</a></li>`
+                    ).join('');
+                    
+                    return `<li class="section-item ${collapsedClass}">
+                        <span class="section-title">${section.title}</span>
+                        <ul class="section-pages">${pagesHtml}</ul>
+                    </li>`;
+                }).join('');
+                
+                // 绑定点击事件
+                document.querySelectorAll('.section-item').forEach(item => {
+                    const title = item.querySelector('.section-title');
+                    const sectionName = title.textContent.trim();
+                    
+                    title.addEventListener('click', () => {
+                        item.classList.toggle('collapsed');
+                        const isOpen = !item.classList.contains('collapsed');
+                        const state = loadState();
+                        state[sectionName] = isOpen;
+                        saveState(state);
+                    });
                 });
-            });
+            }
+            
+            renderSidebar();
         })();
 
         function siteTime() {
