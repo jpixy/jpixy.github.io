@@ -31,9 +31,11 @@ SRE笔试中的算法题通常与实际运维场景结合，如缓存淘汰、�
 
 ### Python3 解答
 
+**方法一：使用 OrderedDict（简洁高效）**
+
 ```python
 from collections import OrderedDict
-from typing import Optional, Any
+from typing import Any
 
 class LRUCache:
     """
@@ -60,9 +62,13 @@ class LRUCache:
         if len(self.cache) > self.capacity:
             # 删除最久未使用的（开头）
             self.cache.popitem(last=False)
+```
 
+**方法二：双向链表 + 哈希表（面试常考）**
 
-# 手动实现版本（面试常考）
+```python
+from typing import Optional, Any
+
 class ListNode:
     def __init__(self, key: str = "", value: Any = None):
         self.key = key
@@ -72,9 +78,7 @@ class ListNode:
 
 
 class LRUCacheManual:
-    """
-    使用双向链表 + 哈希表实现
-    """
+    """使用双向链表 + 哈希表实现"""
     
     def __init__(self, capacity: int):
         self.capacity = capacity
@@ -103,7 +107,6 @@ class LRUCacheManual:
             return -1
         
         node = self.cache[key]
-        # 移动到尾部
         self._remove(node)
         self._add_to_tail(node)
         return node.value
@@ -120,19 +123,20 @@ class LRUCacheManual:
             self._add_to_tail(node)
             
             if len(self.cache) > self.capacity:
-                # 删除头部节点（最久未使用）
                 lru = self.head.next
                 self._remove(lru)
                 del self.cache[lru.key]
+```
 
+**扩展：带 TTL 过期的 LRU 缓存**
 
-# 带TTL的LRU缓存
+```python
 import time
+from collections import OrderedDict
+from typing import Any, Optional
 
 class LRUCacheWithTTL:
-    """
-    支持过期时间的LRU缓存
-    """
+    """支持过期时间的LRU缓存"""
     
     def __init__(self, capacity: int, default_ttl: float = 300):
         self.capacity = capacity
@@ -145,7 +149,6 @@ class LRUCacheWithTTL:
         
         value, expire_time = self.cache[key]
         
-        # 检查是否过期
         if time.time() > expire_time:
             del self.cache[key]
             return -1
@@ -153,7 +156,7 @@ class LRUCacheWithTTL:
         self.cache.move_to_end(key)
         return value
     
-    def put(self, key: str, value: Any, ttl: float = None):
+    def put(self, key: str, value: Any, ttl: Optional[float] = None):
         ttl = ttl or self.default_ttl
         expire_time = time.time() + ttl
         
@@ -168,10 +171,7 @@ class LRUCacheWithTTL:
     def cleanup_expired(self):
         """清理过期条目"""
         now = time.time()
-        expired_keys = [
-            k for k, (_, exp) in self.cache.items() 
-            if now > exp
-        ]
+        expired_keys = [k for k, (_, exp) in self.cache.items() if now > exp]
         for key in expired_keys:
             del self.cache[key]
 ```

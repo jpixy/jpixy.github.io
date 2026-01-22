@@ -22,7 +22,7 @@ taxonomies = [
 
 [markdown]
 highlight_code = true
-highlight_theme = "base16-ocean-dark"
+highlight_theme = "inspired-github"
 smart_punctuation = true
 
 # [link_checker]  # 暂时禁用，加速构建

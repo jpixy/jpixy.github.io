@@ -138,10 +138,9 @@ def scan_common_services(host: str) -> Dict[str, bool]:
 
 ### Python3 解答
 
+**数据结构定义**
+
 ```python
-import os
-import time
-from typing import Dict, List, Optional
 from dataclasses import dataclass
 
 @dataclass
@@ -152,7 +151,14 @@ class ProcessInfo:
     memory_mb: float
     status: str
     threads: int
+```
 
+**方法一：直接读取 /proc 文件系统（无依赖）**
+
+```python
+import os
+import time
+from typing import List, Optional
 
 def get_process_info_from_proc(pid: int) -> Optional[ProcessInfo]:
     """
@@ -164,7 +170,6 @@ def get_process_info_from_proc(pid: int) -> Optional[ProcessInfo]:
         with open(f'/proc/{pid}/stat', 'r') as f:
             stat = f.read().split()
         
-        # 读取进程名
         name = stat[1].strip('()')
         status_map = {'R': 'running', 'S': 'sleeping', 'D': 'disk-sleep', 
                       'Z': 'zombie', 'T': 'stopped'}
@@ -175,7 +180,7 @@ def get_process_info_from_proc(pid: int) -> Optional[ProcessInfo]:
         with open(f'/proc/{pid}/statm', 'r') as f:
             statm = f.read().split()
         page_size = os.sysconf('SC_PAGE_SIZE')
-        memory_mb = int(statm[1]) * page_size / (1024 * 1024)  # RSS
+        memory_mb = int(statm[1]) * page_size / (1024 * 1024)
         
         # CPU使用率需要两次采样
         utime1, stime1 = int(stat[13]), int(stat[14])
@@ -185,27 +190,20 @@ def get_process_info_from_proc(pid: int) -> Optional[ProcessInfo]:
             stat2 = f.read().split()
         utime2, stime2 = int(stat2[13]), int(stat2[14])
         
-        # 计算CPU使用率
         clk_tck = os.sysconf('SC_CLK_TCK')
         cpu_time_diff = (utime2 + stime2 - utime1 - stime1) / clk_tck
         cpu_percent = cpu_time_diff / 0.1 * 100
         
         return ProcessInfo(
-            pid=pid,
-            name=name,
-            cpu_percent=round(cpu_percent, 2),
-            memory_mb=round(memory_mb, 2),
-            status=status,
-            threads=threads
+            pid=pid, name=name, cpu_percent=round(cpu_percent, 2),
+            memory_mb=round(memory_mb, 2), status=status, threads=threads
         )
     except (FileNotFoundError, PermissionError, IndexError):
         return None
 
 
 def find_process_by_name(name: str) -> List[int]:
-    """
-    根据进程名查找PID
-    """
+    """根据进程名查找PID"""
     pids = []
     for entry in os.listdir('/proc'):
         if entry.isdigit():
@@ -220,9 +218,7 @@ def find_process_by_name(name: str) -> List[int]:
 
 
 def monitor_process(pid: int, interval: float = 1.0, count: int = 10) -> List[ProcessInfo]:
-    """
-    持续监控进程，收集多次采样
-    """
+    """持续监控进程，收集多次采样"""
     samples = []
     for _ in range(count):
         info = get_process_info_from_proc(pid)
@@ -230,9 +226,13 @@ def monitor_process(pid: int, interval: float = 1.0, count: int = 10) -> List[Pr
             samples.append(info)
         time.sleep(interval)
     return samples
+```
 
+**方法二：使用 psutil 库（更简洁）**
 
-# 使用psutil库的版本（更简洁，需要安装）
+```python
+from typing import List, Optional
+
 def get_process_info_psutil(pid: int) -> Optional[ProcessInfo]:
     """
     使用psutil库获取进程信息
@@ -255,9 +255,7 @@ def get_process_info_psutil(pid: int) -> Optional[ProcessInfo]:
 
 
 def get_top_processes(n: int = 10, sort_by: str = 'cpu') -> List[ProcessInfo]:
-    """
-    获取资源占用Top N的进程
-    """
+    """获取资源占用Top N的进程"""
     import psutil
     
     processes = []

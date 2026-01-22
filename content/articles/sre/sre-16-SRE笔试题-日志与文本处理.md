@@ -49,10 +49,11 @@ k = 2
 
 ### Python3 解答
 
+**方法一：使用Counter（简洁高效）**
+
 ```python
 from collections import Counter
 from typing import List, Tuple
-import heapq
 
 def top_k_ips(logs: List[str], k: int) -> List[Tuple[str, int]]:
     """
@@ -70,9 +71,15 @@ def top_k_ips(logs: List[str], k: int) -> List[Tuple[str, int]]:
     
     # 使用堆获取Top K，比完全排序更高效
     return ip_counter.most_common(k)
+```
 
+**方法二：使用最小堆（适合超大数据量）**
 
-# 进阶：使用最小堆实现，适合超大数据量
+```python
+import heapq
+from collections import Counter
+from typing import List, Tuple
+
 def top_k_ips_heap(logs: List[str], k: int) -> List[Tuple[str, int]]:
     """
     使用最小堆实现Top K
@@ -192,6 +199,8 @@ def analyze_status_by_category(logs: List[str]) -> Dict[str, int]:
 
 ### Python3 解答
 
+**方法一：手动实现（理解原理）**
+
 ```python
 from typing import List, Dict
 
@@ -224,17 +233,19 @@ def calculate_percentiles(latencies: List[float]) -> Dict[str, float]:
         'p90': round(percentile(90), 2),
         'p99': round(percentile(99), 2)
     }
+```
 
+**方法二：使用标准库（Python 3.8+）**
 
-# 进阶：使用标准库
+```python
 import statistics
+from typing import List, Dict
 
 def calculate_percentiles_stdlib(latencies: List[float]) -> Dict[str, float]:
     """使用statistics库计算百分位数"""
     if not latencies:
         return {'p50': 0, 'p90': 0, 'p99': 0}
     
-    # Python 3.8+
     return {
         'p50': round(statistics.quantiles(latencies, n=100)[49], 2),
         'p90': round(statistics.quantiles(latencies, n=100)[89], 2),
@@ -718,9 +729,11 @@ class RateLimitedLogger:
 
 ### Python3 解答
 
+**核心算法：K路归并**
+
 ```python
 import heapq
-from typing import List, Iterator, Tuple
+from typing import List, Iterator
 from dataclasses import dataclass, field
 
 @dataclass(order=True)
@@ -731,13 +744,18 @@ class LogItem:
     source_idx: int = field(compare=False)
 
 
+def extract_timestamp(line: str) -> str:
+    """从日志行提取时间戳（假设时间戳在行首）"""
+    # 格式: 2026-01-21 10:00:00.123
+    return line[:23] if len(line) >= 23 else line
+
+
 def merge_sorted_logs(log_files: List[List[str]]) -> Iterator[str]:
     """
     K路归并多个已排序的日志文件
     时间复杂度: O(N log K)，N为总日志数，K为文件数
     空间复杂度: O(K)
     """
-    # 使用最小堆
     heap = []
     iterators = [iter(f) for f in log_files]
     
@@ -755,22 +773,19 @@ def merge_sorted_logs(log_files: List[List[str]]) -> Iterator[str]:
         item = heapq.heappop(heap)
         yield item.content
         
-        # 从同一文件取下一条
         try:
             line = next(iterators[item.source_idx])
             timestamp = extract_timestamp(line)
             heapq.heappush(heap, LogItem(timestamp, line, item.source_idx))
         except StopIteration:
             continue
+```
 
+**实际文件处理版本**
 
-def extract_timestamp(line: str) -> str:
-    """从日志行提取时间戳（假设时间戳在行首）"""
-    # 格式: 2026-01-21 10:00:00.123
-    return line[:23] if len(line) >= 23 else line
+```python
+from typing import List, Iterator
 
-
-# 处理实际文件的版本
 def merge_log_files(file_paths: List[str], output_path: str):
     """
     合并多个日志文件到一个输出文件
@@ -786,17 +801,19 @@ def merge_log_files(file_paths: List[str], output_path: str):
     with open(output_path, 'w') as out:
         for line in merge_sorted_logs(generators):
             out.write(line + '\n')
+```
 
+**支持时间范围过滤的合并**
 
-# 进阶：支持按时间范围过滤的合并
+```python
+from typing import List, Iterator, Optional
+
 def merge_logs_with_filter(
     log_files: List[List[str]], 
-    start_time: str = None, 
-    end_time: str = None
+    start_time: Optional[str] = None, 
+    end_time: Optional[str] = None
 ) -> Iterator[str]:
-    """
-    合并日志并按时间范围过滤
-    """
+    """合并日志并按时间范围过滤"""
     for line in merge_sorted_logs(log_files):
         ts = extract_timestamp(line)
         if start_time and ts < start_time:
