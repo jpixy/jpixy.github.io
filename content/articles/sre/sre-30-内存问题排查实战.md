@@ -1,9 +1,9 @@
 +++
 title = "30.内存问题排查实战"
 date = 2026-01-21
-description = "SRE内存问题排查完整指南：内存泄漏、OOM、Swap使用过高的定位与解决"
+description = "SRE内存问题排查完整指南：内存泄漏、OOM、Swap深度分析、Slab缓存问题的定位与解决"
 [taxonomies]
-tags = ["SRE", "内存", "排查", "实战", "OOM", "Linux"]
+tags = ["SRE", "内存", "排查", "实战", "OOM", "Slab", "Swap", "Linux"]
 +++
 
 ## 概述
@@ -646,6 +646,525 @@ done
 
 ---
 
+# 八、Slab深度排查
+
+## 8.1 Slab内存机制详解
+
+### 什么是Slab
+
+```bash
+# Slab是Linux内核的内存分配器
+# 用于高效分配小块内存（内核对象）
+
+# Slab的三层结构：
+# 1. Cache - 特定类型对象的缓存池
+# 2. Slab - 由一个或多个连续物理页组成
+# 3. Object - 实际的内核对象
+
+# 查看Slab总体使用
+cat /proc/meminfo | grep -i slab
+# Slab:            1234567 kB  # Slab总使用
+# SReclaimable:     987654 kB  # 可回收部分（缓存）
+# SUnreclaim:       246913 kB  # 不可回收部分（活跃对象）
+
+# 关键理解：
+# SReclaimable 是缓存，内存紧张时可自动回收
+# SUnreclaim 是活跃内核对象，无法回收
+```
+
+### Slab统计命令
+
+```bash
+# slabtop - 实时监控Slab使用（类似top）
+sudo slabtop
+
+# 输出列说明：
+# OBJS    - 对象数量
+# ACTIVE  - 活跃对象数量
+# USE     - 使用率
+# OBJ SIZE - 单个对象大小
+# SLABS   - slab数量
+# OBJ/SLAB - 每个slab的对象数
+# CACHE SIZE - 缓存总大小
+# NAME    - 缓存名称
+
+# 按缓存大小排序
+sudo slabtop -s c
+
+# 一次性输出（非交互）
+sudo slabtop -o
+
+# 指定刷新间隔
+sudo slabtop -d 2
+
+# 使用slabinfo查看详细信息
+cat /proc/slabinfo
+
+# 格式化输出Slab Top 20
+cat /proc/slabinfo | awk 'NR>2 {
+    size=$3*$4
+    if(size>0) print size, $1
+}' | sort -rn | head -20
+
+# 计算总Slab内存
+cat /proc/slabinfo | awk 'NR>2 {sum+=$3*$4} END {print sum/1024/1024, "MB"}'
+```
+
+## 8.2 常见Slab问题场景
+
+### 场景一：dentry/inode缓存过大
+
+```bash
+# 症状：Slab占用大量内存，主要是dentry和inode_cache
+# 原因：大量文件/目录操作，缓存了目录项和inode
+
+# 检查dentry和inode使用
+cat /proc/slabinfo | grep -E "dentry|inode" | head -10
+
+# 输出示例：
+# dentry              1234567 1234567    192   21    1 : ...
+# inode_cache          567890  567890    600    6    1 : ...
+
+# 计算dentry占用
+cat /proc/slabinfo | awk '/^dentry/{print $3*$4/1024/1024, "MB"}'
+
+# 常见原因：
+# 1. 大量小文件（如日志切割、临时文件）
+# 2. 频繁遍历大目录（如find、ls -R）
+# 3. 监控程序频繁扫描文件系统
+
+# 排查步骤：
+
+# 1. 找出哪个文件系统产生最多缓存
+cat /proc/sys/fs/dentry-state
+# 输出：nr_dentry nr_unused age_limit want_pages
+
+# 2. 查看文件系统使用情况
+df -i  # 查看inode使用
+
+# 3. 找出大目录
+find / -type d 2>/dev/null | while read d; do
+    count=$(ls -1 "$d" 2>/dev/null | wc -l)
+    [ $count -gt 10000 ] && echo "$count $d"
+done | sort -rn | head -10
+
+# 4. 检查是否有程序频繁扫描文件
+# 使用fatrace监控文件访问
+sudo fatrace 2>/dev/null | head -100
+
+# 解决方案：
+# 1. 清理不必要的小文件
+# 2. 调整vfs_cache_pressure
+echo 200 > /proc/sys/vm/vfs_cache_pressure  # 加速回收
+
+# 3. 手动触发回收
+sync
+echo 2 > /proc/sys/vm/drop_caches  # 释放dentries和inodes
+```
+
+### 场景二：特定Slab异常增长
+
+```bash
+# 症状：某个特定slab持续增长，可能是内核内存泄漏
+
+# 监控Slab变化
+while true; do
+    echo "=== $(date) ==="
+    cat /proc/slabinfo | awk 'NR>2 {print $3*$4, $1}' | sort -rn | head -10
+    sleep 60
+done | tee slab_monitor.log
+
+# 分析增长趋势
+# 如果某个slab持续增长不下降，可能有问题
+
+# 常见问题slab：
+# 1. kmalloc-* - 通用内存分配，可能是驱动/模块泄漏
+# 2. task_struct - 进程结构，僵尸进程过多
+# 3. sock_inode_cache - socket结构，连接泄漏
+# 4. TCP/UDP - 网络连接相关
+# 5. buffer_head - 块设备缓冲
+
+# 排查kmalloc泄漏
+cat /proc/slabinfo | grep kmalloc | sort -t' ' -k3 -rn | head -10
+
+# 检查是否是内核模块问题
+lsmod | head -20
+# 尝试卸载可疑模块测试
+
+# 检查网络相关slab
+cat /proc/slabinfo | grep -E "sock|tcp|udp|skb"
+```
+
+### 场景三：buffer_head过大
+
+```bash
+# 症状：buffer_head slab占用大量内存
+# 原因：频繁的块设备I/O
+
+cat /proc/slabinfo | grep buffer_head
+
+# 排查步骤：
+
+# 1. 检查I/O活动
+iostat -x 1 5
+
+# 2. 找出高I/O进程
+iotop -o
+
+# 3. 检查是否有大量小文件读写
+# buffer_head通常与元数据操作相关
+
+# 解决方案：
+# 1. 减少不必要的I/O
+# 2. 使用更大的块大小
+# 3. 清理缓存
+sync
+echo 1 > /proc/sys/vm/drop_caches
+```
+
+## 8.3 Slab内存泄漏排查
+
+### 使用kmemleak检测
+
+```bash
+# kmemleak是内核内存泄漏检测工具
+# 需要内核编译时开启 CONFIG_DEBUG_KMEMLEAK
+
+# 检查是否支持
+cat /sys/kernel/debug/kmemleak 2>/dev/null
+
+# 触发扫描
+echo scan > /sys/kernel/debug/kmemleak
+
+# 查看泄漏报告
+cat /sys/kernel/debug/kmemleak
+
+# 清除已知泄漏
+echo clear > /sys/kernel/debug/kmemleak
+
+# 注意：生产环境通常不开启kmemleak（性能影响）
+```
+
+### 使用ftrace追踪
+
+```bash
+# 追踪slab分配
+echo 1 > /sys/kernel/debug/tracing/events/kmem/kmalloc/enable
+echo 1 > /sys/kernel/debug/tracing/events/kmem/kfree/enable
+
+# 查看追踪
+cat /sys/kernel/debug/tracing/trace_pipe | head -100
+
+# 关闭追踪
+echo 0 > /sys/kernel/debug/tracing/events/kmem/kmalloc/enable
+echo 0 > /sys/kernel/debug/tracing/events/kmem/kfree/enable
+```
+
+### Slab诊断脚本
+
+```bash
+#!/bin/bash
+# slab_diagnose.sh - Slab深度诊断
+
+echo "===== Slab诊断报告 ====="
+echo "时间: $(date)"
+echo ""
+
+echo "--- 1. Slab概览 ---"
+cat /proc/meminfo | grep -i slab
+echo ""
+
+echo "--- 2. 可回收 vs 不可回收 ---"
+RECLAIMABLE=$(awk '/SReclaimable/{print $2}' /proc/meminfo)
+UNRECLAIMABLE=$(awk '/SUnreclaim/{print $2}' /proc/meminfo)
+echo "SReclaimable: $((RECLAIMABLE/1024)) MB"
+echo "SUnreclaim: $((UNRECLAIMABLE/1024)) MB"
+echo ""
+
+echo "--- 3. Top 15 Slab缓存 ---"
+printf "%-40s %15s %15s\n" "NAME" "SIZE(MB)" "OBJECTS"
+cat /proc/slabinfo | awk 'NR>2 {
+    size=$3*$4/1024/1024
+    if(size>0.1) printf "%-40s %15.2f %15d\n", $1, size, $3
+}' | sort -k2 -rn | head -15
+echo ""
+
+echo "--- 4. dentry/inode状态 ---"
+echo "dentry-state: $(cat /proc/sys/fs/dentry-state)"
+echo "inode-state: $(cat /proc/sys/fs/inode-state)"
+echo ""
+
+echo "--- 5. 文件系统缓存压力 ---"
+echo "vfs_cache_pressure: $(cat /proc/sys/vm/vfs_cache_pressure)"
+echo ""
+
+echo "--- 6. 网络相关Slab ---"
+cat /proc/slabinfo | grep -E "sock|tcp|udp|skb" | awk '{
+    size=$3*$4/1024
+    if(size>0) printf "%-30s %10.2f KB\n", $1, size
+}'
+echo ""
+
+echo "===== 诊断完成 ====="
+```
+
+## 8.4 Slab调优参数
+
+```bash
+# /etc/sysctl.conf
+
+# VFS缓存回收压力（默认100）
+# 值越高，越倾向回收dentry/inode缓存
+vm.vfs_cache_pressure = 100
+# 内存紧张时设置为150-200加速回收
+# 文件服务器可设置为50减少回收
+
+# 最小空闲内存（防止Slab占用过多）
+vm.min_free_kbytes = 65536
+
+# 脏页阈值（影响buffer_head）
+vm.dirty_ratio = 20
+vm.dirty_background_ratio = 5
+
+# 应用配置
+sysctl -p
+```
+
+---
+
+# 九、Swap深度分析
+
+## 9.1 Swap机制详解
+
+```bash
+# Swap的作用：
+# 1. 内存不足时，将不活跃页面换出到磁盘
+# 2. 为应用提供更大的虚拟内存空间
+# 3. 休眠时保存内存状态
+
+# 查看Swap配置
+swapon -s
+# 或
+cat /proc/swaps
+
+# 输出：
+# Filename                Type        Size    Used    Priority
+# /dev/sda2               partition   2097148 123456  -2
+# /swapfile               file        1048572 0       -3
+
+# Priority说明：
+# 数值越高优先使用
+# 相同优先级会轮流使用（类似RAID0）
+```
+
+### Swap状态详细分析
+
+```bash
+# 查看详细Swap统计
+cat /proc/meminfo | grep -i swap
+# SwapCached:     12345 kB  # 在swap中但也在内存中
+# SwapTotal:    2097148 kB  # 总Swap空间
+# SwapFree:     1973692 kB  # 空闲Swap
+
+# 查看Swap IO统计
+vmstat 1 5
+# 关注 si (swap in) 和 so (swap out)
+# si: 从swap读入内存的速率 (KB/s)
+# so: 从内存写入swap的速率 (KB/s)
+
+# 使用sar查看历史数据
+sar -W 1 10
+# pswpin/s  - swap in 每秒次数
+# pswpout/s - swap out 每秒次数
+
+# 详细的swap活动
+cat /proc/vmstat | grep -i swap
+# pswpin   - swap in 次数
+# pswpout  - swap out 次数
+```
+
+## 9.2 Swap使用过高排查
+
+### 定位使用Swap的进程
+
+```bash
+# 方法1：遍历/proc
+for proc in /proc/[0-9]*; do
+    pid=$(basename $proc)
+    swap=$(awk '/VmSwap/{print $2}' $proc/status 2>/dev/null)
+    name=$(cat $proc/comm 2>/dev/null)
+    if [ -n "$swap" ] && [ "$swap" != "0" ]; then
+        echo "$swap $pid $name"
+    fi
+done | sort -rn | head -20
+
+# 方法2：使用smem
+sudo smem -rs swap | head -20
+
+# 方法3：使用脚本格式化输出
+#!/bin/bash
+printf "%-10s %-8s %-15s %s\n" "SWAP(KB)" "PID" "USER" "COMMAND"
+for pid in $(ls /proc | grep '^[0-9]*$'); do
+    swap=$(awk '/VmSwap/{print $2}' /proc/$pid/status 2>/dev/null)
+    if [ -n "$swap" ] && [ "$swap" != "0" ] && [ "$swap" != "" ]; then
+        user=$(stat -c '%U' /proc/$pid 2>/dev/null)
+        cmd=$(cat /proc/$pid/comm 2>/dev/null)
+        printf "%-10s %-8s %-15s %s\n" "$swap" "$pid" "$user" "$cmd"
+    fi
+done | sort -rn | head -20
+```
+
+### Swap风暴排查
+
+```bash
+# Swap风暴现象：
+# 1. si/so持续很高
+# 2. 系统响应极慢
+# 3. CPU等待IO时间高（wa）
+
+# 实时监控
+vmstat 1
+# 关注：
+# si > 0 且持续 → 内存不足，频繁换入
+# so > 0 且持续 → 内存压力大，频繁换出
+# wa 很高 → IO等待，可能是swap导致
+
+# 排查步骤：
+
+# 1. 确认是否真的内存不足
+free -h
+cat /proc/meminfo | grep -E "MemTotal|MemAvailable|SwapTotal|SwapFree"
+
+# 2. 检查swappiness设置
+cat /proc/sys/vm/swappiness
+# 默认60，值越高越倾向使用swap
+
+# 3. 找出内存大户
+ps aux --sort=-%mem | head -20
+
+# 4. 检查是否有内存泄漏
+# 观察进程RSS是否持续增长
+
+# 5. 检查是否有cgroup内存限制
+cat /sys/fs/cgroup/memory/*/memory.limit_in_bytes 2>/dev/null
+```
+
+### 解决Swap问题
+
+```bash
+# 临时方案：
+
+# 1. 降低swappiness
+sysctl -w vm.swappiness=10
+
+# 2. 杀死高内存进程（谨慎）
+# 先确认进程可以杀
+
+# 3. 清空Swap（需要足够内存）
+free -h  # 确认有足够可用内存
+swapoff -a && swapon -a
+
+# 4. 增加物理内存或增大Swap
+# 创建swapfile
+dd if=/dev/zero of=/swapfile2 bs=1G count=4
+chmod 600 /swapfile2
+mkswap /swapfile2
+swapon /swapfile2
+
+# 永久方案：
+
+# 1. 调整swappiness
+echo "vm.swappiness = 10" >> /etc/sysctl.conf
+sysctl -p
+
+# 2. 调整应用内存限制
+# Java: -Xmx 限制堆大小
+# 容器: memory.limit
+
+# 3. 增加物理内存
+
+# 4. 优化应用减少内存使用
+```
+
+## 9.3 Swap性能影响分析
+
+```bash
+# Swap对性能的影响
+
+# 1. 延迟增加
+# HDD Swap: 10-20ms 延迟
+# SSD Swap: 0.1-1ms 延迟
+# 内存访问: 100ns
+
+# 测量Swap延迟
+dd if=/dev/sda2 of=/dev/null bs=4k count=1000 iflag=direct 2>&1 | tail -1
+
+# 2. 吞吐量受限
+# Swap带宽远低于内存带宽
+
+# 3. 随机IO问题
+# Swap访问模式通常是随机的，对HDD影响大
+
+# 优化建议：
+# 1. 使用SSD作为Swap（如果必须用Swap）
+# 2. 将Swap放在独立磁盘，避免与数据盘竞争
+# 3. 对于延迟敏感应用，尽量避免使用Swap
+
+# zram作为Swap替代
+# 使用压缩内存作为swap，速度更快
+modprobe zram
+echo lz4 > /sys/block/zram0/comp_algorithm
+echo 2G > /sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon -p 100 /dev/zram0  # 高优先级
+```
+
+## 9.4 Swap监控脚本
+
+```bash
+#!/bin/bash
+# swap_monitor.sh - Swap监控与告警
+
+THRESHOLD=50  # Swap使用率告警阈值(%)
+LOG_FILE="/var/log/swap_monitor.log"
+
+while true; do
+    TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+    
+    # 获取Swap使用率
+    SWAP_TOTAL=$(awk '/SwapTotal/{print $2}' /proc/meminfo)
+    SWAP_FREE=$(awk '/SwapFree/{print $2}' /proc/meminfo)
+    
+    if [ "$SWAP_TOTAL" -gt 0 ]; then
+        SWAP_USED=$((SWAP_TOTAL - SWAP_FREE))
+        SWAP_PERCENT=$((SWAP_USED * 100 / SWAP_TOTAL))
+        
+        # 获取swap IO
+        SI=$(vmstat 1 2 | tail -1 | awk '{print $7}')
+        SO=$(vmstat 1 2 | tail -1 | awk '{print $8}')
+        
+        echo "$TIMESTAMP Swap: ${SWAP_PERCENT}% (${SWAP_USED}/${SWAP_TOTAL}KB) SI:${SI} SO:${SO}" >> $LOG_FILE
+        
+        if [ $SWAP_PERCENT -gt $THRESHOLD ]; then
+            echo "$TIMESTAMP WARNING: Swap使用率超过${THRESHOLD}%" >> $LOG_FILE
+            echo "Top 5 Swap进程:" >> $LOG_FILE
+            for pid in $(ls /proc | grep '^[0-9]*$'); do
+                swap=$(awk '/VmSwap/{print $2}' /proc/$pid/status 2>/dev/null)
+                if [ -n "$swap" ] && [ "$swap" != "0" ]; then
+                    cmd=$(cat /proc/$pid/comm 2>/dev/null)
+                    echo "$swap $pid $cmd"
+                fi
+            done | sort -rn | head -5 >> $LOG_FILE
+            echo "" >> $LOG_FILE
+        fi
+    fi
+    
+    sleep 60
+done
+```
+
+---
+
 ## 总结
 
 | 问题 | 快速命令 | 深入分析 |
@@ -653,15 +1172,29 @@ done
 | 内存使用高 | `free -h`, `ps aux --sort=-%mem` | `smem`, `/proc/<PID>/smaps` |
 | 内存泄漏 | `pidstat -r` | `jmap`, `valgrind`, `pprof` |
 | OOM | `dmesg \| grep oom` | 分析OOM日志 |
-| Swap高 | `vmstat`, `smem -rs swap` | `sar -W` |
-| Slab高 | `slabtop` | `/proc/slabinfo` |
+| Swap高 | `vmstat`, `smem -rs swap` | `sar -W`, Swap进程分析 |
+| Swap风暴 | `vmstat` (si/so持续高) | 降swappiness, 增内存 |
+| Slab高 | `slabtop` | `/proc/slabinfo`, 分类分析 |
+| dentry泄漏 | `slabtop \| grep dentry` | vfs_cache_pressure调优 |
+| 内核内存泄漏 | `slabtop`监控趋势 | kmemleak, ftrace |
+
+**Slab排查要点**：
+1. 先区分SReclaimable（可回收）和SUnreclaim（不可回收）
+2. dentry/inode过大通常是文件操作导致，可调整vfs_cache_pressure
+3. 特定slab持续增长可能是内核模块问题
+
+**Swap排查要点**：
+1. swappiness控制使用Swap的倾向，数据库建议设10-30
+2. si/so持续大于0说明内存压力大
+3. 清空Swap前确保有足够可用内存
 
 **排查三板斧**：
 1. **free/top** - 快速确认整体状态
 2. **ps/smem** - 定位高内存进程
-3. **专用工具** - jmap/valgrind/pprof深入分析
+3. **专用工具** - jmap/valgrind/pprof/slabtop深入分析
 
 **关键理解**：
 1. `available` 才是真正可用内存，`free` 小是正常的
 2. 内存泄漏需要观察趋势，单次采样不够
 3. OOM不一定是坏事，是系统保护机制
+4. Slab的SReclaimable部分是正常缓存，不必担心

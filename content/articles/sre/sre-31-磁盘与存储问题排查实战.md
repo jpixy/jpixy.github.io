@@ -1,9 +1,9 @@
 +++
 title = "31.磁盘与存储问题排查实战"
 date = 2026-01-21
-description = "SRE磁盘问题排查完整指南：磁盘满、inode耗尽、df与du不符、IO问题的定位与解决"
+description = "SRE磁盘问题排查完整指南：磁盘满、inode耗尽、IO问题、IO调度器调优的定位与解决"
 [taxonomies]
-tags = ["SRE", "磁盘", "排查", "实战", "inode", "IO"]
+tags = ["SRE", "磁盘", "排查", "实战", "IO调度器", "块设备", "NFS", "Ceph"]
 +++
 
 ## 概述
@@ -1141,6 +1141,195 @@ echo "===== 诊断完成 ====="
 
 ---
 
+# 十、IO调度器与块设备调优
+
+## 10.1 IO调度器介绍
+
+```bash
+# Linux IO调度器（单队列，已过时）
+# - CFQ (Completely Fair Queuing) - 公平调度，适合桌面
+# - Deadline - 保证延迟，适合数据库
+# - Noop - 无调度，适合SSD/虚拟机
+
+# Linux IO调度器（多队列，现代内核）
+# - mq-deadline - 多队列版deadline，通用推荐
+# - bfq (Budget Fair Queueing) - 低延迟，适合桌面/交互应用
+# - kyber - 低延迟，适合快速设备（NVMe）
+# - none - 无调度，适合NVMe/虚拟机
+
+# 查看当前IO调度器
+cat /sys/block/sda/queue/scheduler
+# 输出示例：[mq-deadline] kyber bfq none
+
+# 查看所有块设备的调度器
+for disk in /sys/block/sd* /sys/block/nvme*; do
+    [ -d "$disk" ] && echo "$(basename $disk): $(cat $disk/queue/scheduler 2>/dev/null)"
+done
+```
+
+## 10.2 选择IO调度器
+
+```bash
+# 推荐配置：
+
+# HDD机械硬盘：mq-deadline 或 bfq
+# - mq-deadline: 数据库、服务器负载
+# - bfq: 桌面、混合负载
+
+# SSD固态硬盘：mq-deadline 或 none
+# - mq-deadline: 需要一些公平性
+# - none: 追求极致性能
+
+# NVMe：none 或 kyber
+# - none: 设备足够快，调度开销反而有害
+# - kyber: 需要低延迟保证
+
+# 虚拟机：none
+# - 宿主机已经做了调度
+
+# 临时修改（重启失效）
+echo mq-deadline > /sys/block/sda/queue/scheduler
+
+# 永久修改（udev规则）
+# /etc/udev/rules.d/60-io-scheduler.rules
+# HDD使用mq-deadline
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
+# SSD使用none
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
+# NVMe使用none
+ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
+
+# 应用udev规则
+udevadm control --reload-rules
+udevadm trigger
+```
+
+## 10.3 块设备队列参数
+
+```bash
+# 查看队列参数
+cat /sys/block/sda/queue/nr_requests      # 请求队列深度
+cat /sys/block/sda/queue/read_ahead_kb    # 预读大小
+cat /sys/block/sda/queue/max_sectors_kb   # 单次IO最大扇区数
+cat /sys/block/sda/queue/rotational       # 0=SSD, 1=HDD
+
+# 调整队列深度
+# 默认128，对于高IOPS设备可以增加
+echo 256 > /sys/block/sda/queue/nr_requests
+
+# 调整预读大小
+# 顺序读取场景增大，随机读取场景减小
+echo 4096 > /sys/block/sda/queue/read_ahead_kb  # 4MB
+
+# 数据库场景优化
+echo 128 > /sys/block/sda/queue/nr_requests
+echo 256 > /sys/block/sda/queue/read_ahead_kb
+
+# 流媒体/大文件场景
+echo 256 > /sys/block/sda/queue/nr_requests
+echo 8192 > /sys/block/sda/queue/read_ahead_kb
+```
+
+## 10.4 高级IO调优
+
+```bash
+# 1. 合并IO请求（提高吞吐量）
+cat /sys/block/sda/queue/nomerges
+# 0=允许合并（默认），2=禁用合并
+# 随机IO场景可考虑禁用
+echo 2 > /sys/block/sda/queue/nomerges
+
+# 2. 查看IO统计
+cat /sys/block/sda/stat
+# 字段说明（空格分隔）：
+# 1 读完成次数
+# 2 读合并次数
+# 3 读扇区数
+# 4 读花费毫秒数
+# 5 写完成次数
+# 6 写合并次数
+# 7 写扇区数
+# 8 写花费毫秒数
+# 9 当前进行中的IO
+# 10 花费在IO的毫秒数
+# 11 加权IO毫秒数
+
+# 3. 关闭NCQ（解决部分SSD问题）
+# 有些SSD的NCQ实现有bug
+echo 1 > /sys/block/sda/device/queue_depth
+
+# 4. SSD TRIM配置
+# 检查TRIM支持
+lsblk --discard
+# DISC-GRAN和DISC-MAX非0表示支持
+
+# 启用discard（实时TRIM）- 可能影响性能
+# /etc/fstab
+/dev/sda1 / ext4 defaults,discard 0 1
+
+# 或使用fstrim定期TRIM（推荐）
+fstrim -v /
+# 设置定时任务
+systemctl enable fstrim.timer
+```
+
+## 10.5 IO调优诊断脚本
+
+```bash
+#!/bin/bash
+# io_tuning_check.sh - IO调优检查脚本
+
+echo "===== IO调优检查 ====="
+echo "时间: $(date)"
+echo ""
+
+for disk in /sys/block/sd* /sys/block/nvme*; do
+    [ ! -d "$disk" ] && continue
+    NAME=$(basename $disk)
+    
+    echo "--- 设备: $NAME ---"
+    
+    # 设备类型
+    ROTATIONAL=$(cat $disk/queue/rotational 2>/dev/null)
+    if [ "$ROTATIONAL" == "1" ]; then
+        echo "类型: HDD（机械硬盘）"
+    else
+        echo "类型: SSD/NVMe（固态）"
+    fi
+    
+    # 调度器
+    SCHEDULER=$(cat $disk/queue/scheduler 2>/dev/null)
+    echo "调度器: $SCHEDULER"
+    
+    # 队列参数
+    echo "队列深度: $(cat $disk/queue/nr_requests 2>/dev/null)"
+    echo "预读大小: $(cat $disk/queue/read_ahead_kb 2>/dev/null) KB"
+    
+    # 建议
+    if [ "$ROTATIONAL" == "1" ]; then
+        if ! echo "$SCHEDULER" | grep -q "\[mq-deadline\]\|\[bfq\]"; then
+            echo "建议: HDD建议使用mq-deadline或bfq调度器"
+        fi
+    else
+        if ! echo "$SCHEDULER" | grep -q "\[none\]\|\[mq-deadline\]"; then
+            echo "建议: SSD建议使用none或mq-deadline调度器"
+        fi
+    fi
+    
+    echo ""
+done
+
+echo "--- 系统级IO参数 ---"
+echo "vm.dirty_ratio: $(sysctl -n vm.dirty_ratio)"
+echo "vm.dirty_background_ratio: $(sysctl -n vm.dirty_background_ratio)"
+echo "vm.dirty_expire_centisecs: $(sysctl -n vm.dirty_expire_centisecs)"
+echo ""
+
+echo "===== 检查完成 ====="
+```
+
+---
+
 ## 总结
 
 | 问题 | 快速诊断 | 解决方法 |
@@ -1149,11 +1338,21 @@ echo "===== 诊断完成 ====="
 | df/du不符 | `lsof +L1` | 重启进程释放文件 |
 | inode耗尽 | `df -i`, `find \| wc -l` | 清理小文件 |
 | IO高 | `iostat -x`, `iotop` | 优化IO/换SSD |
+| IO延迟高 | `iostat`(await) | 调整调度器/队列深度 |
 | 只读 | `dmesg`, `mount` | `fsck`修复 |
 | NFS挂载失败 | `showmount -e`, `rpcinfo` | 检查exports和防火墙 |
 | NFS Stale | `umount -f && mount` | 重新挂载 |
 | Ceph OSD Down | `ceph osd tree` | 检查并恢复OSD |
 | Ceph PG异常 | `ceph pg dump_stuck` | 等待恢复或手动修复 |
+
+**IO调度器速查**：
+| 设备类型 | 推荐调度器 | 适用场景 |
+|----------|------------|----------|
+| HDD | mq-deadline | 数据库、服务器 |
+| HDD | bfq | 桌面、混合负载 |
+| SSD | none/mq-deadline | 通用 |
+| NVMe | none/kyber | 高性能 |
+| 虚拟机 | none | 避免双重调度 |
 
 **排查三板斧**：
 1. **df/du** - 确认空间使用情况
@@ -1164,5 +1363,6 @@ echo "===== 诊断完成 ====="
 1. `df` 和 `du` 不一致首先查 `lsof +L1`
 2. inode问题找小文件最多的目录
 3. IO问题关注 `%util` 和 `await`
-4. NFS问题先查服务端exports和防火墙
-5. Ceph问题先看 `ceph -s` 和 `ceph health detail`
+4. SSD建议使用none调度器，HDD用mq-deadline
+5. NFS问题先查服务端exports和防火墙
+6. Ceph问题先看 `ceph -s` 和 `ceph health detail`

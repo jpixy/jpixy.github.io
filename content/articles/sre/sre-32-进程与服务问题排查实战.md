@@ -1,9 +1,9 @@
 +++
 title = "32.进程与服务问题排查实战"
 date = 2026-01-21
-description = "SRE进程与服务问题排查完整指南：服务启动失败、进程hang住、端口占用、依赖问题的定位与解决"
+description = "SRE进程与服务问题排查完整指南：服务启动失败、僵尸进程、D状态进程、进程信号处理的定位与解决"
 [taxonomies]
-tags = ["SRE", "进程", "服务", "排查", "实战", "systemd"]
+tags = ["SRE", "进程", "服务", "排查", "僵尸进程", "D状态", "信号处理", "systemd"]
 +++
 
 ## 概述
@@ -805,6 +805,582 @@ echo "===== 诊断完成 ====="
 
 ---
 
+# 六、僵尸进程深度排查
+
+## 6.1 僵尸进程原理
+
+```bash
+# 僵尸进程（Zombie Process）：
+# - 进程已终止，但父进程未调用wait()收尸
+# - 保留在进程表中，占用PID但不占用其他资源
+# - 状态显示为 Z（Zombie）
+
+# 进程生命周期：
+# 1. fork() 创建子进程
+# 2. 子进程执行任务
+# 3. 子进程exit()退出，变成僵尸
+# 4. 父进程wait()收尸，僵尸消失
+# 5. 如果父进程不调用wait()，僵尸持续存在
+
+# 检查僵尸进程
+ps aux | awk '$8=="Z" {print}'
+
+# 或者
+ps aux | grep defunct
+
+# 统计僵尸进程数
+ps aux | awk '$8=="Z"' | wc -l
+
+# 查看进程状态含义
+# R - Running/Runnable
+# S - Interruptible Sleep
+# D - Uninterruptible Sleep（重要！）
+# Z - Zombie
+# T - Stopped
+# t - Tracing stop
+```
+
+## 6.2 僵尸进程排查流程
+
+### 步骤一：找出僵尸进程
+
+```bash
+# 列出所有僵尸进程
+ps -eo pid,ppid,stat,cmd | awk '$3~/Z/ {print}'
+
+# 输出：
+# PID   PPID  STAT CMD
+# 12345 23456 Z    [myapp] <defunct>
+
+# 重点关注PPID（父进程ID）
+```
+
+### 步骤二：分析父进程
+
+```bash
+# 找出僵尸进程的父进程
+ZOMBIE_PID=12345
+PARENT_PID=$(ps -o ppid= -p $ZOMBIE_PID)
+echo "父进程: $PARENT_PID"
+
+# 查看父进程信息
+ps -p $PARENT_PID -o pid,ppid,stat,cmd
+
+# 查看父进程是否正常
+cat /proc/$PARENT_PID/status | grep -E "Name|State|Pid"
+```
+
+### 步骤三：解决方案
+
+```bash
+# 方案1：让父进程收尸（推荐）
+# 向父进程发送SIGCHLD信号，提醒它收尸
+kill -SIGCHLD $PARENT_PID
+
+# 方案2：杀死父进程（僵尸会被init接管并清理）
+kill $PARENT_PID
+# 如果父进程不响应
+kill -9 $PARENT_PID
+
+# 方案3：修复应用代码
+# 父进程应该：
+# - 调用wait()/waitpid()
+# - 或设置SIGCHLD处理器
+# - 或使用signal(SIGCHLD, SIG_IGN)忽略
+
+# 注意：无法直接杀死僵尸进程
+# kill -9 <zombie_pid> 无效
+# 因为僵尸进程已经死了，只是没被收尸
+```
+
+## 6.3 僵尸进程代码示例
+
+```bash
+# 问题代码示例（C语言）
+# 父进程不等待子进程
+cat << 'EOF'
+#include <unistd.h>
+int main() {
+    if (fork() == 0) {
+        // 子进程立即退出
+        _exit(0);
+    }
+    // 父进程不调用wait()，继续运行
+    while(1) sleep(1);
+}
+EOF
+
+# 正确代码示例
+cat << 'EOF'
+#include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
+
+// 方法1：在循环中wait
+int main() {
+    if (fork() == 0) {
+        _exit(0);
+    }
+    wait(NULL);  // 等待子进程
+    return 0;
+}
+
+// 方法2：SIGCHLD处理器
+void sigchld_handler(int sig) {
+    while (waitpid(-1, NULL, WNOHANG) > 0);
+}
+int main() {
+    signal(SIGCHLD, sigchld_handler);
+    // ...
+}
+
+// 方法3：忽略SIGCHLD（子进程不会变僵尸）
+int main() {
+    signal(SIGCHLD, SIG_IGN);
+    // ...
+}
+EOF
+```
+
+## 6.4 批量清理僵尸进程
+
+```bash
+#!/bin/bash
+# cleanup_zombies.sh - 清理僵尸进程
+
+echo "===== 僵尸进程清理 ====="
+
+# 统计僵尸进程
+ZOMBIE_COUNT=$(ps aux | awk '$8=="Z"' | wc -l)
+echo "发现僵尸进程: $ZOMBIE_COUNT 个"
+
+if [ $ZOMBIE_COUNT -eq 0 ]; then
+    echo "无需清理"
+    exit 0
+fi
+
+# 按父进程分组
+echo ""
+echo "按父进程分组："
+ps -eo ppid,stat | awk '$2~/Z/ {print $1}' | sort | uniq -c | sort -rn
+
+echo ""
+echo "尝试向父进程发送SIGCHLD..."
+
+# 向所有有僵尸子进程的父进程发送SIGCHLD
+for ppid in $(ps -eo ppid,stat | awk '$2~/Z/ {print $1}' | sort -u); do
+    if [ -d "/proc/$ppid" ]; then
+        echo "向父进程 $ppid 发送 SIGCHLD"
+        kill -SIGCHLD $ppid 2>/dev/null
+    fi
+done
+
+sleep 2
+
+# 再次检查
+NEW_COUNT=$(ps aux | awk '$8=="Z"' | wc -l)
+echo ""
+echo "清理后僵尸进程: $NEW_COUNT 个"
+
+if [ $NEW_COUNT -gt 0 ]; then
+    echo ""
+    echo "剩余僵尸进程需要手动处理（杀死父进程或修复应用）"
+    ps aux | awk '$8=="Z" {print}'
+fi
+```
+
+---
+
+# 七、D状态进程深度排查
+
+## 7.1 D状态原理
+
+```bash
+# D状态（Uninterruptible Sleep）：
+# - 进程在等待不可中断的IO操作
+# - 不响应任何信号，包括SIGKILL
+# - 通常是在等待磁盘IO
+
+# D状态进程的影响：
+# 1. 会增加Load Average
+# 2. 可能导致系统hang
+# 3. 无法杀死（kill -9 无效）
+
+# 检查D状态进程
+ps aux | awk '$8~/D/ {print}'
+
+# 或使用ps的状态过滤
+ps -eo pid,stat,wchan,cmd | grep "^[0-9]* D"
+
+# 统计D状态进程数
+ps aux | awk '$8~/D/' | wc -l
+```
+
+## 7.2 D状态进程排查
+
+### 步骤一：识别D状态进程
+
+```bash
+# 列出D状态进程
+ps aux | awk 'NR==1 || $8~/D/'
+
+# 显示进程等待的内核函数
+ps -eo pid,stat,wchan:32,cmd | awk '$2~/D/'
+
+# wchan列显示进程在等待什么
+# 常见wchan：
+# wait_on_page_bit - 等待页面IO
+# blkdev_issue_flush - 等待块设备刷新
+# nfs4_wait_bit_killable - NFS等待
+# io_schedule - 通用IO调度
+```
+
+### 步骤二：分析等待原因
+
+```bash
+# 查看进程内核栈
+cat /proc/<PID>/stack
+
+# 输出示例：
+# [<ffffffff812345>] wait_on_page_bit+0x12/0x34
+# [<ffffffff812346>] __lock_page+0x12/0x34
+# [<ffffffff812347>] generic_file_read_iter+0x12/0x34
+# ...
+
+# 解读：
+# 从底部到顶部是调用栈
+# 顶部的函数是当前等待点
+
+# 查看进程打开的文件
+lsof -p <PID>
+# 找到可能导致阻塞的文件
+
+# 查看进程的系统调用
+strace -p <PID>
+# D状态进程通常不会有输出（被阻塞在内核中）
+```
+
+### 步骤三：分析IO问题
+
+```bash
+# 检查磁盘IO状态
+iostat -xz 1 5
+# 关注 %util 和 await
+# util接近100%说明磁盘繁忙
+# await高说明IO延迟大
+
+# 查看块设备队列
+cat /sys/block/sda/queue/nr_requests
+cat /sys/block/sda/stat
+
+# 检查是否是NFS问题
+mount | grep nfs
+df -h | grep nfs
+# 如果是NFS挂载点，检查NFS服务器
+
+# 检查存储设备健康
+dmesg | grep -i -E "error|fail|timeout|reset" | tail -20
+smartctl -a /dev/sda
+```
+
+## 7.3 常见D状态场景
+
+### 场景一：磁盘故障
+
+```bash
+# 症状：大量D状态进程，IO完全卡住
+
+# 排查：
+# 1. 检查dmesg
+dmesg | tail -50
+# 看是否有IO错误、磁盘错误
+
+# 2. 检查磁盘健康
+smartctl -H /dev/sda
+smartctl -a /dev/sda | grep -E "Reallocated|Pending|Uncorrectable"
+
+# 3. 检查磁盘控制器
+lspci | grep -i storage
+dmesg | grep -i raid
+
+# 解决：
+# - 如果磁盘故障，需要更换磁盘
+# - 如果是RAID，可能需要重建
+```
+
+### 场景二：NFS挂载问题
+
+```bash
+# 症状：访问NFS挂载点的进程进入D状态
+
+# 排查：
+# 1. 检查NFS挂载
+mount | grep nfs
+df -h  # 可能也会hang
+
+# 2. 检查NFS服务器连通性
+ping <nfs_server>
+rpcinfo -p <nfs_server>
+
+# 3. 检查NFS统计
+nfsstat -c  # 客户端统计
+
+# 解决：
+# 方案1：修复NFS服务器
+# 方案2：卸载问题挂载点（可能需要强制）
+umount -f /mnt/nfs_mount
+umount -l /mnt/nfs_mount  # lazy unmount
+
+# 预防：使用soft挂载选项
+# mount -o soft,timeo=30 server:/share /mnt
+```
+
+### 场景三：内核Bug或驱动问题
+
+```bash
+# 症状：特定操作导致D状态
+
+# 排查：
+# 1. 检查内核版本
+uname -r
+
+# 2. 搜索已知bug
+# 搜索内核bug数据库
+
+# 3. 检查驱动
+lsmod
+dmesg | grep -i driver
+
+# 解决：
+# - 升级内核
+# - 更新驱动
+# - 应用补丁
+```
+
+## 7.4 D状态进程处理
+
+```bash
+# 重要：D状态进程无法被杀死！
+# kill -9 对D状态进程无效
+
+# 唯一解决方法：
+# 1. 修复导致阻塞的底层问题（磁盘、NFS等）
+# 2. 等待IO操作完成（可能需要很长时间）
+# 3. 重启系统（最后手段）
+
+# 监控D状态进程
+while true; do
+    COUNT=$(ps aux | awk '$8~/D/' | wc -l)
+    echo "$(date '+%H:%M:%S') D状态进程: $COUNT"
+    [ $COUNT -gt 0 ] && ps aux | awk '$8~/D/ {print $2, $11}' | head -5
+    sleep 10
+done
+```
+
+---
+
+# 八、进程信号处理问题
+
+## 8.1 信号基础
+
+```bash
+# 常用信号
+# SIGTERM (15) - 终止请求（可被捕获）
+# SIGKILL (9)  - 强制终止（不可被捕获）
+# SIGHUP (1)   - 挂起/重新加载配置
+# SIGINT (2)   - 中断（Ctrl+C）
+# SIGQUIT (3)  - 退出（生成core）
+# SIGUSR1 (10) - 用户定义1
+# SIGUSR2 (12) - 用户定义2
+# SIGCHLD (17) - 子进程状态变化
+# SIGSTOP (19) - 停止（不可被捕获）
+# SIGCONT (18) - 继续
+
+# 查看所有信号
+kill -l
+
+# 发送信号
+kill -SIGTERM <PID>
+kill -15 <PID>
+kill -TERM <PID>
+```
+
+## 8.2 进程无法被杀死
+
+### 场景一：进程忽略SIGTERM
+
+```bash
+# kill <PID> 无效，但 kill -9 有效
+
+# 原因：进程忽略了SIGTERM
+
+# 解决：
+kill -9 <PID>
+
+# 或者尝试其他信号
+kill -SIGQUIT <PID>  # 产生core dump
+kill -SIGABRT <PID>  # 中止
+```
+
+### 场景二：进程处于D状态
+
+```bash
+# kill -9 <PID> 也无效
+
+# 原因：D状态进程不响应任何信号
+# 参见上方"D状态进程"章节
+
+# 解决：修复底层IO问题或重启
+```
+
+### 场景三：进程是僵尸
+
+```bash
+# kill <PID> 提示成功但进程还在
+
+# 原因：僵尸进程已经死了
+# 参见上方"僵尸进程"章节
+
+# 解决：处理父进程
+```
+
+### 场景四：进程在等待锁
+
+```bash
+# 进程卡在某个操作上
+
+# 查看进程在等什么
+cat /proc/<PID>/wchan
+cat /proc/<PID>/stack
+
+# 使用gdb附加
+gdb -p <PID>
+(gdb) bt  # 查看调用栈
+(gdb) info threads  # 查看所有线程
+
+# 可能需要kill其他持有锁的进程
+```
+
+## 8.3 优雅停止进程
+
+```bash
+# 最佳实践：先SIGTERM，再SIGKILL
+
+# 优雅停止脚本
+graceful_stop() {
+    PID=$1
+    TIMEOUT=${2:-30}
+    
+    # 发送SIGTERM
+    echo "发送SIGTERM到进程 $PID"
+    kill -TERM $PID 2>/dev/null
+    
+    # 等待进程退出
+    for i in $(seq 1 $TIMEOUT); do
+        if ! kill -0 $PID 2>/dev/null; then
+            echo "进程 $PID 已优雅退出"
+            return 0
+        fi
+        sleep 1
+    done
+    
+    # 超时，强制杀死
+    echo "进程 $PID 未响应，发送SIGKILL"
+    kill -9 $PID 2>/dev/null
+    sleep 1
+    
+    if kill -0 $PID 2>/dev/null; then
+        echo "警告：进程 $PID 无法被杀死（可能是D状态）"
+        return 1
+    else
+        echo "进程 $PID 已强制终止"
+        return 0
+    fi
+}
+
+# 使用
+graceful_stop 12345 30
+```
+
+---
+
+# 九、进程资源限制问题
+
+## 9.1 常见资源限制
+
+```bash
+# 查看进程资源限制
+cat /proc/<PID>/limits
+
+# 或使用ulimit（当前shell）
+ulimit -a
+
+# 常见限制：
+# Max open files        - 最大文件描述符数
+# Max processes         - 最大进程数
+# Max locked memory     - 最大锁定内存
+# Max stack size        - 最大栈大小
+```
+
+## 9.2 文件描述符耗尽
+
+```bash
+# 症状：程序报错"Too many open files"
+
+# 检查进程打开的文件数
+ls /proc/<PID>/fd | wc -l
+
+# 检查限制
+cat /proc/<PID>/limits | grep "open files"
+
+# 解决方案：
+
+# 1. 临时提高限制
+prlimit --pid <PID> --nofile=65535:65535
+
+# 2. 修改systemd服务
+# /etc/systemd/system/myapp.service
+[Service]
+LimitNOFILE=65535
+
+# 3. 修改全局限制
+# /etc/security/limits.conf
+*         soft    nofile    65535
+*         hard    nofile    65535
+
+# 4. 检查是否有文件描述符泄漏
+lsof -p <PID> | head -50
+# 看是否有大量重复的连接或文件
+```
+
+## 9.3 内存限制问题
+
+```bash
+# 症状：进程被OOM杀死或无法分配内存
+
+# 检查cgroup内存限制
+cat /sys/fs/cgroup/memory/system.slice/myapp.service/memory.limit_in_bytes
+
+# 检查进程内存使用
+cat /proc/<PID>/status | grep -E "VmSize|VmRSS|VmSwap"
+
+# 解决方案：
+
+# 1. 调整cgroup限制
+echo 2147483648 > /sys/fs/cgroup/memory/.../memory.limit_in_bytes
+
+# 2. systemd服务配置
+[Service]
+MemoryMax=2G
+MemoryHigh=1.5G
+
+# 3. 检查OOM Score
+cat /proc/<PID>/oom_score
+cat /proc/<PID>/oom_score_adj
+```
+
+---
+
 ## 总结
 
 | 问题 | 快速命令 | 深入分析 |
@@ -812,9 +1388,27 @@ echo "===== 诊断完成 ====="
 | 服务启动失败 | `systemctl status`, `journalctl -u` | 检查日志、配置、权限 |
 | 进程hang | `ps aux`, `cat /proc/PID/stack` | `strace -p`, `gdb` |
 | 进程消失 | `dmesg`, `journalctl -k` | core dump分析 |
-| 僵尸进程 | `ps aux \| awk '$8=="Z"'` | 处理父进程 |
+| 僵尸进程 | `ps aux \| awk '$8=="Z"'` | `kill -SIGCHLD`父进程 |
+| D状态进程 | `ps aux \| awk '$8~/D/'` | 检查IO/NFS/磁盘 |
+| 无法杀死进程 | `cat /proc/PID/stack` | 判断D状态/僵尸/锁 |
 | 端口占用 | `ss -tlnp`, `lsof -i` | `fuser` |
 | 资源泄漏 | `lsof -p`, `ls /proc/PID/fd` | 持续监控 |
+| 文件描述符耗尽 | `ls /proc/PID/fd \| wc -l` | `prlimit`, `lsof` |
+
+**僵尸进程处理要点**：
+1. 僵尸进程已经死了，无法直接杀死
+2. 向父进程发送SIGCHLD或杀死父进程
+3. 根本解决：修复应用代码
+
+**D状态进程处理要点**：
+1. D状态进程无法被杀死（包括kill -9）
+2. 需要解决底层IO问题
+3. 常见原因：磁盘故障、NFS问题、内核bug
+
+**信号处理要点**：
+1. 先SIGTERM，等待超时再SIGKILL
+2. 检查进程为何不响应信号
+3. D状态和僵尸进程需要特殊处理
 
 **排查三板斧**：
 1. **systemctl status + journalctl** - 服务问题首选

@@ -595,6 +595,147 @@ sysctl -w net.ipv4.tcp_max_syn_backlog=65535
 
 ---
 
+## 4.4 自动化压测脚本
+
+```bash
+#!/bin/bash
+# auto_benchmark.sh - 自动化压测脚本
+
+set -e
+
+# 配置
+TARGET_URL="${1:-http://localhost:8080/api/health}"
+DURATION="${2:-30s}"
+OUTPUT_DIR="benchmark_$(date +%Y%m%d_%H%M%S)"
+
+# 并发梯度
+CONNECTIONS=(10 50 100 200 400 800)
+
+echo "===== 自动化压测 ====="
+echo "目标: $TARGET_URL"
+echo "持续时间: $DURATION"
+echo "输出目录: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+# 检查工具
+check_tools() {
+    for tool in wrk curl; do
+        if ! command -v $tool &> /dev/null; then
+            echo "错误: $tool 未安装"
+            exit 1
+        fi
+    done
+}
+
+# 预热
+warmup() {
+    echo "--- 预热测试 ---"
+    curl -s -o /dev/null -w "状态码: %{http_code}, 耗时: %{time_total}s\n" "$TARGET_URL"
+    wrk -t2 -c10 -d5s "$TARGET_URL" > /dev/null 2>&1
+    echo "预热完成"
+    echo ""
+}
+
+# 运行测试
+run_test() {
+    local conn=$1
+    echo "--- 并发: $conn ---"
+    
+    # 计算线程数（不超过CPU核数和连接数）
+    local threads=$(( conn < $(nproc) ? conn : $(nproc) ))
+    threads=$(( threads < 1 ? 1 : threads ))
+    
+    # 运行wrk
+    wrk -t$threads -c$conn -d$DURATION --latency "$TARGET_URL" | tee "$OUTPUT_DIR/wrk_c${conn}.txt"
+    
+    echo ""
+    sleep 5  # 冷却
+}
+
+# 生成报告
+generate_report() {
+    echo "--- 生成汇总报告 ---"
+    
+    REPORT="$OUTPUT_DIR/summary.txt"
+    echo "压测汇总报告" > "$REPORT"
+    echo "目标: $TARGET_URL" >> "$REPORT"
+    echo "时间: $(date)" >> "$REPORT"
+    echo "" >> "$REPORT"
+    echo "并发数 | QPS | 平均延迟 | P99延迟" >> "$REPORT"
+    echo "-------|-----|----------|--------" >> "$REPORT"
+    
+    for conn in "${CONNECTIONS[@]}"; do
+        if [ -f "$OUTPUT_DIR/wrk_c${conn}.txt" ]; then
+            QPS=$(grep "Requests/sec:" "$OUTPUT_DIR/wrk_c${conn}.txt" | awk '{print $2}')
+            AVG_LAT=$(grep "Latency" "$OUTPUT_DIR/wrk_c${conn}.txt" | head -1 | awk '{print $2}')
+            P99_LAT=$(grep "99%" "$OUTPUT_DIR/wrk_c${conn}.txt" | awk '{print $2}')
+            echo "$conn | $QPS | $AVG_LAT | $P99_LAT" >> "$REPORT"
+        fi
+    done
+    
+    cat "$REPORT"
+}
+
+# 主流程
+check_tools
+warmup
+
+for conn in "${CONNECTIONS[@]}"; do
+    run_test $conn
+done
+
+generate_report
+
+echo ""
+echo "===== 压测完成 ====="
+echo "详细结果: $OUTPUT_DIR/"
+```
+
+```bash
+#!/bin/bash
+# monitor_during_test.sh - 压测期间监控脚本
+
+# 在另一个终端运行此脚本监控系统状态
+
+INTERVAL=5
+LOG_FILE="system_monitor_$(date +%Y%m%d_%H%M%S).log"
+
+echo "开始监控，日志: $LOG_FILE"
+echo "按 Ctrl+C 停止"
+
+echo "时间,CPU%,MEM%,LOAD,CONN,DISK_IO" > "$LOG_FILE"
+
+while true; do
+    TIMESTAMP=$(date '+%H:%M:%S')
+    
+    # CPU使用率
+    CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print 100-$8}')
+    
+    # 内存使用率
+    MEM=$(free | grep Mem | awk '{print $3/$2 * 100}')
+    
+    # 负载
+    LOAD=$(uptime | awk -F'load average:' '{print $2}' | awk -F, '{print $1}' | tr -d ' ')
+    
+    # 连接数
+    CONN=$(ss -ant | grep ESTAB | wc -l)
+    
+    # 磁盘IO
+    DISK_IO=$(iostat -d 1 2 | tail -n +4 | head -1 | awk '{print $2}')
+    
+    echo "$TIMESTAMP,$CPU,$MEM,$LOAD,$CONN,$DISK_IO" >> "$LOG_FILE"
+    
+    # 实时显示
+    printf "\r%s CPU:%.1f%% MEM:%.1f%% LOAD:%s CONN:%d" "$TIMESTAMP" "$CPU" "$MEM" "$LOAD" "$CONN"
+    
+    sleep $INTERVAL
+done
+```
+
+---
+
 ## 总结
 
 | 工具 | 适用场景 | 优势 |

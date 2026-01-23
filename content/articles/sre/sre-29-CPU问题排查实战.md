@@ -1,9 +1,9 @@
 +++
 title = "29.CPU问题排查实战"
 date = 2026-01-21
-description = "SRE CPU问题排查完整指南：CPU使用率高、负载高、进程卡住的定位与解决"
+description = "SRE CPU问题排查完整指南：CPU使用率高、软中断/硬中断、上下文切换、NUMA问题、Steal时间的定位与解决"
 [taxonomies]
-tags = ["SRE", "CPU", "排查", "实战", "性能", "Linux"]
+tags = ["SRE", "CPU", "排查", "实战", "软中断", "NUMA", "上下文切换", "Linux"]
 +++
 
 ## 概述
@@ -623,6 +623,450 @@ done
 
 ---
 
+# 七、软中断与硬中断问题
+
+## 7.1 中断基础概念
+
+```bash
+# 硬中断(hi)：硬件触发，由CPU立即处理
+# 软中断(si)：内核触发，延迟处理（如网络包处理）
+
+# 查看中断分布
+cat /proc/interrupts
+
+# 输出示例：
+#            CPU0       CPU1       CPU2       CPU3
+#   0:         45          0          0          0  IR-IO-APIC   2-edge   timer
+#   8:          1          0          0          0  IR-IO-APIC   8-edge   rtc0
+# LOC:    1234567    2345678    3456789    4567890  Local timer interrupts
+# NET_RX:   12345      23456      34567      45678  Network RX
+# NET_TX:    1234       2345       3456       4567  Network TX
+
+# 查看软中断统计
+cat /proc/softirqs
+
+# 输出示例：
+#                     CPU0       CPU1       CPU2       CPU3
+#           HI:          0          0          0          0
+#        TIMER:    1234567    2345678    3456789    4567890
+#       NET_TX:      12345      23456      34567      45678
+#       NET_RX:     123456     234567     345678     456789
+#        BLOCK:      12345      23456      34567      45678
+#     TASKLET:       1234       2345       3456       4567
+#        SCHED:     123456     234567     345678     456789
+#      RCU:         12345      23456      34567      45678
+```
+
+## 7.2 软中断CPU占用高排查
+
+### 场景：si（软中断）占用高
+
+```bash
+# 1. 确认软中断CPU占用
+mpstat -P ALL 1 5
+# 关注 %soft 列（或 %si）
+
+# 2. 查看是哪种软中断
+watch -d cat /proc/softirqs
+# 观察哪种类型增长最快
+
+# 常见软中断类型：
+# NET_RX - 网络接收（最常见）
+# NET_TX - 网络发送
+# BLOCK  - 块设备
+# TIMER  - 定时器
+# SCHED  - 调度
+# RCU    - Read-Copy-Update
+
+# 3. 网络软中断排查（最常见场景）
+# 查看网卡中断分布
+cat /proc/interrupts | grep eth0
+
+# 查看软中断处理是否均衡
+cat /proc/softirqs | grep NET
+```
+
+### 网络软中断优化
+
+```bash
+# 问题：NET_RX软中断集中在单个CPU
+
+# 原因1：网卡只有单队列
+# 检查网卡队列数
+ethtool -l eth0
+# 如果combined为1，网卡只有单队列
+
+# 解决：增加队列数（如果网卡支持）
+ethtool -L eth0 combined 4
+
+# 原因2：RSS（接收端缩放）未启用或配置不当
+# 查看RSS配置
+ethtool -x eth0
+
+# 原因3：中断亲和性设置不当
+# 查看中断亲和性
+cat /proc/irq/<IRQ_NUM>/smp_affinity
+
+# 使用irqbalance自动均衡
+systemctl status irqbalance
+systemctl start irqbalance
+
+# 原因4：RPS/RFS未启用（软件层面分散负载）
+# 启用RPS
+echo "f" > /sys/class/net/eth0/queues/rx-0/rps_cpus
+# "f" = 1111二进制 = 使用CPU 0-3
+
+# 启用RFS
+echo 32768 > /proc/sys/net/core/rps_sock_flow_entries
+echo 4096 > /sys/class/net/eth0/queues/rx-0/rps_flow_cnt
+```
+
+### 软中断监控脚本
+
+```bash
+#!/bin/bash
+# softirq_monitor.sh - 软中断监控
+
+echo "时间 NET_RX NET_TX TIMER SCHED"
+while true; do
+    TIMESTAMP=$(date '+%H:%M:%S')
+    NET_RX=$(awk '/NET_RX/{sum=0; for(i=2;i<=NF;i++) sum+=$i; print sum}' /proc/softirqs)
+    NET_TX=$(awk '/NET_TX/{sum=0; for(i=2;i<=NF;i++) sum+=$i; print sum}' /proc/softirqs)
+    TIMER=$(awk '/TIMER/{sum=0; for(i=2;i<=NF;i++) sum+=$i; print sum}' /proc/softirqs)
+    SCHED=$(awk '/SCHED/{sum=0; for(i=2;i<=NF;i++) sum+=$i; print sum}' /proc/softirqs)
+    echo "$TIMESTAMP $NET_RX $NET_TX $TIMER $SCHED"
+    sleep 1
+done
+```
+
+## 7.3 硬中断问题
+
+```bash
+# 硬中断(hi)高通常是硬件问题
+
+# 检查硬中断分布
+cat /proc/interrupts
+
+# 常见问题：
+# 1. 某个设备产生大量中断
+# 2. 中断风暴（某设备故障）
+
+# 找出中断最多的设备
+cat /proc/interrupts | awk 'NR>1 {
+    sum=0; for(i=2; i<=NF-3; i++) sum+=$i;
+    if(sum>0) print sum, $NF
+}' | sort -rn | head -10
+
+# 如果某设备中断异常高，检查：
+# 1. 硬件是否故障
+# 2. 驱动是否有问题
+# 3. 是否需要开启中断合并（interrupt coalescing）
+
+# 网卡中断合并
+ethtool -C eth0 rx-usecs 100 rx-frames 25
+# rx-usecs: 延迟微秒数
+# rx-frames: 合并的包数
+```
+
+---
+
+# 八、上下文切换深度分析
+
+## 8.1 上下文切换类型
+
+```bash
+# 自愿切换（voluntary）：进程主动让出CPU
+#   - 等待IO
+#   - 等待锁
+#   - sleep
+
+# 非自愿切换（nonvoluntary）：被调度器强制切换
+#   - 时间片用完
+#   - 被更高优先级进程抢占
+
+# 查看系统上下文切换
+vmstat 1 5
+# cs列是每秒上下文切换次数
+
+# 查看进程级别上下文切换
+pidstat -w 1 5
+# cswch/s  - 自愿切换
+# nvcswch/s - 非自愿切换
+
+# 查看特定进程
+pidstat -w -p <PID> 1
+```
+
+## 8.2 上下文切换过高排查
+
+### 判断标准
+
+```bash
+# 上下文切换次数没有绝对标准，需要结合场景
+
+# 参考值（仅供参考）：
+# - 单核几千到几万次/秒通常正常
+# - 超过10万次/秒可能有问题
+# - 关键是观察变化趋势
+
+# 查看历史数据
+sar -w 1 10
+# proc/s   - 每秒创建的进程数
+# cswch/s  - 每秒上下文切换数
+```
+
+### 场景一：非自愿切换高
+
+```bash
+# 原因：进程竞争CPU激烈
+
+# 排查步骤：
+# 1. 确认是哪些进程
+pidstat -w 1 5 | sort -k5 -rn | head -20
+# nvcswch/s高的进程
+
+# 2. 检查CPU是否饱和
+mpstat -P ALL 1 5
+# 如果idle接近0，说明CPU不够用
+
+# 3. 检查是否有CPU密集型进程
+ps aux --sort=-%cpu | head -10
+
+# 解决方案：
+# 1. 减少并发进程/线程数
+# 2. 增加CPU资源
+# 3. 优化应用，减少CPU使用
+```
+
+### 场景二：自愿切换高
+
+```bash
+# 原因：进程频繁等待资源
+
+# 常见原因：
+# 1. IO等待
+# 2. 锁竞争
+# 3. 频繁sleep
+
+# 排查步骤：
+# 1. 检查IO等待
+iostat -x 1 5
+# await高说明IO慢
+
+# 2. 使用perf分析等待原因
+perf record -g -p <PID> sleep 10
+perf report
+
+# 3. 使用strace查看系统调用
+strace -c -p <PID>
+# 看哪些系统调用占用时间多
+```
+
+### 场景三：进程创建频繁
+
+```bash
+# 现象：vmstat中proc/s很高
+
+# 原因：频繁fork/exec
+
+# 排查：
+# 1. 找出创建进程的父进程
+ps -ef | awk '{print $3}' | sort | uniq -c | sort -rn | head -10
+# 找出PPID最多的
+
+# 2. 使用perf追踪
+perf record -e sched:sched_process_fork -a sleep 10
+perf script
+
+# 解决方案：
+# 1. 使用进程池/线程池
+# 2. 使用长连接替代短连接
+# 3. 优化脚本，减少外部命令调用
+```
+
+## 8.3 上下文切换延迟分析
+
+```bash
+# 使用perf分析调度延迟
+perf sched record sleep 10
+perf sched latency
+
+# 输出示例：
+# Task                  |   Runtime ms  | Switches | Avg delay ms |
+# -------------------------------------------------------------------
+# java:12345           |    5234.567   |   12345  |    0.123     |
+# nginx:23456          |    1234.567   |    2345  |    0.456     |
+
+# Avg delay 高说明进程等待CPU时间长
+
+# 查看调度统计
+perf sched timehist
+```
+
+---
+
+# 九、NUMA与CPU亲和性问题
+
+## 9.1 NUMA基础
+
+```bash
+# NUMA（Non-Uniform Memory Access）
+# 多路服务器上，CPU访问本地内存快，远程内存慢
+
+# 检查是否是NUMA架构
+numactl --hardware
+
+# 输出示例：
+# available: 2 nodes (0-1)
+# node 0 cpus: 0 1 2 3 4 5 6 7
+# node 0 size: 65536 MB
+# node 0 free: 32768 MB
+# node 1 cpus: 8 9 10 11 12 13 14 15
+# node 1 size: 65536 MB
+# node 1 free: 32768 MB
+# node distances:
+# node   0   1
+#   0:  10  21
+#   1:  21  10
+# 距离21 > 10，说明跨节点访问更慢
+
+# 查看NUMA统计
+numastat
+
+# 关键指标：
+# numa_miss  - 本地分配失败次数
+# numa_foreign - 远程分配次数
+# 如果这两个值很高，说明有NUMA问题
+```
+
+## 9.2 NUMA问题排查
+
+### 场景：CPU使用不均衡
+
+```bash
+# 现象：某些CPU核心很忙，其他很闲
+
+# 检查每核CPU使用率
+mpstat -P ALL 1 5
+
+# 检查进程分布在哪些CPU
+ps -eo pid,comm,psr | grep <process_name>
+# psr列是进程运行的CPU号
+
+# 检查NUMA内存分配
+numastat -p <PID>
+```
+
+### 场景：内存访问延迟高
+
+```bash
+# 原因：进程频繁访问远程NUMA节点内存
+
+# 使用perf检测
+perf stat -e node-loads,node-load-misses,node-stores,node-store-misses -p <PID> sleep 10
+
+# 如果miss比例高，说明跨NUMA访问多
+
+# 使用numactl绑定进程到特定节点
+numactl --cpunodebind=0 --membind=0 ./myapp
+# --cpunodebind=0: 只使用node 0的CPU
+# --membind=0: 只使用node 0的内存
+```
+
+## 9.3 CPU亲和性优化
+
+```bash
+# 查看进程CPU亲和性
+taskset -p <PID>
+# 输出是十六进制掩码
+
+# 设置CPU亲和性
+taskset -pc 0,1,2,3 <PID>  # 使用CPU 0-3
+taskset -c 0-3 ./myapp     # 启动时绑定
+
+# 系统服务设置亲和性
+# /etc/systemd/system/myapp.service
+[Service]
+CPUAffinity=0 1 2 3
+
+# 隔离CPU（用于实时任务）
+# 启动参数：isolcpus=2,3
+# 被隔离的CPU不参与普通调度
+# 需要用taskset手动绑定进程
+
+# 检查CPU隔离
+cat /sys/devices/system/cpu/isolated
+```
+
+---
+
+# 十、Steal时间与虚拟化问题
+
+## 10.1 Steal时间解释
+
+```bash
+# Steal时间：虚拟机被宿主机偷走的CPU时间
+# 只在虚拟化环境（AWS、GCP、VMware等）有意义
+
+# 查看steal时间
+top
+# 看 st% 或 %steal
+
+mpstat 1 5
+# %steal 列
+
+# steal > 5% 需要关注
+# steal > 10% 有严重问题
+```
+
+## 10.2 Steal高排查
+
+```bash
+# 原因：
+# 1. 宿主机CPU过载（超卖严重）
+# 2. 其他虚拟机抢占资源
+# 3. CPU限制（云厂商限流）
+
+# 排查步骤：
+
+# 1. 确认是持续性还是偶发
+mpstat 1 60 | tee cpu_monitor.log
+# 观察%steal变化
+
+# 2. 检查是否有CPU限制（云环境）
+# AWS: 检查CPU Credit（T系列实例）
+# 阿里云: 检查CPU积分/限制
+
+# 3. 联系云厂商或虚拟化管理员
+# 可能需要迁移到负载较低的宿主机
+
+# 4. 应对措施
+# - 升级到更大规格实例
+# - 使用独占型实例（Dedicated）
+# - 分散负载到多个实例
+```
+
+## 10.3 虚拟化环境CPU优化
+
+```bash
+# 1. 选择合适的实例类型
+# - 计算密集: C系列实例
+# - 通用型: M系列实例
+# - 避免突发型(T系列)用于生产
+
+# 2. CPU亲和性设置（在虚拟机内部）
+# 虚拟机内的CPU亲和性优化效果有限
+
+# 3. 监控关键指标
+# - %steal: CPU被偷走的时间
+# - CPU Credit Balance (云厂商仪表盘)
+
+# 4. 设置告警
+# steal > 5% 告警
+```
+
+---
+
 ## 总结
 
 | 问题 | 快速定位命令 | 深入分析工具 |
@@ -631,7 +1075,26 @@ done
 | Load高 | `uptime`, `vmstat` | `iostat`, `iotop` |
 | 系统态高 | `mpstat`, `vmstat` | `perf`, `strace -c` |
 | 上下文切换多 | `vmstat`, `pidstat -w` | `perf sched` |
+| 软中断高 | `mpstat` (%soft), `/proc/softirqs` | `ethtool`, RPS/RFS |
+| 硬中断高 | `/proc/interrupts` | 检查硬件/驱动 |
+| NUMA问题 | `numastat`, `numactl --hardware` | `perf stat`, `numactl` |
+| Steal高 | `mpstat` (%steal) | 联系云厂商 |
 | 进程卡住 | `ps aux`, `/proc/<PID>/stack` | `strace`, `gdb` |
+
+**软中断优化要点**：
+1. 启用网卡多队列（RSS）
+2. 使用irqbalance均衡中断
+3. 必要时启用RPS/RFS软件分散
+
+**上下文切换优化要点**：
+1. 非自愿切换高 → 减少CPU竞争
+2. 自愿切换高 → 减少IO/锁等待
+3. 进程创建频繁 → 使用进程池
+
+**NUMA优化要点**：
+1. 绑定进程到特定NUMA节点
+2. 使用numactl控制内存分配
+3. 监控numa_miss指标
 
 **排查三板斧**：
 1. **top/htop** - 快速定位问题进程

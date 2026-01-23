@@ -1002,6 +1002,120 @@ dd if=/dev/zero of=/tmp/bigfile bs=1M count=10000
 
 ---
 
+## 4.3 高可用健康检查脚本
+
+```bash
+#!/bin/bash
+# ha_health_check.sh - 高可用环境健康检查
+
+echo "===== 高可用健康检查 ====="
+echo "时间: $(date)"
+echo ""
+
+# MySQL主从检查
+check_mysql_replication() {
+    echo "--- MySQL主从状态 ---"
+    
+    # 检查主库
+    MASTER_STATUS=$(mysql -h $MYSQL_MASTER -u $MYSQL_USER -p$MYSQL_PASS -e "SHOW MASTER STATUS\G" 2>/dev/null)
+    if [ $? -eq 0 ]; then
+        echo "主库状态: 正常"
+        echo "$MASTER_STATUS" | grep -E "File|Position"
+    else
+        echo "主库状态: 异常!"
+    fi
+    
+    # 检查从库
+    SLAVE_STATUS=$(mysql -h $MYSQL_SLAVE -u $MYSQL_USER -p$MYSQL_PASS -e "SHOW SLAVE STATUS\G" 2>/dev/null)
+    if [ $? -eq 0 ]; then
+        IO_RUNNING=$(echo "$SLAVE_STATUS" | grep "Slave_IO_Running:" | awk '{print $2}')
+        SQL_RUNNING=$(echo "$SLAVE_STATUS" | grep "Slave_SQL_Running:" | awk '{print $2}')
+        BEHIND=$(echo "$SLAVE_STATUS" | grep "Seconds_Behind_Master:" | awk '{print $2}')
+        
+        if [ "$IO_RUNNING" = "Yes" ] && [ "$SQL_RUNNING" = "Yes" ]; then
+            echo "从库状态: 正常 (延迟: ${BEHIND}s)"
+        else
+            echo "从库状态: 异常! IO=$IO_RUNNING SQL=$SQL_RUNNING"
+        fi
+    else
+        echo "从库状态: 连接失败!"
+    fi
+    echo ""
+}
+
+# Redis主从检查
+check_redis_replication() {
+    echo "--- Redis主从状态 ---"
+    
+    REDIS_INFO=$(redis-cli -h $REDIS_HOST -p $REDIS_PORT INFO replication 2>/dev/null)
+    if [ $? -eq 0 ]; then
+        ROLE=$(echo "$REDIS_INFO" | grep "role:" | cut -d: -f2 | tr -d '\r')
+        echo "当前角色: $ROLE"
+        
+        if [ "$ROLE" = "master" ]; then
+            SLAVES=$(echo "$REDIS_INFO" | grep "connected_slaves:" | cut -d: -f2 | tr -d '\r')
+            echo "连接的从节点: $SLAVES"
+        elif [ "$ROLE" = "slave" ]; then
+            LINK=$(echo "$REDIS_INFO" | grep "master_link_status:" | cut -d: -f2 | tr -d '\r')
+            LAG=$(echo "$REDIS_INFO" | grep "master_repl_offset:" | cut -d: -f2 | tr -d '\r')
+            echo "主库连接: $LINK"
+        fi
+    else
+        echo "Redis连接失败!"
+    fi
+    echo ""
+}
+
+# 负载均衡后端检查
+check_lb_backends() {
+    echo "--- 负载均衡后端状态 ---"
+    
+    # Nginx upstream检查（需要stub_status）
+    if command -v nginx &> /dev/null; then
+        nginx -T 2>/dev/null | grep -A5 "upstream" | head -20
+    fi
+    
+    # HAProxy检查
+    if [ -S /var/run/haproxy/admin.sock ]; then
+        echo "show stat" | socat stdio /var/run/haproxy/admin.sock 2>/dev/null | \
+            awk -F, '{if(NR>1 && $18!="") print $1,$2,$18}' | column -t
+    fi
+    echo ""
+}
+
+# Kubernetes节点检查
+check_k8s_nodes() {
+    echo "--- Kubernetes节点状态 ---"
+    
+    if command -v kubectl &> /dev/null; then
+        kubectl get nodes -o wide 2>/dev/null
+        echo ""
+        
+        # 检查不健康的Pod
+        NOT_READY=$(kubectl get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded 2>/dev/null | wc -l)
+        if [ "$NOT_READY" -gt 1 ]; then
+            echo "异常Pod数量: $((NOT_READY-1))"
+            kubectl get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded 2>/dev/null | head -10
+        else
+            echo "所有Pod状态正常"
+        fi
+    else
+        echo "kubectl未安装"
+    fi
+    echo ""
+}
+
+# 运行检查（根据环境取消注释）
+# check_mysql_replication
+# check_redis_replication
+check_lb_backends
+check_k8s_nodes
+
+echo "===== 检查完成 ====="
+```
+
+---
+
 ## 总结
 
 | 场景 | 检查命令 | 关键指标 |

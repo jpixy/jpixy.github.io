@@ -1,9 +1,9 @@
 +++
 title = "28.网络问题排查实战"
 date = 2026-01-21
-description = "SRE网络问题排查完整指南：连接失败、延迟高、丢包、带宽问题的定位与解决"
+description = "SRE网络问题排查完整指南：连接失败、延迟高、丢包、MTU、TCP连接状态、Idle连接问题的定位与解决"
 [taxonomies]
-tags = ["SRE", "网络", "排查", "实战", "TCP", "DNS"]
+tags = ["SRE", "网络", "排查", "MTU", "TCP", "Idle连接", "CLOSE_WAIT", "TIME_WAIT", "VPN"]
 +++
 
 ## 概述
@@ -373,6 +373,132 @@ ss -ti dst target_host
 # rtt:1.234/0.567  # 当前RTT / RTT方差
 # rto:234          # 重传超时
 # cwnd:10          # 拥塞窗口
+```
+
+---
+
+## 3.4 MTU问题排查
+
+### MTU基础
+
+```bash
+# MTU (Maximum Transmission Unit)：最大传输单元
+# 以太网默认MTU: 1500 bytes
+# PPPoE: 1492 bytes
+# VPN/隧道: 通常更小 (1400-1460)
+
+# 查看当前MTU
+ip link show eth0 | grep mtu
+
+# 查看所有接口MTU
+ip link show | grep mtu
+
+# 查看路由表中的MTU
+ip route show | grep mtu
+```
+
+### MTU问题症状
+
+```bash
+# 典型症状：
+# 1. ping小包正常，大包失败
+# 2. SSH能连接，但传输卡住
+# 3. 网页加载一半卡住
+# 4. 小文件下载正常，大文件失败
+
+# MTU探测
+# 使用ping测试（-M do表示不分片）
+ping -c 3 -M do -s 1472 target_host  # 1472 + 28(IP+ICMP头) = 1500
+
+# 如果失败，逐步减小
+ping -c 3 -M do -s 1400 target_host
+ping -c 3 -M do -s 1300 target_host
+
+# 二分法找最大MTU
+for size in 1472 1400 1300 1200; do
+    ping -c 1 -M do -s $size target_host > /dev/null 2>&1 && echo "$size: OK" || echo "$size: FAIL"
+done
+```
+
+### MTU路径发现
+
+```bash
+# 使用tracepath（推荐）
+tracepath target_host
+# 输出最后一行会显示PMTU
+
+# 输出示例：
+# ...
+# Resume: pmtu 1500 hops 10 back 10
+# 如果pmtu < 1500，说明路径中有瓶颈
+
+# 使用traceroute --mtu
+sudo traceroute --mtu target_host
+
+# 检查PMTU缓存
+ip route get target_host
+# 如果有mtu字段，说明之前发现过MTU问题
+```
+
+### MTU问题解决
+
+```bash
+# 临时调整本机MTU
+sudo ip link set eth0 mtu 1400
+
+# 永久调整（NetworkManager）
+nmcli connection modify "connection-name" 802-3-ethernet.mtu 1400
+nmcli connection up "connection-name"
+
+# 永久调整（netplan - Ubuntu）
+# /etc/netplan/01-config.yaml
+network:
+  ethernets:
+    eth0:
+      mtu: 1400
+
+sudo netplan apply
+
+# TCP MSS钳制（防火墙层面）
+# 在路由器/防火墙上设置，自动调整TCP MSS
+iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+# 或指定MSS值（MSS = MTU - 40）
+iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+```
+
+### 常见MTU场景
+
+```bash
+# 场景1：VPN隧道MTU问题
+# VPN封装会增加开销（20-60 bytes）
+# 解决：降低VPN隧道内的MTU
+
+# WireGuard
+wg set wg0 mtu 1420
+
+# OpenVPN (server.conf)
+# tun-mtu 1400
+# mssfix 1360
+
+# 场景2：Docker/容器网络MTU
+# 检查Docker网络MTU
+docker network inspect bridge | grep MTU
+
+# 创建网络时指定MTU
+docker network create --opt com.docker.network.driver.mtu=1400 mynet
+
+# 修改默认bridge MTU
+# /etc/docker/daemon.json
+{
+  "mtu": 1400
+}
+sudo systemctl restart docker
+
+# 场景3：云环境MTU
+# AWS VPC: 9001 (Jumbo frames) 或 1500
+# GCP: 1460 (VPN) 或 1500
+# 阿里云: 通常1500，VPN可能更小
 ```
 
 ---
@@ -1287,12 +1413,485 @@ echo "===== 诊断完成 ====="
 
 ---
 
+# 十一、TCP连接状态与Idle问题
+
+## 11.1 TCP连接状态详解
+
+### TCP状态机
+
+```
+                              +---------+
+                              |  CLOSED |
+                              +---------+
+                                   |
+                   ----------------+----------------
+                   |                               |
+              被动打开                         主动打开
+              (服务端)                         (客户端)
+                   |                               |
+                   v                               v
+              +---------+                     +---------+
+              |  LISTEN |                     | SYN_SENT|
+              +---------+                     +---------+
+                   |                               |
+              收到SYN                          收到SYN+ACK
+              发送SYN+ACK                      发送ACK
+                   |                               |
+                   v                               v
+              +---------+                     +---------+
+              |SYN_RCVD |                     |ESTABLISHED
+              +---------+                     +---------+
+                   |                               |
+              收到ACK                          数据传输...
+                   |                               |
+                   v                               v
+              +---------+                     关闭连接
+              |ESTABLISHED                    (见下方)
+              +---------+
+```
+
+### 查看连接状态
+
+```bash
+# ss命令（推荐，比netstat快）
+ss -ant    # 所有TCP连接，数字显示
+ss -ant | head -20
+
+# 统计各状态连接数
+ss -ant | awk '{print $1}' | sort | uniq -c | sort -rn
+
+# 输出示例：
+#   15234 ESTAB
+#    3456 TIME-WAIT
+#     234 CLOSE-WAIT
+#      56 FIN-WAIT-2
+#      23 SYN-RECV
+#       1 LISTEN
+
+# 按远程IP统计连接
+ss -ant | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn | head -20
+
+# 按本地端口统计
+ss -ant | awk '{print $4}' | grep -oE ':[0-9]+$' | sort | uniq -c | sort -rn | head -20
+
+# netstat命令（兼容性好）
+netstat -ant | head -20
+netstat -ant | awk '{print $6}' | sort | uniq -c | sort -rn
+```
+
+### 各状态含义与问题
+
+```bash
+# ========== ESTABLISHED ==========
+# 正常建立的连接，数据可以双向传输
+
+# 检查ESTABLISHED连接
+ss -ant state established
+
+# 问题：ESTABLISHED过多
+# 原因：连接未正常关闭、连接池配置过大
+# 排查：
+ss -antp state established | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn
+
+# ========== TIME_WAIT ==========
+# 主动关闭方进入，持续2MSL（通常60秒）
+# 目的：确保最后ACK到达，防止旧数据包干扰新连接
+
+# 检查TIME_WAIT数量
+ss -ant state time-wait | wc -l
+
+# 问题：TIME_WAIT过多
+# 影响：占用本地端口，可能导致端口耗尽
+# 解决：
+sysctl -w net.ipv4.tcp_tw_reuse=1  # 允许复用TIME_WAIT端口
+sysctl -w net.ipv4.tcp_fin_timeout=30  # 缩短FIN等待
+sysctl -w net.ipv4.ip_local_port_range="1024 65535"  # 扩大端口范围
+
+# ========== CLOSE_WAIT ==========
+# 被动关闭方收到FIN后进入，等待应用调用close()
+# 这是应用层的问题！
+
+# 检查CLOSE_WAIT
+ss -antp state close-wait
+
+# 问题：CLOSE_WAIT堆积（严重！）
+# 原因：应用收到对端关闭后未调用close()
+# 影响：连接泄漏，资源耗尽
+# 排查：
+# 1. 找出问题进程
+ss -antp state close-wait | awk '{print $6}' | sort | uniq -c | sort -rn
+# 2. 检查应用代码是否正确关闭连接
+# 3. 检查连接池配置
+
+# ========== FIN_WAIT_1 / FIN_WAIT_2 ==========
+# 主动关闭方发送FIN后的状态
+
+# FIN_WAIT_1: 发送FIN，等待ACK
+# FIN_WAIT_2: 收到ACK，等待对端FIN
+
+# 问题：FIN_WAIT_2堆积
+# 原因：对端未发送FIN（应用未关闭）
+# 解决：
+sysctl -w net.ipv4.tcp_fin_timeout=30  # 缩短超时
+
+# ========== SYN_RECV ==========
+# 服务端收到SYN，发送SYN+ACK，等待ACK
+
+# 检查SYN_RECV
+ss -ant state syn-recv | wc -l
+
+# 问题：SYN_RECV过多
+# 可能原因：SYN Flood攻击
+# 排查：
+ss -ant state syn-recv | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn | head -20
+
+# 解决：启用SYN Cookie
+sysctl -w net.ipv4.tcp_syncookies=1
+
+# ========== LAST_ACK ==========
+# 被动关闭方发送FIN后，等待ACK
+
+# 问题：LAST_ACK堆积
+# 原因：对端未响应ACK（网络问题或对端异常）
+ss -ant state last-ack
+```
+
+## 11.2 Idle连接问题
+
+### 什么是Idle连接
+
+```bash
+# Idle连接：建立后长时间无数据传输的连接
+# 问题：
+# 1. 占用服务器资源（文件描述符、内存）
+# 2. 中间设备（防火墙、NAT）可能静默断开
+# 3. 应用无法感知连接已失效
+
+# 检查连接的空闲时间
+ss -antp | grep ESTAB
+
+# 输出的timer列显示keepalive状态
+# 例如：timer:(keepalive,45sec,0)
+# 表示keepalive定时器还有45秒触发
+```
+
+### TCP Keepalive机制
+
+```bash
+# TCP Keepalive：检测空闲连接是否存活
+
+# 查看当前设置
+sysctl net.ipv4.tcp_keepalive_time   # 空闲多久开始发探测（默认7200秒=2小时）
+sysctl net.ipv4.tcp_keepalive_intvl  # 探测间隔（默认75秒）
+sysctl net.ipv4.tcp_keepalive_probes # 探测次数（默认9次）
+
+# 总超时 = keepalive_time + keepalive_intvl * keepalive_probes
+# 默认 = 7200 + 75 * 9 = 7875秒 ≈ 2小时11分
+
+# 优化设置（检测更快）
+sysctl -w net.ipv4.tcp_keepalive_time=600   # 10分钟后开始探测
+sysctl -w net.ipv4.tcp_keepalive_intvl=60   # 60秒一次
+sysctl -w net.ipv4.tcp_keepalive_probes=3   # 3次失败断开
+
+# 永久配置
+cat >> /etc/sysctl.conf << 'EOF'
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_intvl = 60
+net.ipv4.tcp_keepalive_probes = 3
+EOF
+sysctl -p
+
+# 注意：Keepalive需要应用在socket上开启SO_KEEPALIVE选项
+# 系统参数只是默认值
+```
+
+### 应用层Keepalive vs TCP Keepalive
+
+```bash
+# TCP Keepalive
+# - 在TCP层实现
+# - 只检测连接存活，不检测应用健康
+# - 需要socket开启SO_KEEPALIVE
+
+# 应用层Keepalive（心跳）
+# - 在应用层实现
+# - 可以检测应用逻辑是否正常
+# - 例如：HTTP/2 PING帧, WebSocket ping/pong, 自定义心跳包
+
+# 推荐：同时使用两者
+# - TCP Keepalive作为底线保护
+# - 应用层心跳作为主要检测
+```
+
+## 11.3 连接泄漏排查
+
+### 场景一：连接数持续增长
+
+```bash
+# 监控连接数变化
+while true; do
+    echo "$(date '+%H:%M:%S') $(ss -ant | wc -l) total, $(ss -ant state established | wc -l) estab"
+    sleep 60
+done | tee conn_monitor.log
+
+# 如果连接数持续增长不下降，可能有连接泄漏
+
+# 定位问题进程
+ss -antp | awk '{print $6}' | sort | uniq -c | sort -rn | head -10
+
+# 查看特定进程的连接
+ss -antp | grep "pid=12345"
+
+# 检查进程打开的文件描述符
+ls /proc/12345/fd | wc -l
+lsof -p 12345 | grep -E "TCP|socket" | wc -l
+```
+
+### 场景二：CLOSE_WAIT堆积
+
+```bash
+# CLOSE_WAIT是最常见的连接泄漏
+
+# 1. 确认问题
+ss -ant state close-wait | wc -l
+
+# 2. 找出问题进程
+ss -antp state close-wait | awk -F'"' '{print $2}' | sort | uniq -c | sort -rn
+
+# 3. 分析连接来源
+ss -antp state close-wait | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn
+
+# 4. 常见原因：
+# - 应用未正确处理连接关闭
+# - 连接池中的连接未被正确释放
+# - 异步处理未等待完成就关闭
+# - 异常处理路径未关闭连接
+
+# 5. 解决方案：
+# - 检查应用代码的finally块是否有close
+# - 使用try-with-resources（Java）
+# - 配置连接池的空闲超时和最大生命周期
+# - 添加连接监控告警
+```
+
+### 场景三：TIME_WAIT过多
+
+```bash
+# TIME_WAIT过多通常是正常的，但可能导致端口耗尽
+
+# 1. 检查数量
+ss -ant state time-wait | wc -l
+
+# 2. 检查端口使用情况
+cat /proc/sys/net/ipv4/ip_local_port_range
+# 默认 32768-60999 = 28231个端口
+
+# 3. 如果TIME_WAIT接近可用端口数，需要优化
+
+# 4. 解决方案（按优先级）：
+
+# a. 扩大端口范围
+sysctl -w net.ipv4.ip_local_port_range="1024 65535"
+
+# b. 启用端口复用
+sysctl -w net.ipv4.tcp_tw_reuse=1
+
+# c. 增加TIME_WAIT bucket数量
+sysctl -w net.ipv4.tcp_max_tw_buckets=262144
+
+# d. 使用长连接减少连接创建
+# 应用层：HTTP Keep-Alive, 连接池
+
+# 注意：不要使用tcp_tw_recycle（已在4.12内核移除）
+```
+
+## 11.4 空闲连接超时配置
+
+### 常见服务超时配置
+
+```bash
+# ========== Nginx ==========
+# /etc/nginx/nginx.conf
+http {
+    # 客户端连接保持时间
+    keepalive_timeout 65;
+    
+    # 等待客户端发送请求的超时
+    client_header_timeout 60;
+    client_body_timeout 60;
+    
+    # 发送响应的超时
+    send_timeout 60;
+    
+    # upstream连接保持
+    upstream backend {
+        server 127.0.0.1:8080;
+        keepalive 32;          # 保持的连接数
+        keepalive_timeout 60s; # 空闲超时
+    }
+}
+
+# ========== MySQL ==========
+# /etc/mysql/my.cnf
+[mysqld]
+wait_timeout = 28800          # 非交互连接超时（8小时）
+interactive_timeout = 28800   # 交互连接超时
+net_read_timeout = 30
+net_write_timeout = 60
+
+# 查看当前连接
+SHOW PROCESSLIST;
+# 查看空闲连接
+SELECT * FROM information_schema.PROCESSLIST WHERE COMMAND='Sleep';
+
+# ========== Redis ==========
+# redis.conf
+timeout 0    # 客户端空闲超时（0表示不超时）
+tcp-keepalive 300  # TCP keepalive间隔
+
+# 查看客户端连接
+redis-cli CLIENT LIST
+
+# ========== PostgreSQL ==========
+# postgresql.conf
+tcp_keepalives_idle = 60      # 空闲多久开始探测
+tcp_keepalives_interval = 10  # 探测间隔
+tcp_keepalives_count = 6      # 探测次数
+
+# 连接超时由客户端设置
+```
+
+### 连接池配置最佳实践
+
+```bash
+# Java连接池（HikariCP）示例
+# application.properties
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.maximum-pool-size=20
+spring.datasource.hikari.idle-timeout=300000      # 空闲连接最大生存时间（5分钟）
+spring.datasource.hikari.max-lifetime=1800000     # 连接最大生命周期（30分钟）
+spring.datasource.hikari.connection-timeout=30000 # 获取连接超时
+spring.datasource.hikari.keepalive-time=60000     # keepalive间隔
+
+# 关键配置说明：
+# idle-timeout: 连接空闲超过此时间会被回收
+# max-lifetime: 连接存活超过此时间会被回收（防止数据库端关闭）
+# keepalive-time: 定期验证连接有效性
+
+# 连接池监控
+# 应该监控：
+# - 活跃连接数
+# - 空闲连接数
+# - 等待线程数
+# - 连接获取时间
+```
+
+## 11.5 连接状态诊断脚本
+
+```bash
+#!/bin/bash
+# conn_diagnose.sh - TCP连接状态诊断
+
+echo "===== TCP连接状态诊断 ====="
+echo "时间: $(date)"
+echo ""
+
+echo "--- 1. 连接状态统计 ---"
+ss -ant | awk 'NR>1 {print $1}' | sort | uniq -c | sort -rn
+echo ""
+
+echo "--- 2. 各状态数量 ---"
+ESTAB=$(ss -ant state established | wc -l)
+TIME_WAIT=$(ss -ant state time-wait | wc -l)
+CLOSE_WAIT=$(ss -ant state close-wait | wc -l)
+FIN_WAIT=$(ss -ant state fin-wait-1 state fin-wait-2 | wc -l)
+SYN_RECV=$(ss -ant state syn-recv | wc -l)
+echo "ESTABLISHED: $ESTAB"
+echo "TIME_WAIT: $TIME_WAIT"
+echo "CLOSE_WAIT: $CLOSE_WAIT"
+echo "FIN_WAIT: $FIN_WAIT"
+echo "SYN_RECV: $SYN_RECV"
+echo ""
+
+echo "--- 3. CLOSE_WAIT详情（如有）---"
+if [ "$CLOSE_WAIT" -gt 0 ]; then
+    echo "进程分布："
+    ss -antp state close-wait 2>/dev/null | awk -F'"' '{print $2}' | sort | uniq -c | sort -rn | head -5
+    echo ""
+    echo "远程IP分布："
+    ss -antp state close-wait 2>/dev/null | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn | head -5
+else
+    echo "无CLOSE_WAIT连接"
+fi
+echo ""
+
+echo "--- 4. 连接数Top进程 ---"
+ss -antp 2>/dev/null | awk -F'"' '{print $2}' | sort | uniq -c | sort -rn | head -10
+echo ""
+
+echo "--- 5. 端口使用情况 ---"
+RANGE=$(cat /proc/sys/net/ipv4/ip_local_port_range)
+USED=$(ss -ant | awk '{print $4}' | grep -oE ':[0-9]+$' | sort -u | wc -l)
+echo "可用范围: $RANGE"
+echo "已使用端口数: $USED"
+echo ""
+
+echo "--- 6. Keepalive配置 ---"
+echo "tcp_keepalive_time: $(sysctl -n net.ipv4.tcp_keepalive_time)"
+echo "tcp_keepalive_intvl: $(sysctl -n net.ipv4.tcp_keepalive_intvl)"
+echo "tcp_keepalive_probes: $(sysctl -n net.ipv4.tcp_keepalive_probes)"
+echo ""
+
+echo "--- 7. TCP调优参数 ---"
+echo "tcp_tw_reuse: $(sysctl -n net.ipv4.tcp_tw_reuse)"
+echo "tcp_fin_timeout: $(sysctl -n net.ipv4.tcp_fin_timeout)"
+echo "tcp_max_tw_buckets: $(sysctl -n net.ipv4.tcp_max_tw_buckets)"
+echo "somaxconn: $(sysctl -n net.core.somaxconn)"
+echo ""
+
+echo "--- 8. 连接跟踪状态 ---"
+if [ -f /proc/sys/net/netfilter/nf_conntrack_count ]; then
+    echo "conntrack使用: $(cat /proc/sys/net/netfilter/nf_conntrack_count) / $(sysctl -n net.netfilter.nf_conntrack_max)"
+else
+    echo "conntrack未启用或不可用"
+fi
+echo ""
+
+echo "===== 诊断完成 ====="
+```
+
+## 11.6 连接问题速查表
+
+| 状态 | 正常数量 | 异常表现 | 原因 | 解决方案 |
+|------|----------|----------|------|----------|
+| ESTABLISHED | 视业务而定 | 持续增长不下降 | 连接泄漏 | 检查应用close逻辑 |
+| TIME_WAIT | <端口数50% | 接近端口数上限 | 短连接过多 | 启用tcp_tw_reuse，用长连接 |
+| CLOSE_WAIT | 接近0 | 持续增加 | 应用未调用close() | 修复应用代码 |
+| FIN_WAIT_2 | 少量 | 大量堆积 | 对端未发FIN | 调低fin_timeout |
+| SYN_RECV | 少量 | 大量堆积 | SYN Flood攻击 | 启用tcp_syncookies |
+
+---
+
 ## 总结
 
 **排查三板斧**：
 1. **ping/traceroute/mtr** - 确认连通性和路径
 2. **ss/netstat** - 确认本地连接状态
 3. **tcpdump/Wireshark** - 深入分析报文
+
+**连接状态速查**：
+| 状态 | 含义 | 谁进入 |
+|------|------|--------|
+| ESTABLISHED | 连接已建立 | 双方 |
+| TIME_WAIT | 等待2MSL | 主动关闭方 |
+| CLOSE_WAIT | 等待应用close | 被动关闭方 |
+| FIN_WAIT_1/2 | 等待对端确认/FIN | 主动关闭方 |
+| SYN_RECV | 收到SYN，等待ACK | 服务端 |
+
+**Idle连接处理**：
+1. 配置TCP Keepalive检测失效连接
+2. 应用层心跳作为补充
+3. 合理设置连接池超时参数
 
 **防火墙速查**：
 | 工具 | 查看规则 | 添加规则 |
@@ -1311,5 +1910,5 @@ echo "===== 诊断完成 ====="
 - 物理层 → 网线、网口指示灯
 - 数据链路层 → 网卡状态、ARP
 - 网络层 → 路由、防火墙、IP
-- 传输层 → 端口、TCP状态
-- 应用层 → 协议、配置
+- 传输层 → 端口、TCP状态、Idle连接
+- 应用层 → 协议、配置、连接池
