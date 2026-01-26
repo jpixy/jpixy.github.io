@@ -1,7 +1,7 @@
 +++
-title = "Glossary"
+title = "00.Glossary (索引)"
 sort_by = "title"
 template = "section.html"
 +++
 
-Core Concepts Index - Quick reference for key technical concepts
+核心概念索引 - 快速查阅关键技术概念
