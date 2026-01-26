@@ -7,7 +7,7 @@ draft = false
 tags = ["SRE", "HFT", "基础设施", "数据中心", "PTP"]
 +++
 
-# HFT基础设施最佳实践
+# HFT基础设施最佳实践(HFT)
 
 ## 概述
 

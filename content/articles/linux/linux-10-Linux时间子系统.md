@@ -7,7 +7,7 @@ draft = false
 tags = ["Linux", "时间", "TSC", "PTP", "HFT"]
 +++
 
-# Linux时间子系统
+# Linux时间子系统(HFT)
 
 ## 概述
 

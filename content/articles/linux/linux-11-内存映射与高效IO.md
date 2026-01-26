@@ -7,7 +7,7 @@ draft = false
 tags = ["Linux", "mmap", "Huge Pages", "IO", "零拷贝", "HFT"]
 +++
 
-# 内存映射与高效IO
+# 内存映射与高效IO(HFT)
 
 ## 概述
 

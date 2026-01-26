@@ -7,7 +7,7 @@ draft = false
 tags = ["数据结构", "Bloom Filter", "HyperLogLog", "概率算法", "HFT"]
 +++
 
-# 概率数据结构详解
+# 概率数据结构详解(HFT)
 
 ## 概述
 

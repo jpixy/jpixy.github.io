@@ -7,7 +7,7 @@ draft = false
 tags = ["期权定价", "Black-Scholes", "Greeks", "隐含波动率", "量化", "HFT"]
 +++
 
-# 期权定价与Greeks详解
+# 期权定价与Greeks详解(HFT)
 
 ## 概述
 

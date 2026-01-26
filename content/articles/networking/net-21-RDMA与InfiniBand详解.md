@@ -7,7 +7,7 @@ draft = false
 tags = ["RDMA", "InfiniBand", "低延迟", "HFT", "高性能网络"]
 +++
 
-# RDMA与InfiniBand详解
+# RDMA与InfiniBand详解(HFT)
 
 ## 概述
 
