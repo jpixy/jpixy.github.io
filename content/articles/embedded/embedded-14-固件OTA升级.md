@@ -1,5 +1,5 @@
 +++
-title = "固件OTA升级设计"
+title = "14.固件OTA升级设计"
 date = 2026-01-19
 description = "嵌入式OTA升级方案：升级架构设计、安全机制、差分升级、回滚策略与可靠性保障"
 [taxonomies]

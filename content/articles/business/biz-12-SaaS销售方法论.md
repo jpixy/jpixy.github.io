@@ -1,5 +1,5 @@
 +++
-title = "SaaS销售方法论"
+title = "12.SaaS销售方法论"
 description = "MEDDIC、Challenger Sale、SPIN等现代销售方法论详解与实战应用"
 date = 2025-01-16
 [taxonomies]

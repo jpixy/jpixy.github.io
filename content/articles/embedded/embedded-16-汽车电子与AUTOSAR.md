@@ -1,5 +1,5 @@
 +++
-title = "汽车电子与AUTOSAR"
+title = "16.汽车电子与AUTOSAR"
 date = 2026-01-19
 description = "汽车电子开发全景：ECU架构、CAN/LIN网络、AUTOSAR规范、功能安全ISO 26262详解"
 [taxonomies]

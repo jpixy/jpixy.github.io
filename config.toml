@@ -6,7 +6,7 @@ default_language = "en"
 
 compile_sass = true
 minify_html = false  # 开发时关闭，减少构建时间
-build_search_index = false  # 暂时禁用，显著提升构建速度
+build_search_index = true
 generate_feeds = true
 feed_filenames = ["rss.xml"]
 
@@ -14,11 +14,11 @@ taxonomies = [
     { name = "tags", feed = false },  # 关闭tag feed
 ]
 
-# [search]  # 暂时禁用搜索
-# include_title = true
-# include_description = true
-# include_path = true
-# include_content = true
+[search]
+include_title = true
+include_description = true
+include_path = true
+include_content = true
 
 [markdown]
 highlight_code = true

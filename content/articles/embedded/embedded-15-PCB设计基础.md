@@ -1,5 +1,5 @@
 +++
-title = "PCB设计基础"
+title = "15.PCB设计基础"
 date = 2026-01-19
 description = "嵌入式工程师必备PCB知识：原理图阅读、PCB结构、Layout要点、电磁兼容与调试"
 [taxonomies]

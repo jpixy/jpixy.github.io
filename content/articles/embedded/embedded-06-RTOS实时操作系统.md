@@ -1,5 +1,5 @@
 +++
-title = "RTOS实时操作系统详解"
+title = "06.RTOS实时操作系统详解"
 date = 2026-01-19
 description = "RTOS核心概念与FreeRTOS实战：任务管理、调度、同步机制、内存管理"
 [taxonomies]

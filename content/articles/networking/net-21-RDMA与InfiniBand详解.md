@@ -1,5 +1,5 @@
 +++
-title = "RDMA与InfiniBand详解"
+title = "21.RDMA与InfiniBand详解(HFT)"
 description = "深入讲解RDMA技术：RDMA原语(send/recv/read/write)、Verbs API、QP与MR、延迟对比及RoCE配置"
 date = 2026-01-21
 draft = false

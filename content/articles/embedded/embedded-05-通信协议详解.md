@@ -1,5 +1,5 @@
 +++
-title = "嵌入式通信协议详解"
+title = "05.嵌入式通信协议详解"
 date = 2026-01-19
 description = "嵌入式通信协议全面解析：UART、SPI、I2C、CAN、USB工作原理与实战应用"
 [taxonomies]

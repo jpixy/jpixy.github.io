@@ -1,5 +1,5 @@
 +++
-title = "Kubernetes安全与RBAC"
+title = "06.Kubernetes安全与RBAC"
 description = "RBAC权限管理、Pod安全策略、网络安全与安全最佳实践"
 date = 2025-01-16
 [taxonomies]

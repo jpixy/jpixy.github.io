@@ -1,5 +1,5 @@
 +++
-title = "Helm包管理详解"
+title = "08.Helm包管理详解"
 description = "Helm架构、Chart开发、模板语法与生产环境最佳实践"
 date = 2025-01-16
 [taxonomies]

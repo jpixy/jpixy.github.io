@@ -1,5 +1,5 @@
 +++
-title = "在线算法与流式计算"
+title = "10.在线算法与流式计算(HFT)"
 description = "深入讲解在线算法与流式计算：滑动窗口统计、Welford在线均值/方差、Reservoir Sampling、流式Top-K、EMA与VWAP计算"
 date = 2026-01-21
 draft = false

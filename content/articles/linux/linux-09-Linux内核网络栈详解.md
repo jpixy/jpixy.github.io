@@ -1,10 +1,10 @@
 +++
-title = "Linux内核网络栈详解"
+title = "09.Linux内核网络栈详解(HFT)"
 description = "深入讲解Linux内核网络栈：sk_buff结构、netfilter框架、conntrack连接跟踪、TCP状态机、软中断与NAPI机制"
 date = 2026-01-21
 draft = false
 [taxonomies]
-tags = ["Linux", "网络栈", "内核", "sk_buff", "NAPI"]
+tags = ["Linux", "网络栈", "内核", "sk_buff", "NAPI", "HFT"]
 +++
 
 # Linux内核网络栈详解

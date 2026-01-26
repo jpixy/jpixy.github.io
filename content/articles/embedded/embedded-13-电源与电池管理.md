@@ -1,5 +1,5 @@
 +++
-title = "嵌入式电源与电池管理"
+title = "13.嵌入式电源与电池管理"
 date = 2026-01-19
 description = "嵌入式电源设计：LDO与DC-DC选型、电池技术、BMS电池管理、低功耗设计与功耗估算"
 [taxonomies]

@@ -1,5 +1,5 @@
 +++
-title = "销售预测与漏斗管理"
+title = "14.销售预测与漏斗管理"
 description = "销售漏斗管理、销售预测方法、Pipeline健康度与CRM最佳实践"
 date = 2025-01-16
 [taxonomies]

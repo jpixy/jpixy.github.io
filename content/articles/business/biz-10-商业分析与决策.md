@@ -1,5 +1,5 @@
 +++
-title = "商业分析与决策"
+title = "10.商业分析与决策"
 description = "商业模式分析、市场分析、竞争分析与商业决策框架"
 date = 2025-01-16
 [taxonomies]

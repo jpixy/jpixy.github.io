@@ -1,5 +1,5 @@
 +++
-title = "销售谈判与成单技巧"
+title = "07.销售谈判与成单技巧"
 description = "To B销售谈判核心技巧：如何报价、如何让步、如何促单成交"
 date = 2025-01-16
 [taxonomies]

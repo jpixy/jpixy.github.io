@@ -1,10 +1,10 @@
 +++
-title = "时间序列分析详解"
+title = "11.时间序列分析详解(HFT)"
 description = "深入讲解金融时间序列分析：AR/MA/ARIMA/SARIMA、GARCH/EGARCH、协整检验、均值回归、Kalman滤波与状态空间模型"
 date = 2026-01-21
 draft = false
 [taxonomies]
-tags = ["时间序列", "ARIMA", "GARCH", "协整", "量化"]
+tags = ["时间序列", "ARIMA", "GARCH", "协整", "量化", "HFT"]
 +++
 
 # 时间序列分析详解

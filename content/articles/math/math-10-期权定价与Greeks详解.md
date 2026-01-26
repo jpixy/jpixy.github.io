@@ -1,10 +1,10 @@
 +++
-title = "期权定价与Greeks详解"
+title = "10.期权定价与Greeks详解(HFT)"
 description = "深入讲解期权定价理论：Black-Scholes模型推导、Greeks敏感性分析、隐含波动率、波动率曲面与二叉树定价"
 date = 2026-01-21
 draft = false
 [taxonomies]
-tags = ["期权定价", "Black-Scholes", "Greeks", "隐含波动率", "量化"]
+tags = ["期权定价", "Black-Scholes", "Greeks", "隐含波动率", "量化", "HFT"]
 +++
 
 # 期权定价与Greeks详解
