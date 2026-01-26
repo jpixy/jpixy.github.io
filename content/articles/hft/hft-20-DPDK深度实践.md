@@ -1,5 +1,6 @@
 +++
 title = "20.DPDK深度实践"
+slug = "hft-20-DPDK深度实践"
 date = 2026-01-21
 description = "深入剖析DPDK的使用，包括内存池、Ring缓冲区、PMD、多队列和性能调优"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "20.HFT-自定义内存分配器设计"
+slug = "cpp-20-HFT自定义内存分配器设计"
 date = 2026-01-21
 description = "深入剖析C++自定义内存分配器设计，包括Arena分配器、池分配器、无锁分配器等，HFT低延迟系统必备技术"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "18.C++类型萃取与SFINAE详解"
+slug = "cpp-18-类型萃取与SFINAE详解"
 date = 2026-01-21
 description = "深入剖析C++类型萃取、SFINAE、std::enable_if、Concepts等模板元编程核心技术"
 [taxonomies]

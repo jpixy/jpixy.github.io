@@ -1,5 +1,6 @@
 +++
 title = "03.生命周期详解"
+slug = "rust-03-生命周期详解"
 date = 2026-01-19
 description = "Rust生命周期：生命周期标注、省略规则、结构体生命周期、静态生命周期"
 [taxonomies]

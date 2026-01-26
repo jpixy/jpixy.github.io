@@ -1,5 +1,6 @@
 +++
 title = "36.C++Lambda与函数对象详解"
+slug = "cpp-36-Lambda与函数对象详解"
 date = 2026-01-21
 description = "深入剖析C++Lambda表达式和函数对象的底层实现、捕获机制、性能开销以及在HFT中的应用"
 [taxonomies]

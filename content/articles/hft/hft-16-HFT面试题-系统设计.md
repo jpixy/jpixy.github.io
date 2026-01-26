@@ -1,5 +1,6 @@
 +++
 title = "16.HFT面试题-系统设计"
+slug = "hft-16-HFT面试题-系统设计"
 date = 2026-01-21
 description = "HFT系统设计面试题，包括交易系统架构、延迟优化、容错设计和市场数据处理"
 [taxonomies]

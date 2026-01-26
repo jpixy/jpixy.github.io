@@ -1,5 +1,6 @@
 +++
 title = "10.Linux时间子系统(HFT)"
+slug = "linux-10-Linux时间子系统"
 description = "深入讲解Linux时间子系统：时钟源、TSC、HPET、PTP精确时间协议、时间精度、clocksource与nohz模式"
 date = 2026-01-21
 draft = false

@@ -1,5 +1,6 @@
 +++
 title = "15.HFT-Rust Lock-Free编程"
+slug = "rust-15-HFT-Rust-Lock-Free编程"
 date = 2026-01-21
 description = "深入剖析Rust的Lock-Free编程技术，包括std::sync::atomic、crossbeam、无锁队列、Arc开销和parking_lot"
 [taxonomies]

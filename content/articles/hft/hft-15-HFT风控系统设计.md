@@ -1,5 +1,6 @@
 +++
 title = "15.HFT风控系统设计"
+slug = "hft-15-HFT风控系统设计"
 date = 2026-01-21
 description = "深入剖析HFT风控系统设计，包括实时风控、限额管理、熔断机制、异常检测和合规要求"
 [taxonomies]

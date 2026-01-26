@@ -1,5 +1,6 @@
 +++
 title = "09.Linux内核网络栈详解(HFT)"
+slug = "linux-09-Linux内核网络栈详解"
 description = "深入讲解Linux内核网络栈：sk_buff结构、netfilter框架、conntrack连接跟踪、TCP状态机、软中断与NAPI机制"
 date = 2026-01-21
 draft = false

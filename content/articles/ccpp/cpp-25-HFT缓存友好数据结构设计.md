@@ -1,5 +1,6 @@
 +++
 title = "25.HFT-缓存友好数据结构设计"
+slug = "cpp-25-HFT缓存友好数据结构设计"
 date = 2026-01-21
 description = "深入剖析缓存友好的数据结构设计，包括SoA vs AoS、数据布局优化、Cache-Oblivious算法，HFT低延迟系统核心技术"
 [taxonomies]

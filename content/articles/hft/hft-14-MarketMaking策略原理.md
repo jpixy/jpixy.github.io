@@ -1,5 +1,6 @@
 +++
 title = "14.Market Making策略原理"
+slug = "hft-14-MarketMaking策略原理"
 date = 2026-01-21
 description = "深入剖析做市商策略，包括做市商模型、库存管理、价差设置、风险控制和对冲策略"
 [taxonomies]

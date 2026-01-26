@@ -1,5 +1,6 @@
 +++
 title = "55.Python量化面试题"
+slug = "py-55-Python量化面试题"
 date = 2026-01-21
 description = "Python量化面试常见问题，包括策略实现、数据处理、性能优化、统计计算和Pandas/NumPy陷阱"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "12.Trait对象与动态分发"
+slug = "rust-12-Trait对象与动态分发"
 date = 2026-01-21
 description = "深入剖析Rust的Trait对象机制，包括vtable结构、dyn Trait开销、Object Safety以及静态vs动态分发的选择"
 [taxonomies]

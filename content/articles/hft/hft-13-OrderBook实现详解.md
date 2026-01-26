@@ -1,5 +1,6 @@
 +++
 title = "13.Order Book实现详解"
+slug = "hft-13-OrderBook实现详解"
 date = 2026-01-21
 description = "深入剖析Order Book的实现，包括数据结构选择、价格级别管理、快速查找、增量更新和内存优化"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "09.unsafe Rust完全指南"
+slug = "rust-09-unsafe-Rust完全指南"
 date = 2026-01-21
 description = "深入剖析unsafe Rust的正确使用方式，包括裸指针、unsafe trait、内存安全不变量、FFI边界以及Miri检测工具"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "26.HFT技术面试技巧"
+slug = "hft-26-HFT技术面试技巧"
 date = 2026-01-21
 description = "HFT技术面试技巧，包括白板编程、系统设计回答框架、如何展示低延迟经验和常见追问应对"
 [taxonomies]

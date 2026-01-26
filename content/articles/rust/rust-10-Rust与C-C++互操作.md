@@ -1,5 +1,6 @@
 +++
 title = "10.Rust与C/C++互操作"
+slug = "rust-10-Rust与C-C++互操作"
 date = 2026-01-21
 description = "深入剖析Rust与C/C++的互操作技术，包括FFI声明、bindgen/cbindgen、内存传递、回调函数和ABI兼容"
 [taxonomies]

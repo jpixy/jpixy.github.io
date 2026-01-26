@@ -1,5 +1,6 @@
 +++
 title = "20.io_uring详解(HFT)"
+slug = "net-20-io_uring详解"
 description = "深入讲解Linux io_uring：原理架构、liburing使用、SQE/CQE详解、性能对比、与epoll对比及HFT应用场景"
 date = 2026-01-21
 draft = false

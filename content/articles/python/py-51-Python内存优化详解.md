@@ -1,5 +1,6 @@
 +++
 title = "51.Python内存优化详解"
+slug = "py-51-Python内存优化详解"
 date = 2026-01-21
 description = "深入剖析Python的内存优化技术，包括__slots__、memoryview、array模块、内存分析工具和对象大小"
 [taxonomies]

@@ -14,6 +14,9 @@ taxonomies = [
     { name = "tags", feed = false },  # 关闭tag feed
 ]
 
+[slugify]
+paths = "safe"  # 保留中文字符在URL中
+
 [search]
 include_title = true
 include_description = true

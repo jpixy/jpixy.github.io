@@ -1,5 +1,6 @@
 +++
 title = "27.HFT-高精度时间测量"
+slug = "cpp-27-HFT高精度时间测量"
 date = 2026-01-21
 description = "深入剖析高精度时间测量技术，包括RDTSC、clock_gettime、PTP同步，HFT低延迟系统核心技术"
 [taxonomies]

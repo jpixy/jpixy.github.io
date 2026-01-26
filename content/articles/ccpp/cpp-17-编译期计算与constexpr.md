@@ -1,5 +1,6 @@
 +++
 title = "17.C++编译期计算与constexpr详解"
+slug = "cpp-17-编译期计算与constexpr"
 date = 2026-01-21
 description = "深入剖析C++编译期计算、constexpr函数、consteval、编译期容器等核心概念，将运行时开销转移到编译期"
 [taxonomies]

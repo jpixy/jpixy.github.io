@@ -1,5 +1,6 @@
 +++
 title = "52.NumPy高性能编程"
+slug = "py-52-NumPy高性能编程"
 date = 2026-01-21
 description = "深入剖析NumPy的高性能编程技术，包括向量化、广播、内存布局、ufunc、NumPy C API和numexpr"
 [taxonomies]

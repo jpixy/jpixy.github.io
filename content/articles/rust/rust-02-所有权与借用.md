@@ -1,5 +1,6 @@
 +++
 title = "02.所有权与借用"
+slug = "rust-02-所有权与借用"
 date = 2026-01-19
 description = "Rust核心：所有权规则、移动语义、借用规则、引用、生命周期入门"
 [taxonomies]

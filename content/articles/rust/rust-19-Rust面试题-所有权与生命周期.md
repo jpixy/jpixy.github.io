@@ -1,5 +1,6 @@
 +++
 title = "19.Rust面试题-所有权与生命周期"
+slug = "rust-19-Rust面试题-所有权与生命周期"
 date = 2026-01-21
 description = "Rust面试中关于所有权和生命周期的常见问题，包括借用规则、生命周期省略、NLL、self-referential struct和Pin"
 [taxonomies]

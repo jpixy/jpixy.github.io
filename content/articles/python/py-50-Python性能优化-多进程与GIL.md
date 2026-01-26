@@ -1,5 +1,6 @@
 +++
 title = "50.Python性能优化-多进程与GIL"
+slug = "py-50-Python性能优化-多进程与GIL"
 date = 2026-01-21
 description = "深入剖析Python的GIL机制，包括multiprocessing、共享内存、进程池、GIL绕过策略和异步IO"
 [taxonomies]

@@ -1,5 +1,6 @@
 +++
 title = "56.Python异步编程详解"
+slug = "py-56-Python异步编程详解"
 date = 2026-01-21
 description = "深入剖析Python异步编程，包括asyncio深入、事件循环原理、协程vs回调、aiohttp、uvloop、异步陷阱和并发模式"
 [taxonomies]

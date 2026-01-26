@@ -1,5 +1,6 @@
 +++
 title = "49.Python性能优化-Numba详解"
+slug = "py-49-Python性能优化-Numba详解"
 date = 2026-01-21
 description = "深入剖析Numba的使用方法，包括JIT编译、nopython模式、CUDA支持、向量化和性能对比"
 [taxonomies]

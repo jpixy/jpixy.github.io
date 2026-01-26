@@ -1,5 +1,6 @@
 +++
 title = "48.Python性能优化-Cython详解"
+slug = "py-48-Python性能优化-Cython详解"
 date = 2026-01-21
 description = "深入剖析Cython的使用方法，包括Cython语法、类型声明、与C交互、GIL释放和编译优化"
 [taxonomies]

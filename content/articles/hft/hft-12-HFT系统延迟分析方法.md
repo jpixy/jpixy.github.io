@@ -1,5 +1,6 @@
 +++
 title = "12.HFT系统延迟分析方法"
+slug = "hft-12-HFT系统延迟分析方法"
 date = 2026-01-21
 description = "深入剖析HFT系统延迟分析，包括延迟分解、测量点设计、百分位延迟、Tick-to-Trade和硬件时间戳"
 [taxonomies]

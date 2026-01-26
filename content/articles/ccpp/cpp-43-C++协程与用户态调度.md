@@ -1,5 +1,6 @@
 +++
 title = "43.C++协程与用户态调度"
+slug = "cpp-43-C++协程与用户态调度"
 date = 2026-01-21
 description = "深入剖析C++20协程机制和用户态调度技术，包括协程原理、Fiber库、调度器设计以及在HFT中的应用"
 [taxonomies]

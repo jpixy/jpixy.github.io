@@ -1,5 +1,6 @@
 +++
 title = "06.异步编程"
+slug = "rust-06-异步编程"
 date = 2026-01-19
 description = "Rust异步：async/await、Future、tokio运行时、异步模式"
 [taxonomies]

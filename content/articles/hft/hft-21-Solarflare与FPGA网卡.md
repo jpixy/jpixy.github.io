@@ -1,5 +1,6 @@
 +++
 title = "21.Solarflare/Onload与FPGA网卡"
+slug = "hft-21-Solarflare与FPGA网卡"
 date = 2026-01-21
 description = "深入剖析Solarflare网卡技术，包括ef_vi、TCPDirect、硬件时间戳、FPGA加速和选型对比"
 [taxonomies]
