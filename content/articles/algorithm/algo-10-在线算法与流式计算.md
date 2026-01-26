@@ -4,7 +4,6 @@ description = "深入讲解在线算法与流式计算：滑动窗口统计、We
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["算法"]
 tags = ["在线算法", "流式计算", "滑动窗口", "VWAP", "HFT"]
 +++
 

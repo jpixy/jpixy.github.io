@@ -4,7 +4,6 @@ description = "深入讲解Linux时间子系统：时钟源、TSC、HPET、PTP�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["Linux"]
 tags = ["Linux", "时间", "TSC", "PTP", "HFT"]
 +++
 

@@ -4,7 +4,6 @@ description = "深入讲解Linux TCP性能调优：内核参数、拥塞控制�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["网络"]
 tags = ["TCP", "网络调优", "BBR", "低延迟", "HFT"]
 +++
 

@@ -4,7 +4,6 @@ description = "深入讲解Linux io_uring：原理架构、liburing使用、SQE/
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["网络"]
 tags = ["io_uring", "异步IO", "Linux", "高性能", "HFT"]
 +++
 

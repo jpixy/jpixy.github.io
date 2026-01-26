@@ -4,7 +4,6 @@ description = "深入讲解RDMA技术：RDMA原语(send/recv/read/write)、Verbs
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["网络"]
 tags = ["RDMA", "InfiniBand", "低延迟", "HFT", "高性能网络"]
 +++
 

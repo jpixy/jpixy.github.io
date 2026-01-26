@@ -4,7 +4,6 @@ description = "深入讲解量化金融的数学基础：随机过程、布朗�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["数学"]
 tags = ["金融数学", "随机过程", "布朗运动", "伊藤引理", "量化"]
 +++
 

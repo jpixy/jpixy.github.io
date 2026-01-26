@@ -4,7 +4,6 @@ description = "深入讲解HFT系统故障演练方法：混沌工程、故障�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["SRE"]
 tags = ["SRE", "HFT", "混沌工程", "故障演练", "容灾"]
 +++
 

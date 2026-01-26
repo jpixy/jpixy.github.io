@@ -4,7 +4,6 @@ description = "深入讲解统计套利与因子模型：配对交易数学、PC
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["数学"]
 tags = ["统计套利", "因子模型", "PCA", "风险模型", "量化"]
 +++
 

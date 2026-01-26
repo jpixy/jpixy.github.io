@@ -4,7 +4,6 @@ description = "深入讲解概率数据结构：Bloom Filter、Count-Min Sketch�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["算法"]
 tags = ["数据结构", "Bloom Filter", "HyperLogLog", "概率算法", "HFT"]
 +++
 

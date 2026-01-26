@@ -4,7 +4,6 @@ description = "深入讲解HFT系统的合规要求：日志记录、数据保�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["SRE"]
 tags = ["SRE", "HFT", "合规", "审计", "MiFID II"]
 +++
 

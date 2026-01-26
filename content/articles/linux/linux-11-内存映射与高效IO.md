@@ -4,7 +4,6 @@ description = "深入讲解Linux高效IO：mmap原理与陷阱、Huge Pages、TH
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["Linux"]
 tags = ["Linux", "mmap", "Huge Pages", "IO", "零拷贝"]
 +++
 

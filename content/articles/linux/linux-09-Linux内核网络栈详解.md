@@ -4,7 +4,6 @@ description = "深入讲解Linux内核网络栈：sk_buff结构、netfilter框�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["Linux"]
 tags = ["Linux", "网络栈", "内核", "sk_buff", "NAPI"]
 +++
 

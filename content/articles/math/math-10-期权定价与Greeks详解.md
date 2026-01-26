@@ -4,7 +4,6 @@ description = "深入讲解期权定价理论：Black-Scholes模型推导、Gree
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["数学"]
 tags = ["期权定价", "Black-Scholes", "Greeks", "隐含波动率", "量化"]
 +++
 

@@ -4,7 +4,6 @@ description = "深入讲解金融时间序列分析：AR/MA/ARIMA/SARIMA、GARCH
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["数学"]
 tags = ["时间序列", "ARIMA", "GARCH", "协整", "量化"]
 +++
 

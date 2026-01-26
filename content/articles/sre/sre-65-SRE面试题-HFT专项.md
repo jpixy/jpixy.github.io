@@ -4,7 +4,6 @@ description = "HFT环境下SRE面试题精选：延迟排查、网络问题、�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["SRE"]
 tags = ["SRE", "HFT", "面试", "延迟", "性能调优"]
 +++
 

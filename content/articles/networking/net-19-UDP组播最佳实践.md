@@ -4,7 +4,6 @@ description = "深入讲解UDP组播：IGMP协议、组播路由、PIM、组播�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["网络"]
 tags = ["UDP", "组播", "IGMP", "Market Data", "HFT"]
 +++
 

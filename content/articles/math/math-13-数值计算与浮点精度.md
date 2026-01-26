@@ -4,7 +4,6 @@ description = "深入讲解金融系统的数值计算：IEEE 754标准、浮点
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["数学"]
 tags = ["数值计算", "浮点数", "IEEE754", "金融精度", "HFT"]
 +++
 

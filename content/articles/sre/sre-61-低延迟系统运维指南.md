@@ -4,7 +4,6 @@ description = "深入讲解HFT环境下低延迟系统的运维方法论：延�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["SRE"]
 tags = ["SRE", "HFT", "低延迟", "运维", "性能优化"]
 +++
 

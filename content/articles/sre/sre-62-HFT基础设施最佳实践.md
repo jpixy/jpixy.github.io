@@ -4,7 +4,6 @@ description = "深入讲解高频交易基础设施设计：机房选址、网�
 date = 2026-01-21
 draft = false
 [taxonomies]
-categories = ["SRE"]
 tags = ["SRE", "HFT", "基础设施", "数据中心", "PTP"]
 +++
 
