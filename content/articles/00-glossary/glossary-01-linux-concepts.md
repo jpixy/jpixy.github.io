@@ -1,10 +1,10 @@
 +++
 title = "01.Linux & System Concepts"
-description = "Linux与系统核心概念速查：进程管理、内存管理、IO模型、系统调用等关键概念详解"
+description = "Linux系统核心概念速查：进程、内存、IO模型、调度，以及内核/Glibc/Systemd/调试工具/存储/AI基础设施概念索引"
 date = 2026-01-26
 draft = false
 [taxonomies]
-tags = ["Glossary", "Linux", "System", "Kernel", "Reference"]
+tags = ["Glossary", "Linux", "Kernel", "System", "Reference"]
 +++
 
 # Linux & System Concepts
@@ -801,9 +801,164 @@ ls /sys/fs/cgroup/
 
 ---
 
-## 五、延伸阅读
+## 五、操作系统核心组件
+
+### 5.1 Linux Kernel (内核)
+
+**定义**：操作系统核心，管理硬件资源，提供系统调用接口。
+
+**核心子系统**：进程调度、内存管理、文件系统、网络栈、设备驱动、中断处理
+
+**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/)
+
+---
+
+### 5.2 Glibc (GNU C Library)
+
+**定义**：Linux 标准 C 库，封装系统调用为 C 函数接口。
+
+**核心功能**：stdio、stdlib、pthread、动态链接器、内存分配器(ptmalloc2)
+
+**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#二glibc-gnu-c-library)
+
+---
+
+### 5.3 Systemd
+
+**定义**：现代 Linux 系统的 init 进程(PID 1)，管理系统启动和服务生命周期。
+
+**核心概念**：Unit、Service、Target、Timer、journalctl
+
+**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#三systemd)
+
+---
+
+### 5.4 Toolchain (工具链)
+
+**定义**：将源代码编译为可执行文件的工具集。
+
+**核心组件**：GCC(编译器)、Binutils(as/ld/objdump)、GDB(调试器)、Glibc(C库)
+
+**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#四toolchain-工具链)
+
+---
+
+## 六、调试与追踪工具
+
+### 6.1 Crash
+
+**定义**：内核崩溃转储(vmcore)分析工具。
+
+**用途**：分析 Kernel Panic，定位崩溃根因
+
+**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#一crash-内核崩溃分析)
+
+---
+
+### 6.2 GDB
+
+**定义**：GNU 调试器，支持断点、单步、内存检查等。
+
+**用途**：程序调试、core dump 分析、远程调试
+
+**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#二gdb-gnu-debugger-高级技巧)
+
+---
+
+### 6.3 Ftrace
+
+**定义**：内核内置函数追踪器。
+
+**用途**：追踪内核函数调用、事件追踪、性能分析
+
+**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#三ftrace-函数追踪器)
+
+---
+
+### 6.4 BPFtrace / eBPF
+
+**定义**：可编程内核追踪工具，基于 eBPF 技术。
+
+**用途**：低开销追踪、自定义探针、生产环境性能分析
+
+**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#四bpftrace--ebpf)
+
+---
+
+## 七、存储与文件系统
+
+### 7.1 VFS (虚拟文件系统)
+
+**定义**：Linux 文件系统抽象层，统一不同文件系统的接口。
+
+**核心结构**：super_block、inode、dentry、file
+
+**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#一linux-文件系统架构)
+
+---
+
+### 7.2 NVMe
+
+**定义**：Non-Volatile Memory Express，专为 SSD 设计的高性能存储协议。
+
+**特点**：PCIe 直连、多队列、低延迟(~10μs)、高 IOPS(~1M+)
+
+**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#二nvme-驱动与原理)
+
+---
+
+### 7.3 SPDK
+
+**定义**：Storage Performance Development Kit，用户态存储开发框架。
+
+**特点**：绕过内核、轮询模式、零拷贝、延迟~2-5μs
+
+**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#三spdk-storage-performance-development-kit)
+
+---
+
+### 7.4 FUSE
+
+**定义**：Filesystem in Userspace，用户态文件系统框架。
+
+**用途**：无需修改内核即可实现文件系统(sshfs、s3fs等)
+
+**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#四用户态文件系统-fuse)
+
+---
+
+## 八、AI基础设施
+
+### 8.1 GPU 计算
+
+**定义**：图形处理器用于通用并行计算。
+
+**软件栈**：CUDA Runtime → cuDNN/cuBLAS → PyTorch/TensorFlow
+
+**详细文章**：[AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/#一gpu-计算与驱动)
+
+---
+
+### 8.2 RDMA
+
+**定义**：Remote Direct Memory Access，网卡直接读写远程内存。
+
+**特点**：绕过 CPU 和操作系统、延迟~1-2μs、零拷贝
+
+**技术**：InfiniBand、RoCE v2、iWARP
+
+**详细文章**：[AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/#二rdma-remote-direct-memory-access)
+
+---
+
+## 九、延伸阅读
+
+---
+
+## 九、延伸阅读
 
 - [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/)
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
 - [Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
 - [Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
+- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
