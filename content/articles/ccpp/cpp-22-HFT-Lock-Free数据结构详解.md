@@ -440,3 +440,11 @@ void benchmarkQueues() {
 3. 使用适当的memory order
 4. Cache Line对齐避免False Sharing
 5. 考虑使用Hazard Pointer管理内存
+
+---
+
+## 概念速查
+
+- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 无锁队列、CAS、ABA问题等概念速查
+- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - 内存序、原子操作等C++概念速查
+- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 低延迟系统设计概念速查

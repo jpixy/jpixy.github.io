@@ -473,3 +473,11 @@ void benchmark() {
 3. 热路径避免任何动态分配
 4. 使用Huge Pages减少TLB miss
 5. 锁定内存防止换出
+
+---
+
+## 概念速查
+
+- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 对象池、内存分配等概念速查
+- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 内存管理、Huge Pages等概念速查
+- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 虚拟内存、mmap等概念速查

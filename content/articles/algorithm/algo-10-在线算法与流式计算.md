@@ -813,3 +813,10 @@ private:
 4. **数值稳定**：使用Welford等稳定算法
 
 这些算法是HFT实时计算系统的基础组件。
+
+---
+
+## 概念速查
+
+- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 滑动窗口、时间复杂度等概念速查
+- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 实时计算、VWAP等概念速查

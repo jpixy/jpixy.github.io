@@ -674,3 +674,10 @@ using PriceLevel = SkipList<int64_t, int64_t>;  // 价格 -> 数量
 4. **可配置精度**：根据需求调整误差率
 
 在HFT系统中合理使用这些结构，可以在保证业务需求的同时大幅提升性能。
+
+---
+
+## 概念速查
+
+- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - Bloom Filter、哈希表等概念速查
+- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 低延迟系统设计概念速查

@@ -589,3 +589,11 @@ void benchmark_orderbook() {
 3. 分离热区和冷区
 4. 预分配并预热内存
 5. 使用哈希表O(1)订单查找
+
+---
+
+## 概念速查
+
+- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 红黑树、哈希表、对象池等概念速查
+- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - OrderBook、低延迟等概念速查
+- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - 内存管理、智能指针等概念速查
