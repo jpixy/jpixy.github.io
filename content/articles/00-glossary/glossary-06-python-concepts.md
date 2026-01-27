@@ -821,9 +821,49 @@ gc.disable()
 
 ---
 
-## 六、延伸阅读
+## 六、模块与包
+
+### 6.1 Dunder Variables (模块级双下划线变量)
+
+**定义**：Python 模块自动拥有的特殊变量，用于模块元信息和行为控制。
+
+**常用变量**：
+
+| 变量 | 类型 | 描述 |
+|------|------|------|
+| `__name__` | str | 模块名，直接运行时为 `'__main__'` |
+| `__file__` | str | 模块文件路径 |
+| `__doc__` | str | 模块文档字符串 |
+| `__all__` | list | 控制 `from x import *` 的导出列表 |
+| `__dict__` | dict | 模块/对象的属性字典 |
+| `__package__` | str | 所属包名 |
+
+**入口点惯用法**：
+```python
+# 只有直接运行时执行，被import时不执行
+if __name__ == '__main__':
+    main()
+```
+
+**控制导出**：
+```python
+__all__ = ['public_func', 'PublicClass']  # 定义 * 导入的内容
+```
+
+**获取当前文件目录**：
+```python
+from pathlib import Path
+BASE_DIR = Path(__file__).parent.resolve()
+```
+
+**详细文章**：[Python双下划线变量详解](/articles/python/py-57-Python双下划线变量详解/)
+
+---
+
+## 七、延伸阅读
 
 - [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
 - [Rust核心概念索引](/articles/00-glossary/glossary-07-rust-concepts/)
 - [Python高难度面试问题](/articles/python/py-21-高难度面试问题/)
 - [Python量化面试题](/articles/python/py-55-Python量化面试题/)
+- [Python双下划线变量详解](/articles/python/py-57-Python双下划线变量详解/)
