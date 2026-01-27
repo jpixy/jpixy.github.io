@@ -215,6 +215,32 @@ public:
 
 **详细文章**：[深浅拷贝与移动语义详解](/articles/ccpp/cpp-14-深浅拷贝与移动语义详解/)
 
+**C++ vs Python 深浅拷贝对比**：
+
+| 概念 | C++ | Python |
+|------|-----|--------|
+| **变量本质** | 值（直接存储数据） | 引用（指向对象） |
+| **赋值 `b = a`** | 值复制（调用拷贝构造） | 引用绑定（共享对象） |
+| **浅拷贝** | 默认拷贝构造，指针成员指向同一地址 | `copy.copy()`，内部可变对象共享 |
+| **深拷贝** | 需手动实现 | `copy.deepcopy()` |
+| **危险** | double free（析构两次） | 无（引用计数管理） |
+
+```cpp
+// C++: 赋值 = 值复制（独立副本）
+std::vector<int> a = {1, 2, 3};
+std::vector<int> b = a;  // 拷贝构造，b 是独立副本
+b[0] = 100;              // a 不受影响
+```
+
+```python
+# Python: 赋值 = 引用绑定（共享对象）
+a = [1, 2, 3]
+b = a           # 同一对象
+b[0] = 100      # a 也变了！
+```
+
+> 详细对比见 [Python核心概念索引 - 深浅拷贝](/articles/00-glossary/glossary-06-python-concepts/#53-shallow-copy-vs-deep-copy-浅拷贝与深拷贝)
+
 ---
 
 ### 2.2 Perfect Forwarding (完美转发)

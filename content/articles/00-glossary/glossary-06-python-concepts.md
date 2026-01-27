@@ -821,6 +821,229 @@ gc.disable()
 
 ---
 
+### 5.3 Shallow Copy vs Deep Copy (浅拷贝与深拷贝)
+
+**定义**：
+- **浅拷贝 (Shallow Copy)**：创建新对象，但内部的可变对象仍然共享引用
+- **深拷贝 (Deep Copy)**：递归复制所有对象，完全独立
+
+**核心理解：Python 变量是引用**
+
+```python
+# Python 中赋值是引用绑定，不是复制！
+a = [1, 2, [3, 4]]
+b = a           # b 和 a 指向同一个对象
+b[0] = 100
+print(a)        # [100, 2, [3, 4]] — a 也变了！
+print(a is b)   # True — 同一个对象
+```
+
+**三种复制方式对比**：
+
+```python
+import copy
+
+original = [1, 2, [3, 4]]
+
+# 方式1：赋值 — 不复制，只是别名
+alias = original
+alias is original  # True
+
+# 方式2：浅拷贝 — 只复制外层容器
+shallow = copy.copy(original)
+# 或者：shallow = original[:]
+# 或者：shallow = list(original)
+shallow is original              # False — 外层是新对象
+shallow[2] is original[2]        # True — 内层仍共享！
+
+# 方式3：深拷贝 — 递归复制所有层
+deep = copy.deepcopy(original)
+deep is original                 # False
+deep[2] is original[2]           # False — 内层也是新对象
+```
+
+**浅拷贝的陷阱**：
+
+```python
+import copy
+
+matrix = [[0] * 3 for _ in range(3)]
+matrix_shallow = copy.copy(matrix)
+
+matrix_shallow[0][0] = 999
+print(matrix[0][0])  # 999 — 原矩阵也被修改了！
+
+# 正确做法：深拷贝
+matrix_deep = copy.deepcopy(matrix)
+matrix_deep[0][0] = 888
+print(matrix[0][0])  # 999 — 原矩阵不受影响
+```
+
+**常见浅拷贝方法**：
+
+| 方法 | 适用类型 | 示例 |
+|------|----------|------|
+| `copy.copy(x)` | 任意类型 | `copy.copy(obj)` |
+| 切片 `[:]` | 序列 | `lst[:]`, `s[:]` |
+| 构造函数 | 容器 | `list(lst)`, `dict(d)`, `set(s)` |
+| `.copy()` 方法 | list/dict/set | `lst.copy()`, `d.copy()` |
+| `dict(**d)` | dict | `{**d}` |
+| `[*lst]` | list | `[*lst]` |
+
+**深拷贝注意事项**：
+
+```python
+import copy
+
+# 1. 深拷贝比浅拷贝慢很多
+%timeit copy.copy(large_list)      # ~1μs
+%timeit copy.deepcopy(large_list)  # ~100μs
+
+# 2. 深拷贝处理循环引用
+a = [1, 2]
+a.append(a)  # 自引用
+b = copy.deepcopy(a)  # 正确处理，不会无限递归
+
+# 3. 不可变对象不会被复制
+t = (1, 2, 3)
+copy.deepcopy(t) is t  # True — 元组是不可变的，直接返回原对象
+
+# 4. 自定义深拷贝行为
+class MyClass:
+    def __deepcopy__(self, memo):
+        # 自定义复制逻辑
+        return MyClass(copy.deepcopy(self.data, memo))
+```
+
+---
+
+### 5.4 Python vs C++ 深浅拷贝对比
+
+**本质区别**：Python 变量是引用，C++ 变量默认是值。
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **变量本质** | 引用（指向对象） | 值（存储数据本身） |
+| **赋值语义** | 引用绑定（不复制） | 值复制（调用拷贝构造） |
+| **浅拷贝** | 新容器，内部引用共享 | 按位复制，指针成员指向同一地址 |
+| **深拷贝** | 递归复制所有对象 | 手动实现，复制指针指向的内容 |
+
+**Python 赋值 vs C++ 赋值**：
+
+```python
+# Python: 赋值 = 引用绑定
+a = [1, 2, 3]
+b = a           # b 和 a 指向同一对象
+b[0] = 100      # a 也变了
+```
+
+```cpp
+// C++: 赋值 = 值复制
+std::vector<int> a = {1, 2, 3};
+std::vector<int> b = a;  // 复制构造，b 是独立副本
+b[0] = 100;              // a 不受影响！
+```
+
+**C++ 的浅拷贝问题**：
+
+```cpp
+// C++ 浅拷贝：指针成员指向同一地址
+class Shallow {
+    int* data;
+public:
+    Shallow(int val) : data(new int(val)) {}
+    // 默认拷贝构造：浅拷贝
+    // Shallow(const Shallow& other) : data(other.data) {}
+    ~Shallow() { delete data; }  // 危险！double free
+};
+
+Shallow a(42);
+Shallow b = a;  // 浅拷贝：b.data 指向 a.data 同一地址
+// 析构时 double free！
+```
+
+```cpp
+// C++ 深拷贝：手动实现
+class Deep {
+    int* data;
+public:
+    Deep(int val) : data(new int(val)) {}
+    
+    // 深拷贝构造
+    Deep(const Deep& other) : data(new int(*other.data)) {}
+    
+    // 深拷贝赋值
+    Deep& operator=(const Deep& other) {
+        if (this != &other) {
+            delete data;
+            data = new int(*other.data);
+        }
+        return *this;
+    }
+    
+    ~Deep() { delete data; }
+};
+```
+
+**Python 不存在 C++ 的 double free 问题**：
+
+```python
+# Python 通过引用计数自动管理内存
+class Node:
+    def __init__(self, data):
+        self.data = data
+
+a = Node([1, 2, 3])
+b = copy.copy(a)  # 浅拷贝：b.data 和 a.data 指向同一列表
+
+# 不会 double free！引用计数管理内存
+del a  # 引用计数 -1
+del b  # 引用计数变为0时才释放
+```
+
+**快速对照表**：
+
+| 操作 | Python | C++ |
+|------|--------|-----|
+| `b = a` | 引用绑定（共享对象） | 值复制（独立副本） |
+| 浅拷贝列表 | `copy.copy(a)` | 默认拷贝构造（危险） |
+| 深拷贝列表 | `copy.deepcopy(a)` | 需手动实现 |
+| 修改 `b` 是否影响 `a` | 赋值=影响，浅拷贝=可能影响 | 赋值=不影响 |
+| 内存管理 | 自动（引用计数+GC） | 手动（或用智能指针） |
+
+**实际应用建议**：
+
+```python
+# Python 开发者常犯的错误
+def append_to_list(item, lst=[]):  # 默认参数是可变对象！
+    lst.append(item)
+    return lst
+
+print(append_to_list(1))  # [1]
+print(append_to_list(2))  # [1, 2] — 不是 [2]！
+
+# 正确做法
+def append_to_list(item, lst=None):
+    if lst is None:
+        lst = []
+    lst.append(item)
+    return lst
+```
+
+```python
+# 何时使用深拷贝
+# 1. 需要修改嵌套数据结构但不影响原数据
+# 2. 传递可变对象作为参数，担心被意外修改
+# 3. 缓存/备份嵌套数据
+
+# 何时使用浅拷贝
+# 1. 只需要新容器，内部元素是不可变的
+# 2. 性能敏感场景（深拷贝慢很多）
+# 3. 明确知道不会修改内部可变对象
+```
+
+---
+
 ## 六、模块与包
 
 ### 6.1 Dunder Variables (模块级双下划线变量)
@@ -860,7 +1083,868 @@ BASE_DIR = Path(__file__).parent.resolve()
 
 ---
 
-## 七、延伸阅读
+## 七、Python vs C++ 易混淆概念
+
+以下概念在 Python 和 C++ 中名字相同，但含义或行为完全不同，是跨语言开发者最容易踩的坑。
+
+---
+
+### 7.1 引用 (Reference)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **本质** | 变量就是引用，指向对象 | 引用是别名，绑定到变量 |
+| **可重新绑定** | ✅ 可以 | ❌ 不可以 |
+| **可为空** | ✅ 可以 (`None`) | ❌ 不可以（必须初始化） |
+| **语法** | 隐式（所有变量） | 显式 (`T&`) |
+
+```python
+# Python: 变量是引用，可重新绑定
+a = [1, 2, 3]
+b = a           # b 和 a 指向同一对象
+a = [4, 5, 6]   # a 重新绑定到新对象
+print(b)        # [1, 2, 3] — b 仍指向原对象
+```
+
+```cpp
+// C++: 引用是别名，不能重新绑定
+std::vector<int> a = {1, 2, 3};
+std::vector<int>& b = a;  // b 是 a 的别名
+// b = other;  // 这不是重新绑定！是赋值操作
+b[0] = 100;   // a 也变了
+```
+
+**易错点**：Python 开发者以为 C++ 引用可以像 Python 那样重新指向另一个对象。
+
+---
+
+### 7.2 静态 (Static)
+
+| 用法 | Python | C++ |
+|------|--------|-----|
+| **类变量** | 类体内直接定义 | `static` 成员变量 |
+| **静态方法** | `@staticmethod` | `static` 成员函数 |
+| **局部静态** | ❌ 不支持 | ✅ 保持值跨调用 |
+| **静态链接** | ❌ 无概念 | ✅ 内部链接 |
+
+```python
+# Python: 类变量 vs 实例变量
+class Counter:
+    count = 0  # 类变量（所有实例共享）
+    
+    def __init__(self):
+        Counter.count += 1
+        self.id = Counter.count  # 实例变量
+```
+
+```cpp
+// C++: static 有多重含义
+class Counter {
+    static int count;  // 类静态变量（需要类外定义）
+public:
+    int id;
+    Counter() : id(++count) {}
+    static int getCount() { return count; }  // 静态方法
+};
+int Counter::count = 0;  // 类外定义
+
+// 局部静态变量
+int nextId() {
+    static int id = 0;  // 只初始化一次，保持值
+    return ++id;
+}
+```
+
+**易错点**：Python 没有 C++ 的"局部静态变量"概念，需要用闭包或类来模拟。
+
+---
+
+### 7.3 私有 (Private)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **强制程度** | 约定俗成（可绕过） | 编译时强制 |
+| **语法** | `_` 或 `__` 前缀 | `private:` 关键字 |
+| **继承可见性** | 都可见 | 子类不可见 |
+
+```python
+# Python: "私有"只是约定，不是强制
+class Account:
+    def __init__(self):
+        self._balance = 0      # 约定私有（单下划线）
+        self.__secret = 42     # 名称修饰（双下划线）
+
+a = Account()
+print(a._balance)              # 可以访问！只是不建议
+print(a._Account__secret)      # 也可以访问！名称被修饰了
+```
+
+```cpp
+// C++: private 是编译时强制的
+class Account {
+private:
+    int balance = 0;
+    int secret = 42;
+public:
+    int getBalance() { return balance; }
+};
+
+Account a;
+// a.balance;  // 编译错误！无法访问
+```
+
+**易错点**：Python 的 `__` 不是真正私有，只是名称修饰防止意外覆盖。
+
+---
+
+### 7.4 虚函数 / 多态 (Virtual / Polymorphism)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **默认行为** | 所有方法都是"虚"的 | 需显式声明 `virtual` |
+| **性能开销** | 每次调用都动态查找 | 虚函数有 vtable 开销 |
+| **纯虚函数** | `@abstractmethod` | `virtual f() = 0` |
+
+```python
+# Python: 所有方法默认动态分发
+class Animal:
+    def speak(self):
+        return "..."
+
+class Dog(Animal):
+    def speak(self):  # 自动覆盖，无需声明
+        return "Woof!"
+
+def make_speak(animal):
+    print(animal.speak())  # 动态分发
+
+make_speak(Dog())  # Woof!
+```
+
+```cpp
+// C++: 需要显式声明 virtual
+class Animal {
+public:
+    virtual std::string speak() { return "..."; }  // 必须声明 virtual
+};
+
+class Dog : public Animal {
+public:
+    std::string speak() override { return "Woof!"; }
+};
+
+void makeSpeak(Animal& animal) {
+    std::cout << animal.speak();  // 多态调用
+}
+
+// 如果 speak() 不是 virtual，将调用 Animal::speak()！
+```
+
+**易错点**：C++ 忘记写 `virtual`，导致多态失效，调用基类方法。
+
+---
+
+### 7.5 Lambda / 闭包 (Lambda / Closure)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **语法** | `lambda x: expr` | `[captures](params) { body }` |
+| **多行** | ❌ 只能单表达式 | ✅ 支持 |
+| **捕获方式** | 自动捕获（引用） | 显式指定 `[=]` `[&]` `[x]` |
+| **可变性** | 可修改捕获变量 | 需要 `mutable` |
+
+```python
+# Python: 自动捕获外部变量（引用）
+def make_counter():
+    count = 0
+    def counter():
+        nonlocal count  # 需要声明才能修改
+        count += 1
+        return count
+    return counter
+
+# lambda 只能单表达式
+add = lambda x, y: x + y
+```
+
+```cpp
+// C++: 显式指定捕获方式
+auto make_counter() {
+    int count = 0;
+    return [count]() mutable {  // 值捕获 + mutable
+        return ++count;
+    };
+}
+
+// lambda 可以多行
+auto process = [](int x) {
+    int result = x * 2;
+    result += 10;
+    return result;
+};
+```
+
+**易错点**：
+1. Python lambda 不能有多条语句
+2. C++ lambda 默认捕获的是值的副本，修改需要 `mutable`
+3. Python 闭包捕获的是变量本身，不是值
+
+```python
+# Python 闭包陷阱
+funcs = [lambda: i for i in range(3)]
+print([f() for f in funcs])  # [2, 2, 2] 不是 [0, 1, 2]！
+
+# 修复：默认参数捕获当前值
+funcs = [lambda i=i: i for i in range(3)]
+print([f() for f in funcs])  # [0, 1, 2]
+```
+
+---
+
+### 7.6 None vs nullptr
+
+| 概念 | Python `None` | C++ `nullptr` |
+|------|---------------|---------------|
+| **本质** | 单例对象 | 空指针字面量 |
+| **类型** | `NoneType` | `std::nullptr_t` |
+| **比较方式** | `is None` | `== nullptr` |
+| **可调用方法** | ❌ 报错 | ❌ 未定义行为/崩溃 |
+
+```python
+# Python: None 是对象
+x = None
+print(type(x))    # <class 'NoneType'>
+print(x is None)  # True（用 is，不用 ==）
+
+# None 调用方法会报错
+# x.foo()  # AttributeError
+```
+
+```cpp
+// C++: nullptr 是空指针
+int* p = nullptr;
+if (p == nullptr) { /* ... */ }
+
+// nullptr 解引用是未定义行为
+// *p = 42;  // 崩溃或更糟
+```
+
+**易错点**：Python 用 `is None`，不要用 `== None`。
+
+---
+
+### 7.7 迭代器 (Iterator)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **协议** | `__iter__` + `__next__` | 5种迭代器类别 |
+| **失效问题** | 一般不存在 | 容器修改导致失效 |
+| **结束标志** | `StopIteration` 异常 | `it == end()` |
+
+```python
+# Python: 简单的迭代器协议
+class Counter:
+    def __init__(self, max):
+        self.max = max
+        self.n = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.n >= self.max:
+            raise StopIteration
+        self.n += 1
+        return self.n
+
+for i in Counter(3):
+    print(i)  # 1, 2, 3
+```
+
+```cpp
+// C++: 迭代器类别和失效
+std::vector<int> v = {1, 2, 3, 4, 5};
+
+for (auto it = v.begin(); it != v.end(); ) {
+    if (*it % 2 == 0) {
+        it = v.erase(it);  // 返回新的有效迭代器
+    } else {
+        ++it;
+    }
+}
+
+// 错误：迭代器失效
+for (auto it = v.begin(); it != v.end(); ++it) {
+    if (*it % 2 == 0) {
+        v.erase(it);  // 危险！it 已失效
+    }
+}
+```
+
+**易错点**：C++ 迭代器在容器修改后可能失效，Python 一般不存在这个问题。
+
+---
+
+### 7.8 异常处理 (Exception)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **性能开销** | 较大（异常很慢） | 零开销异常（不抛出时无开销） |
+| **常用程度** | 常用于控制流 | 仅用于异常情况 |
+| **声明异常** | 不需要 | `noexcept` 优化 |
+| **RAII** | 使用 `with` | 析构函数自动清理 |
+
+```python
+# Python: 异常常用于控制流（EAFP风格）
+def get_value(d, key):
+    try:
+        return d[key]
+    except KeyError:
+        return None
+
+# 或者
+value = d.get(key)  # 推荐
+```
+
+```cpp
+// C++: 异常仅用于异常情况（性能考虑）
+// HFT 中通常禁用异常
+std::optional<int> getValue(const std::map<std::string, int>& m, 
+                            const std::string& key) {
+    auto it = m.find(key);
+    if (it != m.end()) {
+        return it->second;
+    }
+    return std::nullopt;  // 不使用异常
+}
+
+// noexcept 优化
+void fastFunction() noexcept {
+    // 保证不抛异常，编译器可以优化
+}
+```
+
+**易错点**：Python 开发者可能过度使用异常，在 C++/HFT 中会导致性能问题。
+
+---
+
+### 7.9 const / 不可变
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **常量** | 无真正常量（约定全大写） | `const` 编译时强制 |
+| **不可变类型** | `int`, `str`, `tuple` | 无内置不可变类型 |
+| **const 方法** | 无 | `const` 成员函数 |
+
+```python
+# Python: 没有真正的 const
+MAX_SIZE = 100  # 约定常量（全大写）
+MAX_SIZE = 200  # 可以修改！只是约定
+
+# 不可变类型
+t = (1, 2, 3)
+# t[0] = 10  # TypeError
+
+# 但不可变类型内的可变对象可以修改
+t = ([1, 2], [3, 4])
+t[0].append(5)  # 可以！
+print(t)  # ([1, 2, 5], [3, 4])
+```
+
+```cpp
+// C++: const 是编译时强制的
+const int MAX_SIZE = 100;
+// MAX_SIZE = 200;  // 编译错误
+
+// const 成员函数
+class Point {
+    int x, y;
+public:
+    int getX() const { return x; }  // 不修改对象
+    void setX(int val) { x = val; } // 修改对象
+};
+
+const Point p{1, 2};
+p.getX();   // OK
+// p.setX(3);  // 编译错误
+```
+
+**易错点**：Python 的 `tuple` 不可变指的是元组本身，不是元素。
+
+---
+
+### 7.10 继承 (Inheritance)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **多重继承** | MRO (C3 线性化) | 菱形继承问题 |
+| **虚继承** | 无需关心 | `virtual` 继承 |
+| **调用父类** | `super()` | `Base::method()` |
+| **私有继承** | 无 | `private` / `protected` 继承 |
+
+```python
+# Python: MRO 自动解决菱形继承
+class A:
+    def greet(self):
+        return "A"
+
+class B(A):
+    def greet(self):
+        return "B"
+
+class C(A):
+    def greet(self):
+        return "C"
+
+class D(B, C):
+    pass
+
+print(D().greet())  # B
+print(D.__mro__)    # D -> B -> C -> A -> object
+```
+
+```cpp
+// C++: 菱形继承需要虚继承
+class A {
+public:
+    int value = 0;
+};
+
+class B : virtual public A {};  // 虚继承
+class C : virtual public A {};  // 虚继承
+
+class D : public B, public C {};
+
+D d;
+d.value = 42;  // 只有一份 A::value
+```
+
+**易错点**：C++ 不用虚继承的菱形继承会导致多份基类副本。
+
+---
+
+### 7.11 完整对照表
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| 变量本质 | 引用 | 值 |
+| 赋值语义 | 引用绑定 | 值复制 |
+| 引用 | 隐式，可重绑定 | 显式，不可重绑定 |
+| 私有 | 约定（`_`/`__`） | 强制（`private:`） |
+| 多态 | 默认动态分发 | 需要 `virtual` |
+| Lambda 捕获 | 自动（引用） | 显式（`[=]`/`[&]`） |
+| 迭代器失效 | 一般不存在 | 常见问题 |
+| 异常使用 | 控制流 | 仅异常情况 |
+| 常量 | 约定（全大写） | 强制（`const`） |
+| 多重继承 | MRO 自动解决 | 需虚继承 |
+| 内存管理 | 自动（GC） | 手动/智能指针 |
+| 类型检查 | 运行时 | 编译时 |
+
+---
+
+### 7.12 类型系统 (Type System)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **类型检查时机** | 运行时 | 编译时 |
+| **类型声明** | 可选（Type Hints） | 必须 |
+| **鸭子类型** | ✅ 原生支持 | 模板（编译时鸭子类型） |
+| **类型转换** | 隐式/显式 | 隐式/显式/强制 |
+
+```python
+# Python: 运行时类型检查，鸭子类型
+def process(obj):
+    return obj.read()  # 只要有 read() 方法就行
+
+# Type Hints（可选，不强制）
+def greet(name: str) -> str:
+    return f"Hello, {name}"
+
+greet(42)  # 运行时不报错！Type Hints 只是提示
+```
+
+```cpp
+// C++: 编译时类型检查
+void greet(const std::string& name) {
+    std::cout << "Hello, " << name;
+}
+
+// greet(42);  // 编译错误！
+
+// 模板：编译时鸭子类型
+template<typename T>
+auto process(T& obj) {
+    return obj.read();  // 编译时检查 T 是否有 read()
+}
+```
+
+**易错点**：Python Type Hints 不是强制的，mypy 等工具才会检查。
+
+---
+
+### 7.13 资源管理 (with vs RAII)
+
+| 概念 | Python `with` | C++ RAII |
+|------|---------------|----------|
+| **机制** | 显式使用 `with` | 自动（析构函数） |
+| **忘记用** | 资源泄漏 | 不会泄漏 |
+| **适用范围** | 代码块内 | 作用域内 |
+
+```python
+# Python: 需要显式使用 with
+# 正确
+with open('file.txt') as f:
+    data = f.read()
+# f 自动关闭
+
+# 错误（可能忘记关闭）
+f = open('file.txt')
+data = f.read()
+# 忘记 f.close() → 资源泄漏
+```
+
+```cpp
+// C++: RAII 自动管理
+void readFile() {
+    std::ifstream f("file.txt");  // 打开
+    std::string data;
+    f >> data;
+}  // 离开作用域，自动关闭
+
+// 智能指针同理
+void process() {
+    auto ptr = std::make_unique<Resource>();
+    ptr->use();
+}  // 自动释放，无需 delete
+```
+
+**易错点**：Python 必须记住用 `with`，C++ RAII 自动处理。
+
+---
+
+### 7.14 生成器 (Generator)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **语法** | `yield` | C++20 coroutine |
+| **易用性** | 非常简单 | 复杂 |
+| **普及度** | 广泛使用 | 较少使用 |
+
+```python
+# Python: 生成器非常简单
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+for num in fibonacci(10):
+    print(num)
+
+# 生成器表达式
+squares = (x*x for x in range(10))
+```
+
+```cpp
+// C++20: 协程复杂得多
+#include <coroutine>
+#include <generator>  // C++23
+
+std::generator<int> fibonacci(int n) {
+    int a = 0, b = 1;
+    for (int i = 0; i < n; ++i) {
+        co_yield a;
+        auto tmp = a;
+        a = b;
+        b = tmp + b;
+    }
+}
+
+// 使用
+for (int num : fibonacci(10)) {
+    std::cout << num << "\n";
+}
+```
+
+**易错点**：C++ 协程需要 C++20+，且样板代码多。
+
+---
+
+### 7.15 默认参数 (Default Arguments)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **求值时机** | 函数定义时（一次） | 每次调用时 |
+| **可变默认值** | 危险！共享同一对象 | 安全 |
+
+```python
+# Python 经典陷阱：可变默认参数
+def append(item, lst=[]):  # lst 在定义时创建一次
+    lst.append(item)
+    return lst
+
+print(append(1))  # [1]
+print(append(2))  # [1, 2] — 不是 [2]！
+
+# 正确做法
+def append(item, lst=None):
+    if lst is None:
+        lst = []
+    lst.append(item)
+    return lst
+```
+
+```cpp
+// C++: 默认参数每次调用求值（安全）
+std::vector<int> append(int item, std::vector<int> lst = {}) {
+    lst.push_back(item);
+    return lst;
+}
+
+std::cout << append(1).size();  // 1
+std::cout << append(2).size();  // 1 — 每次都是新 vector
+```
+
+**易错点**：Python 可变默认参数是最常见的 bug 来源之一。
+
+---
+
+### 7.16 字符串 (String)
+
+| 概念 | Python `str` | C++ `std::string` |
+|------|--------------|-------------------|
+| **可变性** | 不可变 | 可变 |
+| **编码** | Unicode (UTF-8/16/32) | 字节序列 |
+| **拼接效率** | 低（每次创建新对象） | 高（原地修改） |
+
+```python
+# Python: 字符串不可变
+s = "hello"
+# s[0] = 'H'  # TypeError
+
+s = s.upper()  # 创建新字符串
+
+# 拼接效率问题
+result = ""
+for i in range(10000):
+    result += str(i)  # 每次创建新对象！O(n²)
+
+# 正确做法
+result = "".join(str(i) for i in range(10000))  # O(n)
+```
+
+```cpp
+// C++: 字符串可变
+std::string s = "hello";
+s[0] = 'H';  // OK
+
+// 拼接效率高
+std::string result;
+result.reserve(50000);  // 预分配
+for (int i = 0; i < 10000; ++i) {
+    result += std::to_string(i);  // 原地追加
+}
+```
+
+**易错点**：Python 字符串拼接用 `+` 效率低，应该用 `join()` 或 f-string。
+
+---
+
+### 7.17 列表/数组 (List vs Vector)
+
+| 概念 | Python `list` | C++ `std::vector` |
+|------|---------------|-------------------|
+| **元素类型** | 可混合 | 必须同类型 |
+| **内存布局** | 指针数组 | 连续内存 |
+| **性能** | 较慢 | 快 |
+| **切片** | `lst[1:3]` | 无原生支持 |
+
+```python
+# Python: 异构列表
+lst = [1, "hello", 3.14, [1, 2]]  # 不同类型混合
+
+# 切片（创建新列表）
+sub = lst[1:3]  # ['hello', 3.14]
+
+# 列表推导式
+squares = [x*x for x in range(10)]
+```
+
+```cpp
+// C++: 同构 vector
+std::vector<int> v = {1, 2, 3, 4};
+// std::vector<???> mixed = {1, "hello"};  // 不行
+
+// 无原生切片，需要用迭代器
+std::vector<int> sub(v.begin() + 1, v.begin() + 3);
+
+// 范围 for
+for (int x : v) { /* ... */ }
+
+// C++20 ranges
+auto squares = std::views::iota(0, 10) 
+             | std::views::transform([](int x) { return x*x; });
+```
+
+**易错点**：Python 切片创建新列表（浅拷贝），不是视图。
+
+---
+
+### 7.18 字典/哈希表 (dict vs unordered_map)
+
+| 概念 | Python `dict` | C++ `std::unordered_map` |
+|------|---------------|--------------------------|
+| **有序性** | 保持插入顺序 (3.7+) | 无序 |
+| **键类型** | 必须可哈希 | 需要 `std::hash` |
+| **默认值** | `.get()` / `defaultdict` | `[]` 会插入默认值！ |
+
+```python
+# Python: dict 保持插入顺序
+d = {'b': 2, 'a': 1}
+list(d.keys())  # ['b', 'a']
+
+# 安全获取
+val = d.get('c', 0)  # 不存在返回 0
+
+# defaultdict
+from collections import defaultdict
+dd = defaultdict(list)
+dd['key'].append(1)  # 自动创建空列表
+```
+
+```cpp
+// C++: unordered_map 无序
+std::unordered_map<std::string, int> m = {{"b", 2}, {"a", 1}};
+// 遍历顺序不确定
+
+// 危险：[] 会插入默认值！
+int val = m["c"];  // 不存在？插入 {"c": 0}！
+
+// 安全获取
+auto it = m.find("c");
+if (it != m.end()) {
+    val = it->second;
+}
+
+// C++17
+if (auto it = m.find("c"); it != m.end()) {
+    val = it->second;
+}
+```
+
+**易错点**：C++ `map["key"]` 会自动插入，检查存在性要用 `find()` 或 `count()`。
+
+---
+
+### 7.19 函数重载 (Function Overloading)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **支持** | ❌ 不支持 | ✅ 支持 |
+| **替代方案** | 默认参数/可变参数 | - |
+| **运算符重载** | 魔术方法 | `operator` 关键字 |
+
+```python
+# Python: 不支持函数重载
+def add(a, b):
+    return a + b
+
+def add(a, b, c):  # 覆盖上面的定义！
+    return a + b + c
+
+add(1, 2)  # TypeError: missing argument 'c'
+
+# 替代方案
+def add(*args):
+    return sum(args)
+
+# 或使用 singledispatch
+from functools import singledispatch
+
+@singledispatch
+def process(arg):
+    raise NotImplementedError
+
+@process.register(int)
+def _(arg):
+    return arg * 2
+
+@process.register(str)
+def _(arg):
+    return arg.upper()
+```
+
+```cpp
+// C++: 支持函数重载
+int add(int a, int b) { return a + b; }
+int add(int a, int b, int c) { return a + b + c; }
+double add(double a, double b) { return a + b; }
+
+add(1, 2);      // 调用第一个
+add(1, 2, 3);   // 调用第二个
+add(1.0, 2.0);  // 调用第三个
+```
+
+**易错点**：Python 后定义的函数会覆盖前面的同名函数。
+
+---
+
+### 7.20 作用域 (Scope)
+
+| 概念 | Python | C++ |
+|------|--------|-----|
+| **变量声明** | 赋值即声明 | 需要类型声明 |
+| **块作用域** | ❌ 只有函数/类/模块 | ✅ `{}` 创建作用域 |
+| **捕获外部变量** | 需要 `nonlocal`/`global` | 自动可见 |
+
+```python
+# Python: 没有块作用域
+if True:
+    x = 10
+print(x)  # 10 — x 在 if 外仍可见！
+
+for i in range(5):
+    pass
+print(i)  # 4 — i 在循环外仍可见！
+
+# 修改外部变量需要声明
+def outer():
+    x = 10
+    def inner():
+        nonlocal x  # 需要声明
+        x = 20
+    inner()
+    print(x)  # 20
+```
+
+```cpp
+// C++: 块作用域
+if (true) {
+    int x = 10;
+}
+// std::cout << x;  // 编译错误：x 不可见
+
+for (int i = 0; i < 5; ++i) {
+    // ...
+}
+// std::cout << i;  // 编译错误：i 不可见
+
+// 可以直接访问外部变量
+void outer() {
+    int x = 10;
+    auto inner = [&x]() {
+        x = 20;  // 直接修改
+    };
+    inner();
+    std::cout << x;  // 20
+}
+```
+
+**易错点**：Python 循环变量在循环外仍然可见，C++ 不会。
+
+---
+
+## 八、延伸阅读
 
 - [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
 - [Rust核心概念索引](/articles/00-glossary/glossary-07-rust-concepts/)
