@@ -596,14 +596,24 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.1 大二层 (Large Layer 2)
 
-**定义**：将二层网络扩展到跨机房规模，让 VM 可以跨物理位置迁移而不改 IP。
+**一句话**：让整个数据中心像一个巨大的交换机，VM 可以随意迁移而不改 IP。
 
-**核心问题**：
-- 传统 VLAN 只有 4096 个
-- STP 扩展性差，阻塞冗余链路
-- VM 热迁移需要同一二层
+**为什么需要？**
+```
+传统问题:
+┌─────────────────────────────────────────────────────────────┐
+│ 1. VLAN 只有 4096 个 → 云计算百万租户不够用                  │
+│    原因: 802.1Q 只分配了 12bit 给 VLAN ID (2^12=4096)       │
+│                                                             │
+│ 2. VM 热迁移必须同一二层 → 传统网络跨机房很难                │
+│    原因: 改 IP = 连接断开 + DNS更新 + 防火墙改配置           │
+│                                                             │
+│ 3. STP 阻塞冗余链路 → 带宽浪费 50%                          │
+│    原因: 生成树防环，但代价是阻塞备份链路                    │
+└─────────────────────────────────────────────────────────────┘
+```
 
-**实现技术**：VXLAN、NVGRE、TRILL、SPB
+**实现技术**：VXLAN（主流）、NVGRE、TRILL、SPB
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#二大二层网络-large-layer-2)
 
@@ -611,19 +621,22 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.2 大三层 / Spine-Leaf
 
-**定义**：用纯三层路由替代二层交换，所有交换机都是路由器。
+**一句话**：用纯路由替代交换，消除 STP，所有链路同时工作。
 
 ```
-          Spine  Spine
-            ╲ ╱  ╲ ╱
-             ╳    ╳     ← 全互联，ECMP
-            ╱ ╲  ╱ ╲
-         Leaf Leaf Leaf
-           │    │    │
-         服务器群
+传统三层 (STP阻塞):         Spine-Leaf (全部Active):
+
+    Core                      Spine  Spine
+      │                         ╲ ╱  ╲ ╱
+   STP阻塞                       ╳    ╳   ← ECMP，负载均衡
+   部分链路                     ╱ ╲  ╱ ╲
+      │                      Leaf Leaf Leaf
+    Agg                         │    │    │
+      │                       服务器群
+    Acc
 ```
 
-**优点**：无 STP、ECMP 负载均衡、可预测延迟（最多2跳）、水平扩展
+**为什么更好**：无 STP、链路 100% 利用、任意两点最多 2 跳、水平扩展
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#三大三层网络-routed-layer-3)
 
@@ -631,28 +644,43 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.3 VXLAN
 
-**定义**：Virtual Extensible LAN，在三层网络上封装二层帧，支持 1600 万个虚拟网络。
+**一句话**：在三层网络上"虚拟"出二层网络，支持 1600 万个隔离网络。
+
+**解决什么问题**：
+| 问题 | 传统方案 | VXLAN |
+|------|----------|-------|
+| VLAN 数量 | 12位=4096 | 24位=1600万 |
+| 跨机房二层 | 需要直连 | 三层可达即可 |
+| STP 限制 | 扩展性差 | 底层是三层，无 STP |
 
 **关键概念**：
-- **VNI**：24位网络标识（vs VLAN 12位）
-- **VTEP**：执行封装/解封装的隧道端点
-- **Underlay**：底层物理 IP 网络
-- **Overlay**：上层虚拟二层网络
+- **VNI**：24位网络 ID（相当于超级 VLAN 号）
+- **VTEP**：隧道端点（负责封装/解封装）
+- **Underlay**：底层物理 IP 网络（高速公路）
+- **Overlay**：上层虚拟二层网络（公路上的专线）
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#vxlan-virtual-extensible-lan)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#23-vxlan-深入剖析)
 
 ---
 
 ### 5.4 BGP EVPN
 
-**定义**：Ethernet VPN，VXLAN 的控制面协议，自动分发 MAC/IP 地址映射。
+**一句话**：VXLAN 的"大脑"，让 VTEP 自动知道"谁在哪里"，避免广播风暴。
 
-**作用**：避免 ARP 广播泛洪，VTEP 间通过 BGP 交换主机位置信息
+**为什么需要？**
+```
+没有 EVPN (数据面学习):       有 EVPN (控制面分发):
 
-**路由类型**：
-- Type-2：MAC/IP 通告
-- Type-3：BUM 流量（广播/组播）
-- Type-5：IP 前缀
+VM1 问 "VM2 在哪?"           VM2 启动时，BGP 通告:
+      ↓                       "我的 MAC/IP 在 VTEP2"
+广播到所有 VTEP                     ↓
+(规模大了是灾难)              所有 VTEP 都知道了
+      ↓                             ↓
+只有 VTEP2 回复               VM1 问时，本地直接回答
+                              (无需广播)
+```
+
+**路由类型**：Type-2(MAC/IP)、Type-3(组播)、Type-5(子网前缀)
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#四bgp-evpn)
 
@@ -660,11 +688,25 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.5 Underlay vs Overlay
 
-**Underlay**：底层物理网络，只需保证 VTEP 间 IP 可达
+**一句话**：分层解耦，底层只管 IP 可达，上层虚拟网络随便折腾。
 
-**Overlay**：上层虚拟网络，用户/租户看到的逻辑网络，可以 IP 重叠
+```
+┌─────────────────────────────────────────────┐
+│  Overlay (虚拟网络)                          │
+│  - 租户看到的网络                            │
+│  - 可以 IP 地址重叠（不同租户用相同 10.x）   │
+│  - 变化频繁（VM 创建/删除/迁移）             │
+└─────────────────────────────────────────────┘
+              ↑ 封装/解封装 (VXLAN)
+┌─────────────────────────────────────────────┐
+│  Underlay (物理网络)                         │
+│  - 只需保证 VTEP 之间 IP 可达                │
+│  - 配置简单稳定，很少变动                    │
+│  - 纯三层路由 (BGP/OSPF)                    │
+└─────────────────────────────────────────────┘
 
-**好处**：解耦、简化管理、多租户隔离
+好处: 上层变化不影响底层，运维职责分离
+```
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#五underlay-与-overlay)
 
@@ -672,19 +714,31 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.6 SDN (Software Defined Networking)
 
-**定义**：将网络控制面从设备中抽离，集中到控制器统一管理。
+**一句话**：把网络设备的"大脑"抽出来集中管理，设备只负责转发。
 
-**数据中心方案**：VMware NSX、Cisco ACI、OpenStack Neutron、Calico、Cilium
+**解决什么问题**：
+- 传统：每台设备独立配置，变更慢，易出错
+- SDN：控制器统一下发策略，一处修改全网生效
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#六sdn-与数据中心网络)
+**典型方案**：VMware NSX、Cisco ACI、OpenStack Neutron、Calico、Cilium
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#八sdn-与数据中心网络)
 
 ---
 
 ### 5.7 SR-IOV
 
-**定义**：Single Root I/O Virtualization，网卡硬件虚拟化，直通给 VM。
+**一句话**：网卡硬件虚拟化，让 VM 直接访问网卡，跳过软件 vSwitch。
 
-**优点**：接近裸机网络性能，绕过软件 vSwitch
+**为什么需要**：
+```
+传统虚拟网络:              SR-IOV:
+VM → vSwitch → NIC         VM → VF → NIC (直通)
+   ↑                          ↑
+CPU处理，延迟高             硬件处理，接近裸机性能
+```
+
+**适用场景**：对延迟敏感的 HFT、NFV、RDMA 应用
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#103-sr-iov)
 
@@ -692,9 +746,11 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.8 ECMP
 
-**定义**：Equal-Cost Multi-Path，等价多路径负载均衡。
+**一句话**：多条等价路径同时用，告别 STP 浪费带宽。
 
-**作用**：多条等价路由同时使用，基于五元组 Hash 分流
+**原理**：基于五元组 Hash，同一流走同一路径（避免乱序），不同流负载均衡
+
+**注意**：大象流（单个大流量连接）无法分散，需要应用层多连接
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#61-ecmp-equal-cost-multi-path)
 
@@ -702,9 +758,16 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.9 MLAG / VPC
 
-**定义**：Multi-chassis Link Aggregation，跨两台交换机的链路聚合。
+**一句话**：两台交换机假装是一台，服务器双上行双活。
 
-**作用**：服务器双上行到两台 Leaf，实现冗余和带宽叠加
+**解决什么问题**：
+```
+单上行: 线断了就断网
+双上行+STP: 一条被阻塞，还是单活
+MLAG: 两条线同时用，任一交换机挂了另一台接管
+```
+
+**厂商名称**：Cisco vPC、Arista MLAG、华为 M-LAG、Juniper MC-LAG
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#62-mlag--vpc-多机箱链路聚合)
 
@@ -712,9 +775,15 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.10 Anycast Gateway
 
-**定义**：分布式网关，所有 Leaf 配置相同网关 IP/MAC。
+**一句话**：每个 Leaf 都是网关，VM 本地路由，不用绕到集中网关。
 
-**优点**：消除网关瓶颈，本地路由，低延迟
+**解决什么问题**：
+```
+集中式网关: 所有跨子网流量都绕到网关 → 瓶颈 + 延迟
+分布式网关: 每个 Leaf 都能路由 → 最短路径 + 高可用
+```
+
+**实现**：所有 Leaf 配置相同的网关 IP 和 MAC
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#63-anycast-gateway-分布式网关)
 
@@ -722,9 +791,14 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ### 5.11 DCI (Data Center Interconnect)
 
-**定义**：数据中心互联，连接多个物理 DC 成逻辑统一网络。
+**一句话**：把多个物理机房连成一个逻辑网络。
 
-**技术**：VXLAN+EVPN、OTV、VPLS、SD-WAN
+**使用场景**：
+- 灾备：主机房挂了切到备机房
+- 扩容：单机房容量不够
+- 就近服务：用户访问最近的机房
+
+**技术选型**：VXLAN+EVPN（主流）、OTV（Cisco）、SD-WAN（分支互联）
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#72-dci-data-center-interconnect)
 
