@@ -1,10 +1,10 @@
 +++
 title = "02.Networking Concepts"
-description = "网络核心概念速查：TCP/IP、Socket编程、高性能网络、协议优化等关键概念详解"
-date = 2026-01-26
+description = "网络核心概念速查：TCP/IP、Socket编程、高性能网络、数据中心架构(大二层/大三层/VXLAN/BGP EVPN/SDN)等关键概念详解"
+date = 2026-01-27
 draft = false
 [taxonomies]
-tags = ["Glossary", "Networking", "TCP", "UDP", "Reference"]
+tags = ["Glossary", "Networking", "TCP", "UDP", "VXLAN", "EVPN", "SDN", "DataCenter", "Reference"]
 +++
 
 # Networking Concepts
@@ -592,9 +592,149 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 ---
 
-## 五、延伸阅读
+## 五、数据中心网络架构
+
+### 5.1 大二层 (Large Layer 2)
+
+**定义**：将二层网络扩展到跨机房规模，让 VM 可以跨物理位置迁移而不改 IP。
+
+**核心问题**：
+- 传统 VLAN 只有 4096 个
+- STP 扩展性差，阻塞冗余链路
+- VM 热迁移需要同一二层
+
+**实现技术**：VXLAN、NVGRE、TRILL、SPB
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#二大二层网络-large-layer-2)
+
+---
+
+### 5.2 大三层 / Spine-Leaf
+
+**定义**：用纯三层路由替代二层交换，所有交换机都是路由器。
+
+```
+          Spine  Spine
+            ╲ ╱  ╲ ╱
+             ╳    ╳     ← 全互联，ECMP
+            ╱ ╲  ╱ ╲
+         Leaf Leaf Leaf
+           │    │    │
+         服务器群
+```
+
+**优点**：无 STP、ECMP 负载均衡、可预测延迟（最多2跳）、水平扩展
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#三大三层网络-routed-layer-3)
+
+---
+
+### 5.3 VXLAN
+
+**定义**：Virtual Extensible LAN，在三层网络上封装二层帧，支持 1600 万个虚拟网络。
+
+**关键概念**：
+- **VNI**：24位网络标识（vs VLAN 12位）
+- **VTEP**：执行封装/解封装的隧道端点
+- **Underlay**：底层物理 IP 网络
+- **Overlay**：上层虚拟二层网络
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#vxlan-virtual-extensible-lan)
+
+---
+
+### 5.4 BGP EVPN
+
+**定义**：Ethernet VPN，VXLAN 的控制面协议，自动分发 MAC/IP 地址映射。
+
+**作用**：避免 ARP 广播泛洪，VTEP 间通过 BGP 交换主机位置信息
+
+**路由类型**：
+- Type-2：MAC/IP 通告
+- Type-3：BUM 流量（广播/组播）
+- Type-5：IP 前缀
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#四bgp-evpn)
+
+---
+
+### 5.5 Underlay vs Overlay
+
+**Underlay**：底层物理网络，只需保证 VTEP 间 IP 可达
+
+**Overlay**：上层虚拟网络，用户/租户看到的逻辑网络，可以 IP 重叠
+
+**好处**：解耦、简化管理、多租户隔离
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#五underlay-与-overlay)
+
+---
+
+### 5.6 SDN (Software Defined Networking)
+
+**定义**：将网络控制面从设备中抽离，集中到控制器统一管理。
+
+**数据中心方案**：VMware NSX、Cisco ACI、OpenStack Neutron、Calico、Cilium
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#六sdn-与数据中心网络)
+
+---
+
+### 5.7 SR-IOV
+
+**定义**：Single Root I/O Virtualization，网卡硬件虚拟化，直通给 VM。
+
+**优点**：接近裸机网络性能，绕过软件 vSwitch
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#103-sr-iov)
+
+---
+
+### 5.8 ECMP
+
+**定义**：Equal-Cost Multi-Path，等价多路径负载均衡。
+
+**作用**：多条等价路由同时使用，基于五元组 Hash 分流
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#61-ecmp-equal-cost-multi-path)
+
+---
+
+### 5.9 MLAG / VPC
+
+**定义**：Multi-chassis Link Aggregation，跨两台交换机的链路聚合。
+
+**作用**：服务器双上行到两台 Leaf，实现冗余和带宽叠加
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#62-mlag--vpc-多机箱链路聚合)
+
+---
+
+### 5.10 Anycast Gateway
+
+**定义**：分布式网关，所有 Leaf 配置相同网关 IP/MAC。
+
+**优点**：消除网关瓶颈，本地路由，低延迟
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#63-anycast-gateway-分布式网关)
+
+---
+
+### 5.11 DCI (Data Center Interconnect)
+
+**定义**：数据中心互联，连接多个物理 DC 成逻辑统一网络。
+
+**技术**：VXLAN+EVPN、OTV、VPLS、SD-WAN
+
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#72-dci-data-center-interconnect)
+
+---
+
+## 六、延伸阅读
 
 - [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/)
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
 - [TCP调优深入详解(HFT)](/articles/networking/net-18-TCP调优深入详解/)
 - [io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
+- [数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/)
+- [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
