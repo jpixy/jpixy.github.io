@@ -15,7 +15,7 @@ tags = ["Glossary", "Networking", "TCP", "UDP", "VLAN", "STP", "VXLAN", "EVPN", 
 
 ## 零、二层三层网络基础
 
-> 详细文章：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/)
+> 详细文章：[二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/)
 
 ### 0.1 MAC 地址
 
@@ -101,7 +101,7 @@ STP 的致命问题:
 替代方案: Spine-Leaf + ECMP、MLAG、堆叠
 ```
 
-**详细文章**：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/#六stp-生成树协议)
+**详细文章**：[二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/#六stp-生成树协议)
 
 ---
 
@@ -123,7 +123,7 @@ STP 的致命问题:
 VXLAN 可以看作 "VLAN 的升级版"，解决了 VLAN 的所有局限
 ```
 
-**详细文章**：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/#七vxlan-virtual-extensible-lan)
+**详细文章**：[二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/#七vxlan-virtual-extensible-lan)
 
 ---
 
@@ -783,7 +783,7 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 **实现技术**：VXLAN（主流）、NVGRE、TRILL、SPB
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#二大二层网络-large-layer-2)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#二大二层网络-large-layer-2)
 
 ---
 
@@ -806,7 +806,7 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 **为什么更好**：无 STP、链路 100% 利用、任意两点最多 2 跳、水平扩展
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#三大三层网络-routed-layer-3)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#三大三层网络-routed-layer-3)
 
 ---
 
@@ -827,7 +827,7 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 - **Underlay**：底层物理 IP 网络（高速公路）
 - **Overlay**：上层虚拟二层网络（公路上的专线）
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#23-vxlan-深入剖析)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#23-vxlan-深入剖析)
 
 ---
 
@@ -850,7 +850,7 @@ VM1 问 "VM2 在哪?"           VM2 启动时，BGP 通告:
 
 **路由类型**：Type-2(MAC/IP)、Type-3(组播)、Type-5(子网前缀)
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#四bgp-evpn)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#四bgp-evpn)
 
 ---
 
@@ -876,7 +876,7 @@ VM1 问 "VM2 在哪?"           VM2 启动时，BGP 通告:
 好处: 上层变化不影响底层，运维职责分离
 ```
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#五underlay-与-overlay)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#五underlay-与-overlay)
 
 ---
 
@@ -890,7 +890,7 @@ VM1 问 "VM2 在哪?"           VM2 启动时，BGP 通告:
 
 **典型方案**：VMware NSX、Cisco ACI、OpenStack Neutron、Calico、Cilium
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#八sdn-与数据中心网络)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#八sdn-与数据中心网络)
 
 ---
 
@@ -908,7 +908,7 @@ CPU处理，延迟高             硬件处理，接近裸机性能
 
 **适用场景**：对延迟敏感的 HFT、NFV、RDMA 应用
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#103-sr-iov)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#103-sr-iov)
 
 ---
 
@@ -920,7 +920,7 @@ CPU处理，延迟高             硬件处理，接近裸机性能
 
 **注意**：大象流（单个大流量连接）无法分散，需要应用层多连接
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#61-ecmp-equal-cost-multi-path)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#61-ecmp-equal-cost-multi-path)
 
 ---
 
@@ -937,7 +937,7 @@ MLAG: 两条线同时用，任一交换机挂了另一台接管
 
 **厂商名称**：Cisco vPC、Arista MLAG、华为 M-LAG、Juniper MC-LAG
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#62-mlag--vpc-多机箱链路聚合)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#62-mlag--vpc-多机箱链路聚合)
 
 ---
 
@@ -953,7 +953,7 @@ MLAG: 两条线同时用，任一交换机挂了另一台接管
 
 **实现**：所有 Leaf 配置相同的网关 IP 和 MAC
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#63-anycast-gateway-分布式网关)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#63-anycast-gateway-分布式网关)
 
 ---
 
@@ -968,7 +968,7 @@ MLAG: 两条线同时用，任一交换机挂了另一台接管
 
 **技术选型**：VXLAN+EVPN（主流）、OTV（Cisco）、SD-WAN（分支互联）
 
-**详细文章**：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/#72-dci-data-center-interconnect)
+**详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#72-dci-data-center-interconnect)
 
 ---
 
@@ -978,5 +978,5 @@ MLAG: 两条线同时用，任一交换机挂了另一台接管
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
 - [TCP调优深入详解(HFT)](/articles/networking/net-18-TCP调优深入详解/)
 - [io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
-- [数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/)
+- [数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
 - [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)

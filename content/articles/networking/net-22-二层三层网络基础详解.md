@@ -1,5 +1,5 @@
 +++
-title = "00.二层三层网络基础详解"
+title = "22.二层三层网络基础详解"
 description = "网络基础概念深度解析：STP生成树协议、VLAN与VXLAN关系、MAC地址、ARP协议、二层交换与三层路由、802.1Q标签、广播域、MTU、链路聚合等核心知识"
 date = 2026-01-28
 draft = false
@@ -691,7 +691,7 @@ STP 的致命缺陷:
 
 **→ 现代数据中心几乎不用 STP，改用 Spine-Leaf 架构。**
 
-详细文章：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/)
+详细文章：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
 
 ---
 
@@ -826,7 +826,7 @@ VNI = 24 bit = 可支持约 1600 万个隔离网络
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-详细文章：[数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/)
+详细文章：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
 
 ---
 
@@ -1160,7 +1160,7 @@ IS-IS vs OSPF:
 
 ### 详细专题
 
-- [数据中心网络架构详解](/articles/networking/net-22-数据中心网络架构详解/) - Spine-Leaf、VXLAN、BGP EVPN 深入
+- [数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/) - Spine-Leaf、VXLAN、BGP EVPN 深入
 - [网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/) - OVS、Linux Bridge
 - [RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/) - 高性能网络
 
