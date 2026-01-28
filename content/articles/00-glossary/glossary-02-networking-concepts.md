@@ -1,15 +1,183 @@
 +++
 title = "02.Networking Concepts"
-description = "网络核心概念速查：TCP/IP、Socket编程、高性能网络、数据中心架构(大二层/大三层/VXLAN/BGP EVPN/SDN)等关键概念详解"
+description = "网络核心概念速查：二层三层基础(MAC/ARP/VLAN/STP/VXLAN)、TCP/IP、Socket编程、高性能网络、数据中心架构(大二层/大三层/VXLAN/BGP EVPN/SDN)等关键概念详解"
 date = 2026-01-27
 draft = false
 [taxonomies]
-tags = ["Glossary", "Networking", "TCP", "UDP", "VXLAN", "EVPN", "SDN", "DataCenter", "Reference"]
+tags = ["Glossary", "Networking", "TCP", "UDP", "VLAN", "STP", "VXLAN", "EVPN", "SDN", "DataCenter", "Reference"]
 +++
 
 # Networking Concepts
 
 本索引收录网络编程的核心概念，涵盖协议、Socket编程、高性能网络技术等。
+
+---
+
+## 零、二层三层网络基础
+
+> 详细文章：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/)
+
+### 0.1 MAC 地址
+
+**定义**：Media Access Control 地址，网卡的唯一标识符，48位（6字节）。
+
+```
+格式: 00:1A:2B:3C:4D:5E
+      └─OUI─┘└─设备ID─┘
+      (厂商)  (唯一编号)
+
+特殊地址:
+● 广播 MAC: FF:FF:FF:FF:FF:FF (发给所有设备)
+● 组播 MAC: 首字节最低位为 1
+```
+
+---
+
+### 0.2 ARP (Address Resolution Protocol)
+
+**定义**：地址解析协议，将 IP 地址解析为 MAC 地址。
+
+```
+场景: 主机A 想发数据给 192.168.1.100，但不知道 MAC
+
+流程:
+1. A 广播 ARP 请求: "谁是 192.168.1.100?"
+2. 目标主机单播回复: "我是，MAC 是 xx:xx:xx:xx:xx:xx"
+3. A 缓存结果，发送数据
+
+关键点:
+● ARP 只在同一二层网络内工作
+● 跨网段时，ARP 解析的是网关的 MAC，不是目标的
+```
+
+---
+
+### 0.3 广播域 vs 冲突域
+
+| 概念 | 定义 | 隔离设备 |
+|------|------|----------|
+| **冲突域** | 共享传输介质，同时发送会冲突 | 交换机隔离 |
+| **广播域** | 广播帧能到达的范围 | 路由器/VLAN 隔离 |
+
+**广播域过大的问题**：广播风暴、安全隐患、性能下降
+
+---
+
+### 0.4 VLAN (Virtual LAN)
+
+**定义**：虚拟局域网，在物理交换机上逻辑划分广播域。
+
+```
+802.1Q 标签: 4字节插入以太网帧
+● VLAN ID: 12 bit = 4096 个 VLAN
+● 这就是为什么传统 VLAN 最多 4096 个
+
+端口类型:
+● Access: 连终端，进出时处理标签
+● Trunk:  连交换机，保持标签，多 VLAN 共用一条线
+```
+
+**局限**：4096 不够用、不能跨三层、STP 限制 → 催生 VXLAN
+
+---
+
+### 0.5 STP (Spanning Tree Protocol)
+
+**定义**：生成树协议，通过阻塞冗余链路防止二层环路。
+
+```
+工作原理:
+1. 选根桥 (Root Bridge)
+2. 每交换机选根端口 (到根桥最近)
+3. 每链路选指定端口，其他阻塞
+
+STP 的致命问题:
+┌─────────────────────────────────────────────────────────────┐
+│  ● 阻塞链路 = 浪费带宽 (50% 浪费)                            │
+│  ● 收敛慢 = 30-50 秒 (云服务不可接受)                        │
+│  ● 规模限制 = 不建议超过 100 台交换机                        │
+└─────────────────────────────────────────────────────────────┘
+
+替代方案: Spine-Leaf + ECMP、MLAG、堆叠
+```
+
+**详细文章**：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/#六stp-生成树协议)
+
+---
+
+### 0.6 VLAN vs VXLAN
+
+| 特性 | VLAN | VXLAN |
+|------|------|-------|
+| **标识位数** | 12 bit (4096) | 24 bit (1600万) |
+| **封装** | 802.1Q 二层标签 | MAC-in-UDP 隧道 |
+| **跨三层** | 不支持 | 支持 (只需 IP 可达) |
+| **STP** | 需要 | 不需要 (底层是三层) |
+| **适用场景** | 传统企业 | 云计算/数据中心 |
+
+```
+关系:
+● VLAN = 物理二层网络的逻辑划分
+● VXLAN = 在三层网络上虚拟出来的二层网络
+
+VXLAN 可以看作 "VLAN 的升级版"，解决了 VLAN 的所有局限
+```
+
+**详细文章**：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/#七vxlan-virtual-extensible-lan)
+
+---
+
+### 0.7 MTU 与 MSS
+
+| 概念 | 全称 | 说明 |
+|------|------|------|
+| **MTU** | Maximum Transmission Unit | 链路层最大传输单元，以太网默认 1500 |
+| **MSS** | Maximum Segment Size | TCP 最大段大小，= MTU - 40 (IP+TCP头) |
+
+```
+VXLAN 的 MTU 问题:
+原始帧 1500 + VXLAN封装 50 = 1550 → 超过物理 MTU
+
+解决方案:
+● 物理网络 MTU 调大 (推荐 9000 Jumbo Frame)
+● 或 VM 内 MTU 调小 (1450)
+```
+
+---
+
+### 0.8 链路聚合 (LAG/LACP)
+
+**定义**：将多条物理链路捆绑成一条逻辑链路。
+
+| 术语 | 说明 |
+|------|------|
+| **LAG** | Link Aggregation Group，链路聚合组 |
+| **LACP** | Link Aggregation Control Protocol (802.3ad)，动态协商协议 |
+| **Bond** | Linux 的链路聚合实现 |
+
+```bash
+# Linux Bonding (LACP 模式)
+ip link add bond0 type bond mode 802.3ad
+ip link set eth0 master bond0
+ip link set eth1 master bond0
+```
+
+---
+
+### 0.9 路由协议简介
+
+| 协议 | 类型 | 适用场景 |
+|------|------|----------|
+| **OSPF** | IGP (链路状态) | 中大型企业网络 |
+| **IS-IS** | IGP (链路状态) | 运营商、大型数据中心 |
+| **BGP** | EGP (路径向量) | AS 间互联、数据中心 |
+
+```
+为什么数据中心用 BGP?
+● 互联网验证的可扩展性 (百万路由)
+● 可承载 EVPN (VXLAN 控制面)
+● 丰富的策略控制能力
+```
 
 ---
 

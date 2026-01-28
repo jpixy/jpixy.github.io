@@ -11,6 +11,8 @@ tags = ["Networking", "DataCenter", "VXLAN", "BGP", "EVPN", "SpineLeaf", "SDN"]
 
 本文深入介绍现代数据中心网络架构，包括大二层/大三层概念、Spine-Leaf 架构、Overlay 网络技术等。
 
+> **前置知识**：本文假设读者了解 MAC 地址、ARP、VLAN、STP 等二层网络基础。如需复习，请参阅：[二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/)
+
 ---
 
 ## 一、传统数据中心网络架构
@@ -1310,7 +1312,11 @@ ip route show | grep nexthop
 
 ## 相关文章
 
+### 基础概念
+- [二层三层网络基础详解](/articles/networking/net-00-二层三层网络基础详解/) - STP、VLAN、VXLAN、ARP、MAC 等基础概念详解
 - [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/) - 概念速查
+
+### 专题深入
 - [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
 - [网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
 - [OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
