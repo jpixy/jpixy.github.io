@@ -1,7 +1,7 @@
 :root {
     --font-cn: "Noto Serif SC", serif;
     --font-en: "Courier Prime", monospace;
-    --font-code: "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+    --font-code: "Courier Prime", monospace;
     --font-main: "Courier Prime", "Noto Serif SC", monospace, serif;
     
     --color-bg: #fafaf8;
