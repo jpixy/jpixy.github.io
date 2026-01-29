@@ -165,14 +165,14 @@ graph TD
 
 **Query Flow**：
 
-```
-1. 请求到达 → 提取客户端 IP
-2. Query本地 LRU Cache
-   - 命中 → 直接返回结果
-   - 未命中 → 继续
-3. Query Redis SISMEMBER
-4. 结果写入 LRU Cache (TTL 5min)
-5. 返回结果
+```mermaid
+graph LR
+    A[Request] --> B[Extract IP]
+    B --> C{LRU Cache?}
+    C -->|Hit| D[Return Result]
+    C -->|Miss| E[Query Redis]
+    E --> F[Write to LRU<br/>TTL 5min]
+    F --> D
 ```
 
 **Pros**：实现Simple，维护成本低
@@ -260,100 +260,37 @@ IP: 192.168.1.1
 
 **Radix Tree Principle**：
 
+Radix Tree = Compressed Prefix Tree (Trie)，相同前缀合并节省空间。
+
+```mermaid
+graph TD
+    A[Root] --> B[2001::/16]
+    A --> C[2607::/16]
+    B --> D[db8::/32 ⛔BANNED]
+    C --> E[f8b0::/32 ⛔BANNED]
+    D --> F[85a3::/48 ⛔BANNED]
 ```
-Radix Tree = Compressed Prefix Tree (Trie)
-Nodes with same prefix are merged to save space
 
-Example: Ban these IPv6
-- 2001:db8::/32
-- 2001:db8:85a3::/48
-- 2607:f8b0::/32
-
-                              ┌────────────────┐
-                              │     Root       │
-                              └───────┬────────┘
-                                      │
-              ┌───────────────────────┴───────────────────────┐
-              │                                               │
-              ▼                                               ▼
-      ┌──────────────┐                                ┌──────────────┐
-      │ 2001::/16    │                                │ 2607::/16    │
-      └──────┬───────┘                                └──────┬───────┘
-             │                                               │
-             ▼                                               ▼
-      ┌──────────────┐                                ┌──────────────┐
-      │ db8::/32     │                                │ f8b0::/32    │
-      │   * BANNED   │                                │   * BANNED   │
-      └──────┬───────┘                                └──────────────┘
-             │
-             ▼
-      ┌──────────────┐
-      │ 85a3::/48    │
-      │   * BANNED   │
-      └──────────────┘
-
-* = Ban flag
-Query: match from root down, return true when ban flag is hit
-```
+Query: 从 Root 向下匹配，遇到 BANNED 标记即返回 true。
 
 **完整架构**：
 
-```
-                                        ┌─────────────────────────┐
-                                        │    security.gov.x       │
-                                        └───────────┬─────────────┘
-                                                    │
-                                        ┌───────────▼─────────────┐
-                                        │    Sync Service         │
-                                        │                         │
-                                        │  - Parse IPv4 & IPv6    │
-                                        │  - Gen Bitmap (IPv4)    │
-                                        │  - Gen Radix Tree (v6)  │
-                                        └───────────┬─────────────┘
-                                                    │
-                              ┌─────────────────────┴─────────────────────┐
-                              │                                           │
-                              ▼                                           ▼
-                ┌───────────────────────┐                   ┌───────────────────────┐
-                │   Object Storage      │                   │   Message Queue       │
-                │                       │                   │   (Kafka)             │
-                │  ipv4_bitmap.bin      │                   │                       │
-                │  ipv6_radix.bin       │                   │  Real-time Push       │
-                └───────────┬───────────┘                   └───────────┬───────────┘
-                            │                                           │
-                       CDN Distribute                                   │
-                            │                                           │
-        ┌───────────────────┼───────────────────────────────────────────┼───────────────────┐
-        │                   │                                           │                   │
-        ▼                   ▼                                           ▼                   ▼
-┌───────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                      Edge Node                                                │
-│                                                                                               │
-│   ┌─────────────────────────────────────────────────────────────────────────────────────┐     │
-│   │                              Query Entry                                            │     │
-│   └────────────────────────────────┬────────────────────────────────────────────────────┘     │
-│                                    │                                                          │
-│                    ┌───────────────┴───────────────┐                                          │
-│                    │                               │                                          │
-│                    ▼                               ▼                                          │
-│   ┌────────────────────────────┐   ┌────────────────────────────┐                             │
-│   │         IPv4 Path          │   │         IPv6 Path          │                             │
-│   │                            │   │                            │                             │
-│   │  ┌──────────────────────┐  │   │  ┌──────────────────────┐  │                             │
-│   │  │     LRU Cache        │  │   │  │     LRU Cache        │  │                             │
-│   │  │     (100MB)          │  │   │  │     (1GB)            │  │                             │
-│   │  └──────────┬───────────┘  │   │  └──────────┬───────────┘  │                             │
-│   │             │ miss         │   │             │ miss         │                             │
-│   │             ▼              │   │             ▼              │                             │
-│   │  ┌──────────────────────┐  │   │  ┌──────────────────────┐  │                             │
-│   │  │     Bitmap           │  │   │  │    Radix Tree        │  │                             │
-│   │  │     (512MB)          │  │   │  │    (20-40GB)         │  │                             │
-│   │  │     O(1) lookup      │  │   │  │    O(128) lookup     │  │                             │
-│   │  └──────────────────────┘  │   │  └──────────────────────┘  │                             │
-│   │                            │   │                            │                             │
-│   └────────────────────────────┘   └────────────────────────────┘                             │
-│                                                                                               │
-└───────────────────────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[security.gov.x] --> B[Sync Service<br/>Parse IPv4 & IPv6<br/>Gen Bitmap + Radix Tree]
+    B --> C[Object Storage<br/>ipv4_bitmap.bin<br/>ipv6_radix.bin]
+    B --> D[Kafka<br/>Real-time Push]
+    C --> E[CDN]
+    E --> F[Edge Node]
+    D --> F
+    
+    subgraph F[Edge Node]
+        G[Query Entry] --> H{IP Type?}
+        H -->|IPv4| I[LRU Cache 100MB]
+        H -->|IPv6| J[LRU Cache 1GB]
+        I -->|miss| K[Bitmap 512MB<br/>O-1 lookup]
+        J -->|miss| L[Radix Tree 20-40GB<br/>O-128 lookup]
+    end
 ```
 
 **Performance Comparison**：
@@ -1022,48 +959,36 @@ Query: match from root down, return true when ban flag is hit
 
 ### 10.11 Data主权与地理隔离
 
+**Scenario**: 多个国家有类似封禁要求
+
+```mermaid
+graph TD
+    subgraph Country X
+        A1[Gov API X] --> B1[Sync X] --> C1[Bitmap X]
+    end
+    subgraph Country Y
+        A2[Gov API Y] --> B2[Sync Y] --> C2[Bitmap Y]
+    end
+    subgraph Country Z
+        A3[Gov API Z] --> B3[Sync Z] --> C3[Bitmap Z]
+    end
+    
+    U[User Request] --> R{Geo Router}
+    R -->|Region X| C1
+    R -->|Region Y| C2
+    R -->|Region Z| C3
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Data主权考量                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Scenario: 多个国家有类似BanRequires                                    │
-│                                                                 │
-│  架构设计:                                                       │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                                                         │    │
-│  │   Country X          Country Y          Country Z       │    │
-│  │   ┌─────────┐        ┌─────────┐        ┌─────────┐     │    │
-│  │   │ Gov API │        │ Gov API │        │ Gov API │     │    │
-│  │   └────┬────┘        └────┬────┘        └────┬────┘     │    │
-│  │        │                  │                  │          │    │
-│  │        ▼                  ▼                  ▼          │    │
-│  │   ┌─────────┐        ┌─────────┐        ┌─────────┐     │    │
-│  │   │ Sync X  │        │ Sync Y  │        │ Sync Z  │     │    │
-│  │   └────┬────┘        └────┬────┘        └────┬────┘     │    │
-│  │        │                  │                  │          │    │
-│  │        ▼                  ▼                  ▼          │    │
-│  │   ┌─────────┐        ┌─────────┐        ┌─────────┐     │    │
-│  │   │Bitmap X │        │Bitmap Y │        │Bitmap Z │     │    │
-│  │   └─────────┘        └─────────┘        └─────────┘     │    │
-│  │                                                         │    │
-│  │   users请求 → 根据地理Location路由 → 应用对应国家的Ban规则  │    │
-│  │                                                         │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-│  Key原则:                                                       │
-│  • Banlist按国家隔离存储                                        │
-│  • 边缘节点只加载服务区域的规则                                  │
-│  • 审计日志按国家分区存储                                        │
-│  • 避免跨境Data传输 (GDPR/Data本地化)                            │
-│                                                                 │
-│  冲突Solution:                                                       │
-│  • Country X RequiresBan，Country Y Requires不能Ban                    │
-│  • 解决: 按users所在地区应用规则，而Non-服务器所在地区              │
-│  • 法务确认: 书面记录决策依据                                    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**关键原则**:
+- 封禁列表按国家隔离存储
+- 边缘节点只加载服务区域的规则
+- 审计日志按国家分区存储
+- 避免跨境数据传输 (GDPR/数据本地化)
+
+**冲突处理**:
+- Country X 要求封禁，Country Y 要求不能封禁
+- 解决: 按用户所在地区应用规则
+- 法务确认: 书面记录决策依据
 
 ### 10.12 安全加固
 
@@ -1444,35 +1369,25 @@ Query: match from root down, return true when ban flag is hit
 
 ### 11.10 Solution选择决策树
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Solution选择决策树                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Q1: Banlist是否包含 IPv6?                                      │
-│  ├── 是 ──▶ Q3                                                  │
-│  └── 否 ──▶ Q2                                                  │
-│                                                                 │
-│  Q2: IPv4 Ban Count?                                              │
-│  ├── < 1000K ──▶ Redis SET + 本地 LRU                           │
-│  ├── 1000K-100M ──▶ Bloom Filter + Redis                         │
-│  └── > 100M ──▶ Bitmap (512MB)                                   │
-│                                                                 │
-│  Q3: IPv6 是单 IP 还是 CIDR 段?                                  │
-│  ├── 主要是 CIDR ──▶ Radix Tree (天然支持前缀匹配)              │
-│  └── 主要是单 IP ──▶ 分层 HashMap (按前缀分层)                  │
-│                                                                 │
-│  Q4: Latency Req?                                                   │
-│  ├── Seconds ──▶ 需要Push机制 (Kafka/WebSocket)                    │
-│  ├── Minutes ──▶ incremental轮询 (Every  5 min)                            │
-│  └── hour级 ──▶ Full Sync即可                                    │
-│                                                                 │
-│  Q5: QPS level?                                                   │
-│  ├── < 100K ──▶ 单层架构足够                                    │
-│  ├── 100K-1000K ──▶ Local Cache + 分布式存储                       │
-│  └── > 1000K ──▶ 边缘节点本地化 + eBPF 加速                     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Q1{包含 IPv6?} -->|No| Q2{IPv4 数量?}
+    Q1 -->|Yes| Q3{IPv6 格式?}
+    
+    Q2 -->|< 1M| S1[Redis SET + LRU]
+    Q2 -->|1M-100M| S2[Bloom Filter + Redis]
+    Q2 -->|> 100M| S3[Bitmap 512MB]
+    
+    Q3 -->|CIDR 为主| S4[Radix Tree]
+    Q3 -->|单 IP 为主| S5[分层 HashMap]
+    
+    Q4{时效要求?} -->|秒级| S6[Kafka/WebSocket Push]
+    Q4 -->|分钟级| S7[增量轮询 5min]
+    Q4 -->|小时级| S8[全量同步]
+    
+    Q5{QPS 级别?} -->|< 100K| S9[单层架构]
+    Q5 -->|100K-1M| S10[本地缓存 + 分布式]
+    Q5 -->|> 1M| S11[边缘节点 + eBPF]
 ```
 
 ---
