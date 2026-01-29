@@ -575,11 +575,25 @@ tr:nth-child(even) {
     padding: 1rem;
     border-radius: 6px;
     border: 1px solid var(--color-border);
+    overflow: visible;
 }
 
 .mermaid svg {
     max-width: 100%;
+    min-width: 300px;
     height: auto;
+    font-size: 14px;
+}
+
+/* Ensure code blocks don't scroll */
+pre {
+    overflow-x: visible;
+    overflow-wrap: break-word;
+}
+
+pre code {
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 hr {

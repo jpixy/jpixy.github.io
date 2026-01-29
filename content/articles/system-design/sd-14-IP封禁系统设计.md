@@ -41,28 +41,15 @@ tags = ["系统设计", "面试", "IPBan", "Bitmap", "Radix Tree", "分布式"]
 
 ### 2.2 Answer Framework
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Answer Framework (45min)                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  1. Clarify Questions (5min)                                             │
-│     └── Ask to confirm key params                                         │
-│                                                                 │
-│  2. Requirements Analysis (5min)                                             │
-│     └── Functional Requirements + Non-Functional Requirements                                    │
-│                                                                 │
-│  3. High-level Design (10min)                                            │
-│     └── Draw arch diagram                                    │
-│                                                                 │
-│  4. Deep Dive Design (15min)                                            │
-│     └── Data struct, sync, cache                              │
-│                                                                 │
-│  5. Extended Discussion (10min)                                            │
-│     └── Go-live, monitoring, edge cases                              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+**回答框架 (45分钟)**
+
+| 阶段 | 时间 | 内容 |
+|------|------|------|
+| 1. 澄清问题 | 5分钟 | 确认关键参数 |
+| 2. 需求分析 | 5分钟 | 功能需求 + 非功能需求 |
+| 3. 高层设计 | 10分钟 | 画架构图，解释核心组件 |
+| 4. 深入设计 | 15分钟 | 数据结构、同步策略、缓存设计 |
+| 5. 扩展讨论 | 10分钟 | 上线方案、监控告警、边界情况 |
 
 ---
 
@@ -89,308 +76,46 @@ tags = ["系统设计", "面试", "IPBan", "Bitmap", "Radix Tree", "分布式"]
 
 根据面试官的回答，会有以下几种典型Scenario：
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│                           Scenario Matrix                                    │
-├────────────┬─────────────┬─────────────┬─────────────┬──────────────────┤
-│   Scenario     │  Ban Count    │   IP Type   │  Latency Req   │    Solution       │
-├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
-│ SimpleScenario   │ < 1000K     │ IPv4        │ Minutes      │ Redis SET        │
-├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
-│ MediumScenario   │ 1000K-100M   │ IPv4        │ Minutes      │ Bloom + Redis    │
-├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
-│ Large Scale     │ > 100M       │ IPv4        │ Minutes      │ Bitmap (512MB)   │
-├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
-│ IPv6 Scenario  │ Any        │ IPv6/Mixed   │ Minutes      │ Radix Tree       │
-├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
-│ Real-time   │ Any        │ Any        │ Seconds        │ Push + Local Cache   │
-└────────────┴─────────────┴─────────────┴─────────────┴──────────────────┘
-```
-
----
-
-## 四、Requirements Analysis
-
-### 4.1 Functional Requirements (Functional Requirements)
-
-| 需求 | 描述 |
-|------|------|
-| IP Query | CheckAny IP 是否在Banlist中 |
-| list同步 | 定期从 security.gov.x 同步Banlist |
-| 实when更新 | 新增/unbans能及wheneffective |
-| 审计日志 | 记录Every timeBan操作（ComplianceRequires） |
-
-### 4.2 Non-Functional Requirements (Non-Functional Requirements)
-
-| 需求 | 目标值 | 说明 |
-|------|--------|------|
-| **Latency** | P99 < 1ms | 不能Impactnormal请求 |
-| **Throughput** | 支持 1000K+ QPS | Twitter level |
-| **可用性** | 99.99% | Government API 挂了也要能工作 |
-| **一致性** | 最终一致，Latency < 5min | Compliance窗口期 |
-| **准确性** | 零False Ban（false negative） | 宁可多封不可漏封 |
-
-### 4.3 容量估算
-
-假设 Twitter 规模：
-
-```
-日活users: 500M
-Every usersDaily请求: 100time
-日请求量: 50000M
-QPS (峰值): 50000M / 86400 × 3 ≈ 1700K QPS
-
-Banlist:
-- 假设Ban 1000M IPv4 (最坏情况)
-- 存储: Bitmap Solution = 512 MB
-- or: Redis SET = 40+ GB
-```
-
----
-
-## 五、Solution设计
-
-### 5.1 Scenario一：IPv4 小规模（< 10000K IP）
-
-**Solution**：Redis SET + Local Cache
-
-```mermaid
-graph TD
-    A[security.gov.x] --> B[Sync Service<br/>Sync every 5 min]
-    B --> C[Redis Cluster<br/>banned_ips SET<br/>~1-2 GB]
-    C --> D[App Server 1<br/>LRU Cache 100MB]
-    C --> E[App Server 2<br/>LRU Cache 100MB]
-    C --> F[App Server N<br/>LRU Cache 100MB]
-```
-
-**Query Flow**：
-
-```mermaid
-graph LR
-    A[Request] --> B[Extract IP]
-    B --> C{LRU Cache?}
-    C -->|Hit| D[Return Result]
-    C -->|Miss| E[Query Redis]
-    E --> F[Write to LRU<br/>TTL 5min]
-    F --> D
-```
-
-**Pros**：实现Simple，维护成本低
-**Cons**：Redis 成为瓶颈，不适合超Large Scale
-
----
-
-### 5.2 Scenario二：IPv4 Large Scale（> 100M IP）
-
-**Solution**：Bitmap 位图
-
-**核心Principle**：
-
-```
-IPv4 地址 = 32位无符号整数
-scope: 0 ~ 4,294,967,295 (4300M)
-
-Bitmap 表示:
-┌───┬───┬───┬───┬───┬───┬───┬───┐
-│ 0 │ 1 │ 0 │ 0 │ 1 │ 0 │ 1 │ 0 │  ← 1字节 = 8个IP
-└───┴───┴───┴───┴───┴───┴───┴───┘
-  ↑       ↑
-  │       └── IP=4 被Ban
-  └── IP=1 被Ban
-
-总Size = 2^32 / 8 = 512 MB (固定!)
-
-无论Ban 1个 还是 4300M个 IP，存储都是 512 MB
-```
-
-**架构图**：
-
-```mermaid
-graph TD
-    A[security.gov.x] --> B[Sync Service<br/>Generate Bitmap]
-    B --> C[Object Storage S3<br/>ip_bitmap.bin 512MB]
-    C --> D[CDN Distribute]
-    D --> E[Edge Node 1<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
-    D --> F[Edge Node 2<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
-    D --> G[Edge Node N<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
-```
-
-**Query算法**：
-
-```
-IP: 192.168.1.1
-   │
-   ▼
-转换为整数: 3232235777
-   │
-   ▼
-计算Location:
-  - byte_index = 3232235777 / 8 = 404029472
-  - bit_index  = 3232235777 % 8 = 1
-   │
-   ▼
-读取 bitmap[byte_index] 的第 bit_index 位
-   │
-   ▼
-1 = Ban, 0 = Allow
-```
-
-**Pros**：
-- 存储固定 512MB，与 IP 数量无关
-- Query O(1)，纳SecondsLatency
-- 无网络开销，本地内存操作
-
-**Cons**：
-- 不支持 IPv6
-- Every 个节点都需要 512MB 内存
-
----
-
-### 5.3 Scenario三：IPv6 orMixedScenario
-
-**Solution**：Radix Tree（基数树）
-
-**为什么 Bitmap 不Use case于 IPv6**：
-
-| 对比 | IPv4 | IPv6 |
-|------|------|------|
-| 地址位数 | 32 位 | 128 位 |
-| 地址空间 | 43 00M | 3.4 × 10^38 |
-| Bitmap Size | 512 MB | 无穷大 (不可行) |
-
-**Radix Tree Principle**：
-
-Radix Tree = Compressed Prefix Tree (Trie)，相同前缀合并节省空间。
-
-```mermaid
-graph TD
-    A[Root] --> B[2001::/16]
-    A --> C[2607::/16]
-    B --> D[db8::/32 ⛔BANNED]
-    C --> E[f8b0::/32 ⛔BANNED]
-    D --> F[85a3::/48 ⛔BANNED]
-```
-
-Query: 从 Root 向下匹配，遇到 BANNED 标记即返回 true。
-
-**完整架构**：
-
-```mermaid
-graph TD
-    A[security.gov.x] --> B[Sync Service<br/>Parse IPv4 & IPv6<br/>Gen Bitmap + Radix Tree]
-    B --> C[Object Storage<br/>ipv4_bitmap.bin<br/>ipv6_radix.bin]
-    B --> D[Kafka<br/>Real-time Push]
-    C --> E[CDN]
-    E --> F[Edge Node]
-    D --> F
-    
-    subgraph F[Edge Node]
-        G[Query Entry] --> H{IP Type?}
-        H -->|IPv4| I[LRU Cache 100MB]
-        H -->|IPv6| J[LRU Cache 1GB]
-        I -->|miss| K[Bitmap 512MB<br/>O-1 lookup]
-        J -->|miss| L[Radix Tree 20-40GB<br/>O-128 lookup]
-    end
-```
-
-**Performance Comparison**：
-
-| 指标 | IPv4 Bitmap | IPv6 Radix Tree |
-|------|-------------|-----------------|
-| 存储 | 512 MB (固定) | 20-40 GB (取决于Data量) |
-| QueryLatency | ~50 ns | ~1-5 μs |
-| 支持 CIDR | 需预Solution | 原生支持 |
-| 动态更新 | Simple (bit 翻转) | 复杂 (树操作) |
-
----
-
-## 六、Key设计细节
-
-### 6.1 Sync Strategy
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Sync Strategy                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Full Sync (Daily Full Sync)                                     │
-│  ─────────────────────────                                      │
-│  • Frequency: Daily 1 time (Off-peak hours)                                  │
-│  • Method: Fetch full list, rebuild data                          │
-│  • Purpose: Fix errors, eventual consistency                              │
-│                                                                 │
-│  Incremental Sync (Incremental Sync)                                    │
-│  ─────────────────────────                                      │
-│  • Frequency: Every  5 min                                               │
-│  • Method: Fetch changes only IP (new bans + unbans)                   │
-│  • Purpose: Quick response to policy                                        │
-│                                                                 │
-│  Real-time Push (Optional)                                                 │
-│  ─────────────────────────                                      │
-│  • Method: Gov API supports Webhook                              │
-│  • Latency: Secondseffective                                                │
-│  • Requires: Gov API support needed                                         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+| 场景 | 封禁数量 | IP 类型 | 时效要求 | 推荐方案 |
+|------|----------|---------|----------|----------|
+| 简单场景 | < 100万 | IPv4 | 分钟级 | Redis SET |
+| 中等场景 | 100万-1亿 | IPv4 | 分钟级 | Bloom + Redis |
+| 大规模 | > 1亿 | IPv4 | 分钟级 | Bitmap (512MB) |
+| IPv6 场景 | 任意 | IPv6/混合 | 分钟级 | Radix Tree |
+| 极端实时 | 任意 | 任意 | 秒级 | 推送 + 本地缓存 |
 
 ### 6.2 缓存 TTL 设计
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Cache TTL Tradeoff                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   TTL Too short (e.g. 1sec)                                              │
-│   ├── Pros: Baneffectivefast                                          │
-│   └── Cons: Low hit rate, high backend load                            │
-│                                                                 │
-│   TTL Too long (e.g. 1hour)                                            │
-│   ├── Pros: High hit rate, good perf                                │
-│   └── Cons: 解封Latencylong，users体验差                              │
-│                                                                 │
-│   Recommended Strategy:                                                      │
-│   ┌─────────────────────────────────────────────────────────┐   │
-│   │  Banned IP cache: TTL = sync interval (5min)                │   │
-│   │  Normal IP cache:   TTL = 1-5 min                        │   │
-│   │  Hot IPs:          Extended TTL (LRU auto managed)               │   │
-│   └─────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│   Key: Incremental Syncwhenproactively clear cache entries                           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+**缓存 TTL 权衡**
+
+| TTL 设置 | 优点 | 缺点 |
+|----------|------|------|
+| 太短 (1秒) | 封禁生效快 | 缓存命中率低 |
+| 太长 (1小时) | 命中率高，性能好 | 解封延迟长 |
+
+**推荐策略**:
+- 被封禁 IP: TTL = 同步间隔 (5分钟)
+- 正常 IP: TTL = 1-5 分钟
+- 热点 IP: LRU 自动管理
+- **关键**: 增量同步时主动清除相关缓存
 
 ### 6.3 热更新机制
 
+```mermaid
+graph LR
+    subgraph 双缓冲热更新
+        A[Active Bitmap v1] <-->|查询| Q[All Queries]
+        B[Standby Bitmap v2] <-->|后台加载| L[Load New Version]
+        A -.->|原子切换| B
+    end
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Double Buffer Hot Update                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   Issue: How to update without downtime 512MB Bitmap?                     │
-│                                                                 │
-│   ┌─────────────┐         ┌─────────────┐                       │
-│   │  Active     │◄────────│   Pointer      │◄──── All queries         │
-│   │  Bitmap     │         │   Switch      │                       │
-│   │  (v1)       │         └──────┬──────┘                       │
-│   └─────────────┘                │                              │
-│                                  │ Atomic Switch                      │
-│   ┌─────────────┐                │                              │
-│   │  Standby    │◄───────────────┘                              │
-│   │  Bitmap     │                                               │
-│   │  (v2 Loading) │◄──── Background load new version                            │
-│   └─────────────┘                                               │
-│                                                                 │
-│   Steps:                                                          │
-│   1. Download new version to standby                                 │
-│   2. Verify checksum (checksum)                                       │
-│   3. Atomic SwitchPointer                                                │
-│   4. Wait for old requests (5sec grace period)                           │
-│   5. Release old version memory                                              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**更新步骤**:
+1. 后台下载新版本到 Standby
+2. 验证 checksum
+3. 原子切换指针
+4. 等待旧请求完成 (5秒)
+5. 释放旧版本内存
 
 ### 6.4 Fallback Strategy
 
@@ -655,75 +380,54 @@ graph TD
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 10.2 eBPF/XDP 高性能filter（加分项）
+### 10.2 eBPF/XDP 高性能过滤（加分项）
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   eBPF/XDP Solution (Ultimate Performance)                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Traditional Path:                                                       │
-│  ┌───────┐   ┌───────┐   ┌───────┐   ┌───────┐   ┌───────┐     │
-│  │ NIC   │──▶│ Kernel  │──▶│ TCP   │──▶│ App   │──▶│ Check  │     │
-│  │       │   │ Stack │   │ Handshake  │   │ Solution  │   │ Ban  │     │
-│  └───────┘   └───────┘   └───────┘   └───────┘   └───────┘     │
-│                                                                 │
-│  XDP Path:                                                       │
-│  ┌───────┐   ┌───────┐                                          │
-│  │ NIC   │──▶│ XDP   │──▶ DROP (Ban) or PASS (Allow)            │
-│  │       │   │ Program  │   At NIC driver layerSolution，no need to enterKernel      │
-│  └───────┘   └───────┘                                          │
-│                                                                 │
-│  Performance Comparison:                                                       │
-│  ┌──────────────────┬────────────────┬────────────────┐         │
-│  │ Solution             │ Latency           │ Throughput           │         │
-│  ├──────────────────┼────────────────┼────────────────┤         │
-│  │ Application Layerfilter       │ ~100 μs        │ 100K pps       │         │
-│  │ iptables         │ ~10 μs         │ 1M pps         │         │
-│  │ eBPF/XDP         │ ~1 μs          │ 10M+ pps       │         │
-│  └──────────────────┴────────────────┴────────────────┘         │
-│                                                                 │
-│  Limitation: XDP Cannot read HTTP 头，CannotSolution CDN Scenario                 │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+**Traditional Path vs XDP Path**:
+
+```mermaid
+graph LR
+    subgraph Traditional Path
+        A1[NIC] --> B1[Kernel Stack] --> C1[TCP Handshake] --> D1[App] --> E1[Check Ban]
+    end
+    
+    subgraph XDP Path
+        A2[NIC] --> B2[XDP Program] --> C2{Decision}
+        C2 -->|DROP| D2[Ban]
+        C2 -->|PASS| E2[Allow]
+    end
 ```
 
-### 10.3 Bloom Filter Solution（Medium规模）
+**性能对比**:
 
+| 方案 | 延迟 | 吞吐 |
+|------|------|------|
+| 应用层过滤 | ~100 μs | 100K pps |
+| iptables | ~10 μs | 1M pps |
+| eBPF/XDP | ~1 μs | 10M+ pps |
+
+**限制**: XDP 无法读取 HTTP 头，不能处理 CDN 场景。
+
+### 10.3 Bloom Filter 方案（中等规模）
+
+**原理**: 概率数据结构，允许假阳性 (FP)，不允许假阴性 (FN)。
+
+```mermaid
+graph TD
+    A[IP] --> B{Bloom Filter}
+    B -->|Not Exist| C[✅ Allow<br/>100% 确定]
+    B -->|May Exist| D[Query Redis]
+    D -->|Exists| E[⛔ Ban<br/>True Positive]
+    D -->|Not Exist| F[✅ Allow<br/>False Positive]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│               Bloom Filter Solution (1000K-100M IP)                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Principle: Probabilistic DS, allows FP, no FN                    │
-│                                                                 │
-│  Query Flow:                                                       │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                                                         │    │
-│  │   IP ──▶ Bloom Filter ──┬── Not exist ──▶ Allow (100%certain)  │    │
-│  │                         │                               │    │
-│  │                         └── May exist ──▶ Query Redis     │    │
-│  │                                              │          │    │
-│  │                                    ┌─────────┴─────────┐│    │
-│  │                                    ▼                   ▼│    │
-│  │                                  Exists               Not exist│    │
-│  │                                  Ban              Allow  │    │
-│  │                               (True positive)           (False positive)│    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-│  Parameter Design (100M IP, 1% False positive率):                                 │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  Bloom Filter Size: ~120 MB                              │   │
-│  │  Hash hash functions: 7                                        │   │
-│  │  99% requests end at Bloom Filter (normal IP 直接Allow)       │   │
-│  │  1% False positive需要Query Redis 确认                            │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  Pros: 内存占用小，Queryfast                                        │
-│  Cons: No delete support (Unban needs rebuild)，有False positive                       │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**参数设计** (1亿 IP, 1% 假阳性率):
+- Bloom Filter 大小: ~120 MB
+- Hash 函数数量: 7
+- 99% 请求在 Bloom Filter 层结束
+- 1% 假阳性需要查询 Redis 确认
+
+**优点**: 内存占用小，查询快
+**缺点**: 不支持删除（解封需要重建），有假阳性
 
 ### 10.4 CIDR 聚合优化
 
@@ -1367,28 +1071,36 @@ graph TD
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 11.10 Solution选择决策树
+### 11.10 方案选择决策树
+
+**决策 1: 数据结构选择**
 
 ```mermaid
 graph TD
-    Q1{包含 IPv6?} -->|No| Q2{IPv4 数量?}
-    Q1 -->|Yes| Q3{IPv6 格式?}
-    
-    Q2 -->|< 1M| S1[Redis SET + LRU]
-    Q2 -->|1M-100M| S2[Bloom Filter + Redis]
-    Q2 -->|> 100M| S3[Bitmap 512MB]
-    
-    Q3 -->|CIDR 为主| S4[Radix Tree]
-    Q3 -->|单 IP 为主| S5[分层 HashMap]
-    
-    Q4{时效要求?} -->|秒级| S6[Kafka/WebSocket Push]
-    Q4 -->|分钟级| S7[增量轮询 5min]
-    Q4 -->|小时级| S8[全量同步]
-    
-    Q5{QPS 级别?} -->|< 100K| S9[单层架构]
-    Q5 -->|100K-1M| S10[本地缓存 + 分布式]
-    Q5 -->|> 1M| S11[边缘节点 + eBPF]
+    A{包含 IPv6?} -->|否| B{IPv4 数量}
+    A -->|是| C{IPv6 格式}
+    B -->|< 1M| D[Redis SET]
+    B -->|1M-100M| E[Bloom Filter]
+    B -->|> 100M| F[Bitmap]
+    C -->|CIDR| G[Radix Tree]
+    C -->|单IP| H[HashMap]
 ```
+
+**决策 2: 同步策略**
+
+| 时效要求 | 推荐方案 |
+|----------|----------|
+| 秒级 | Kafka/WebSocket 推送 |
+| 分钟级 | 增量轮询 (5min) |
+| 小时级 | 全量同步 |
+
+**决策 3: 架构复杂度**
+
+| QPS 级别 | 推荐架构 |
+|----------|----------|
+| < 100K | 单层架构 |
+| 100K - 1M | 本地缓存 + 分布式 |
+| > 1M | 边缘节点 + eBPF |
 
 ---
 
