@@ -119,38 +119,24 @@ graph LR
 
 ### 6.4 Fallback Strategy
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Fallback Strategy                                  │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Scenario1: Government API 不可用                                          │
-│  ───────────────────────                                        │
-│  • Trigger: 3 consecutive sync failures                                       │
-│  • Strategy: Use local snapshot                                │
-│  • Alert: P1 levelAlert，notify On-Call                               │
-│  • Compliance: Log audit, using cached data                          │
-│                                                                 │
-│  Scenario2: Edge node data corrupted                                         │
-│  ───────────────────────                                        │
-│  • Detect: checksum validation failed                                       │
-│  • Strategy: Auto rollback to prev version                                      │
-│  • Alert: P2 levelAlert                                             │
-│                                                                 │
-│  Scenario3: Large ScaleFalse Ban (Emergency rollback)                                    │
-│  ───────────────────────                                        │
-│  • Trigger: Ban rate spike or Complaints surge                              │
-│  • Strategy: One-click disable, allow all                                  │
-│  • Permission: Requires SRE lead approval                                     │
-│                                                                 │
-│  Priority Decision:                                                     │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  ComplianceMode (default): Reject when uncertain                        │    │
-│  │  Availability mode:      Allow when uncertain (needs approval)               │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Fallback Strategy
+- **Scenario1**: Government API 不可用
+• Trigger: 3 consecutive sync failures
+• Strategy: Use local snapshot
+• Alert: P1 levelAlert，notify On-Call
+• Compliance: Log audit, using cached data
+- **Scenario2**: Edge node data corrupted
+• Detect: checksum validation failed
+• Strategy: Auto rollback to prev version
+• Alert: P2 levelAlert
+- **Scenario3**: Large ScaleFalse Ban (Emergency rollback)
+• Trigger: Ban rate spike or Complaints surge
+• Strategy: One-click disable, allow all
+• Permission: Requires SRE lead approval
+- **Priority Decision**: 
+- **ComplianceMode (default)**: Reject when uncertain
+- **Availability mode**: Allow when uncertain (needs approval)
+
 
 ---
 
@@ -158,51 +144,34 @@ graph LR
 
 ### 7.1 阶段规划
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     8 Week Go-Live Plan                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Week 1-2: Infrastructure                                              │
-│  ─────────────────────                                          │
-│  • Connect Gov API, confirm specs                                    │
-│  • Build sync service prototype                                              │
-│  • Decide data structure (Bitmap/Radix Tree)                              │
-│                                                                 │
-│  Week 3-4: Core Development                                              │
-│  ─────────────────────                                          │
-│  • Implement sync service (full + incremental)                                    │
-│  • Implement edge filter module                                          │
-│  • Unit test + Integration test                                           │
-│                                                                 │
-│  Week 5: Shadow Mode (Shadow Mode)                                    │
-│  ─────────────────────                                          │
-│  • Deploy to production                                                │
-│  • Log only, no actual ban                                        │
-│  • Verify hit rate, FP rate、Latency                                      │
-│                                                                 │
-│  Week 6: Canary Release                                                │
-│  ─────────────────────                                          │
-│  • Day 1: 1% traffic with ban enabled                                        │
-│  • Day 2: 5% traffic                                                │
-│  • Day 3: 20% traffic                                               │
-│  • Day 4: 50% traffic                                               │
-│  • 24h observation each stage                                            │
-│                                                                 │
-│  Week 7: fullRelease                                                │
-│  ─────────────────────                                          │
-│  • 100% traffic with ban enabled                                             │
-│  • 7×24 On-call standby                                                 │
-│  • PrepareEmergency rollbackSolution                                              │
-│                                                                 │
-│  Week 8: Buffer Period                                                  │
-│  ─────────────────────                                          │
-│  • SolutionremainingIssue                                                  │
-│  • Performance tuning                                                      │
-│  • Documentation                                                      │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 8 Week Go-Live Plan
+- **Week 1-2**: Infrastructure
+• Connect Gov API, confirm specs
+• Build sync service prototype
+• Decide data structure (Bitmap/Radix Tree)
+- **Week 3-4**: Core Development
+• Implement sync service (full + incremental)
+• Implement edge filter module
+• Unit test + Integration test
+- **Week 5**: Shadow Mode (Shadow Mode)
+• Deploy to production
+• Log only, no actual ban
+• Verify hit rate, FP rate、Latency
+- **Week 6**: Canary Release
+• Day 1: 1% traffic with ban enabled
+• Day 2: 5% traffic
+• Day 3: 20% traffic
+• Day 4: 50% traffic
+• 24h observation each stage
+- **Week 7**: fullRelease
+• 100% traffic with ban enabled
+• 7×24 On-call standby
+• PrepareEmergency rollbackSolution
+- **Week 8**: Buffer Period
+• SolutionremainingIssue
+• Performance tuning
+• Documentation
+
 
 ### 7.2 Release检查清单
 
@@ -223,37 +192,24 @@ graph LR
 
 ### 8.1 核心指标
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Monitoring Metrics                                  │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Business Metrics                                                        │
-│  ─────────────────────                                          │
-│  • ip_filter_requests_total     # Total requests                      │
-│  • ip_filter_blocked_total      # Blocked count                      │
-│  • ip_filter_blocked_rate       # Ban rate (AnomalyDetect)             │
-│                                                                 │
-│  Performance Metrics                                                        │
-│  ─────────────────────                                          │
-│  • ip_filter_latency_p50        # QueryLatency P50                  │
-│  • ip_filter_latency_p99        # QueryLatency P99                  │
-│  • ip_filter_cache_hit_rate     # Cache hit rate                    │
-│                                                                 │
-│  Sync Metrics                                                        │
-│  ─────────────────────                                          │
-│  • sync_last_success_timestamp  # Last sync time              │
-│  • sync_duration_seconds        # Sync duration                      │
-│  • sync_errors_total            # Sync errors                  │
-│  • sync_ip_count                # Total banned IPs                  │
-│                                                                 │
-│  Consistency Metrics                                                      │
-│  ─────────────────────                                          │
-│  • edge_node_version_mismatch   # Version mismatch nodes            │
-│  • data_checksum_errors         # Datavalidation failed                  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Monitoring Metrics
+- Business Metrics
+• ip_filter_requests_total     # Total requests
+• ip_filter_blocked_total      # Blocked count
+• ip_filter_blocked_rate       # Ban rate (AnomalyDetect)
+- Performance Metrics
+• ip_filter_latency_p50        # QueryLatency P50
+• ip_filter_latency_p99        # QueryLatency P99
+• ip_filter_cache_hit_rate     # Cache hit rate
+- Sync Metrics
+• sync_last_success_timestamp  # Last sync time
+• sync_duration_seconds        # Sync duration
+• sync_errors_total            # Sync errors
+• sync_ip_count                # Total banned IPs
+- Consistency Metrics
+• edge_node_version_mismatch   # Version mismatch nodes
+• data_checksum_errors         # Datavalidation failed
+
 
 ### 8.2 Alert规则
 
@@ -289,62 +245,39 @@ graph LR
 
 ### 9.3 特殊Scenario
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Special Scenarios                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  NAT/NAT/Proxy Scenario                                                    │
-│  ─────────────────────                                          │
-│  Issue: Multi-user share same exit IP                                     │
-│  Impact: Ban一个 IP mayImpactmanynormalusers                          │
-│  Solution: No solution (Legal requirement)，but logImpactscope                         │
-│                                                                 │
-│  CDN/ReverseNAT/Proxy Scenario                                                │
-│  ─────────────────────                                          │
-│  Issue: Request via CDN, cant see real IP                               │
-│  Solution: Use X-Forwarded-For, beware spoof                        │
-│                                                                 │
-│  Mobile Network Scenario                                                    │
-│  ─────────────────────                                          │
-│  Issue: Carrier IP pool dynamic alloc                                      │
-│  Impact: Unbanned IP may go to other user                               │
-│  Solution: Rely on gov list updates                                          │
-│                                                                 │
-│  InternaltrafficScenario                                                    │
-│  ─────────────────────                                          │
-│  Issue: Internal service calls filtered                                    │
-│  Solution: Add internal IPs to whitelist                                      │
-│                                                                 │
-│  VPN/Tor Exit Nodes                                                │
-│  ─────────────────────                                          │
-│  Issue: User bypass ban via VPN/Tor                                 │
-│  Solution: Maintain known VPN/Tor 出口 IP list，OptionalBan                   │
-│  Note: May false ban normal VPN users                                     │
-│                                                                 │
-│  Cloud Provider IPs (AWS/GCP/Azure)                                     │
-│  ─────────────────────                                          │
-│  Issue: Attacker use cloud, IP changes often                           │
-│  Solution: Rely on gov list updates，consider behavior analysis                    │
-│                                                                 │
-│  Dual-Stack Network (Dual-Stack)                                           │
-│  ─────────────────────                                          │
-│  Issue: Same user may have both IPv4 and IPv6                      │
-│  Solution: Check both, ban if either blocked                        │
-│  Note: IPv4-mapped IPv6 (::ffff:1.2.3.4) needs specialSolution              │
-│                                                                 │
-│  Anycast Scenario                                                    │
-│  ─────────────────────                                          │
-│  Issue: User may route to different edge nodes                            │
-│  Solution: Ensure all nodes synced, same version                            │
-│                                                                 │
-│  IP Spoofing (Spoofing)                                              │
-│  ─────────────────────                                          │
-│  Issue: Attacker forge source IP                                           │
-│  Solution: TCP handshake protects, UDP needs verify                          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Special Scenarios
+- NAT/NAT/Proxy Scenario
+- **Issue**: Multi-user share same exit IP
+- **Impact**: Ban一个 IP mayImpactmanynormalusers
+- **Solution**: No solution (Legal requirement)，but logImpactscope
+- CDN/ReverseNAT/Proxy Scenario
+- **Issue**: Request via CDN, cant see real IP
+- **Solution**: Use X-Forwarded-For, beware spoof
+- Mobile Network Scenario
+- **Issue**: Carrier IP pool dynamic alloc
+- **Impact**: Unbanned IP may go to other user
+- **Solution**: Rely on gov list updates
+- InternaltrafficScenario
+- **Issue**: Internal service calls filtered
+- **Solution**: Add internal IPs to whitelist
+- VPN/Tor Exit Nodes
+- **Issue**: User bypass ban via VPN/Tor
+- **Solution**: Maintain known VPN/Tor 出口 IP list，OptionalBan
+- **Note**: May false ban normal VPN users
+- Cloud Provider IPs (AWS/GCP/Azure)
+- **Issue**: Attacker use cloud, IP changes often
+- **Solution**: Rely on gov list updates，consider behavior analysis
+- Dual-Stack Network (Dual-Stack)
+- **Issue**: Same user may have both IPv4 and IPv6
+- **Solution**: Check both, ban if either blocked
+- **Note**: IPv4-mapped IPv6 (::ffff:1.2.3.4) needs specialSolution
+- Anycast Scenario
+- **Issue**: User may route to different edge nodes
+- **Solution**: Ensure all nodes synced, same version
+- IP Spoofing (Spoofing)
+- **Issue**: Attacker forge source IP
+- **Solution**: TCP handshake protects, UDP needs verify
+
 
 ---
 
@@ -352,33 +285,21 @@ graph LR
 
 ### 10.1 filter层级选择
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Filter Layer Comparison                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Layer 3/4 (Network/Transport Layer)                                       │
-│  ─────────────────────────                                      │
-│  Location: Firewall, Load Balancer、eBPF/XDP                              │
-│  Pros: Ultra low latency (<1μs)，Low CPU overhead                               │
-│  Cons: Cannot get HTTP headers                                      │
-│  Use case: Large scale ban, perf sensitive                                  │
-│                                                                 │
-│  Layer 7 (Application Layer)                                                │
-│  ─────────────────────────                                      │
-│  Location: Nginx、App code                                           │
-│  Pros: Can get XFF, flexible response                      │
-│  Cons: Higher latency, more resources                                      │
-│  Use case: Need to identify real IP (CDN behind)                                  │
-│                                                                 │
-│  Recommended: Dual layer filter                                                  │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  L3/4: Fast filter known banned IPs (eBPF/iptables)              │    │
-│  │  L7:   Solution CDN Scenario，preciselyCheckreal IP                   │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Filter Layer Comparison
+- Layer 3/4 (Network/Transport Layer)
+- **Location**: Firewall, Load Balancer、eBPF/XDP
+- **Pros**: Ultra low latency (<1μs)，Low CPU overhead
+- **Cons**: Cannot get HTTP headers
+- **Use case**: Large scale ban, perf sensitive
+- Layer 7 (Application Layer)
+- **Location**: Nginx、App code
+- **Pros**: Can get XFF, flexible response
+- **Cons**: Higher latency, more resources
+- **Use case**: Need to identify real IP (CDN behind)
+- **Recommended**: Dual layer filter
+- **L3/4**: Fast filter known banned IPs (eBPF/iptables)
+- **L7**: Solution CDN Scenario，preciselyCheckreal IP
+
 
 ### 10.2 eBPF/XDP 高性能过滤（加分项）
 
@@ -431,235 +352,148 @@ graph TD
 
 ### 10.4 CIDR 聚合优化
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      CIDR Aggregation Strategy                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Issue: Gov may send many consecutive IPs                 │
-│                                                                 │
-│  Example:                                                           │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  Original: 192.168.1.0, 192.168.1.1, ... 192.168.1.255      │    │
-│  │  Aggregated: 192.168.1.0/24 (One rule replaces 256)            │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-│  实现Method:                                                       │
-│  • IPv4 Bitmap: No aggregation needed                       │
-│  • IPv6 Radix Tree: Native CIDR prefix match                       │
-│  • Redis SET: 需要预Solution聚合，or使用 Sorted Set scopeQuery         │
-│                                                                 │
-│  Aggregation Algorithm:                                                       │
-│  1. Convert IPs to int and sort                                   │
-│  2. Identify continuous ranges                                                 │
-│  3. Merge to max CIDR blocks                                           │
-│  4. Use Patricia Trie for storage                                │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- CIDR Aggregation Strategy
+- **Issue**: Gov may send many consecutive IPs
+- **Example**: 
+- **Original**: 192.168.1.0, 192.168.1.1, ... 192.168.1.255
+- **Aggregated**: 192.168.1.0/24 (One rule replaces 256)
+- **实现Method**: 
+• IPv4 Bitmap: No aggregation needed
+• IPv6 Radix Tree: Native CIDR prefix match
+• Redis SET: 需要预Solution聚合，or使用 Sorted Set scopeQuery
+- **Aggregation Algorithm**: 
+- 1. Convert IPs to int and sort
+- 2. Identify continuous ranges
+- 3. Merge to max CIDR blocks
+- 4. Use Patricia Trie for storage
+
 
 ### 10.5 long连接与 WebSocket Solution
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   long连接ScenarioSolution                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Issue: users已建立连接behind被Ban，e.g.何Solution？                        │
-│                                                                 │
-│  Solution 1: Check on connect (Recommended)                                       │
-│  ─────────────────────────                                      │
-│  • Check IP only on connection                                         │
-│  • 已建立连接不受新BanImpact                                      │
-│  • Pros: 实现Simple，users体验好                                    │
-│  • Cons: ExistsCompliance窗口期                                          │
-│                                                                 │
-│  Solution 2: Periodic recheck                                                │
-│  ─────────────────────────                                      │
-│  • Every  N min重新检查活跃连接的 IP                                │
-│  • Disconnect when ban found                                        │
-│  • Pros: Better Compliance                                              │
-│  • Cons: Increases complexity                                          │
-│                                                                 │
-│  Solution 3: Event driven                                                │
-│  ─────────────────────────                                      │
-│  • Push to conn manager on ban update                              │
-│  • Conn manager disconnects matched                                  │
-│  • Pros: Best real-time                                              │
-│  • Cons: Complex architecture                                                │
-│                                                                 │
-│  Recommended: Solution 1 + periodic full recheck (hourly)                            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- long连接ScenarioSolution
+- **Issue**: users已建立连接behind被Ban，e.g.何Solution？
+- **Solution 1**: Check on connect (Recommended)
+• Check IP only on connection
+• 已建立连接不受新BanImpact
+• Pros: 实现Simple，users体验好
+• Cons: ExistsCompliance窗口期
+- **Solution 2**: Periodic recheck
+• Every  N min重新检查活跃连接的 IP
+• Disconnect when ban found
+• Pros: Better Compliance
+• Cons: Increases complexity
+- **Solution 3**: Event driven
+• Push to conn manager on ban update
+• Conn manager disconnects matched
+• Pros: Best real-time
+• Cons: Complex architecture
+- **Recommended**: Solution 1 + periodic full recheck (hourly)
+
 
 ### 10.6 real IP 获取Strategy
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Real IP Identification                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Scenario: Request via CDN/LB/proxy, direct IP is proxy server                │
-│                                                                 │
-│  Request chain:                                                       │
-│  User (1.2.3.4) ──▶ CDN (5.6.7.8) ──▶ LB (10.0.0.1) ──▶ App    │
-│                                                                 │
-│  获取real IP 的Method:                                             │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  Header              │ Example值                           │    │
-│  ├──────────────────────┼──────────────────────────────────┤    │
-│  │  X-Forwarded-For     │ 1.2.3.4, 5.6.7.8                 │    │
-│  │  X-Real-IP           │ 1.2.3.4                          │    │
-│  │  CF-Connecting-IP    │ 1.2.3.4 (Cloudflare specific)        │    │
-│  │  True-Client-IP      │ 1.2.3.4 (Akamai specific)            │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-│  Security Risk: X-Forwarded-For Can be spoofed!                             │
-│                                                                 │
-│  Protection Strategy:                                                       │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  1. Trust headers from known proxies only                           │    │
-│  │  2. Config trusted proxy list (CDN IP range)                         │    │
-│  │  3. Parse XFF right-to-left, get first untrusted      │    │
-│  │  4. For suspicious, ban both direct and claimed IP        │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Real IP Identification
+- **Scenario**: Request via CDN/LB/proxy, direct IP is proxy server
+- **Request chain**: 
+- User (1.2.3.4) ▶ CDN (5.6.7.8) ▶ LB (10.0.0.1) ▶ App
+- **获取real IP 的Method**: 
+- Header               Example值
+- X-Forwarded-For      1.2.3.4, 5.6.7.8
+- X-Real-IP            1.2.3.4
+- CF-Connecting-IP     1.2.3.4 (Cloudflare specific)
+- True-Client-IP       1.2.3.4 (Akamai specific)
+- **Security Risk**: X-Forwarded-For Can be spoofed!
+- **Protection Strategy**: 
+- 1. Trust headers from known proxies only
+- 2. Config trusted proxy list (CDN IP range)
+- 3. Parse XFF right-to-left, get first untrusted
+- 4. For suspicious, ban both direct and claimed IP
+
 
 ### 10.7 错误响应设计
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Ban Response Design                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  HTTP Status Code Selection:                                                │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  403 Forbidden      - Most common, clear access denied           │   │
-│  │  451 Unavailable    - Unavailable for legal reasons (RFC 7725)        │   │
-│  │       For Legal                                          │   │
-│  │       Reasons       - Recommended用于GovernmentComplianceScenario               │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  Response Content (Needs legal review):                                          │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  {                                                       │   │
-│  │    "error": "access_denied",                             │   │
-│  │    "message": "Access to this service is not available   │   │
-│  │                in your region.",                         │   │
-│  │    "support": "support@company.com"                      │   │
-│  │  }                                                       │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  Note事项:                                                       │
-│  • Dont reveal ban reason (Avoid leaking Strategy)                           │
-│  • Dont show user IP (Privacy protection)                                    │
-│  • 提供客服联系Method (SolutionFalse Ban)                                   │
-│  • Response Content需多语言支持                                          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Ban Response Design
+- **HTTP Status Code Selection**: 
+- 403 Forbidden      - Most common, clear access denied
+- 451 Unavailable    - Unavailable for legal reasons (RFC 7725)
+- For Legal
+- Reasons       - Recommended用于GovernmentComplianceScenario
+- **Response Content (Needs legal review)**: 
+- {
+- **"error"**: "access_denied",
+- **"message"**: "Access to this service is not available
+- in your region.",
+- **"support"**: "support@company.com"
+- }
+- **Note事项**: 
+• Dont reveal ban reason (Avoid leaking Strategy)
+• Dont show user IP (Privacy protection)
+• 提供客服联系Method (SolutionFalse Ban)
+• Response Content需多语言支持
+
 
 ### 10.8 Government API 对接细节
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Government API 对接考量                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  需确认的接口规格:                                               │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  Issue                      │ Impact                        │   │
-│  ├────────────────────────────┼─────────────────────────────┤   │
-│  │  认证Method (API Key/mTLS)   │ 安全架构设计                │   │
-│  │  速率Limitation                  │ Sync Strategy设计                │   │
-│  │  Data格式 (JSON/Protobuf)  │ 解析逻辑                    │   │
-│  │  分页Method                  │ Full Sync实现                │   │
-│  │  incremental接口 (有/无)          │ 同步效率                    │   │
-│  │  SLA 保证                  │ Fallback Strategy设计                │   │
-│  │  变更notify (Push/轮询)      │ 实when性                      │   │
-│  │  测试环境                  │ 开发调试                    │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  安全Requires:                                                       │
-│  • 使用 mTLS 双向认证                                            │
-│  • API 密钥定期轮换                                              │
-│  • 传输加密 (TLS 1.3)                                            │
-│  • 审计所有 API 调用                                             │
-│                                                                 │
-│  容错设计:                                                       │
-│  • 指数退避重试                                                  │
-│  • 熔断器Mode (连续失败behind暂停调用)                               │
-│  • 备用 API 端点                                                 │
-│  • 离线Mode (使用Local Cache)                                       │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Government API 对接考量
+- **需确认的接口规格**: 
+- Issue                       Impact
+- 认证Method (API Key/mTLS)    安全架构设计
+- 速率Limitation                   Sync Strategy设计
+- Data格式 (JSON/Protobuf)   解析逻辑
+- 分页Method                   Full Sync实现
+- incremental接口 (有/无)           同步效率
+- SLA 保证                   Fallback Strategy设计
+- 变更notify (Push/轮询)       实when性
+- 测试环境                   开发调试
+- **安全Requires**: 
+• 使用 mTLS 双向认证
+• API 密钥定期轮换
+• 传输加密 (TLS 1.3)
+• 审计所有 API 调用
+- **容错设计**: 
+• 指数退避重试
+• 熔断器Mode (连续失败behind暂停调用)
+• 备用 API 端点
+• 离线Mode (使用Local Cache)
+
 
 ### 10.9 Data隐私Compliance (GDPR)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Data隐私考量                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  IP 地址是否属于个人Data?                                        │
-│  ───────────────────────                                        │
-│  • GDPR 观点: 是 (可关联到个人)                                  │
-│  • Impact: 存储和Solution需要合法依据                                  │
-│                                                                 │
-│  Compliance措施:                                                       │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  1. 法律依据: "合法利益" or "法律义务"                   │   │
-│  │  2. Data最小化: 只存储必要信息                           │   │
-│  │  3. 保留期限: 明确日志保留when间                           │   │
-│  │  4. 访问控制: Limitation谁能访问Banlist                       │   │
-│  │  5. 审计追踪: 记录谁访问了Data                           │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  审计日志保留:                                                   │
-│  • Ban记录: 按法规Requires (通常 2-7 年)                            │
-│  • 访问日志: 90 天 (性能考虑)                                    │
-│  • 需要与法务确认具体Requires                                        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Data隐私考量
+- IP 地址是否属于个人Data?
+• GDPR 观点: 是 (可关联到个人)
+• Impact: 存储和Solution需要合法依据
+- **Compliance措施**: 
+- **1. 法律依据**: "合法利益" or "法律义务"
+- **2. Data最小化**: 只存储必要信息
+- **3. 保留期限**: 明确日志保留when间
+- **4. 访问控制**: Limitation谁能访问Banlist
+- **5. 审计追踪**: 记录谁访问了Data
+- **审计日志保留**: 
+• Ban记录: 按法规Requires (通常 2-7 年)
+• 访问日志: 90 天 (性能考虑)
+• 需要与法务确认具体Requires
+
 
 ### 10.10 容量规划与扩展
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      容量规划                                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  当前容量 vs 未来增long                                            │
-│  ─────────────────────────                                      │
-│  • Ban IP 数量: 当前 100M → 未来 1000M (Bitmap 无Impact)            │
-│  • QPS: 当前 1000K → 未来 10000K (需增加边缘节点)                │
-│  • 边缘节点: 当前 50 → 未来 200 (CDN 成本线性增long)               │
-│                                                                 │
-│  扩展Strategy                                                        │
-│  ─────────────────────────                                      │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  维度           │ 扩展Method                               │   │
-│  ├──────────────────┼───────────────────────────────────────┤   │
-│  │  QPS            │ 增加边缘节点 (水平扩展)                │   │
-│  │  IPv4 数量      │ Bitmap 固定 512MB，无需扩展            │   │
-│  │  IPv6 数量      │ Radix Tree 分片，按前缀分区            │   │
-│  │  同步Frequency       │ 增加同步服务实例，分区并行             │   │
-│  │  存储           │ S3 自动扩展，增加版本保留              │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  瓶颈分析                                                        │
-│  ─────────────────────────                                      │
-│  • Government API 速率Limitation → 多账号/IP 轮询                            │
-│  • CDN 带宽 → Incremental Sync减少传输量                                 │
-│  • 边缘节点内存 → IPv6 Radix Tree 分片                           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 容量规划
+- 当前容量 vs 未来增long
+• Ban IP 数量: 当前 100M → 未来 1000M (Bitmap 无Impact)
+• QPS: 当前 1000K → 未来 10000K (需增加边缘节点)
+• 边缘节点: 当前 50 → 未来 200 (CDN 成本线性增long)
+- 扩展Strategy
+- 维度            扩展Method
+- QPS             增加边缘节点 (水平扩展)
+- IPv4 数量       Bitmap 固定 512MB，无需扩展
+- IPv6 数量       Radix Tree 分片，按前缀分区
+- 同步Frequency        增加同步服务实例，分区并行
+- 存储            S3 自动扩展，增加版本保留
+- 瓶颈分析
+• Government API 速率Limitation → 多账号/IP 轮询
+• CDN 带宽 → Incremental Sync减少传输量
+• 边缘节点内存 → IPv6 Radix Tree 分片
+
 
 ### 10.11 Data主权与地理隔离
 
@@ -696,102 +530,70 @@ graph TD
 
 ### 10.12 安全加固
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      安全考量                                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Banlist保护                                                    │
-│  ─────────────────────────                                      │
-│  • 威胁: Banlist泄露may被利用 (攻击者知道哪些 IP 被监控)       │
-│  • 措施:                                                         │
-│    - 传输加密 (TLS 1.3)                                          │
-│    - 存储加密 (S3 SSE-S3 or SSE-KMS)                             │
-│    - 访问控制 (IAM 最小Permission)                                     │
-│    - 审计日志 (谁访问了Banlist)                                 │
-│                                                                 │
-│  API 安全                                                        │
-│  ─────────────────────────                                      │
-│  • Government API 认证: mTLS 双向认证                                  │
-│  • Internal API: JWT + RBAC                                          │
-│  • 密钥管理: HashiCorp Vault or AWS Secrets Manager              │
-│  • 密钥轮换: Every  90 天自动轮换                                    │
-│                                                                 │
-│  防篡改                                                          │
-│  ─────────────────────────                                      │
-│  • Bitmap 文件签名: SHA-256 + 数字签名                           │
-│  • 边缘节点验证签名behind才加载                                      │
-│  • 签名密钥与Data分离存储                                        │
-│                                                                 │
-│  DDoS 防护                                                       │
-│  ─────────────────────────                                      │
-│  • IP filter与 DDoS 防护解耦                                       │
-│  • eBPF 在Kernel层filter，不消耗Application Layer资源                           │
-│  • 速率Limitation在 IP filter之前                                        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 安全考量
+- Banlist保护
+• 威胁: Banlist泄露may被利用 (攻击者知道哪些 IP 被监控)
+• 措施:
+- 传输加密 (TLS 1.3)
+- 存储加密 (S3 SSE-S3 or SSE-KMS)
+- 访问控制 (IAM 最小Permission)
+- 审计日志 (谁访问了Banlist)
+- API 安全
+• Government API 认证: mTLS 双向认证
+• Internal API: JWT + RBAC
+• 密钥管理: HashiCorp Vault or AWS Secrets Manager
+• 密钥轮换: Every  90 天自动轮换
+- 防篡改
+• Bitmap 文件签名: SHA-256 + 数字签名
+• 边缘节点验证签名behind才加载
+• 签名密钥与Data分离存储
+- DDoS 防护
+• IP filter与 DDoS 防护解耦
+• eBPF 在Kernel层filter，不消耗Application Layer资源
+• 速率Limitation在 IP filter之前
+
 
 ### 10.13 测试Strategy
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      测试Strategy                                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Unit test                                                        │
-│  ─────────────────────                                          │
-│  • Bitmap 位操作正确性                                           │
-│  • IP 解析和转换                                                 │
-│  • CIDR 匹配逻辑                                                 │
-│  • 缓存 TTL 过期                                                 │
-│                                                                 │
-│  Integration test                                                        │
-│  ─────────────────────                                          │
-│  • 同步服务与 Mock Government API                                      │
-│  • 边缘节点Data更新                                              │
-│  • 多节点一致性                                                  │
-│                                                                 │
-│  性能测试                                                        │
-│  ─────────────────────                                          │
-│  • QueryLatency (目标: P99 < 1ms)                                    │
-│  • Throughput量 (目标: 1000K+ QPS)                                     │
-│  • Sync duration (1000M IP Full Sync)                                   │
-│                                                                 │
-│  混沌测试                                                        │
-│  ─────────────────────                                          │
-│  • Government API 不可用                                               │
-│  • Redis 宕机                                                    │
-│  • 网络分区                                                      │
-│  • Data损坏                                                      │
-│                                                                 │
-│  影子测试 (Shadow Testing)                                       │
-│  ─────────────────────                                          │
-│  • 复制生产traffic到测试环境                                        │
-│  • 对比filter结果，验证准确性                                      │
-│  • 不Impactrealusers                                                │
-│                                                                 │
-│  回归测试                                                        │
-│  ─────────────────────                                          │
-│  • 已知Ban IP list验证                                          │
-│  • 边界 IP 测试 (0.0.0.0, 255.255.255.255)                       │
-│  • IPv4-mapped IPv6 地址 (::ffff:192.168.1.1)                    │
-│                                                                 │
-│  边界用例完整清单                                                 │
-│  ─────────────────────                                          │
-│  • 空Banlist                                                    │
-│  • fullBan (4300M IPv4 全封)                                     │
-│  • 单 IP Ban/解封循环                                           │
-│  • CIDR /0 (全网段)                                              │
-│  • CIDR /32 (单 IP)                                              │
-│  • 重叠 CIDR (10.0.0.0/8 和 10.1.0.0/16)                         │
-│  • 私有 IP range (10.x, 172.16.x, 192.168.x)                        │
-│  • 环回地址 (127.0.0.1, ::1)                                     │
-│  • 多播地址 (224.0.0.0/4)                                        │
-│  • 链路本地地址 (169.254.x.x, fe80::)                            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 测试Strategy
+- Unit test
+• Bitmap 位操作正确性
+• IP 解析和转换
+• CIDR 匹配逻辑
+• 缓存 TTL 过期
+- Integration test
+• 同步服务与 Mock Government API
+• 边缘节点Data更新
+• 多节点一致性
+- 性能测试
+• QueryLatency (目标: P99 < 1ms)
+• Throughput量 (目标: 1000K+ QPS)
+• Sync duration (1000M IP Full Sync)
+- 混沌测试
+• Government API 不可用
+• Redis 宕机
+• 网络分区
+• Data损坏
+- 影子测试 (Shadow Testing)
+• 复制生产traffic到测试环境
+• 对比filter结果，验证准确性
+• 不Impactrealusers
+- 回归测试
+• 已知Ban IP list验证
+• 边界 IP 测试 (0.0.0.0, 255.255.255.255)
+• IPv4-mapped IPv6 地址 (::ffff:192.168.1.1)
+- 边界用例完整清单
+• 空Banlist
+• fullBan (4300M IPv4 全封)
+• 单 IP Ban/解封循环
+• CIDR /0 (全网段)
+• CIDR /32 (单 IP)
+• 重叠 CIDR (10.0.0.0/8 和 10.1.0.0/16)
+• 私有 IP range (10.x, 172.16.x, 192.168.x)
+• 环回地址 (127.0.0.1, ::1)
+• 多播地址 (224.0.0.0/4)
+• 链路本地地址 (169.254.x.x, fe80::)
+
 
 ---
 
@@ -829,247 +631,157 @@ graph TD
 
 ### 11.4 成本估算
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      成本估算 (月度)                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Solution A: Redis SET (小规模)                                      │
-│  ─────────────────────────                                      │
-│  • Redis Cluster (3主3从): ~$2,000/月                           │
-│  • 同步服务 (2 实例): ~$200/月                                   │
-│  • 总计: ~$2,200/月                                              │
-│                                                                 │
-│  Solution B: Bitmap (Large Scale IPv4)                                    │
-│  ─────────────────────────                                      │
-│  • S3 存储 (512MB × 版本): ~$10/月                               │
-│  • CDN 分发: ~$500/月                                            │
-│  • 同步服务: ~$200/月                                            │
-│  • 边缘节点额外内存 (+512MB × N): 已有成本                       │
-│  • 总计: ~$710/月                                                │
-│                                                                 │
-│  Solution C: Radix Tree (IPv6)                                       │
-│  ─────────────────────────                                      │
-│  • S3 存储 (40GB × 版本): ~$100/月                               │
-│  • CDN 分发: ~$2,000/月                                          │
-│  • 边缘节点额外内存 (+40GB × N): ~$5,000/月                      │
-│  • 总计: ~$7,100/月                                              │
-│                                                                 │
-│  隐性成本:                                                       │
-│  • 开发人力: 2-3 人 × 2 月 = ~$80,000 (一time性)                   │
-│  • 运维人力: 0.5 FTE = ~$5,000/月                                │
-│  • Compliance审计: ~$10,000/年                                         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 成本估算 (月度)
+- **Solution A**: Redis SET (小规模)
+• Redis Cluster (3主3从): ~$2,000/月
+• 同步服务 (2 实例): ~$200/月
+• 总计: ~$2,200/月
+- **Solution B**: Bitmap (Large Scale IPv4)
+• S3 存储 (512MB × 版本): ~$10/月
+• CDN 分发: ~$500/月
+• 同步服务: ~$200/月
+• 边缘节点额外内存 (+512MB × N): 已有成本
+• 总计: ~$710/月
+- **Solution C**: Radix Tree (IPv6)
+• S3 存储 (40GB × 版本): ~$100/月
+• CDN 分发: ~$2,000/月
+• 边缘节点额外内存 (+40GB × N): ~$5,000/月
+• 总计: ~$7,100/月
+- **隐性成本**: 
+• 开发人力: 2-3 人 × 2 月 = ~$80,000 (一time性)
+• 运维人力: 0.5 FTE = ~$5,000/月
+• Compliance审计: ~$10,000/年
+
 
 ### 11.5 SLI/SLO 定义
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      SLI/SLO 定义                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  可用性 SLO                                                      │
-│  ─────────────────────────                                      │
-│  • SLI: 成功Solution的请求数 / Total requests                              │
-│  • SLO: 99.99% (Every 月最多 4.3 min不可用)                         │
-│  • 错误预算: 0.01% 请求可失败                                    │
-│                                                                 │
-│  Latency SLO                                                        │
-│  ─────────────────────────                                      │
-│  • SLI: IP 检查Latency                                              │
-│  • SLO: P50 < 100μs, P99 < 1ms, P99.9 < 10ms                    │
-│                                                                 │
-│  Data新鲜度 SLO                                                  │
-│  ─────────────────────────                                      │
-│  • SLI: Last sync time                                         │
-│  • SLO: 同步Latency < 10 min (99.9%)                               │
-│  • Full Sync: Every  24 hour至少 1 time                                 │
-│                                                                 │
-│  准确性 SLO                                                      │
-│  ─────────────────────────                                      │
-│  • 假阴性率 (漏封): 0% (硬性Requires)                                │
-│  • False positive率 (False Ban): < 0.001%                                     │
-│                                                                 │
-│  一致性 SLO                                                      │
-│  ─────────────────────────                                      │
-│  • SLI: 版本一致的边缘节点比例                                   │
-│  • SLO: > 99% 节点版本一致                                       │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- SLI/SLO 定义
+- 可用性 SLO
+• SLI: 成功Solution的请求数 / Total requests
+• SLO: 99.99% (Every 月最多 4.3 min不可用)
+• 错误预算: 0.01% 请求可失败
+- Latency SLO
+• SLI: IP 检查Latency
+• SLO: P50 < 100μs, P99 < 1ms, P99.9 < 10ms
+- Data新鲜度 SLO
+• SLI: Last sync time
+• SLO: 同步Latency < 10 min (99.9%)
+• Full Sync: Every  24 hour至少 1 time
+- 准确性 SLO
+• 假阴性率 (漏封): 0% (硬性Requires)
+• False positive率 (False Ban): < 0.001%
+- 一致性 SLO
+• SLI: 版本一致的边缘节点比例
+• SLO: > 99% 节点版本一致
+
 
 ### 11.6 运维手册要点
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Runbook 核心Scenario                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Scenario 1: 同步失败Alert                                            │
-│  ─────────────────────────                                      │
-│  1. 检查Government API 状态 (curl https://security.gov.x/health)       │
-│  2. 检查同步服务日志 (kubectl logs sync-service-xxx)            │
-│  3. 检查网络连通性 (是否被防火墙拦截)                            │
-│  4. 若 API 不可用，确认使用本地fast照继续服务                      │
-│  5. notify法务团队，记录事件                                       │
-│  6. 升级: 30 min未恢复 → P1 On-Call                             │
-│                                                                 │
-│  Scenario 2: Ban rateAnomaly飙升                                          │
-│  ─────────────────────────                                      │
-│  1. 检查最近同步内容 (是否有大批量新增)                          │
-│  2. 对比前behind版本 diff (多了哪些 IP/CIDR)                         │
-│  3. 抽样检查被Ban请求 (是否有False Ban迹象)                          │
-│  4. 若确认False Ban:                                                  │
-│     a. 回滚到上一版本                                            │
-│     b. or: 启用紧急开关，暂停filter                                │
-│  5. notify产品/法务，评估Impact                                      │
-│                                                                 │
-│  Scenario 3: 边缘节点版本不一致                                      │
-│  ─────────────────────────                                      │
-│  1. 识别不一致节点 (监控面板)                                    │
-│  2. 检查节点网络/CDN 拉取状态                                    │
-│  3. 手动Trigger同步: curl -X POST /admin/sync                       │
-│  4. 若持续失败，隔离节点 (从 LB 摘除)                            │
-│  5. 修复behind重新Release                                               │
-│                                                                 │
-│  Scenario 4: 紧急fullAllow                                            │
-│  ─────────────────────────                                      │
-│  Trigger条件: Large ScaleFalse Ban，业务严重受损                              │
-│  操作: kubectl set env deployment/edge-filter FILTER_ENABLED=false│
-│  审批: 需 SRE 负责人 + 法务确认                                  │
-│  恢复: 修复behind重新启用，逐步灰度                                  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Runbook 核心Scenario
+- **Scenario 1**: 同步失败Alert
+- **1. 检查Government API 状态 (curl https**: //security.gov.x/health)
+- 2. 检查同步服务日志 (kubectl logs sync-service-xxx)
+- 3. 检查网络连通性 (是否被防火墙拦截)
+- 4. 若 API 不可用，确认使用本地fast照继续服务
+- 5. notify法务团队，记录事件
+- **6. 升级**: 30 min未恢复 → P1 On-Call
+- **Scenario 2**: Ban rateAnomaly飙升
+- 1. 检查最近同步内容 (是否有大批量新增)
+- 2. 对比前behind版本 diff (多了哪些 IP/CIDR)
+- 3. 抽样检查被Ban请求 (是否有False Ban迹象)
+- **4. 若确认False Ban**: 
+- a. 回滚到上一版本
+- **b. or**: 启用紧急开关，暂停filter
+- 5. notify产品/法务，评估Impact
+- **Scenario 3**: 边缘节点版本不一致
+- 1. 识别不一致节点 (监控面板)
+- 2. 检查节点网络/CDN 拉取状态
+- **3. 手动Trigger同步**: curl -X POST /admin/sync
+- 4. 若持续失败，隔离节点 (从 LB 摘除)
+- 5. 修复behind重新Release
+- **Scenario 4**: 紧急fullAllow
+- **Trigger条件**: Large ScaleFalse Ban，业务严重受损
+- **操作**: kubectl set env deployment/edge-filter FILTER_ENABLED=false
+- **审批**: 需 SRE 负责人 + 法务确认
+- **恢复**: 修复behind重新启用，逐步灰度
+
 
 ### 11.7 Feature Flags 设计
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Feature Flags                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ip_filter.enabled                                               │
-│  ─────────────────────────                                      │
-│  • 描述: 总开关，控制是否启用 IP filter                            │
-│  • default: true (生产), false (开发)                               │
-│  • 用途: Emergency rollback                                                │
-│                                                                 │
-│  ip_filter.mode                                                  │
-│  ─────────────────────────                                      │
-│  • 值: "enforce" | "shadow" | "log_only"                        │
-│  • enforce: realBan                                             │
-│  • shadow: 记录日志但不Ban                                      │
-│  • log_only: 只记录匹配，不执行任何动作                          │
-│                                                                 │
-│  ip_filter.rollout_percentage                                    │
-│  ─────────────────────────                                      │
-│  • 描述: 灰度比例 (0-100)                                        │
-│  • 用途: 渐进式Release                                              │
-│  • 实现: hash(request_id) % 100 < percentage                    │
-│                                                                 │
-│  ip_filter.whitelist_enabled                                     │
-│  ─────────────────────────                                      │
-│  • 描述: 是否启用白名单                                          │
-│  • 用途: 豁免特定 IP (合作伙伴、Internal服务)                        │
-│                                                                 │
-│  ip_filter.fail_mode                                             │
-│  ─────────────────────────                                      │
-│  • 值: "open" | "closed"                                        │
-│  • open: 出错whenAllow (可用性优先)                                 │
-│  • closed: 出错whenBan (Compliance优先, default)                           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- Feature Flags
+- ip_filter.enabled
+• 描述: 总开关，控制是否启用 IP filter
+• default: true (生产), false (开发)
+• 用途: Emergency rollback
+- ip_filter.mode
+• 值: "enforce" | "shadow" | "log_only"
+• enforce: realBan
+• shadow: 记录日志但不Ban
+• log_only: 只记录匹配，不执行任何动作
+- ip_filter.rollout_percentage
+• 描述: 灰度比例 (0-100)
+• 用途: 渐进式Release
+• 实现: hash(request_id) % 100 < percentage
+- ip_filter.whitelist_enabled
+• 描述: 是否启用白名单
+• 用途: 豁免特定 IP (合作伙伴、Internal服务)
+- ip_filter.fail_mode
+• 值: "open" | "closed"
+• open: 出错whenAllow (可用性优先)
+• closed: 出错whenBan (Compliance优先, default)
+
 
 ### 11.8 团队与职责
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      团队职责矩阵                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  角色              │ 职责                                        │
-│  ─────────────────────────────────────────────────────────────  │
-│  Tech Lead         │ 架构设计、技术决策、代码审查                │
-│  Backend Engineer  │ 同步服务开发、Data结构实现                  │
-│  Infra Engineer    │ 边缘节点集成、eBPF 开发                     │
-│  SRE               │ 部署、监控、On-Call、Runbook                │
-│  QA                │ 测试Strategy、性能测试、混沌测试                │
-│  Legal/Compliance  │ Compliance确认、审计Requires、责任边界                │
-│  Product Manager   │ 需求对接、利益相关者沟通                    │
-│                                                                 │
-│  人力估算:                                                       │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  Phase 1-4 (开发): 2 Backend + 1 Infra + 0.5 SRE         │   │
-│  │  Phase 5-7 (Release): 1 Backend + 1 SRE + 0.5 QA            │   │
-│  │  Phase 8+ (维护): 0.5 SRE (日常运维)                     │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 团队职责矩阵
+- 角色               职责
+- Tech Lead          架构设计、技术决策、代码审查
+- Backend Engineer   同步服务开发、Data结构实现
+- Infra Engineer     边缘节点集成、eBPF 开发
+- SRE                部署、监控、On-Call、Runbook
+- QA                 测试Strategy、性能测试、混沌测试
+- Legal/Compliance   Compliance确认、审计Requires、责任边界
+- Product Manager    需求对接、利益相关者沟通
+- **人力估算**: 
+- **Phase 1-4 (开发)**: 2 Backend + 1 Infra + 0.5 SRE
+- **Phase 5-7 (Release)**: 1 Backend + 1 SRE + 0.5 QA
+- **Phase 8+ (维护)**: 0.5 SRE (日常运维)
+
 
 ### 11.9 常见错误与反Mode
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   面试常见错误 (避坑指南)                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ❌ 错误 1: Every time请求都调用Government API                               │
-│  ─────────────────────────                                      │
-│  Issue: Latency高、成本高、单点故障                                  │
-│  正解: Local Cache/同步，批量拉取                                   │
-│                                                                 │
-│  ❌ 错误 2: 使用 HashSet 存储 10 00M IP                           │
-│  ─────────────────────────                                      │
-│  Issue: 内存占用 40+ GB，Redis Cannot承受                           │
-│  正解: Bitmap (512MB) or Bloom Filter                           │
-│                                                                 │
-│  ❌ 错误 3: IPv6 也用 Bitmap                                     │
-│  ─────────────────────────                                      │
-│  Issue: 2^128 个地址，Cannot存储                                    │
-│  正解: Radix Tree or分层 HashMap                                │
-│                                                                 │
-│  ❌ 错误 4: 一time性fullRelease                                       │
-│  ─────────────────────────                                      │
-│  Issue: Cannot验证正确性，出IssueImpactfullusers                        │
-│  正解: Shadow Mode → 灰度 → full                                     │
-│                                                                 │
-│  ❌ 错误 5: 忽略 X-Forwarded-For 伪造风险                        │
-│  ─────────────────────────                                      │
-│  Issue: 攻击者可伪造 IP 绕过Ban                                  │
-│  正解: 只信任可信代理，从右向左解析                              │
-│                                                                 │
-│  ❌ 错误 6: 没有Fallback Strategy                                         │
-│  ─────────────────────────                                      │
-│  Issue: Government API 挂了，系统Cannot工作                               │
-│  正解: 本地fast照 + 离线Mode                                      │
-│                                                                 │
-│  ❌ 错误 7: 忽略Compliance/审计需求                                    │
-│  ─────────────────────────                                      │
-│  Issue: Cannot证明系统正确执行了Ban                                │
-│  正解: 完整审计日志 + 可追溯                                    │
-│                                                                 │
-│  ❌ 错误 8: 只考虑技术不考虑when间                                 │
-│  ─────────────────────────                                      │
-│  Issue: Solution完美但 2 个月Cannot完成                                 │
-│  正解: MVP 优先，迭代优化                                       │
-│                                                                 │
-│  ❌ 错误 9: Banbehind返回 200 OK                                    │
-│  ─────────────────────────                                      │
-│  Issue: users不知道被Ban，体验差                                  │
-│  正解: 返回 403/451 + 友好错误信息                              │
-│                                                                 │
-│  ❌ 错误 10: 没有Emergency rollback机制                                    │
-│  ─────────────────────────                                      │
-│  Issue: Large ScaleFalse BanwhenCannotfast速恢复                                  │
-│  正解: Feature Flag 一键关闭                                    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+- 面试常见错误 (避坑指南)
+- **❌ 错误 1**: Every time请求都调用Government API
+- **Issue**: Latency高、成本高、单点故障
+- **正解**: Local Cache/同步，批量拉取
+- **❌ 错误 2**: 使用 HashSet 存储 10 00M IP
+- **Issue**: 内存占用 40+ GB，Redis Cannot承受
+- **正解**: Bitmap (512MB) or Bloom Filter
+- **❌ 错误 3**: IPv6 也用 Bitmap
+- **Issue**: 2^128 个地址，Cannot存储
+- **正解**: Radix Tree or分层 HashMap
+- **❌ 错误 4**: 一time性fullRelease
+- **Issue**: Cannot验证正确性，出IssueImpactfullusers
+- **正解**: Shadow Mode → 灰度 → full
+- **❌ 错误 5**: 忽略 X-Forwarded-For 伪造风险
+- **Issue**: 攻击者可伪造 IP 绕过Ban
+- **正解**: 只信任可信代理，从右向左解析
+- **❌ 错误 6**: 没有Fallback Strategy
+- **Issue**: Government API 挂了，系统Cannot工作
+- **正解**: 本地fast照 + 离线Mode
+- **❌ 错误 7**: 忽略Compliance/审计需求
+- **Issue**: Cannot证明系统正确执行了Ban
+- **正解**: 完整审计日志 + 可追溯
+- **❌ 错误 8**: 只考虑技术不考虑when间
+- **Issue**: Solution完美但 2 个月Cannot完成
+- **正解**: MVP 优先，迭代优化
+- **❌ 错误 9**: Banbehind返回 200 OK
+- **Issue**: users不知道被Ban，体验差
+- **正解**: 返回 403/451 + 友好错误信息
+- **❌ 错误 10**: 没有Emergency rollback机制
+- **Issue**: Large ScaleFalse BanwhenCannotfast速恢复
+- **正解**: Feature Flag 一键关闭
+
 
 ### 11.10 方案选择决策树
 
