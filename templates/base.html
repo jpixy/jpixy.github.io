@@ -225,5 +225,32 @@
         })();
         {% endif %}
     </script>
+    
+    <!-- Mermaid diagram support -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: { 
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        // Convert code blocks with language-mermaid to mermaid class
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+        
+        // Re-run mermaid after DOM manipulation
+        mermaid.run();
+    </script>
 </body>
 </html>

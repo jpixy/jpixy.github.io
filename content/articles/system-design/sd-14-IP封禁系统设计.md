@@ -154,32 +154,13 @@ Banlist:
 
 **Solution**：Redis SET + Local Cache
 
-```
-                                    ┌─────────────────────────┐
-                                    │    security.gov.x       │
-                                    └───────────┬─────────────┘
-                                                │
-                                    ┌───────────▼─────────────┐
-                                    │   Sync Service          │
-                                    │   Sync every 5 min      │
-                                    └───────────┬─────────────┘
-                                                │
-                              ┌─────────────────▼─────────────────┐
-                              │         Redis Cluster             │
-                              │     banned_ips (SET type)         │
-                              │     Size: ~1-2 GB                 │
-                              └─────────────────┬─────────────────┘
-                                                │
-              ┌─────────────────────────────────┼─────────────────────────────────┐
-              │                                 │                                 │
-              ▼                                 ▼                                 ▼
-     ┌─────────────────┐               ┌─────────────────┐               ┌─────────────────┐
-     │   App Server 1  │               │   App Server 2  │               │   App Server N  │
-     │  ┌───────────┐  │               │  ┌───────────┐  │               │  ┌───────────┐  │
-     │  │ LRU Cache │  │               │  │ LRU Cache │  │               │  │ LRU Cache │  │
-     │  │  (100MB)  │  │               │  │  (100MB)  │  │               │  │  (100MB)  │  │
-     │  └───────────┘  │               │  └───────────┘  │               │  └───────────┘  │
-     └─────────────────┘               └─────────────────┘               └─────────────────┘
+```mermaid
+graph TD
+    A[security.gov.x] --> B[Sync Service<br/>Sync every 5 min]
+    B --> C[Redis Cluster<br/>banned_ips SET<br/>~1-2 GB]
+    C --> D[App Server 1<br/>LRU Cache 100MB]
+    C --> E[App Server 2<br/>LRU Cache 100MB]
+    C --> F[App Server N<br/>LRU Cache 100MB]
 ```
 
 **Query Flow**：
@@ -224,37 +205,14 @@ Bitmap 表示:
 
 **架构图**：
 
-```
-                                    ┌─────────────────────────┐
-                                    │    security.gov.x       │
-                                    └───────────┬─────────────┘
-                                                │
-                                    ┌───────────▼─────────────┐
-                                    │   Sync Service          │
-                                    │   Generate Bitmap       │
-                                    └───────────┬─────────────┘
-                                                │
-                              ┌─────────────────▼─────────────────┐
-                              │       Object Storage (S3)         │
-                              │   ip_bitmap_v20260129.bin (512MB) │
-                              └─────────────────┬─────────────────┘
-                                                │
-                                           CDN Distribute
-                                                │
-         ┌──────────────────────────────────────┼──────────────────────────────────────┐
-         │                                      │                                      │
-         ▼                                      ▼                                      ▼
-┌─────────────────┐                 ┌─────────────────┐                 ┌─────────────────┐
-│   Edge Node 1   │                 │   Edge Node 2   │                 │   Edge Node N   │
-│  ┌───────────┐  │                 │  ┌───────────┐  │                 │  ┌───────────┐  │
-│  │  Bitmap   │  │                 │  │  Bitmap   │  │                 │  │  Bitmap   │  │
-│  │  512 MB   │  │                 │  │  512 MB   │  │                 │  │  512 MB   │  │
-│  │  mmap     │  │                 │  │  mmap     │  │                 │  │  mmap     │  │
-│  └───────────┘  │                 │  └───────────┘  │                 │  └───────────┘  │
-│                 │                 │                 │                 │                 │
-│   Latency:      │                 │   Latency:      │                 │   Latency:      │
-│   ~50 ns        │                 │   ~50 ns        │                 │   ~50 ns        │
-└─────────────────┘                 └─────────────────┘                 └─────────────────┘
+```mermaid
+graph TD
+    A[security.gov.x] --> B[Sync Service<br/>Generate Bitmap]
+    B --> C[Object Storage S3<br/>ip_bitmap.bin 512MB]
+    C --> D[CDN Distribute]
+    D --> E[Edge Node 1<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
+    D --> F[Edge Node 2<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
+    D --> G[Edge Node N<br/>Bitmap 512MB mmap<br/>Latency ~50ns]
 ```
 
 **Query算法**：

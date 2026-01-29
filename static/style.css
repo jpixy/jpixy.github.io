@@ -1,7 +1,7 @@
 :root {
     --font-cn: "Noto Serif SC", serif;
     --font-en: "Courier Prime", monospace;
-    --font-code: "Courier Prime", monospace;
+    --font-code: "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
     --font-main: "Courier Prime", "Noto Serif SC", monospace, serif;
     
     --color-bg: #fafaf8;
@@ -565,6 +565,21 @@ th {
 
 tr:nth-child(even) {
     background: var(--color-bg-alt);
+}
+
+/* Mermaid diagram styles */
+.mermaid {
+    text-align: center;
+    margin: 1.5rem 0;
+    background: #fafafa;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
 }
 
 hr {
