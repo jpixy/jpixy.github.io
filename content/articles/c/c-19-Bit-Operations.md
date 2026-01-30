@@ -358,5 +358,5 @@ uint32_t reverse_bits(uint32_t n) {
 ## Related Topics
 
 - [03. Operators and Expressions](@/articles/c/c-03-运算符与表达式.md)
-- [40. C Written Test Questions](@/articles/c/c-15-C语言笔试题精选.md)
+- [40. C Written Test Questions](@/articles/c/c-40-C-Written-Test-Questions.md)
 - [17. Memory Alignment](@/articles/c/c-17-Memory-Alignment.md)

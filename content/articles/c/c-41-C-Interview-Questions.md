@@ -1000,7 +1000,7 @@ void *worker(void *arg) {
 
 ## 相关链接
 
-- [C语言笔试题精选](@/articles/c/c-15-C语言笔试题精选.md)
+- [C Written Test Questions](@/articles/c/c-40-C-Written-Test-Questions.md)
 - [06.指针基础与内存模型](@/articles/c/c-06-指针基础与内存模型.md)
 - [09.动态内存管理](@/articles/c/c-09-动态内存管理.md)
 - [C++面试题汇总](@/articles/cpp/cpp-50-Cpp面试题汇总.md)
