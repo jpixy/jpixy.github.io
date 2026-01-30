@@ -1,5 +1,5 @@
 +++
-title = "03.IO多路复用的例子"
+title = "14. IO Multiplexing (select/poll/epoll)"
 slug = "c-IO多路复用的例子"
 +++
 

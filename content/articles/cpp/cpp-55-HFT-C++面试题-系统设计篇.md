@@ -1,5 +1,5 @@
 +++
-title = "55.HFT-C++面试题-系统设计篇"
+title = "55. Interview - System Design (HFT)"
 date = 2026-01-21
 description = "HFT系统设计C++面试题汇总，包括低延迟设计、内存管理、网络优化、架构设计等核心话题"
 [taxonomies]

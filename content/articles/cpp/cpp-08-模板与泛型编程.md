@@ -1,5 +1,5 @@
 +++
-title = "08.C++模板与泛型编程"
+title = "08. Templates and Generic Programming"
 date = 2026-01-19
 description = "C++模板详解：函数模板、类模板、模板特化、SFINAE、可变参数模板"
 [taxonomies]

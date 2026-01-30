@@ -1,5 +1,5 @@
 +++
-title = "21.C++智能指针底层与陷阱"
+title = "21. Smart Pointers Internals and Pitfalls"
 slug = "cpp-21-智能指针底层与陷阱"
 date = 2026-01-21
 description = "深入剖析unique_ptr、shared_ptr、weak_ptr的底层实现、性能开销和常见陷阱"

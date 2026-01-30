@@ -1,5 +1,5 @@
 +++
-title = "34.C++模板高级技巧详解"
+title = "34. Advanced Template Techniques"
 date = 2026-01-21
 description = "深入剖析C++模板高级技术，包括变参模板、模板特化、CRTP深入、Expression Templates、Tag Dispatch等核心技术"
 [taxonomies]

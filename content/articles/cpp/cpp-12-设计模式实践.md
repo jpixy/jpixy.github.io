@@ -1,5 +1,5 @@
 +++
-title = "12.C++设计模式实践"
+title = "12. Design Patterns in C++"
 date = 2026-01-19
 description = "C++设计模式：创建型、结构型、行为型模式的现代C++实现"
 [taxonomies]

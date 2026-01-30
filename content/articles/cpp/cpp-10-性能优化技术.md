@@ -1,5 +1,5 @@
 +++
-title = "10.C++性能优化技术"
+title = "10. Performance Optimization"
 date = 2026-01-19
 description = "C++性能优化：编译器优化、内存优化、缓存友好、SIMD、性能分析工具"
 [taxonomies]

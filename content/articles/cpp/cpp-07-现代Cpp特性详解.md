@@ -1,5 +1,5 @@
 +++
-title = "07.现代C++特性详解"
+title = "07. Modern C++ Features"
 date = 2026-01-19
 description = "C++11/14/17/20核心特性：auto、智能指针、lambda、移动语义、并发"
 [taxonomies]

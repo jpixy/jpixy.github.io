@@ -1,5 +1,5 @@
 +++
-title = "41.HFT-CPU微架构与性能优化"
+title = "41. CPU Microarchitecture Optimization (HFT)"
 date = 2026-01-21
 description = "深入剖析CPU微架构对HFT性能的影响，包括流水线、乱序执行、ILP、µop缓存、分支预测等核心概念"
 [taxonomies]

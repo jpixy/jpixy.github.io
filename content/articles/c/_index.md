@@ -1,5 +1,5 @@
 +++
-title = "C 语言"
+title = "C Language"
 sort_by = "title"
 template = "section.html"
 +++

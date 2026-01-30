@@ -1,5 +1,5 @@
 +++
-title = "13.C++项目实践与工具链"
+title = "13. Project Practices and Toolchain"
 date = 2026-01-19
 description = "C++工程实践：CMake构建、单元测试、代码质量、包管理、CI/CD"
 [taxonomies]

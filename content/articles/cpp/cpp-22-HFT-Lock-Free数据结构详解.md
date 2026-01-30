@@ -1,5 +1,5 @@
 +++
-title = "22.HFT-Lock-Free数据结构详解"
+title = "22. Lock-Free Data Structures (HFT)"
 slug = "cpp-22-HFT-Lock-Free数据结构详解"
 date = 2026-01-21
 description = "深入剖析无锁数据结构的原理与实现，包括CAS、ABA问题、SPSC/MPMC队列、Hazard Pointer等，HFT低延迟系统核心技术"

@@ -1,5 +1,5 @@
 +++
-title = "24.HFT-分支预测与热路径优化"
+title = "24. Branch Prediction and Hot Path (HFT)"
 slug = "cpp-24-HFT分支预测与热路径优化"
 date = 2026-01-21
 description = "深入剖析CPU分支预测机制、分支优化技术、Branchless编程，HFT低延迟系统核心优化技术"

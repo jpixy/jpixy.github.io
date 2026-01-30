@@ -1,5 +1,5 @@
 +++
-title = "15.HFT-C++内存模型与缓存优化"
+title = "15. Memory Model and Cache Optimization (HFT)"
 date = 2026-01-21
 description = "深入剖析C++11内存模型、CPU缓存层次结构、Cache Line、False Sharing、Memory Ordering等核心概念，HFT低延迟系统必备知识"
 [taxonomies]

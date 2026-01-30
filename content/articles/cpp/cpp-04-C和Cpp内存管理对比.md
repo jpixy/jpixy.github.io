@@ -1,5 +1,5 @@
 +++
-title = "04.C和C++内存管理对比"
+title = "04. C vs C++ Memory Management"
 slug = "cpp-C和C++在内存管理上的对比"
 +++
 

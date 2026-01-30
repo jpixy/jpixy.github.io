@@ -1,5 +1,5 @@
 +++
-title = "37.HFT-字符串处理优化"
+title = "37. String Processing Optimization (HFT)"
 date = 2026-01-21
 description = "深入剖析C++字符串处理优化技术，包括std::string_view、SSO、零拷贝字符串、固定长度字符串等HFT关键技术"
 [taxonomies]

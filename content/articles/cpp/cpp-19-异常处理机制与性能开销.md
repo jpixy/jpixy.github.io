@@ -1,5 +1,5 @@
 +++
-title = "19.C++异常处理机制与性能开销"
+title = "19. Exception Handling and Performance"
 date = 2026-01-21
 description = "深入剖析C++异常处理的底层实现、性能开销分析、noexcept优化，以及HFT系统中的异常策略"
 [taxonomies]

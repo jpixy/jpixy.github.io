@@ -1,5 +1,5 @@
 +++
-title = "26.HFT-CPU亲和性与NUMA优化"
+title = "26. CPU Affinity and NUMA (HFT)"
 slug = "cpp-26-HFT-CPU亲和性与NUMA优化"
 date = 2026-01-21
 description = "深入剖析CPU亲和性设置、NUMA架构优化、线程绑定策略，HFT低延迟系统核心技术"
