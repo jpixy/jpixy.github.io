@@ -474,3 +474,10 @@ async fn main() {
 | Stream | 异步迭代 |
 
 Rust的异步编程需要理解Future和运行时的概念，tokio是最常用的异步运行时。
+
+---
+
+## 相关文章
+
+- [上一篇：并发编程](/articles/rust/rust-05-并发编程/)
+- [下一篇：嵌入式Rust](/articles/rust/rust-07-嵌入式Rust/)

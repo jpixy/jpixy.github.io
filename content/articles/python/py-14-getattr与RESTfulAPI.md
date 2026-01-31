@@ -327,3 +327,9 @@ class AsyncRESTClient:
 
 这种模式特别适合需要与多个端点交互的 RESTful API，能够显著减少样板代码，同时保持代码的灵活性和可读性。
 
+---
+
+## 相关文章
+
+- [上一篇：Python的高阶函数大全和详解](/articles/python/py-13-高阶函数/)
+- [下一篇：Python的并发和并行全面详解](/articles/python/py-15-并发和并行/)

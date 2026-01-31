@@ -669,3 +669,10 @@ uint32_t read_unaligned(uint8_t *ptr) {
 6. **调试技巧**: 快速定位问题的能力
 
 掌握这些知识，你就具备了独立开发嵌入式项目的基础能力。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式开发入门指南](/articles/embedded/embedded-01-嵌入式入门/)
+- [下一篇：嵌入式高级知识](/articles/embedded/embedded-03-嵌入式高级知识/)

@@ -239,3 +239,10 @@ JWT由三部分组成：Header.Payload.Signature
 | 安全架构 | 零信任 |
 
 认证和授权是安全的核心，需要根据场景选择合适的方案。
+
+---
+
+## 相关文章
+
+- [上一篇：密码学基础](/articles/security/sec-03-密码学基础/)
+- [下一篇：安全开发实践](/articles/security/sec-05-安全开发实践/)

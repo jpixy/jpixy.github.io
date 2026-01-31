@@ -243,3 +243,10 @@ if __name__ == "__main__":
     - Prepare 2-3 questions for the interviewer
 
 Would you like me to elaborate on any specific question or provide more coding examples?
+
+---
+
+## 相关文章
+
+- [上一篇：Interview相关英文](/articles/english/eng-01-Interview相关英文/)
+- [下一篇：Python高级知识英文面试](/articles/english/eng-03-Python高级英文面试/)

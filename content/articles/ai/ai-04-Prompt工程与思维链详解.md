@@ -546,3 +546,10 @@ Prompt: 请回答问题，然后检查你的答案是否正确，
 - [Anthropic Prompt Engineering](https://docs.anthropic.com/claude/docs/prompt-engineering)
 - [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
 - [Tree of Thoughts](https://arxiv.org/abs/2305.10601)
+
+---
+
+## 相关文章
+
+- [上一篇：大模型文件格式与保存信息详解](/articles/ai/ai-03-大模型文件格式详解/)
+- [下一篇：RAG检索增强生成详解](/articles/ai/ai-05-RAG检索增强生成详解/)

@@ -772,3 +772,10 @@ void run_all_selftests(void) {
 | 可靠性 | 看门狗、CRC、双备份、错误恢复 |
 
 掌握这些高级知识，你就具备了独立设计量产级嵌入式产品的能力。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式必知必会](/articles/embedded/embedded-02-嵌入式必知必会/)
+- [下一篇：嵌入式开发环境与工具链](/articles/embedded/embedded-04-开发环境与工具链/)

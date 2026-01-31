@@ -1239,3 +1239,10 @@ groups:
 
 ### MQ 产品
 `Kafka`, `RocketMQ`, `RabbitMQ`, `Pulsar`
+
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个类似Kafka的消息队列](/articles/interview/interview-12-设计Kafka消息队列/)
+- [下一篇：如何设计一个限流器](/articles/interview/interview-14-设计限流器/)

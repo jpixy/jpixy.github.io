@@ -958,3 +958,8 @@ Q: 需要集成外部系统？
 
 > 💡 **提示**：AI 领域发展迅速，建议持续关注 Hugging Face、arXiv、各大模型官方博客获取最新动态。
 
+---
+
+## 相关文章
+
+- [下一篇：Kubernetes平台工程与云原生应用管理学习路线](/articles/insights/insights-02-K8s平台工程学习路线/)

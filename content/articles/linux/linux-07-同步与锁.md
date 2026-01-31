@@ -312,3 +312,10 @@ glibc的PTHREAD_MUTEX_ERRORCHECK可以检测同一线程的重复加锁。
 | 原子操作 | 无锁编程基础 |
 
 选择合适的同步原语取决于具体场景。优先使用高级抽象（mutex、cond），只在必要时使用低级原语。
+
+---
+
+## 相关文章
+
+- [上一篇：网络编程](/articles/linux/linux-06-网络编程/)
+- [下一篇：性能分析与调试](/articles/linux/linux-08-性能分析与调试/)

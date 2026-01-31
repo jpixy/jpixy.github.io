@@ -348,3 +348,10 @@ def backtrack(path, choices):
 | 分析 | 时空复杂度 |
 
 算法面试考察的是**思维过程**和**代码能力**，多练习、多总结是提升的关键。
+
+---
+
+## 相关文章
+
+- [上一篇：高级数据结构](/articles/algorithm/algo-07-高级数据结构/)
+- [下一篇：概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)

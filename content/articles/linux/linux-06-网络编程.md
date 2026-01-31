@@ -276,3 +276,10 @@ tee复制数据到另一个管道。
 | 零拷贝 | sendfile、splice |
 
 网络编程是系统编程的重要组成部分。掌握socket接口和高性能I/O模型是构建可扩展服务的基础。
+
+---
+
+## 相关文章
+
+- [上一篇：信号处理](/articles/linux/linux-05-信号处理/)
+- [下一篇：同步与锁](/articles/linux/linux-07-同步与锁/)

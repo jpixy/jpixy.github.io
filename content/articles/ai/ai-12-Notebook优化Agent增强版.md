@@ -709,3 +709,10 @@ tags = ["ai", "agent", "jupyter", "rag", "mcp", "langchain", "langgraph"]
 ├── + 多租户支持
 └── + 监控和审计
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：Notebook执行Agent架构设计](/articles/ai/ai-11-Notebook执行Agent架构设计/)
+- [下一篇：AI高级知识与技能详解](/articles/ai/ai-13-AI高级知识与技能详解/)

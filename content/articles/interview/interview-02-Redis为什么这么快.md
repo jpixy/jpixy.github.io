@@ -782,3 +782,10 @@ slug = "interview-Redis为什么这么快"
 2. **范围查询高效**：跳表天然有序，直接遍历
 3. **并发友好**：局部锁即可，红黑树需要更大范围锁
 4. **内存局部性好**：缓存命中率更高
+
+---
+
+## 相关文章
+
+- [上一篇：Redis数据结构与典型应用](/articles/interview/interview-01-Redis数据结构与应用/)
+- [下一篇：Redis高可用架构](/articles/interview/interview-03-Redis高可用架构/)

@@ -330,3 +330,10 @@ jobs:
 | CI/CD | GitHub Actions |
 
 掌握工具链是高效嵌入式开发的基础。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式高级知识](/articles/embedded/embedded-03-嵌入式高级知识/)
+- [下一篇：嵌入式通信协议详解](/articles/embedded/embedded-05-通信协议详解/)

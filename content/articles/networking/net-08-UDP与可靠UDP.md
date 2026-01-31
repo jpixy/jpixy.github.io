@@ -311,3 +311,10 @@ WiFi(IP-A) → 4G(IP-B) = 连接继续（Connection ID不变）
 - 实时性要求高：KCP或QUIC
 - 简单广播：纯UDP
 - 特殊需求：自研可靠UDP
+
+---
+
+## 相关文章
+
+- [上一篇：TCP协议详解](/articles/networking/net-07-TCP协议详解/)
+- [下一篇：多播与组播技术](/articles/networking/net-09-多播与组播技术/)

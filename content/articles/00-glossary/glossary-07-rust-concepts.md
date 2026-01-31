@@ -784,3 +784,9 @@ mem::forget(v);  // 内存泄漏！小心使用
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
 - [Rust面试题-所有权与生命周期](/articles/rust/rust-19-Rust面试题-所有权与生命周期/)
 - [HFT-Rust-Lock-Free编程](/articles/rust/rust-15-HFT-Rust-Lock-Free编程/)
+
+---
+
+## 相关文章
+
+- [上一篇：Python Concepts](/articles/00-glossary/glossary-06-python-concepts/)

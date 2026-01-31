@@ -451,3 +451,10 @@ def erase_overlap_intervals(intervals):
 **贪心**：当能证明局部最优=全局最优时使用
 
 两者都需要多做题培养直觉。
+
+---
+
+## 相关文章
+
+- [上一篇：动态规划](/articles/algorithm/algo-04-动态规划/)
+- [下一篇：常见算法技巧](/articles/algorithm/algo-06-常见算法技巧/)

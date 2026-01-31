@@ -1048,3 +1048,10 @@ Consumer 配置:
 - 传统传输：磁盘→PageCache→用户空间→Socket缓冲区→网卡 (4次拷贝)
 - 零拷贝：磁盘→PageCache→网卡 (2次 DMA 拷贝，0 次 CPU 拷贝)
 - Kafka 使用 `FileChannel.transferTo()` 底层调用 Linux `sendfile` 系统调用
+
+---
+
+## 相关文章
+
+- [上一篇：MySQL分库分表实践](/articles/interview/interview-05-MySQL分库分表/)
+- [下一篇：分布式事务解决方案](/articles/interview/interview-07-分布式事务方案/)

@@ -701,3 +701,10 @@ private:
 3. Kill Switch必须有独立的触发路径
 4. 所有订单和风控事件必须有审计日志
 5. 定期进行风控系统压力测试
+
+---
+
+## 相关文章
+
+- [上一篇：Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
+- [下一篇：DPDK深度实践](/articles/hft/hft-16-DPDK深度实践/)

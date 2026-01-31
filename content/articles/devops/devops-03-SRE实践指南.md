@@ -485,3 +485,10 @@ SRE（Site Reliability Engineering）是Google提出的一种运维方法论，�
 3. **变更管理**：大部分故障来自变更
 4. **事故管理**：快速响应，彻底复盘
 5. **持续改进**：将可靠性建设为文化
+
+---
+
+## 相关文章
+
+- [上一篇：可观测性实践](/articles/devops/devops-02-可观测性实践/)
+- [下一篇：如何添加新硬盘扩展LVM](/articles/devops/devops-04-添加硬盘扩展LVM/)

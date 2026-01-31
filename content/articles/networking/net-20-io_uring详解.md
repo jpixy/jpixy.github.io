@@ -599,3 +599,10 @@ io_uring的核心优势：
 5. **链式操作**：依赖操作的原子执行
 
 io_uring是现代Linux高性能IO的首选方案，特别适合HFT等低延迟场景。
+
+---
+
+## 相关文章
+
+- [上一篇：UDP组播最佳实践(HFT)](/articles/networking/net-19-UDP组播最佳实践/)
+- [下一篇：RDMA与InfiniBand详解(HFT)](/articles/networking/net-21-RDMA与InfiniBand详解/)

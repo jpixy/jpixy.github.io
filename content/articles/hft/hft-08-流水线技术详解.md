@@ -449,3 +449,10 @@ write_pos ───────────────────────�
 - [C++ Concurrency in Action](https://www.manning.com/)
 - [Intel 64 and IA-32 Optimization Reference Manual](https://www.intel.com/)
 - [What Every Programmer Should Know About Memory](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf)
+
+---
+
+## 相关文章
+
+- [上一篇：执行层设计](/articles/hft/hft-07-执行层设计/)
+- [下一篇：定点运算详解](/articles/hft/hft-09-定点运算详解/)

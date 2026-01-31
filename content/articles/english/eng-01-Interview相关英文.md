@@ -276,3 +276,9 @@ Use **Floyd’s Cycle-Finding Algorithm** (tortoise and hare):
 ---
 
 这些例子覆盖了软件工程师面试的常见领域。如果需要更深入的回答或特定方向的问题，可以进一步细化！
+
+---
+
+## 相关文章
+
+- [下一篇：Python基础知识英文面试](/articles/english/eng-02-Python基础英文面试/)

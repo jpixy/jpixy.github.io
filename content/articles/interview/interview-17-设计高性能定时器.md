@@ -1398,3 +1398,10 @@ return expired
 | **Netty HashedWheelTimer** | io.netty.util.HashedWheelTimer 源码 |
 | **Go runtime timer** | runtime/time.go 源码 |
 | **分布式调度** | XXL-JOB、Quartz、Elastic-Job 文档 |
+
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个定时任务系统](/articles/interview/interview-16-设计定时任务系统/)
+- [下一篇：如何设计一个配置中心](/articles/interview/interview-18-设计配置中心/)

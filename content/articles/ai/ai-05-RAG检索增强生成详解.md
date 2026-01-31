@@ -595,3 +595,10 @@ RAG（Retrieval-Augmented Generation）是当前大模型应用的核心技术�
 - [LangChain RAG](https://python.langchain.com/docs/use_cases/question_answering/)
 - [LlamaIndex](https://www.llamaindex.ai/)
 - [Pinecone Learning](https://www.pinecone.io/learn/)
+
+---
+
+## 相关文章
+
+- [上一篇：Prompt工程与思维链详解](/articles/ai/ai-04-Prompt工程与思维链详解/)
+- [下一篇：LangChain详解](/articles/ai/ai-06-LangChain详解/)

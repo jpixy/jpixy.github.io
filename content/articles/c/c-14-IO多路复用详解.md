@@ -743,3 +743,9 @@ int main() {
 
 请注意，`Boost.Asio` 是 C++ 库，而不是 C 语言库，因此上面的示例是用 C++ 编写的。C 语言没有直接使用 `Boost.Asio` 的能力，但 C++ 代码可以作为 C 语言项目的组成部分。如果你需要在 C 项目中使用类似的异步网络功能，你可能需要寻找或编写一个 C 语言的网络库，或者考虑将你的项目迁移到 C++。
 
+---
+
+## 相关文章
+
+- [上一篇：String Storage Data Structures](/articles/c/c-13-保存英文句子的数据结构/)
+- [下一篇：Memory Alignment and Struct Packing](/articles/c/c-15-Memory-Alignment/)

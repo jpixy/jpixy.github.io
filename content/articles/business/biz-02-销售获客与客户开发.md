@@ -544,3 +544,10 @@ tags = ["sales", "business", "customer-acquisition", "networking", "lead-generat
 □ 建立一个客户案例
 □ 发展一个合作伙伴关系
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：企业部门职能与协作详解](/articles/business/biz-01-企业部门职能与协作详解/)
+- [下一篇：销售市场开拓策略](/articles/business/biz-03-销售市场开拓策略/)

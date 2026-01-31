@@ -593,3 +593,10 @@ _"In my previous project, we reduced Ollama’s VRAM usage by 60% using _`--gpu-
 _"vLLM’s PagedAttention improves throughput by 24x compared to naive HuggingFace pipelines (arXiv:2309.06180)."_  
 + **反问展示深度**:  
 _"How does your team handle model versioning when using Ollama in production?"_
+
+---
+
+## 相关文章
+
+- [上一篇：Python高级知识英文面试](/articles/english/eng-03-Python高级英文面试/)
+- [下一篇：QA相关英文](/articles/english/eng-05-QA相关英文/)

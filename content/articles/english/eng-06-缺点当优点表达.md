@@ -294,3 +294,10 @@ _"I log microscopic inconsistencies—now I tag them as 'Nice-to-Have'. This pre
 _"This candidate transforms weaknesses into technical process improvements with measurable impact."_  
 
 Need me to drill deeper into any specific scenario?
+
+---
+
+## 相关文章
+
+- [上一篇：QA相关英文](/articles/english/eng-05-QA相关英文/)
+- [下一篇：K8S相关英语](/articles/english/eng-07-K8S相关英语/)

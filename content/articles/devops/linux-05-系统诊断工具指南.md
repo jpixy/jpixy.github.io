@@ -923,3 +923,10 @@ bpftrace -e 'tracepoint:...'      # eBPF 跟踪
 - [bpftrace Reference Guide](https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md)
 - [Brendan Gregg's Blog](http://www.brendangregg.com/blog/index.html)
 - [Linux Performance Tools](http://www.brendangregg.com/linuxperf.html)
+
+---
+
+## 相关文章
+
+- [上一篇：如何添加新硬盘扩展LVM](/articles/devops/devops-04-添加硬盘扩展LVM/)
+- [下一篇：Linux系统性能调优深度指南](/articles/devops/linux-06-系统性能调优指南/)

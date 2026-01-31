@@ -473,3 +473,10 @@ sysctl -w net.core.somaxconn=65535
 | Proactor | 完全异步 | Windows、io_uring |
 
 掌握Socket编程是理解网络应用的基础，高性能服务器开发需要深入理解IO模型和事件驱动架构。
+
+---
+
+## 相关文章
+
+- [上一篇：多播与组播技术](/articles/networking/net-09-多播与组播技术/)
+- [下一篇：网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)

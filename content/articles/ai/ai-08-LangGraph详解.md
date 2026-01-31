@@ -563,3 +563,10 @@ app = graph.compile()
       ↓
 5. 构建复杂 Agent 工作流
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：LangChain实践指南](/articles/ai/ai-07-LangChain实践指南/)
+- [下一篇：LangGraph实践指南](/articles/ai/ai-09-LangGraph实践指南/)

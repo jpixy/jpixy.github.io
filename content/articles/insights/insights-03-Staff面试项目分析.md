@@ -434,3 +434,10 @@ R - Result (结果)
 - 展示跨领域融合能力
 - 回答"你对什么技术感兴趣"类问题
 - 体现持续学习和技术热情
+
+---
+
+## 相关文章
+
+- [上一篇：Kubernetes平台工程与云原生应用管理学习路线](/articles/insights/insights-02-K8s平台工程学习路线/)
+- [下一篇：企业级云VPN服务架构设计与技术深度解析](/articles/insights/insights-04-云VPN服务架构设计/)

@@ -368,3 +368,10 @@ DPDK：网卡 → DPDK PMD → 用户态应用
 - 大部分场景：优化内核参数 + 应用优化即可
 - 高性能要求：考虑零拷贝、XDP
 - 极致性能：DPDK、RDMA
+
+---
+
+## 相关文章
+
+- [上一篇：网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
+- [下一篇：HTTP协议详解](/articles/networking/net-14-HTTP协议详解/)

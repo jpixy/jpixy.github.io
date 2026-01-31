@@ -376,3 +376,10 @@ A：增加延迟（经过Sidecar）；资源开销（每个Pod一个Sidecar）�
 3. **负载均衡分散压力**：多种算法适配场景
 4. **高可用是前提**：多实例、无状态
 5. **Service Mesh是趋势**：服务治理下沉
+
+---
+
+## 相关文章
+
+- [上一篇：微服务架构设计原则](/articles/interview/interview-32-微服务架构设计原则/)
+- [下一篇：数据库选型指南](/articles/interview/interview-34-数据库选型指南/)

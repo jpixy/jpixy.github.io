@@ -590,3 +590,10 @@ Agent 类型：
 - [AutoGen](https://microsoft.github.io/autogen/)
 - [ReAct Paper](https://arxiv.org/abs/2210.03629)
 - [Reflexion Paper](https://arxiv.org/abs/2303.11366)
+
+---
+
+## 相关文章
+
+- [上一篇：LangGraph实践指南](/articles/ai/ai-09-LangGraph实践指南/)
+- [下一篇：Notebook执行Agent架构设计](/articles/ai/ai-11-Notebook执行Agent架构设计/)

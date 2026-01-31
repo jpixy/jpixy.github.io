@@ -1619,3 +1619,9 @@ public void replicaFetch() {
 > 4. **高性能**: 批量 + 压缩 + Page Cache
 > 5. **弹性伸缩**: 分区机制 + 数据再平衡
 
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个消息队列](/articles/interview/interview-11-设计消息队列/)
+- [下一篇：如何设计多线程消费消息模型](/articles/interview/interview-13-多线程消费模型/)

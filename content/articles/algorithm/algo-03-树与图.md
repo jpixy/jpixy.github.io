@@ -458,3 +458,10 @@ def prim(n, graph):
 | 所有点对最短路径 | Floyd-Warshall | O(V³) |
 | 拓扑排序 | Kahn/DFS | O(V+E) |
 | 最小生成树 | Kruskal/Prim | O(ElogE) |
+
+---
+
+## 相关文章
+
+- [上一篇：排序与搜索](/articles/algorithm/algo-02-排序与搜索/)
+- [下一篇：动态规划](/articles/algorithm/algo-04-动态规划/)

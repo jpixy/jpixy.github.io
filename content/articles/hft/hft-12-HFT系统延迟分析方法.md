@@ -563,3 +563,10 @@ private:
 3. 关注尾延迟（P99、P99.9）
 4. 持续监控并设置告警阈值
 5. 定期校准时间源
+
+---
+
+## 相关文章
+
+- [上一篇：Rust在HFT领域的实践与必知必会](/articles/hft/hft-11-Rust在HFT的实践/)
+- [下一篇：Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)

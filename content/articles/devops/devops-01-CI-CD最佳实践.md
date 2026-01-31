@@ -431,3 +431,9 @@ tags = ["devops", "ci-cd", "pipeline", "automation", "deployment"]
 2. 自动化是基础，测试是保障
 3. 关注指标，持续改进
 4. 团队文化比工具更重要
+
+---
+
+## 相关文章
+
+- [下一篇：可观测性实践](/articles/devops/devops-02-可观测性实践/)

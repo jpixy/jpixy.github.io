@@ -1051,3 +1051,10 @@ aa-logprof
 - [Red Hat Security Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/security_hardening/)
 - [SELinux Project](https://selinuxproject.org/)
 - [AppArmor Wiki](https://gitlab.com/apparmor/apparmor/-/wikis/home)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux网络技术深度指南](/articles/devops/linux-08-网络技术指南/)
+- [下一篇：Linux自动化运维深度指南](/articles/devops/linux-10-自动化运维指南/)

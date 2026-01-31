@@ -514,3 +514,10 @@ cny_raw = (usd_raw * rate_raw) / 10000
 - [What Every Computer Scientist Should Know About Floating-Point](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)
 - [Financial Calculations and Decimal Arithmetic](https://speleotrove.com/decimal/)
 - [Intel Decimal Floating-Point Math Library](https://www.intel.com/content/www/us/en/developer/articles/tool/intel-decimal-floating-point-math-library.html)
+
+---
+
+## 相关文章
+
+- [上一篇：流水线技术详解](/articles/hft/hft-08-流水线技术详解/)
+- [下一篇：低延迟系统前沿技术与新趋势](/articles/hft/hft-10-前沿技术与新趋势/)

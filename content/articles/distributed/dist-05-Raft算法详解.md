@@ -263,3 +263,10 @@ Kubernetes使用的分布式KV存储。
 | 成员变更 | 单节点变更最简单 |
 
 Raft是工程中最常用的共识算法。理解其设计可以帮助正确使用基于Raft的系统，以及调试分布式问题。
+
+---
+
+## 相关文章
+
+- [上一篇：Paxos算法详解](/articles/distributed/dist-04-Paxos算法详解/)
+- [下一篇：分布式存储](/articles/distributed/dist-06-分布式存储/)

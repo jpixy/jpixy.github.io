@@ -383,3 +383,10 @@ service.namespace.svc.cluster.local → ClusterIP
 | 安全 | DNSSEC、DoH/DoT |
 
 DNS是互联网的基础设施，其可用性直接影响所有网络服务。理解DNS原理对于网络运维和故障排查非常重要。
+
+---
+
+## 相关文章
+
+- [上一篇：HTTP协议详解](/articles/networking/net-14-HTTP协议详解/)
+- [下一篇：网络安全基础](/articles/networking/net-16-网络安全基础/)

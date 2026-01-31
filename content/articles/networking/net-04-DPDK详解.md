@@ -83,3 +83,9 @@ include $(RTE_SDK)/mk/rte.extapp.mk
 
 这个简单的例子展示了DPDK的基本概念，包括环境初始化、多核心处理和任务同步。在实际应用中，你将需要编写更复杂的逻辑来处理数据包的接收、处理和传输。可以参考DPDK的官方文档和示例代码来进一步学习和开发更复杂的应用程序。
 
+---
+
+## 相关文章
+
+- [上一篇：OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
+- [下一篇：eBPF详解](/articles/networking/net-05-eBPF详解/)

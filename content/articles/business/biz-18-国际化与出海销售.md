@@ -618,3 +618,9 @@ tags = ["sales", "business", "global", "international", "expansion"]
 □ 品牌认知提升
 □ 持续优化迭代
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：市场活动策划与执行](/articles/business/biz-17-市场活动策划与执行/)

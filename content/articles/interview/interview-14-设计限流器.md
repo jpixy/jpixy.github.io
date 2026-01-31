@@ -1492,3 +1492,10 @@ slug = "interview-如何设计一个限流器"
 
 ### 客户端策略
 `指数退避`, `抖动`, `Retry-After`, `重试风暴`
+
+---
+
+## 相关文章
+
+- [上一篇：如何设计多线程消费消息模型](/articles/interview/interview-13-多线程消费模型/)
+- [下一篇：如何设计一个限流系统](/articles/interview/interview-15-设计限流系统/)

@@ -895,3 +895,10 @@ valgrind --tool=cachegrind ./target/release/trading_engine
 - [Rust FFI Omnibus](http://jakegoulding.com/rust-ffi-omnibus/)
 - Jane Street - "Rust at Jane Street"
 - Tower Research - "Low Latency Rust"
+
+---
+
+## 相关文章
+
+- [上一篇：低延迟系统前沿技术与新趋势](/articles/hft/hft-10-前沿技术与新趋势/)
+- [下一篇：HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)

@@ -567,3 +567,10 @@ ls /sys/bus/platform/devices/
 ```
 
 掌握Linux驱动开发，能够胜任更高薪的嵌入式岗位。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式项目实战案例](/articles/embedded/embedded-08-项目实战案例/)
+- [下一篇：无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)

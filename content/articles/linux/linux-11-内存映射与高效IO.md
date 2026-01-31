@@ -899,3 +899,10 @@ void io_uring_batch_example(void) {
 - [ ] 网卡启用SG-DMA（`ethtool -K eth0 sg on`）
 - [ ] 考虑io_uring替代epoll+阻塞I/O
 - [ ] 极端场景评估Kernel Bypass方案
+
+---
+
+## 相关文章
+
+- [上一篇：Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
+- [下一篇：内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/)

@@ -515,3 +515,10 @@ tags = ["hft", "architecture", "execution", "order-routing"]
 - [FIX Protocol Specification](https://www.fixtrading.org/)
 - [Direct Market Access](https://www.investopedia.com/terms/d/directmarketaccess.asp)
 - [Exchange Connectivity Best Practices](https://www.cmegroup.com/confluence/)
+
+---
+
+## 相关文章
+
+- [上一篇：策略逻辑层设计](/articles/hft/hft-06-策略逻辑层设计/)
+- [下一篇：流水线技术详解](/articles/hft/hft-08-流水线技术详解/)

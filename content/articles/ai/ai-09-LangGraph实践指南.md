@@ -796,3 +796,10 @@ class ReviewState(TypedDict):
 Agent        → tools + 循环
 复杂工作流   → 子图 + 持久化 + 人工介入
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：LangGraph详解](/articles/ai/ai-08-LangGraph详解/)
+- [下一篇：AI Agent智能体架构详解](/articles/ai/ai-10-Agent智能体架构详解/)

@@ -479,3 +479,10 @@ tags = ["hft", "architecture", "strategy", "trading"]
 - [Trading and Exchanges: Market Microstructure](https://www.oxfordscholarship.com/)
 - [Algorithmic Trading: Winning Strategies](https://www.wiley.com/)
 - [High-Frequency Trading: A Practical Guide](https://www.wiley.com/)
+
+---
+
+## 相关文章
+
+- [上一篇：数据采集层设计](/articles/hft/hft-05-数据采集层设计/)
+- [下一篇：执行层设计](/articles/hft/hft-07-执行层设计/)

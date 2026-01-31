@@ -966,3 +966,10 @@ update-grub && reboot
 - [Red Hat Performance Tuning Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/monitoring_and_managing_system_status_and_performance/)
 - [Brendan Gregg's Linux Performance](http://www.brendangregg.com/linuxperf.html)
 - [NUMA Best Practices for AMD EPYC](https://developer.amd.com/resources/epyc-resources/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux系统诊断工具深度指南](/articles/devops/linux-05-系统诊断工具指南/)
+- [下一篇：Linux存储技术深度指南](/articles/devops/linux-07-存储技术指南/)

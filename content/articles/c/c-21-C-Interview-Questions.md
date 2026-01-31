@@ -1,0 +1,1012 @@
++++
+title = "21. C Interview Questions"
+date = 2026-01-30
+description = "C语言高频面试题：指针、内存、预处理、数据结构、算法"
+[taxonomies]
+tags = ["C", "面试", "指针"]
++++
+
+## 指针与内存
+
+### 题目1: 指针大小
+
+**问题**: 以下代码输出什么？
+
+```c
+int arr[] = {1, 2, 3, 4, 5};
+int *p = arr;
+
+printf("%zu\n", sizeof(arr));
+printf("%zu\n", sizeof(p));
+printf("%zu\n", sizeof(*p));
+```
+
+**答案** (64位系统):
+- `sizeof(arr)` = 20 (5个int，每个4字节)
+- `sizeof(p)` = 8 (指针大小)
+- `sizeof(*p)` = 4 (int大小)
+
+---
+
+### 题目2: 数组与指针
+
+**问题**: 以下两个声明有什么区别？
+
+```c
+char arr[] = "hello";
+char *ptr = "hello";
+```
+
+**答案**:
+- `arr` 是数组，内容可修改，`arr[0] = 'H'` 合法
+- `ptr` 指向字符串字面量，内容不可修改，`ptr[0] = 'H'` 未定义行为
+- `sizeof(arr)` = 6 (包含'\0')
+- `sizeof(ptr)` = 8 (指针大小)
+
+---
+
+### 题目3: 指针运算
+
+**问题**: 输出什么？
+
+```c
+int arr[] = {1, 2, 3, 4, 5};
+int *p = arr;
+int *q = arr + 4;
+
+printf("%td\n", q - p);
+printf("%td\n", (char*)q - (char*)p);
+```
+
+**答案**:
+- `q - p` = 4 (元素个数)
+- `(char*)q - (char*)p` = 16 (字节数，4个int)
+
+---
+
+### 题目4: 二级指针
+
+**问题**: 为什么需要二级指针？
+
+```c
+void bad_alloc(int *p) {
+    p = malloc(sizeof(int));  // 修改的是副本
+}
+
+void good_alloc(int **pp) {
+    *pp = malloc(sizeof(int));  // 修改指向的指针
+}
+
+int main(void) {
+    int *ptr = NULL;
+    bad_alloc(ptr);
+    printf("%p\n", ptr);  // 仍然是 NULL
+    
+    good_alloc(&ptr);
+    printf("%p\n", ptr);  // 非 NULL
+    free(ptr);
+    return 0;
+}
+```
+
+**答案**: 函数参数是值传递，要修改指针本身需要传指针的地址。
+
+---
+
+### 题目5: 复杂声明
+
+**问题**: 解释以下声明：
+
+```c
+int (*p)[10];
+int *p[10];
+int (*p)(int, int);
+int (*p[10])(int);
+```
+
+**答案**:
+1. `int (*p)[10]`: p 是指向"10个int的数组"的指针
+2. `int *p[10]`: p 是"10个int*指针"的数组
+3. `int (*p)(int, int)`: p 是指向"接受两个int返回int"函数的指针
+4. `int (*p[10])(int)`: p 是"10个函数指针"的数组，每个函数接受int返回int
+
+---
+
+## 数据类型与运算
+
+### 题目6: 类型转换
+
+**问题**: 输出什么？
+
+```c
+unsigned int a = 1;
+int b = -1;
+printf("%d\n", a > b);
+```
+
+**答案**: 0 (false)
+
+**解释**: b 被转换为 unsigned int，-1 变成 UINT_MAX (4294967295)，所以 1 < UINT_MAX。
+
+---
+
+### 题目7: 整数溢出
+
+**问题**: 以下代码有什么问题？
+
+```c
+int abs_value(int x) {
+    if (x < 0) return -x;
+    return x;
+}
+
+printf("%d\n", abs_value(INT_MIN));
+```
+
+**答案**: `-INT_MIN` 溢出，结果是未定义行为。INT_MIN = -2147483648，而 INT_MAX = 2147483647。
+
+**修复**:
+```c
+unsigned int safe_abs(int x) {
+    if (x < 0) return -(unsigned int)x;
+    return x;
+}
+```
+
+---
+
+### 题目8: 位运算
+
+**问题**: 不用临时变量交换两个数
+
+```c
+void swap(int *a, int *b) {
+    *a ^= *b;
+    *b ^= *a;
+    *a ^= *b;
+}
+```
+
+**注意**: 必须检查 a != b，否则 `*a ^= *b` 会把值清零。
+
+---
+
+### 题目9: 求二进制中1的个数
+
+**问题**: 实现 `int popcount(unsigned int n)`
+
+**方法1: 循环**
+```c
+int popcount(unsigned int n) {
+    int count = 0;
+    while (n) {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+```
+
+**方法2: Brian Kernighan**
+```c
+int popcount(unsigned int n) {
+    int count = 0;
+    while (n) {
+        n &= (n - 1);  // 清除最低位的1
+        count++;
+    }
+    return count;
+}
+```
+
+---
+
+## 内存管理
+
+### 题目10: 内存泄漏
+
+**问题**: 找出内存泄漏
+
+```c
+char *get_string(void) {
+    char *s = malloc(100);
+    strcpy(s, "hello");
+    return s;
+}
+
+void process(void) {
+    char *str = get_string();
+    printf("%s\n", str);
+    // 忘记 free(str);
+}
+```
+
+---
+
+### 题目11: 悬空指针
+
+**问题**: 什么是悬空指针？如何避免？
+
+```c
+int *create_array(int n) {
+    int arr[n];  // 栈上数组
+    return arr;   // 返回局部变量地址 - 悬空指针!
+}
+
+// 正确做法
+int *create_array(int n) {
+    int *arr = malloc(n * sizeof(int));
+    return arr;  // 堆上分配，调用者负责 free
+}
+```
+
+---
+
+### 题目12: realloc 注意事项
+
+**问题**: 以下代码有什么问题？
+
+```c
+int *p = malloc(10 * sizeof(int));
+p = realloc(p, 20 * sizeof(int));
+if (p == NULL) {
+    // 原内存泄漏!
+}
+```
+
+**修复**:
+```c
+int *p = malloc(10 * sizeof(int));
+int *temp = realloc(p, 20 * sizeof(int));
+if (temp == NULL) {
+    free(p);  // 释放原内存
+    return;
+}
+p = temp;
+```
+
+---
+
+## 结构体与对齐
+
+### 题目13: 结构体大小
+
+**问题**: 计算结构体大小
+
+```c
+struct A { char a; int b; char c; };      // ?
+struct B { int b; char a; char c; };      // ?
+struct C { char a; short s; int b; };     // ?
+```
+
+**答案** (假设32位对齐):
+- struct A = 12 (1+3+4+1+3)
+- struct B = 8 (4+1+1+2)
+- struct C = 8 (1+1+2+4)
+
+---
+
+### 题目14: offsetof 实现
+
+**问题**: 不用 stddef.h，实现 offsetof
+
+```c
+#define OFFSETOF(type, member) \
+    ((size_t)&(((type *)0)->member))
+```
+
+---
+
+### 题目15: container_of
+
+**问题**: 从成员地址获取结构体地址
+
+```c
+#define container_of(ptr, type, member) \
+    ((type *)((char *)(ptr) - offsetof(type, member)))
+
+struct Node { int data; struct Node *next; };
+
+void process_data(int *data_ptr) {
+    struct Node *node = container_of(data_ptr, struct Node, data);
+}
+```
+
+---
+
+## 字符串处理
+
+### 题目16: 实现 strlen
+
+```c
+size_t my_strlen(const char *s) {
+    const char *p = s;
+    while (*p) p++;
+    return p - s;
+}
+```
+
+---
+
+### 题目17: 实现 strcpy
+
+```c
+char *my_strcpy(char *dest, const char *src) {
+    char *ret = dest;
+    while ((*dest++ = *src++) != '\0');
+    return ret;
+}
+```
+
+**思考**: 为什么返回 dest？答: 方便链式调用。
+
+---
+
+### 题目18: 实现 strstr
+
+```c
+char *my_strstr(const char *haystack, const char *needle) {
+    if (*needle == '\0') return (char *)haystack;
+    
+    for (; *haystack; haystack++) {
+        const char *h = haystack;
+        const char *n = needle;
+        while (*h && *n && *h == *n) {
+            h++; n++;
+        }
+        if (*n == '\0') return (char *)haystack;
+    }
+    return NULL;
+}
+```
+
+---
+
+## 预处理器
+
+### 题目19: 宏陷阱
+
+**问题**: 修复这个宏
+
+```c
+#define SQUARE(x) x * x
+
+int a = SQUARE(1 + 2);  // 1 + 2 * 1 + 2 = 5 (错误)
+```
+
+**修复**:
+```c
+#define SQUARE(x) ((x) * (x))
+```
+
+**问题2**: 为什么这个宏仍有问题？
+
+```c
+int i = 3;
+int s = SQUARE(i++);  // ((i++) * (i++)) 未定义行为!
+```
+
+---
+
+### 题目20: do-while(0) 的作用
+
+**问题**: 为什么多语句宏用 do-while(0)?
+
+```c
+#define SWAP(a, b) do { int t = a; a = b; b = t; } while(0)
+
+if (condition)
+    SWAP(x, y);  // 安全，整体是一条语句
+else
+    // ...
+```
+
+---
+
+## 函数与递归
+
+### 题目21: 反转字符串
+
+**迭代**:
+```c
+void reverse(char *s) {
+    int left = 0, right = strlen(s) - 1;
+    while (left < right) {
+        char t = s[left];
+        s[left++] = s[right];
+        s[right--] = t;
+    }
+}
+```
+
+**递归**:
+```c
+void reverse_recursive(char *s, int left, int right) {
+    if (left >= right) return;
+    char t = s[left];
+    s[left] = s[right];
+    s[right] = t;
+    reverse_recursive(s, left + 1, right - 1);
+}
+```
+
+---
+
+### 题目22: 尾递归优化
+
+**问题**: 什么是尾递归？优化版阶乘？
+
+```c
+// 普通递归
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);  // 乘法在递归之后
+}
+
+// 尾递归
+int factorial_tail(int n, int acc) {
+    if (n <= 1) return acc;
+    return factorial_tail(n - 1, n * acc);  // 递归是最后操作
+}
+```
+
+---
+
+## 综合题
+
+### 题目23: 实现简单的内存池
+
+```c
+#define POOL_SIZE 1024
+
+static char pool[POOL_SIZE];
+static size_t pool_offset = 0;
+
+void *pool_alloc(size_t size) {
+    // 对齐到 8 字节
+    size = (size + 7) & ~7;
+    if (pool_offset + size > POOL_SIZE) return NULL;
+    void *p = pool + pool_offset;
+    pool_offset += size;
+    return p;
+}
+
+void pool_reset(void) {
+    pool_offset = 0;
+}
+```
+
+---
+
+### 题目24: 单链表反转
+
+```c
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *reverse_list(struct Node *head) {
+    struct Node *prev = NULL;
+    struct Node *curr = head;
+    while (curr) {
+        struct Node *next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+```
+
+---
+
+### 题目25: 检测链表环
+
+```c
+// Floyd 快慢指针
+int has_cycle(struct Node *head) {
+    struct Node *slow = head, *fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) return 1;
+    }
+    return 0;
+}
+```
+
+---
+
+## 高级内存与编译器
+
+### 题目26: volatile 的作用
+
+**问题**: volatile 关键字有什么作用？给出使用场景。
+
+**答案**:
+volatile 告诉编译器变量可能被外部因素修改，禁止优化。
+
+```c
+// 场景1: 硬件寄存器
+volatile uint32_t *status_reg = (uint32_t *)0x40000000;
+while (*status_reg & 0x01) {
+    // 等待硬件就绪
+}
+
+// 场景2: 信号处理
+volatile sig_atomic_t flag = 0;
+void handler(int sig) { flag = 1; }
+
+// 场景3: 多线程共享变量 (注意: volatile不保证原子性!)
+volatile int shared_data;  // 仍需要锁或原子操作
+```
+
+**注意**: volatile 不能替代锁或原子操作，它只防止编译器优化。
+
+---
+
+### 题目27: restrict 关键字
+
+**问题**: C99 的 restrict 有什么作用？
+
+**答案**:
+restrict 告诉编译器指针是访问该内存的唯一方式，允许更激进的优化。
+
+```c
+// 没有 restrict: 编译器必须假设 a 和 b 可能重叠
+void add_arrays(int *a, int *b, int *c, int n) {
+    for (int i = 0; i < n; i++) {
+        c[i] = a[i] + b[i];
+    }
+}
+
+// 有 restrict: 编译器可以向量化
+void add_arrays_fast(int * restrict a, int * restrict b, 
+                     int * restrict c, int n) {
+    for (int i = 0; i < n; i++) {
+        c[i] = a[i] + b[i];
+    }
+}
+```
+
+标准库示例: `memcpy(void * restrict dest, const void * restrict src, size_t n)`
+
+---
+
+### 题目28: 内存屏障
+
+**问题**: 什么是内存屏障？为什么需要它？
+
+**答案**:
+内存屏障防止编译器和 CPU 重排序内存操作。
+
+```c
+// 编译器屏障
+asm volatile("" ::: "memory");
+
+// GCC 内置
+__sync_synchronize();  // 全屏障
+
+// C11 原子
+#include <stdatomic.h>
+atomic_thread_fence(memory_order_seq_cst);
+```
+
+**使用场景**:
+- 无锁编程
+- 与硬件交互
+- 多核同步
+
+---
+
+### 题目29: 对齐要求
+
+**问题**: 什么是内存对齐？为什么需要对齐？
+
+**答案**:
+
+```c
+// 未对齐访问可能:
+// 1. 性能下降 (需要多次内存访问)
+// 2. 在某些架构上崩溃 (如 ARM)
+// 3. 产生未定义行为
+
+// 强制对齐
+struct __attribute__((aligned(64))) CacheLine {
+    int data[16];
+};
+
+// C11 对齐
+#include <stdalign.h>
+_Alignas(16) float vector[4];
+```
+
+**自然对齐规则**: 类型的对齐要求等于其大小。
+
+---
+
+## 系统编程
+
+### 题目30: 实现简单的引用计数
+
+```c
+typedef struct {
+    void *ptr;
+    int refcount;
+    void (*destructor)(void*);
+} RefCounted;
+
+RefCounted *rc_create(void *ptr, void (*destructor)(void*)) {
+    RefCounted *rc = malloc(sizeof(RefCounted));
+    rc->ptr = ptr;
+    rc->refcount = 1;
+    rc->destructor = destructor;
+    return rc;
+}
+
+void rc_retain(RefCounted *rc) {
+    __sync_fetch_and_add(&rc->refcount, 1);
+}
+
+void rc_release(RefCounted *rc) {
+    if (__sync_sub_and_fetch(&rc->refcount, 1) == 0) {
+        if (rc->destructor) {
+            rc->destructor(rc->ptr);
+        }
+        free(rc->ptr);
+        free(rc);
+    }
+}
+```
+
+---
+
+### 题目31: setjmp/longjmp 用法
+
+**问题**: setjmp/longjmp 是什么？有什么用途？
+
+```c
+#include <setjmp.h>
+
+jmp_buf env;
+
+void deep_function(void) {
+    // 发生错误，跳回 main
+    longjmp(env, 1);
+}
+
+int main(void) {
+    if (setjmp(env) == 0) {
+        // 正常执行路径
+        deep_function();
+    } else {
+        // 异常处理路径
+        printf("Error occurred\n");
+    }
+    return 0;
+}
+```
+
+**用途**: 实现异常处理机制、协程切换。
+**注意**: longjmp 不会执行析构函数或清理操作。
+
+---
+
+### 题目32: 可变参数函数实现
+
+**问题**: 实现一个简单的 printf 包装函数。
+
+```c
+#include <stdarg.h>
+#include <stdio.h>
+
+void debug_log(const char *file, int line, const char *fmt, ...) {
+    fprintf(stderr, "[%s:%d] ", file, line);
+    
+    va_list args;
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+    
+    fprintf(stderr, "\n");
+}
+
+#define LOG(fmt, ...) debug_log(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+
+// 使用
+LOG("Value: %d", 42);
+```
+
+---
+
+### 题目33: 信号处理
+
+**问题**: 如何正确处理 SIGINT？
+
+```c
+#include <signal.h>
+#include <stdio.h>
+
+volatile sig_atomic_t running = 1;
+
+void sigint_handler(int sig) {
+    running = 0;
+}
+
+int main(void) {
+    struct sigaction sa;
+    sa.sa_handler = sigint_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    
+    while (running) {
+        printf("Working...\n");
+        sleep(1);
+    }
+    
+    printf("Graceful shutdown\n");
+    return 0;
+}
+```
+
+**关键点**:
+- 使用 `sig_atomic_t` 和 `volatile`
+- 信号处理函数只能调用 async-signal-safe 函数
+- 优先使用 `sigaction` 而非 `signal`
+
+---
+
+## 经典陷阱
+
+### 题目34: 整数提升陷阱
+
+**问题**: 以下代码的问题？
+
+```c
+unsigned short a = 65535;
+unsigned short b = 1;
+if (a + b > 65535) {
+    printf("Overflow!\n");
+} else {
+    printf("No overflow\n");
+}
+```
+
+**答案**: 输出 "Overflow!"。
+
+**解释**: `a + b` 会进行整数提升到 `int`，65535 + 1 = 65536，不会回绕。
+
+---
+
+### 题目35: 数组退化陷阱
+
+**问题**: 以下代码有什么问题？
+
+```c
+void process(int arr[100]) {
+    int n = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < n; i++) {
+        arr[i] = 0;
+    }
+}
+```
+
+**答案**: `arr` 退化为指针，`sizeof(arr)` 是指针大小(8)，不是数组大小。
+
+**修复**: 显式传递长度 `void process(int *arr, size_t n)`。
+
+---
+
+### 题目36: 字符串字面量修改
+
+**问题**: 以下代码为什么崩溃？
+
+```c
+char *s = "hello";
+s[0] = 'H';
+```
+
+**答案**: 字符串字面量存储在只读数据段，修改导致段错误。
+
+**修复**:
+```c
+char s[] = "hello";  // 数组拷贝，可修改
+s[0] = 'H';          // OK
+```
+
+---
+
+## 高级数据结构
+
+### 题目37: 找链表环的入口
+
+```c
+struct Node *find_cycle_entry(struct Node *head) {
+    struct Node *slow = head, *fast = head;
+    
+    // 检测环
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) break;
+    }
+    
+    if (!fast || !fast->next) return NULL;  // 无环
+    
+    // 找入口: slow 从头开始，fast 从相遇点开始，相遇处即入口
+    slow = head;
+    while (slow != fast) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+    
+    return slow;
+}
+```
+
+---
+
+### 题目38: 合并K个有序链表
+
+```c
+// 使用最小堆实现
+struct Node *merge_k_lists(struct Node **lists, int k) {
+    struct Node dummy = {0, NULL};
+    struct Node *tail = &dummy;
+    
+    // 简化版: 逐个合并 (面试可以讨论堆优化)
+    struct Node *merged = NULL;
+    for (int i = 0; i < k; i++) {
+        merged = merge_two_lists(merged, lists[i]);
+    }
+    
+    return merged;
+}
+
+struct Node *merge_two_lists(struct Node *l1, struct Node *l2) {
+    struct Node dummy = {0, NULL};
+    struct Node *tail = &dummy;
+    
+    while (l1 && l2) {
+        if (l1->data < l2->data) {
+            tail->next = l1;
+            l1 = l1->next;
+        } else {
+            tail->next = l2;
+            l2 = l2->next;
+        }
+        tail = tail->next;
+    }
+    
+    tail->next = l1 ? l1 : l2;
+    return dummy.next;
+}
+```
+
+---
+
+### 题目39: 实现哈希表
+
+```c
+#define TABLE_SIZE 256
+
+typedef struct Entry {
+    char *key;
+    int value;
+    struct Entry *next;
+} Entry;
+
+typedef struct {
+    Entry *buckets[TABLE_SIZE];
+} HashTable;
+
+unsigned int hash(const char *key) {
+    unsigned int h = 0;
+    while (*key) {
+        h = h * 31 + (unsigned char)*key++;
+    }
+    return h % TABLE_SIZE;
+}
+
+void ht_put(HashTable *ht, const char *key, int value) {
+    unsigned int idx = hash(key);
+    
+    // 查找已存在
+    for (Entry *e = ht->buckets[idx]; e; e = e->next) {
+        if (strcmp(e->key, key) == 0) {
+            e->value = value;
+            return;
+        }
+    }
+    
+    // 新增
+    Entry *e = malloc(sizeof(Entry));
+    e->key = strdup(key);
+    e->value = value;
+    e->next = ht->buckets[idx];
+    ht->buckets[idx] = e;
+}
+
+int ht_get(HashTable *ht, const char *key, int *value) {
+    unsigned int idx = hash(key);
+    for (Entry *e = ht->buckets[idx]; e; e = e->next) {
+        if (strcmp(e->key, key) == 0) {
+            *value = e->value;
+            return 1;
+        }
+    }
+    return 0;
+}
+```
+
+---
+
+### 题目40: 实现简单的线程池框架
+
+```c
+#include <pthread.h>
+
+typedef void (*Task)(void*);
+
+typedef struct {
+    Task func;
+    void *arg;
+} Job;
+
+typedef struct {
+    Job *jobs;
+    int capacity;
+    int head, tail, count;
+    pthread_mutex_t mutex;
+    pthread_cond_t not_empty;
+    pthread_cond_t not_full;
+    int shutdown;
+    pthread_t *threads;
+    int thread_count;
+} ThreadPool;
+
+void *worker(void *arg) {
+    ThreadPool *pool = (ThreadPool *)arg;
+    
+    while (1) {
+        pthread_mutex_lock(&pool->mutex);
+        
+        while (pool->count == 0 && !pool->shutdown) {
+            pthread_cond_wait(&pool->not_empty, &pool->mutex);
+        }
+        
+        if (pool->shutdown) {
+            pthread_mutex_unlock(&pool->mutex);
+            break;
+        }
+        
+        Job job = pool->jobs[pool->head];
+        pool->head = (pool->head + 1) % pool->capacity;
+        pool->count--;
+        
+        pthread_cond_signal(&pool->not_full);
+        pthread_mutex_unlock(&pool->mutex);
+        
+        job.func(job.arg);
+    }
+    
+    return NULL;
+}
+```
+
+---
+
+## 相关链接
+
+- [C Written Test Questions](@/articles/c/c-40-C-Written-Test-Questions.md)
+- [06.指针基础与内存模型](@/articles/c/c-06-指针基础与内存模型.md)
+- [09.动态内存管理](@/articles/c/c-09-动态内存管理.md)
+- [C++面试题汇总](@/articles/cpp/cpp-50-Cpp面试题汇总.md)
+
+---
+
+## 相关文章
+
+- [上一篇：C Written Test Questions](/articles/c/c-20-C-Written-Test-Questions/)

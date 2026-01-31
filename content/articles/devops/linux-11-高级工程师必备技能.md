@@ -765,3 +765,10 @@ dmesg -T | tail -50
 - [The Linux Kernel Documentation](https://www.kernel.org/doc/html/latest/)
 - [eBPF.io](https://ebpf.io/)
 - [Prometheus Documentation](https://prometheus.io/docs/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux自动化运维深度指南](/articles/devops/linux-10-自动化运维指南/)
+- [下一篇：BIOS与硬件级调优指南](/articles/devops/linux-12-BIOS与硬件级调优/)

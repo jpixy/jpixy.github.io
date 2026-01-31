@@ -983,3 +983,10 @@ o1 模型思路：
 - [DeepSpeed Documentation](https://www.deepspeed.ai/)
 - [vLLM Documentation](https://docs.vllm.ai/)
 - [Anthropic Interpretability Research](https://www.anthropic.com/research)
+
+---
+
+## 相关文章
+
+- [上一篇：Notebook优化Agent增强版](/articles/ai/ai-12-Notebook优化Agent增强版/)
+- [下一篇：分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)

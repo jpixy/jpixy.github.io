@@ -926,3 +926,10 @@ groups:
 
 ### 新技术
 `Backstage`, `Crossplane`, `Gateway API`, `WebAssembly`, `eBPF`, `Cilium`, `KubeFlow`, `Kueue`, `Volcano`
+
+---
+
+## 相关文章
+
+- [上一篇：AI应用技术栈全景与实践指南](/articles/insights/insights-01-AI应用技术栈全景/)
+- [下一篇：Staff级别面试项目选择与技术亮点分析](/articles/insights/insights-03-Staff面试项目分析/)

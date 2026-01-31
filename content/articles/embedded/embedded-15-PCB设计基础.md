@@ -428,3 +428,10 @@ MCU复位电路设计：
 | 团队协作 | 需求表达、评审参与 |
 
 不需要成为硬件专家，但理解这些基础知识会让你成为更全面、更有价值的嵌入式工程师。
+
+---
+
+## 相关文章
+
+- [上一篇：固件OTA升级设计](/articles/embedded/embedded-14-固件OTA升级/)
+- [下一篇：汽车电子与AUTOSAR](/articles/embedded/embedded-16-汽车电子与AUTOSAR/)

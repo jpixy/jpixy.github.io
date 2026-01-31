@@ -370,3 +370,10 @@ FIX 的二进制替代方案：
 - [FIX 4.4 Specification](https://www.fixtrading.org/standards/fix-4-4/)
 - [FIX 5.0 SP2 Specification](https://www.fixtrading.org/standards/fix-5-0-sp-2/)
 - [Simple Binary Encoding](https://github.com/FIXTradingCommunity/fix-simple-binary-encoding)
+
+---
+
+## 相关文章
+
+- [上一篇：HFT领域C++必知必会知识点详解](/articles/hft/hft-01-Cpp必知必会/)
+- [下一篇：FAST协议详解](/articles/hft/hft-03-FAST协议详解/)

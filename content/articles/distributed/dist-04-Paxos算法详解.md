@@ -238,3 +238,10 @@ Paxos更灵活，适合特殊需求。
 | Multi-Paxos | Leader优化，减少延迟 |
 
 Paxos是分布式共识的奠基性算法。理解其原理对于理解所有共识算法都有帮助，尽管实践中通常使用更易理解的Raft。
+
+---
+
+## 相关文章
+
+- [上一篇：一致性模型详解](/articles/distributed/dist-03-一致性模型详解/)
+- [下一篇：Raft算法详解](/articles/distributed/dist-05-Raft算法详解/)

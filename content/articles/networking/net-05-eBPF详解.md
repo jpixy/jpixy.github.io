@@ -135,3 +135,9 @@ sudo ./user_program
 
 这个示例展示了eBPF程序的基本结构和如何从用户空间加载和控制eBPF程序。eBPF技术非常灵活，可以用于各种高级网络和系统监控任务。更多高级用法和示例可以在eBPF社区找到。
 
+---
+
+## 相关文章
+
+- [上一篇：DPDK详解](/articles/networking/net-04-DPDK详解/)
+- [下一篇：TCP/IP协议栈基础](/articles/networking/net-06-TCPIP协议栈基础/)

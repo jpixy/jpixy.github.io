@@ -427,3 +427,10 @@ ovs-ofctl add-flow br0 "in_port=1,actions=output:2"
 | Network NS | - | 网络隔离 |
 
 网络虚拟化是云计算和容器技术的基础，理解这些概念对于容器网络排障和性能优化至关重要。
+
+---
+
+## 相关文章
+
+- [上一篇：网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)
+- [下一篇：高性能网络架构](/articles/networking/net-13-高性能网络架构/)

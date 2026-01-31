@@ -402,3 +402,10 @@ class LRUCache:
 | LRU缓存 | O(1) | 缓存淘汰 |
 
 这些高级数据结构在特定场景下可以大幅提升性能。
+
+---
+
+## 相关文章
+
+- [上一篇：常见算法技巧](/articles/algorithm/algo-06-常见算法技巧/)
+- [下一篇：算法面试指南](/articles/algorithm/algo-08-算法面试指南/)

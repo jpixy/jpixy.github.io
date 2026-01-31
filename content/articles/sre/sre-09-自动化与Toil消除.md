@@ -424,3 +424,10 @@ def auto_remediate():
 > — Carla Geisser, Google SRE
 
 人工操作应该是例外，而非常态。通过持续的自动化投入，让系统自己照顾自己，SRE才能专注于更有价值的工程工作。
+
+---
+
+## 相关文章
+
+- [上一篇：混沌工程与韧性测试](/articles/sre/sre-08-混沌工程与韧性测试/)
+- [下一篇：SRE工具链详解](/articles/sre/sre-10-SRE工具链详解/)

@@ -870,3 +870,9 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 ### 业界实践
 `AWS Nitro`, `Azure AccelNet`, `Google Andromeda`, `Cloudflare XDP`, `5G UPF`, `NFV`, `CNF`, `MEC`
+
+---
+
+## 相关文章
+
+- [上一篇：网络是计算存储网络三大件的瓶颈吗](/articles/insights/insights-05-网络瓶颈分析/)

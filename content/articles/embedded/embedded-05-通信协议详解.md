@@ -241,3 +241,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 - **CAN**: 最可靠，适合汽车/工业
 
 根据应用需求选择合适的协议是嵌入式设计的关键决策。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式开发环境与工具链](/articles/embedded/embedded-04-开发环境与工具链/)
+- [下一篇：RTOS实时操作系统详解](/articles/embedded/embedded-06-RTOS实时操作系统/)

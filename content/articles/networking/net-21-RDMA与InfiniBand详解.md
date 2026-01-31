@@ -619,3 +619,10 @@ RDMA的核心优势：
 4. **高吞吐**：100Gbps+带宽
 
 RDMA是HFT基础设施的重要组成部分，适用于交易服务器间的低延迟通信。
+
+---
+
+## 相关文章
+
+- [上一篇：io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
+- [下一篇：二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/)

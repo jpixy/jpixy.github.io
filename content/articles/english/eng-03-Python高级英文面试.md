@@ -239,3 +239,10 @@ def fibonacci():
 A: Introduced in Python 3.7, `contextvars` provide thread-local-like storage that works with asyncio. Each task maintains its own context copy.
 
 These questions cover advanced Python concepts while maintaining natural interview language. They progress from core concepts to specialized topics, testing both theoretical knowledge and practical implementation skills.
+
+---
+
+## 相关文章
+
+- [上一篇：Python基础知识英文面试](/articles/english/eng-02-Python基础英文面试/)
+- [下一篇：AI相关英文](/articles/english/eng-04-AI相关英文/)

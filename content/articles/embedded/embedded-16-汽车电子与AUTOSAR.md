@@ -500,3 +500,10 @@ UDS（Unified Diagnostic Services，ISO 14229）是统一诊断协议。
 | 开发流程 | V模型、工具链 |
 
 汽车电子是嵌入式领域的"皇冠"，技术门槛高但回报丰厚。建议从CAN和AUTOSAR基础开始，逐步深入功能安全领域。
+
+---
+
+## 相关文章
+
+- [上一篇：PCB设计基础](/articles/embedded/embedded-15-PCB设计基础/)
+- [下一篇：嵌入式电机控制](/articles/embedded/embedded-17-电机控制/)

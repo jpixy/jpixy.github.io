@@ -532,3 +532,9 @@ perf stat -e power/energy-cores/,power/energy-pkg/ -I 1000
 - [Red Hat Performance Tuning Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/monitoring_and_managing_system_status_and_performance/)
 - [Dell PowerEdge BIOS Tuning Guide](https://www.dell.com/support/kbdoc/)
 - [HPE Gen10 BIOS Tuning Guide](https://support.hpe.com/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux高级工程师必备技能详解](/articles/devops/linux-11-高级工程师必备技能/)

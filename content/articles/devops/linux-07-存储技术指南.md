@@ -864,3 +864,10 @@ cat /sys/block/sda/queue/scheduler
 - [Red Hat Storage Administration Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_storage_devices/)
 - [XFS Documentation](https://xfs.wiki.kernel.org/)
 - [LVM Administrator's Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux系统性能调优深度指南](/articles/devops/linux-06-系统性能调优指南/)
+- [下一篇：Linux网络技术深度指南](/articles/devops/linux-08-网络技术指南/)

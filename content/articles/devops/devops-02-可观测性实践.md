@@ -459,3 +459,10 @@ Traces：这个请求经过了哪些服务？哪里慢了？
 2. **关联是关键**，TraceID贯穿
 3. **SLO驱动**，明确目标
 4. **持续改进**，从实践中学习
+
+---
+
+## 相关文章
+
+- [上一篇：CI/CD最佳实践](/articles/devops/devops-01-CI-CD最佳实践/)
+- [下一篇：SRE实践指南](/articles/devops/devops-03-SRE实践指南/)

@@ -482,3 +482,10 @@ sysctl -w net.ipv4.ip_local_port_range="1024 65535"
 2. 分层排查，缩小范围
 3. 对比正常环境
 4. 记录过程，便于复盘
+
+---
+
+## 相关文章
+
+- [上一篇：网络安全基础](/articles/networking/net-16-网络安全基础/)
+- [下一篇：TCP调优深入详解(HFT)](/articles/networking/net-18-TCP调优深入详解/)

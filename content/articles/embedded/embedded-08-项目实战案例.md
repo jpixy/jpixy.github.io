@@ -377,3 +377,10 @@ int main(void) {
 | 物联网网关 | RTOS、网络协议、多任务 |
 
 项目实战是检验和巩固技能的最佳方式。建议从简单项目开始，逐步挑战复杂系统。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式调试与故障排查](/articles/embedded/embedded-07-调试与故障排查/)
+- [下一篇：嵌入式Linux驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)

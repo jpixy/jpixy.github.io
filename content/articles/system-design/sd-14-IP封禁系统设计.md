@@ -1514,3 +1514,9 @@ graph TD
 ### 一句话总结
 
 > **IPv4 用 Bitmap (512MB)，IPv6 用 Radix Tree (20-40GB)，配合多层缓存 (LRU + Bloom)，5 分钟增量同步，eBPF 加速可选，暗上线 → 灰度 → 全量，一键回滚，完整审计。**
+
+---
+
+## 相关文章
+
+- [上一篇：分布式限流器设计 (Rate Limiter)](/articles/system-design/sd-13-分布式限流器设计/)

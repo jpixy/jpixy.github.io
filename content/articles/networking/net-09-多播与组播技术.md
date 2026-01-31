@@ -413,3 +413,10 @@ socat UDP4-RECVFROM:5000,ip-add-membership=239.192.1.100:eth0 -
 | 可靠性 | 默认不可靠，需额外机制 |
 
 多播是解决一对多高效通信的关键技术，在视频分发、金融行情、集群通信等场景有广泛应用。
+
+---
+
+## 相关文章
+
+- [上一篇：UDP与可靠UDP](/articles/networking/net-08-UDP与可靠UDP/)
+- [下一篇：Socket网络编程](/articles/networking/net-10-Socket网络编程/)

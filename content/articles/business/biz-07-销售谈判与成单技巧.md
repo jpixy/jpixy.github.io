@@ -741,3 +741,10 @@ tags = ["sales", "business", "negotiation", "closing", "pricing"]
 ├── 心理素质
 └── 应变能力
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：To B销售全流程详解](/articles/business/biz-06-To-B销售全流程详解/)
+- [下一篇：客户成功与续约管理](/articles/business/biz-08-客户成功与续约管理/)

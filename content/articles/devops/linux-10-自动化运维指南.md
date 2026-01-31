@@ -595,3 +595,10 @@ infrastructure/
 - [Python for DevOps](https://www.oreilly.com/library/view/python-for-devops/9781492057680/)
 - [Infrastructure as Code](https://www.oreilly.com/library/view/infrastructure-as-code/9781098114664/)
 - [The Practice of Cloud System Administration](https://www.oreilly.com/library/view/the-practice-of/9780133478549/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux安全加固深度指南](/articles/devops/linux-09-安全加固指南/)
+- [下一篇：Linux高级工程师必备技能详解](/articles/devops/linux-11-高级工程师必备技能/)

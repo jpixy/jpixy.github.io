@@ -273,3 +273,10 @@ A：开启慢查询日志；使用EXPLAIN分析执行计划；关注type、key�
 3. **最左前缀**：联合索引设计的关键
 4. **覆盖索引**：避免回表的重要优化
 5. **EXPLAIN**：查询优化的必备工具
+
+---
+
+## 相关文章
+
+- [上一篇：Redis高可用架构](/articles/interview/interview-03-Redis高可用架构/)
+- [下一篇：MySQL分库分表实践](/articles/interview/interview-05-MySQL分库分表/)

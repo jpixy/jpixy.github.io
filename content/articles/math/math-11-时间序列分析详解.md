@@ -737,3 +737,10 @@ signals, zscore = strategy.generate_signals(ou_series)
 6. **均值回归**：量化策略的重要来源
 
 掌握这些工具是进行量化研究和策略开发的基础。
+
+---
+
+## 相关文章
+
+- [上一篇：期权定价与Greeks详解(HFT)](/articles/math/math-10-期权定价与Greeks详解/)
+- [下一篇：统计套利与因子模型(HFT)](/articles/math/math-12-统计套利与因子模型/)

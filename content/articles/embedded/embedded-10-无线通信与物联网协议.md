@@ -405,3 +405,10 @@ Broker保存主题的最后一条消息：
 | 快速上云 | WiFi、NB-IoT |
 
 没有万能的技术，只有合适的选择。深入理解每种技术的特点和限制，才能做出正确的架构决策。
+
+---
+
+## 相关文章
+
+- [上一篇：嵌入式Linux驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
+- [下一篇：嵌入式面试指南](/articles/embedded/embedded-11-嵌入式面试指南/)

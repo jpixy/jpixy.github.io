@@ -1343,3 +1343,10 @@ L_ij = q_i × q_j × S_ij
 
 ### 评估
 `A/B测试`, `分流`, `正交实验`, `CTR`, `NDCG`, `AUC`, `覆盖率`
+
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个搜索引擎](/articles/interview/interview-21-设计搜索引擎/)
+- [下一篇：如何设计一个Feed流系统](/articles/interview/interview-23-设计Feed流系统/)

@@ -344,3 +344,10 @@ public class LoginPage {
 ---
 
 这些问答覆盖了QA面试的核心领域。如果需要更深入的回答或特定工具（如JIRA, TestRail）的问题，可以进一步细化！
+
+---
+
+## 相关文章
+
+- [上一篇：AI相关英文](/articles/english/eng-04-AI相关英文/)
+- [下一篇：缺点当成优点表达](/articles/english/eng-06-缺点当优点表达/)

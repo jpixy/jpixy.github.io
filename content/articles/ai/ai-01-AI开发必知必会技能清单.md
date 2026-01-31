@@ -741,3 +741,9 @@ RAG：Retrieval-Augmented Generation for Knowledge-Intensive NLP
 - [LangChain Documentation](https://python.langchain.com/)
 - [Papers With Code](https://paperswithcode.com/)
 - [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+
+---
+
+## 相关文章
+
+- [下一篇：大模型训练为什么GPU比CPU更合适](/articles/ai/ai-02-大模型训练为什么GPU比CPU更合适/)

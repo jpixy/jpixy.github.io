@@ -580,3 +580,10 @@ private:
 3. 监控订单流毒性，及时调整策略
 4. 设置多层风控，包括kill switch
 5. 收盘前清理库存
+
+---
+
+## 相关文章
+
+- [上一篇：Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+- [下一篇：HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)

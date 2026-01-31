@@ -646,3 +646,10 @@ Linux时间子系统的核心要点：
 5. **硬件时间戳**：最精确的网络延迟测量
 
 精确的时间测量是HFT系统的基础能力。
+
+---
+
+## 相关文章
+
+- [上一篇：Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
+- [下一篇：内存映射与高效IO(HFT)](/articles/linux/linux-11-内存映射与高效IO/)

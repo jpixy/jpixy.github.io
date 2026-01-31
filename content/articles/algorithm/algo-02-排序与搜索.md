@@ -393,3 +393,10 @@ def counting_sort(arr):
 | 答案单调性 | 二分答案 |
 
 二分查找的关键是确定**搜索空间**和**收缩条件**。
+
+---
+
+## 相关文章
+
+- [上一篇：数据结构基础](/articles/algorithm/algo-01-数据结构基础/)
+- [下一篇：树与图](/articles/algorithm/algo-03-树与图/)

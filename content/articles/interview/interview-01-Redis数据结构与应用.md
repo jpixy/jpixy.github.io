@@ -319,3 +319,9 @@ A：使用ZSet，score为分数，member为用户ID。ZINCRBY更新分数，ZREV
 2. **理解内部编码**：影响性能和内存
 3. **掌握典型应用**：每种类型的最佳实践
 4. **注意边界情况**：大Key、热Key的处理
+
+---
+
+## 相关文章
+
+- [下一篇：Redis为什么这么快](/articles/interview/interview-02-Redis为什么这么快/)

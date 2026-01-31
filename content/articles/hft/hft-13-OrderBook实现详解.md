@@ -597,3 +597,10 @@ void benchmark_orderbook() {
 - [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 红黑树、哈希表、对象池等概念速查
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - OrderBook、低延迟等概念速查
 - [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - 内存管理、智能指针等概念速查
+
+---
+
+## 相关文章
+
+- [上一篇：HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)
+- [下一篇：Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)

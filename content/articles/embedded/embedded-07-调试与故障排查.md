@@ -291,3 +291,10 @@ const cli_cmd_t commands[] = {
 | 生产支持 | 日志系统、远程诊断 |
 
 这些技能是AI无法替代的——因为需要与真实硬件交互。
+
+---
+
+## 相关文章
+
+- [上一篇：RTOS实时操作系统详解](/articles/embedded/embedded-06-RTOS实时操作系统/)
+- [下一篇：嵌入式项目实战案例](/articles/embedded/embedded-08-项目实战案例/)

@@ -1527,3 +1527,9 @@ Object Storage ─────────────────────�
 ### 监控
 `Prometheus`, `Grafana`, `TTFB`, `下载成功率`, `链路追踪`, `Jaeger`
 
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个短链接服务](/articles/interview/interview-19-设计短链接服务/)
+- [下一篇：如何设计一个搜索引擎](/articles/interview/interview-21-设计搜索引擎/)

@@ -378,3 +378,10 @@ fn process(s: Option<String>) -> String {
 | 切片 | 对部分数据的引用 |
 
 所有权系统是Rust的核心，理解它是掌握Rust的关键。编译器会帮助你遵守这些规则。
+
+---
+
+## 相关文章
+
+- [上一篇：Rust语言基础](/articles/rust/rust-01-Rust语言基础/)
+- [下一篇：生命周期详解](/articles/rust/rust-03-生命周期详解/)

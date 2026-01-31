@@ -777,3 +777,9 @@ double process_price_branchless(double price, double min_tick) {
 5. **市场规范**：遵守各市场的精度要求
 
 在HFT系统中，精度问题不仅关系到正确性，还可能涉及监管合规。必须从设计阶段就考虑数值计算的精度问题。
+
+---
+
+## 相关文章
+
+- [上一篇：统计套利与因子模型(HFT)](/articles/math/math-12-统计套利与因子模型/)

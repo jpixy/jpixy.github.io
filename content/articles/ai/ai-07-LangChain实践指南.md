@@ -714,3 +714,10 @@ def with_retry(chain, max_retries=3):
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 - [LangSmith](https://smith.langchain.com/)
 - [LangChain GitHub](https://github.com/langchain-ai/langchain)
+
+---
+
+## 相关文章
+
+- [上一篇：LangChain详解](/articles/ai/ai-06-LangChain详解/)
+- [下一篇：LangGraph详解](/articles/ai/ai-08-LangGraph详解/)

@@ -19,3 +19,9 @@ KCP（Kantons Calibration Protocol）是另一个流行的可靠UDP协议，它�
 
 在实际应用中，选择使用可靠的UDP协议还是TCP，需要根据具体的应用场景和性能要求来决定。如果应用对实时性要求很高，并且可以容忍一定程度的数据丢失，那么可靠的UDP协议可能是一个更好的选择。
 
+---
+
+## 相关文章
+
+- [上一篇：Ethernet相关](/articles/networking/net-01-Ethernet基础/)
+- [下一篇：OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)

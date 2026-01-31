@@ -1430,3 +1430,10 @@ P3 (提示): 需要关注，工作时间处理
 
 ### 安全
 `HTTPS`, `JWT`, `OAuth`, `数据加密`, `脱敏`, `防刷`
+
+---
+
+## 相关文章
+
+- [上一篇：如何设计一个支付系统](/articles/interview/interview-28-设计支付系统/)
+- [下一篇：如何设计一个电商系统](/articles/interview/interview-30-设计电商系统/)

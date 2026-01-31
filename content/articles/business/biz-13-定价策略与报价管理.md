@@ -555,3 +555,10 @@ tags = ["sales", "business", "pricing", "negotiation", "strategy"]
 □ 折扣需要审批吗？
 □ 这个价格可持续吗？
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：SaaS销售方法论](/articles/business/biz-12-SaaS销售方法论/)
+- [下一篇：销售预测与漏斗管理](/articles/business/biz-14-销售预测与漏斗管理/)

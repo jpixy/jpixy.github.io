@@ -820,3 +820,9 @@ private:
 
 - [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 滑动窗口、时间复杂度等概念速查
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 实时计算、VWAP等概念速查
+
+---
+
+## 相关文章
+
+- [上一篇：概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)

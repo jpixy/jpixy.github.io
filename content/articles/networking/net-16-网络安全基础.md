@@ -350,3 +350,10 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 | 安全实践 | 最小权限、监控审计 |
 
 网络安全是一个持续的过程，需要纵深防御，不能依赖单一措施。
+
+---
+
+## 相关文章
+
+- [上一篇：DNS详解](/articles/networking/net-15-DNS详解/)
+- [下一篇：网络故障排查](/articles/networking/net-17-网络故障排查/)

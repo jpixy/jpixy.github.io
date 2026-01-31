@@ -602,3 +602,10 @@ answer = chain.invoke("文档的主要内容是什么？")
      ↓
 5. 高级：LangGraph + LangSmith
 ```
+
+---
+
+## 相关文章
+
+- [上一篇：RAG检索增强生成详解](/articles/ai/ai-05-RAG检索增强生成详解/)
+- [下一篇：LangChain实践指南](/articles/ai/ai-07-LangChain实践指南/)

@@ -723,3 +723,9 @@ kubectl logs -n kube-system csi-provisioner-0
 _"In a recent project, we reduced cross-zone failover time from 15 minutes to 2 minutes by combining Istio’s _`LocalityLB`_ with Portworx synchronous replication."_  
 
 Would you like to explore specific configurations (e.g., Istio `ServiceEntry` for hybrid cloud) or storage benchmark methodologies?
+
+---
+
+## 相关文章
+
+- [上一篇：缺点当成优点表达](/articles/english/eng-06-缺点当优点表达/)

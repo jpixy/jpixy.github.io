@@ -482,3 +482,10 @@ let value = queue.pop();
 | Send/Sync | 并发安全标记 |
 
 Rust的"无畏并发"来自编译器对Send和Sync的检查，让并发错误在编译期暴露。
+
+---
+
+## 相关文章
+
+- [上一篇：错误处理](/articles/rust/rust-04-错误处理/)
+- [下一篇：异步编程](/articles/rust/rust-06-异步编程/)

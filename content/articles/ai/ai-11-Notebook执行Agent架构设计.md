@@ -585,3 +585,10 @@ else:
 - CI/CD 流水线集成
 - 批量执行历史 Notebook
 - 自动化报告生成
+
+---
+
+## 相关文章
+
+- [上一篇：AI Agent智能体架构详解](/articles/ai/ai-10-Agent智能体架构详解/)
+- [下一篇：Notebook优化Agent增强版](/articles/ai/ai-12-Notebook优化Agent增强版/)

@@ -585,3 +585,10 @@ void persistData(void* dest, const void* src, size_t len) {
 - [LMAX Disruptor](https://lmax-exchange.github.io/disruptor/)
 - Jane Street Tech Blog
 - Two Sigma Engineering Blog
+
+---
+
+## 相关文章
+
+- [上一篇：定点运算详解](/articles/hft/hft-09-定点运算详解/)
+- [下一篇：Rust在HFT领域的实践与必知必会](/articles/hft/hft-11-Rust在HFT的实践/)

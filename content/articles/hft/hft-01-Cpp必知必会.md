@@ -724,3 +724,9 @@ private:
 - LMAX Disruptor 设计思想
 - Intel 优化手册
 - Linux 内核网络栈源码
+
+---
+
+## 相关文章
+
+- [下一篇：FIX协议详解](/articles/hft/hft-02-FIX协议详解/)

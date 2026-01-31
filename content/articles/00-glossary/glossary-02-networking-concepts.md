@@ -980,3 +980,10 @@ MLAG: 两条线同时用，任一交换机挂了另一台接管
 - [io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
 - [数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
 - [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
+
+---
+
+## 相关文章
+
+- [上一篇：Linux & System Concepts](/articles/00-glossary/glossary-01-linux-concepts/)
+- [下一篇：Algorithm & Data Structure Concepts](/articles/00-glossary/glossary-03-algorithm-concepts/)

@@ -258,3 +258,10 @@ HBase、Cassandra的设计来源。
 | LSM树 | 写优化存储引擎 |
 
 分布式存储是构建可伸缩系统的基础。理解复制和分片的权衡是做出正确设计决策的前提。
+
+---
+
+## 相关文章
+
+- [上一篇：Raft算法详解](/articles/distributed/dist-05-Raft算法详解/)
+- [下一篇：分布式事务](/articles/distributed/dist-07-分布式事务/)
