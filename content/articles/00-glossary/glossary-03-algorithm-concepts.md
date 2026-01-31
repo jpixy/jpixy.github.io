@@ -3558,6 +3558,7 @@ list(zip(*matrix))  # 矩阵转置
 - [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
 - [概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
 - [在线算法与流式计算(HFT)](/articles/algorithm/algo-10-在线算法与流式计算/)
+- [平衡树详解：AVL、红黑树、B树与B+树](/articles/algorithm/algo-11-平衡树详解/)
 
 ---
 

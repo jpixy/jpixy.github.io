@@ -613,6 +613,10 @@ NCCL_DEBUG=INFO python train.py
 
 ## 相关文章
 
+- [上一篇：存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/)
+- [下一篇：内核内存管理详解](/articles/linux/linux-16-内核内存管理详解/)
+
+**延伸阅读**：
 - [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 概念速查
 - [HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/) - NUMA优化
 - [内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/) - 调试工具

@@ -710,7 +710,119 @@ int main() {
 
 ---
 
-### 4.3 Signal (信号)
+### 4.3 Spinlock (自旋锁)
+
+**定义**：一种忙等待锁，获取失败时不睡眠，而是循环检测（自旋）直到锁可用。
+
+**为什么重要**：
+- 中断上下文只能使用 spinlock（不能睡眠）
+- 短临界区性能优于互斥锁（无上下文切换开销）
+- 多核系统的基础同步原语
+
+**多核实现演进**：
+
+| 实现 | 特点 | 问题 |
+|------|------|------|
+| **TAS** | test-and-set 原子操作 | 不公平，缓存行抖动 |
+| **Ticket Lock** | 取号排队，FIFO 公平 | 所有 CPU 同一缓存行自旋 |
+| **MCS Lock** | 每 CPU 本地自旋 | 实现复杂 |
+| **qspinlock** | 三级策略，Linux 4.2+ | 当前内核默认 |
+
+**Spinlock 变体**：
+
+```cpp
+spin_lock(&lock);           // 禁止抢占
+spin_lock_bh(&lock);        // 禁止抢占 + 软中断
+spin_lock_irq(&lock);       // 禁止抢占 + 硬中断
+spin_lock_irqsave(&lock, flags);  // 同上，保存中断状态
+```
+
+**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+
+---
+
+### 4.4 RCU (Read-Copy-Update)
+
+**定义**：一种同步机制，读者无需加锁，写者负责同步。适用于读多写少的场景。
+
+**核心思想**：
+- 读者无开销访问数据
+- 写者创建副本修改，原子替换指针
+- 等待宽限期（所有读者退出）后释放旧数据
+
+**工作原理**：
+
+```
+1. 写者复制数据，修改副本
+2. rcu_assign_pointer() 原子替换指针
+3. synchronize_rcu() 等待宽限期
+4. 宽限期结束后释放旧数据
+```
+
+**API**：
+
+```c
+// 读者
+rcu_read_lock();
+ptr = rcu_dereference(global_ptr);
+// 使用 ptr
+rcu_read_unlock();
+
+// 写者
+new_ptr = kmalloc(...);
+old_ptr = rcu_dereference(global_ptr);
+rcu_assign_pointer(global_ptr, new_ptr);
+synchronize_rcu();  // 或 call_rcu()
+kfree(old_ptr);
+```
+
+**应用场景**：
+- 链表遍历（读多写少）
+- 路由表查询
+- 文件系统 dcache
+
+**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+
+---
+
+### 4.5 Memory Barrier (内存屏障)
+
+**定义**：阻止编译器和 CPU 重排序内存操作的指令。
+
+**为什么需要**：
+- 编译器优化可能重排指令
+- CPU 乱序执行提高性能
+- Store Buffer 导致写操作延迟可见
+
+**Linux 内存屏障 API**：
+
+| 屏障 | 作用 |
+|------|------|
+| `barrier()` | 编译器屏障 |
+| `mb()` | 全屏障 |
+| `rmb()` | 读屏障 |
+| `wmb()` | 写屏障 |
+| `smp_mb()` | SMP 全屏障 |
+
+**典型模式**：
+
+```c
+// 生产者
+data = value;
+smp_wmb();     // 确保 data 写入在 flag 之前
+flag = 1;
+
+// 消费者
+while (!flag);
+smp_rmb();     // 确保读 flag 在读 data 之前
+use(data);
+```
+
+**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+
+---
+
+### 4.6 Signal (信号)
 
 **定义**：进程间通信的异步通知机制。内核或其他进程可以向目标进程发送信号，触发特定处理。
 

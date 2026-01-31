@@ -1,747 +1,732 @@
 +++
-title = "14. IO Multiplexing (select/poll/epoll)"
-slug = "c-IO多路复用的例子"
+title = "14. IO多路复用详解：原理、实现与对比"
+date = 2026-01-31
+description = "深入剖析select、poll、epoll、io_uring的底层原理与内核实现，揭示高性能IO的设计思想"
+[taxonomies]
+tags = ["C", "Linux", "IO多路复用", "epoll", "io_uring", "系统编程"]
 +++
 
-# IO多路复用的例子
-## select
-`select` 是一种传统的I/O多路复用机制，它允许程序同时监视多个文件描述符（file descriptors），以确定哪些文件描述符已经准备好进行I/O操作（如读、写）。`select` 是较早的I/O多路复用技术，它在各种UNIX-like操作系统中广泛支持。
+# IO 多路复用详解：原理、实现与对比
 
-### 基本原理
-`select` 函数通过监视文件描述符集合中的活动来工作。它允许程序等待直到某个文件描述符就绪，然后进行相应的读或写操作。`select` 会阻塞调用线程，直到以下情况发生：
+IO 多路复用是高并发服务器的核心技术。本文深入剖析 select、poll、epoll 和 io_uring 的底层原理，揭示它们的设计思想和性能差异。
 
-+ 一个或多个监视的文件描述符就绪（可读、可写或有异常）。
-+ 超时时间到达（如果没有文件描述符就绪）。
-+ 被信号打断。
+---
 
-### 函数原型
-```c
-int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+## 一、IO 模型概述
+
+### 1.1 阻塞与非阻塞
+
+```mermaid
+sequenceDiagram
+    participant App as 应用程序
+    participant Kernel as 内核
+    participant Disk as 磁盘/网络
+    
+    rect rgb(255, 230, 230)
+    Note over App,Disk: 阻塞IO
+    App->>Kernel: read()
+    Kernel->>Disk: 等待数据
+    Note over App: 进程阻塞
+    Disk-->>Kernel: 数据就绪
+    Kernel-->>App: 返回数据
+    end
+    
+    rect rgb(230, 255, 230)
+    Note over App,Disk: 非阻塞IO
+    App->>Kernel: read() [O_NONBLOCK]
+    Kernel-->>App: EAGAIN (无数据)
+    App->>Kernel: read()
+    Kernel-->>App: EAGAIN
+    App->>Kernel: read()
+    Kernel->>Disk: 数据就绪
+    Kernel-->>App: 返回数据
+    end
 ```
 
-+ `nfds`：监视的文件描述符集合中最大文件描述符的值加1。
-+ `readfds`：指向读文件描述符集合的指针，`select` 检查这些文件描述符是否有数据可读。
-+ `writefds`：指向写文件描述符集合的指针，`select` 检查这些文件描述符是否可写。
-+ `exceptfds`：指向异常条件文件描述符集合的指针，通常用于检查OOB（out-of-band）数据。
-+ `timeout`：指定`select` 调用的最长阻塞时间。如果设置为NULL，`select` 将无限期阻塞。
+### 1.2 IO 多路复用的价值
 
-### 返回值
-+ 成功时，返回就绪文件描述符的数量。
-+ 如果超时，返回0。
-+ 如果出错，返回-1，并设置全局变量`errno`。
+**问题**：一个线程如何同时等待多个 fd？
 
-### 使用步骤
-1. 初始化`fd_set`集合。
-2. 使用`FD_SET`宏将感兴趣的文件描述符添加到集合中。
-3. 调用`select`函数。
-4. `select` 返回后，使用`FD_ISSET`宏检查哪些文件描述符就绪。
-5. 根据就绪的文件描述符进行相应的读或写操作。
-6. 循环步骤1-5。
+**传统方案**：每个连接一个线程 → 线程开销大，扩展性差
 
-### 示例代码
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/select.h>
+**IO 多路复用**：一个线程监控多个 fd，有事件时才处理
 
-int main() {
-    int sockfd, nfds;
-    fd_set readfds;
-    struct timeval tv;
-
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
-        perror("socket");
-        exit(EXIT_FAILURE);
-    }
-
-    // 初始化文件描述符集合
-    FD_ZERO(&readfds);
-    FD_SET(sockfd, &readfds);
-
-    // 设置监视的文件描述符数量
-    nfds = sockfd + 1;
-
-    // 设置超时时间
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
-
-    // 调用select
-    int retval = select(nfds, &readfds, NULL, NULL, &tv);
-    if (retval == -1) {
-        perror("select()");
-        exit(EXIT_FAILURE);
-    } else if (retval) {
-        if (FD_ISSET(sockfd, &readfds)) {
-            printf("Data is ready to be read\n");
-            // 执行读取操作
-        }
-    } else {
-        printf("Timeout!\n");
-    }
-
-    close(sockfd);
-    return 0;
-}
+```mermaid
+graph LR
+    subgraph "传统模型"
+        T1[线程1] --> C1[连接1]
+        T2[线程2] --> C2[连接2]
+        T3[线程3] --> C3[连接3]
+        T4[线程N] --> C4[连接N]
+    end
+    
+    subgraph "IO多路复用"
+        T[单线程] --> M[多路复用器]
+        M --> D1[fd1]
+        M --> D2[fd2]
+        M --> D3[fd3]
+        M --> D4[fdN]
+    end
 ```
 
-### 注意事项
-+ `select` 每次调用时都会复制文件描述符集合，这可能会导致性能问题，尤其是在文件描述符数量较多的情况下。
-+ `select` 有一个限制，即它不能处理大量的文件描述符。在大多数系统上，这个限制是1024，尽管这个值可以通过`getrlimit`和`setrlimit`调用来增加。
-+ `select` 是阻塞调用，如果没有任何文件描述符就绪，它将一直阻塞，直到超时或有文件描述符就绪。
+---
 
-尽管`select`有这些局限性，但它仍然是一个简单且在某些情况下有效的I/O多路复用选择。在需要处理大量文件描述符或需要更高效I/O多路复用时，可以考虑使用`poll`或`epoll`（仅限于Linux）。
+## 二、select
 
-## poll
-`poll` 是一种I/O多路复用技术，它允许程序同时监控多个文件描述符（FD），以确定哪些文件描述符已经准备好进行I/O操作。与 `select` 类似，`poll` 通过检查一个文件描述符列表来确定是否有文件描述符已经准备好进行非阻塞读或写。
+### 2.1 工作原理
 
-### `poll` 函数原型
 ```c
+int select(int nfds, fd_set *readfds, fd_set *writefds, 
+           fd_set *exceptfds, struct timeval *timeout);
+```
+
+**fd_set 结构**：
+
+```
+fd_set 本质是一个位图 (bitmap)，每一位代表一个 fd
+
+┌─────────────────────────────────────────────────────────────────┐
+│  fd_set (1024 bits = 128 bytes on most systems)                 │
+├───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬─────────────────────────┤
+│ 0 │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │...│1023│                        │
+├───┼───┼───┼───┼───┼───┼───┼───┼───┼────┤                        │
+│ 1 │ 0 │ 0 │ 1 │ 0 │ 1 │ 0 │ 0 │...│ 0  │ 监控 fd 0, 3, 5        │
+└───┴───┴───┴───┴───┴───┴───┴───┴───┴────┴────────────────────────┘
+```
+
+### 2.2 内核实现流程
+
+```mermaid
+sequenceDiagram
+    participant User as 用户空间
+    participant Kernel as 内核
+    participant Driver as 设备驱动
+    
+    User->>Kernel: select(nfds, readfds, ...)
+    Note over Kernel: 1. 复制 fd_set 到内核空间
+    
+    loop 遍历每个 fd
+        Kernel->>Driver: 调用 poll 方法
+        Driver-->>Kernel: 返回就绪状态
+        Note over Kernel: 如果就绪，设置结果位
+        Note over Kernel: 如果都没就绪，加入等待队列
+    end
+    
+    alt 有 fd 就绪
+        Kernel->>Kernel: 构建结果 fd_set
+    else 无 fd 就绪
+        Kernel->>Kernel: 睡眠等待
+        Driver-->>Kernel: 唤醒
+        Kernel->>Kernel: 再次遍历检查
+    end
+    
+    Kernel-->>User: 返回就绪 fd 数量
+    Note over User: 2. 遍历检查哪些 fd 就绪
+```
+
+### 2.3 select 的问题
+
+| 问题 | 说明 |
+|------|------|
+| **fd 数量限制** | 通常最多 1024 个 (FD_SETSIZE) |
+| **每次调用复制** | fd_set 要在用户态和内核态之间复制 |
+| **线性扫描** | 内核每次遍历所有 fd 检查状态 |
+| **返回后再扫描** | 用户态也要遍历找出就绪的 fd |
+| **无状态** | 每次调用都要重新设置 fd_set |
+
+**时间复杂度**：O(n) 每次调用，n 是监控的 fd 数量
+
+---
+
+## 三、poll
+
+### 3.1 改进点
+
+poll 使用链表代替位图，解决了 fd 数量限制：
+
+```c
+struct pollfd {
+    int fd;         // 文件描述符
+    short events;   // 请求的事件
+    short revents;  // 返回的事件
+};
+
 int poll(struct pollfd *fds, nfds_t nfds, int timeout);
 ```
 
-+ `fds`：指向 `pollfd` 结构体数组的指针，用于指定要监控的文件描述符和事件。
-+ `nfds`：指定 `fds` 数组中元素的数量。
-+ `timeout`：指定 `poll` 函数的超时时间，单位为毫秒。如果设置为 `-1`，`poll` 将阻塞直到至少一个文件描述符就绪；如果设置为 `0`，`poll` 将立即返回，不会阻塞。
+### 3.2 poll vs select
 
-### `pollfd` 结构体
+| 方面 | select | poll |
+|------|--------|------|
+| fd 限制 | 1024 (FD_SETSIZE) | 无限制 (受系统资源限制) |
+| 数据结构 | 位图 | 结构体数组 |
+| 事件分离 | 三个 fd_set | events/revents 分离 |
+| 内核遍历 | O(n) | O(n) |
+| 状态保持 | 无 | 部分 (events 不变) |
+
+**问题依然存在**：
+- 每次调用仍需复制整个 pollfd 数组
+- 内核仍需线性遍历所有 fd
+- 时间复杂度仍是 O(n)
+
+---
+
+## 四、epoll
+
+### 4.1 设计思想
+
+epoll 的核心改进：**状态驻留内核 + 事件驱动**
+
+```mermaid
+graph TD
+    subgraph "select/poll 模式"
+        A1[应用] -->|每次传递全部fd| B1[内核遍历检查]
+        B1 -->|返回| A1
+    end
+    
+    subgraph "epoll 模式"
+        A2[应用] -->|一次注册| B2[内核维护事件表]
+        B2 -->|就绪事件| C2[就绪队列]
+        C2 -->|只返回就绪fd| A2
+    end
+```
+
+### 4.2 API 设计
+
 ```c
-struct pollfd {
-    int fd;        // 要监控的文件描述符
-    short events;  // 要监控的事件
-    short revents; // 已发生的事件
+// 创建 epoll 实例
+int epoll_create(int size);
+int epoll_create1(int flags);
+
+// 注册/修改/删除事件
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+// op: EPOLL_CTL_ADD, EPOLL_CTL_MOD, EPOLL_CTL_DEL
+
+// 等待事件
+int epoll_wait(int epfd, struct epoll_event *events, 
+               int maxevents, int timeout);
+```
+
+### 4.3 内核数据结构
+
+```mermaid
+graph TD
+    subgraph "epoll 实例 (eventpoll)"
+        EPFD[epoll fd] --> EP[eventpoll 结构]
+        
+        subgraph "红黑树 (rbr)"
+            EP --> RBT[所有注册的 fd]
+            RBT --> N1[epitem fd=3]
+            RBT --> N2[epitem fd=5]
+            RBT --> N3[epitem fd=8]
+        end
+        
+        subgraph "就绪链表 (rdllist)"
+            EP --> RDY[就绪的 fd]
+            RDY --> R1[epitem fd=5]
+            RDY --> R2[epitem fd=8]
+        end
+    end
+```
+
+**核心结构体**：
+
+```c
+struct eventpoll {
+    spinlock_t lock;              // 保护访问
+    struct mutex mtx;             // 序列化 epoll_ctl
+    wait_queue_head_t wq;         // epoll_wait 等待队列
+    wait_queue_head_t poll_wait;  // file->poll() 等待队列
+    struct list_head rdllist;     // 就绪链表
+    struct rb_root_cached rbr;    // 红黑树根
+    struct epitem *ovflist;       // 溢出链表
+    struct wakeup_source *ws;     // 唤醒源
+    struct user_struct *user;     // 用户信息
+};
+
+struct epitem {
+    struct rb_node rbn;           // 红黑树节点
+    struct list_head rdllink;     // 就绪链表节点
+    struct epitem *next;          // 溢出链表
+    struct epoll_filefd ffd;      // 关联的 fd 和 file
+    int nwait;                    // 等待队列数
+    struct list_head pwqlist;     // poll 等待队列
+    struct eventpoll *ep;         // 所属 eventpoll
+    struct list_head fllink;      // file 链表
+    struct epoll_event event;     // 用户事件
 };
 ```
 
-+ `fd`：要监控的文件描述符。
-+ `events`：要监控的事件，可以是 `POLLIN`、`POLLOUT`、`POLLERR` 等。
-+ `revents`：实际发生的事件，可以是 `events` 中指定的事件，也可以是 `POLLHUP`、`POLLNVAL` 等。
+### 4.4 epoll 工作流程详解
 
-### C语言例子
-下面是一个使用 `poll` 的简单示例，该示例创建了一个服务器，监听一个端口，并接受连接：
+#### epoll_create
+
+```mermaid
+sequenceDiagram
+    participant User as 用户空间
+    participant Kernel as 内核
+    
+    User->>Kernel: epoll_create1(0)
+    Kernel->>Kernel: 分配 eventpoll 结构
+    Kernel->>Kernel: 初始化红黑树 (rbr)
+    Kernel->>Kernel: 初始化就绪链表 (rdllist)
+    Kernel->>Kernel: 创建匿名 inode
+    Kernel->>Kernel: 分配文件描述符
+    Kernel-->>User: 返回 epoll fd
+```
+
+#### epoll_ctl (添加 fd)
+
+```mermaid
+sequenceDiagram
+    participant User as 用户空间
+    participant Epoll as epoll 内核模块
+    participant Driver as 设备驱动
+    
+    User->>Epoll: epoll_ctl(EPOLL_CTL_ADD, fd, event)
+    Epoll->>Epoll: 分配 epitem
+    Epoll->>Epoll: 将 epitem 插入红黑树
+    Epoll->>Driver: 调用 fd 的 poll 方法
+    Note over Driver: 注册回调函数 ep_poll_callback
+    Driver-->>Epoll: 返回当前状态
+    
+    alt fd 已就绪
+        Epoll->>Epoll: 将 epitem 加入就绪链表
+    end
+    
+    Epoll-->>User: 返回成功
+```
+
+#### 事件触发流程
+
+```mermaid
+sequenceDiagram
+    participant Device as 设备
+    participant Driver as 驱动
+    participant Callback as ep_poll_callback
+    participant Epoll as eventpoll
+    participant App as 应用程序
+    
+    Device->>Driver: 数据到达
+    Driver->>Callback: 调用注册的回调
+    Callback->>Epoll: 检查 epitem 是否在就绪链表
+    
+    alt 不在就绪链表
+        Callback->>Epoll: 将 epitem 加入 rdllist
+    end
+    
+    Callback->>Epoll: 唤醒等待在 wq 上的进程
+    Epoll-->>App: epoll_wait 返回
+```
+
+#### epoll_wait
+
+```mermaid
+flowchart TD
+    A[epoll_wait 调用] --> B{就绪链表非空?}
+    B -->|是| C[复制就绪事件到用户空间]
+    B -->|否| D[加入等待队列]
+    D --> E[睡眠]
+    E --> F{被唤醒}
+    F --> G{超时?}
+    G -->|是| H[返回 0]
+    G -->|否| B
+    C --> I[返回就绪事件数]
+```
+
+### 4.5 水平触发 vs 边缘触发
+
+| 模式 | 行为 | 使用要点 |
+|------|------|----------|
+| **LT (水平触发)** | 只要缓冲区有数据，每次 epoll_wait 都会通知 | 简单可靠，但可能频繁唤醒 |
+| **ET (边缘触发)** | 只在状态变化时通知一次 | 必须一次读完，配合非阻塞 IO |
+
+```mermaid
+sequenceDiagram
+    participant App
+    participant Kernel
+    
+    Note over App,Kernel: 假设缓冲区收到 1000 字节
+    
+    rect rgb(230, 230, 255)
+    Note over App,Kernel: 水平触发 (LT)
+    Kernel-->>App: epoll_wait 返回可读
+    App->>Kernel: read(500)
+    Kernel-->>App: epoll_wait 返回可读
+    Note over App: 缓冲区还有 500 字节
+    App->>Kernel: read(500)
+    Kernel-->>App: epoll_wait 不返回
+    Note over App: 缓冲区空
+    end
+    
+    rect rgb(255, 230, 230)
+    Note over App,Kernel: 边缘触发 (ET)
+    Kernel-->>App: epoll_wait 返回可读
+    App->>Kernel: read(500)
+    Note over App: 缓冲区还有 500 字节
+    Note over App: 但 ET 不会再通知!
+    Note over App: 必须循环读到 EAGAIN
+    end
+```
+
+**ET 模式正确用法**：
 
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <poll.h>
+// 设置非阻塞
+fcntl(fd, F_SETFL, O_NONBLOCK);
 
-#define PORT 8080
-#define MAX_CLIENTS 5
+// 注册为 ET 模式
+event.events = EPOLLIN | EPOLLET;
+epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &event);
+
+// 读取时必须读到 EAGAIN
+while (1) {
+    ssize_t n = read(fd, buf, sizeof(buf));
+    if (n < 0) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK)
+            break;  // 真的没数据了
+        // 处理错误
+    }
+    if (n == 0) {
+        // 连接关闭
+        break;
+    }
+    // 处理数据
+}
+```
+
+### 4.6 epoll 性能分析
+
+| 操作 | 时间复杂度 | 说明 |
+|------|-----------|------|
+| epoll_create | O(1) | 一次性操作 |
+| epoll_ctl | O(log n) | 红黑树插入/删除 |
+| epoll_wait | O(1)~O(m) | m 是就绪 fd 数，不是总 fd 数 |
+
+**与 select/poll 对比**：
+
+| 场景 | select/poll | epoll |
+|------|-------------|-------|
+| 10 个 fd，1 个就绪 | 遍历 10 个 | 返回 1 个 |
+| 10000 个 fd，10 个就绪 | 遍历 10000 个 | 返回 10 个 |
+| 添加/删除 fd | O(1) 用户态 | O(log n) 内核态 |
+
+---
+
+## 五、io_uring
+
+### 5.1 为什么需要 io_uring
+
+epoll 的局限性：
+1. **系统调用开销**：每次 epoll_wait 和实际 IO 都是独立的系统调用
+2. **不支持文件 IO**：文件 IO 在 Linux 上总是"就绪"的，epoll 对它无效
+3. **每次 IO 一次系统调用**：read/write 无法批量处理
+
+**io_uring 目标**：真正的异步 IO + 零系统调用开销
+
+### 5.2 io_uring 架构
+
+```mermaid
+graph TD
+    subgraph "用户空间"
+        APP[应用程序]
+        SQ[Submission Queue<br/>提交队列]
+        CQ[Completion Queue<br/>完成队列]
+    end
+    
+    subgraph "共享内存"
+        SQE[SQE Ring<br/>提交条目]
+        CQE[CQE Ring<br/>完成条目]
+    end
+    
+    subgraph "内核"
+        WORKER[io-wq 工作线程]
+        POLL[轮询模式]
+    end
+    
+    APP -->|1. 填充请求| SQ
+    SQ -->|映射| SQE
+    SQE -->|2. 通知或轮询| WORKER
+    WORKER -->|3. 执行IO| POLL
+    POLL -->|4. 写入结果| CQE
+    CQE -->|映射| CQ
+    CQ -->|5. 读取结果| APP
+```
+
+### 5.3 核心数据结构
+
+```
+                    用户空间                内核空间
+                    ┌─────────┐
+    SQ head ───────>│ SQE 0   │<───── 用户写入
+                    ├─────────┤
+    SQ tail ───────>│ SQE 1   │
+                    ├─────────┤
+                    │ ...     │
+                    └─────────┘
+                         │
+                         │ 内核消费
+                         ▼
+                    ┌─────────┐
+                    │ 执行 IO │
+                    └─────────┘
+                         │
+                         │ 内核写入
+                         ▼
+                    ┌─────────┐
+    CQ head ───────>│ CQE 0   │<───── 用户读取
+                    ├─────────┤
+    CQ tail ───────>│ CQE 1   │
+                    ├─────────┤
+                    │ ...     │
+                    └─────────┘
+```
+
+**SQE (Submission Queue Entry)**：
+
+```c
+struct io_uring_sqe {
+    __u8  opcode;       // 操作类型
+    __u8  flags;        // 标志
+    __u16 ioprio;       // IO 优先级
+    __s32 fd;           // 文件描述符
+    __u64 off;          // 偏移
+    __u64 addr;         // 缓冲区地址
+    __u32 len;          // 长度
+    union { ... };      // 操作特定参数
+    __u64 user_data;    // 用户数据 (返回时原样返回)
+};
+```
+
+**CQE (Completion Queue Entry)**：
+
+```c
+struct io_uring_cqe {
+    __u64 user_data;    // 对应 SQE 的 user_data
+    __s32 res;          // 结果 (类似系统调用返回值)
+    __u32 flags;        // 标志
+};
+```
+
+### 5.4 工作模式
+
+```mermaid
+graph TD
+    subgraph "默认模式"
+        A1[用户提交 SQE] --> B1[io_uring_enter 系统调用]
+        B1 --> C1[内核处理]
+        C1 --> D1[写入 CQE]
+    end
+    
+    subgraph "SQPOLL 模式"
+        A2[用户提交 SQE] --> B2[内核轮询线程自动消费]
+        B2 --> C2[内核处理]
+        C2 --> D2[写入 CQE]
+        Note over B2: 无系统调用!
+    end
+    
+    subgraph "IOPOLL 模式"
+        A3[内核轮询设备完成状态] --> B3[适用于 NVMe 等高速设备]
+    end
+```
+
+### 5.5 io_uring 优势
+
+| 特性 | 传统 IO | io_uring |
+|------|---------|----------|
+| 系统调用 | 每次 IO 一次 | 可批量，或零调用 |
+| 数据复制 | 多次 | 最小化 |
+| 文件 IO | 阻塞或 AIO (复杂) | 原生异步 |
+| 网络 IO | epoll + read/write | 统一接口 |
+| 批量操作 | 不支持 | 原生支持 |
+
+### 5.6 基本使用示例
+
+```c
+#include <liburing.h>
 
 int main() {
-    int server_fd, client_fd;
-    struct sockaddr_in server_addr, client_addr;
-    socklen_t client_addr_len;
-    struct pollfd fds[MAX_CLIENTS + 1];
-
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_fd == -1) {
-        perror("socket");
-        exit(EXIT_FAILURE);
+    struct io_uring ring;
+    struct io_uring_sqe *sqe;
+    struct io_uring_cqe *cqe;
+    
+    // 初始化
+    io_uring_queue_init(32, &ring, 0);
+    
+    // 获取 SQE
+    sqe = io_uring_get_sqe(&ring);
+    
+    // 准备读请求
+    io_uring_prep_read(sqe, fd, buf, len, offset);
+    sqe->user_data = 123;  // 标识这个请求
+    
+    // 提交
+    io_uring_submit(&ring);
+    
+    // 等待完成
+    io_uring_wait_cqe(&ring, &cqe);
+    
+    // 处理结果
+    if (cqe->res < 0) {
+        // 错误
+    } else {
+        // cqe->res 是读取的字节数
+        // cqe->user_data == 123
     }
-
-    memset(&server_addr, 0, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(PORT);
-
-    if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
-        perror("bind");
-        exit(EXIT_FAILURE);
-    }
-
-    if (listen(server_fd, MAX_CLIENTS) == -1) {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
-
-    fds[0].fd = server_fd;
-    fds[0].events = POLLIN;
-
-    for (int i = 1; i <= MAX_CLIENTS; i++) {
-        fds[i].fd = -1;
-    }
-
-    while (1) {
-        int ret = poll(fds, MAX_CLIENTS + 1, -1);
-        if (ret > 0) {
-            if (fds[0].revents & POLLIN) {
-                client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_addr_len);
-                if (client_fd == -1) {
-                    perror("accept");
-                    continue;
-                }
-                for (int i = 1; i <= MAX_CLIENTS; i++) {
-                    if (fds[i].fd == -1) {
-                        fds[i].fd = client_fd;
-                        fds[i].events = POLLIN;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i <= MAX_CLIENTS; i++) {
-                if (fds[i].revents & POLLIN) {
-                    char buffer[1024];
-                    int bytes_read = read(fds[i].fd, buffer, sizeof(buffer));
-                    if (bytes_read > 0) {
-                        write(fds[i].fd, buffer, bytes_read);
-                    } else {
-                        close(fds[i].fd);
-                        fds[i].fd = -1;
-                    }
-                }
-            }
-        }
-    }
-
-    close(server_fd);
+    
+    // 标记 CQE 已处理
+    io_uring_cqe_seen(&ring, cqe);
+    
+    io_uring_queue_exit(&ring);
     return 0;
 }
 ```
 
-在这个例子中，服务器使用 `poll` 来监控多个客户端连接。当有新的连接请求时，服务器接受连接并将新的文件描述符添加到 `pollfd` 数组中。然后，服务器继续监控所有连接以接收数据。如果接收到数据，服务器将其回显给客户端。如果客户端断开连接，服务器关闭该文件描述符并从 `pollfd` 数组中移除。
+---
 
-### 注意事项
-+ `poll` 没有最大文件描述符数量的限制，但是文件描述符的数量过多可能会影响性能。
-+ `poll` 函数的 `timeout` 参数可以控制函数的阻塞时间。设置为 `-1` 表示无限期阻塞，直到有文件描述符就绪；设置为 `0` 表示非阻塞调用，立即返回。
-+ 在使用 `poll` 时，需要确保正确处理所有可能的错误情况，例如文件描述符无效或网络错误。
+## 六、各方案综合对比
 
-## epoll
-`epoll` 是 Linux 系统下的一种高效的 I/O 多路复用技术，它在处理大量并发连接时相比于 `select` 和 `poll` 具有显著的性能优势。下面将详细介绍 `epoll` 的原理和使用方法，并提供一个 C 语言的使用示例。
+### 6.1 性能对比
 
-### `epoll` 原理
-`epoll` 是 Linux 提供的一种高效的 I/O 事件通知机制，它通过在内核中维护一个事件表来实现对多个文件描述符的监控。当文件描述符上发生事件时，`epoll` 能够将这些事件通知给用户空间的应用程序。
+```mermaid
+graph LR
+    subgraph "10K 连接，100 活跃"
+        A[select<br/>遍历 10000] --> B[poll<br/>遍历 10000]
+        B --> C[epoll<br/>返回 100]
+        C --> D[io_uring<br/>批量返回]
+    end
+```
 
-`epoll` 有两种工作模式：水平触发（Level Triggered, LT）和边缘触发（Edge Triggered, ET）。默认情况下，`epoll` 工作在 LT 模式，即只要文件描述符的状态没有被改变，`epoll` 会持续通知应用程序。而在 ET 模式下，文件描述符的状态发生变化时才会通知一次。
+### 6.2 特性对比表
 
-### `epoll` 函数
-1. `epoll_create`：创建一个新的 `epoll` 实例。
-2. `epoll_ctl`：向 `epoll` 实例中添加、修改或删除文件描述符。
-3. `epoll_wait`：等待文件描述符就绪。
+| 特性 | select | poll | epoll | io_uring |
+|------|--------|------|-------|----------|
+| **可移植性** | POSIX | POSIX | Linux | Linux 5.1+ |
+| **最大 fd** | 1024 | 无限制 | 无限制 | 无限制 |
+| **fd 复制** | 每次 | 每次 | 一次注册 | 一次设置 |
+| **事件检查** | O(n) | O(n) | O(1) | O(1) |
+| **文件 IO** | 不适用 | 不适用 | 不适用 | 支持 |
+| **批量操作** | 否 | 否 | 否 | 是 |
+| **零拷贝** | 否 | 否 | 否 | 可选 |
+| **系统调用** | 每次 | 每次 | 每次 | 可选零调用 |
+| **触发模式** | LT | LT | LT/ET | 多种 |
+| **使用复杂度** | 低 | 低 | 中 | 高 |
 
-### C 语言示例
-下面是一个简单的 `epoll` 使用示例，该示例创建了一个监听特定端口的服务器，使用 `epoll` 来处理客户端的连接和数据传输。
+### 6.3 选型建议
+
+```mermaid
+flowchart TD
+    A[选择 IO 多路复用方案] --> B{需要跨平台?}
+    B -->|是| C{BSD/macOS?}
+    C -->|是| D[kqueue]
+    C -->|否| E[select/poll]
+    
+    B -->|否| F{Linux 版本?}
+    F -->|< 5.1| G[epoll]
+    F -->|>= 5.1| H{需要文件异步IO?}
+    H -->|是| I[io_uring]
+    H -->|否| J{连接数?}
+    J -->|< 1000| G
+    J -->|> 10000| K{延迟敏感?}
+    K -->|是| I
+    K -->|否| G
+```
+
+**总结建议**：
+
+| 场景 | 推荐方案 |
+|------|----------|
+| 跨平台小规模应用 | poll |
+| Linux 高并发网络服务 | epoll |
+| 极低延迟、高吞吐 | io_uring + SQPOLL |
+| 文件异步 IO | io_uring |
+| BSD/macOS | kqueue |
+| Windows | IOCP |
+
+---
+
+## 七、其他方案简介
+
+### 7.1 kqueue (BSD/macOS)
+
+kqueue 是 BSD 系统的 epoll 等价物，功能更丰富：
 
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/epoll.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+int kq = kqueue();
 
-#define MAX_EVENTS 10
-#define PORT 8080
+struct kevent change;
+EV_SET(&change, sockfd, EVFILT_READ, EV_ADD, 0, 0, NULL);
+kevent(kq, &change, 1, NULL, 0, NULL);
 
-int main() {
-    int listen_sock, conn_sock, nfds, epollfd;
-    struct sockaddr_in addr;
-    struct epoll_event event, events[MAX_EVENTS];
-    int yes = 1;
-
-    // 创建监听套接字
-    listen_sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (listen_sock == -1) {
-        perror("socket");
-        exit(EXIT_FAILURE);
-    }
-
-    setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
-
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = htons(PORT);
-
-    if (bind(listen_sock, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
-        perror("bind");
-        exit(EXIT_FAILURE);
-    }
-
-    if (listen(listen_sock, 5) == -1) {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
-
-    // 创建epoll实例
-    epollfd = epoll_create1(0);
-    if (epollfd == -1) {
-        perror("epoll_create1");
-        exit(EXIT_FAILURE);
-    }
-
-    // 添加监听套接字到epoll监控
-    event.data.fd = listen_sock;
-    event.events = EPOLLIN | EPOLLET;
-    if (epoll_ctl(epollfd, EPOLL_CTL_ADD, listen_sock, &event) == -1) {
-        perror("epoll_ctl: listen_sock");
-        exit(EXIT_FAILURE);
-    }
-
-    nfds = 0;
-    while (1) {
-        int n, i;
-
-        n = epoll_wait(epollfd, events, MAX_EVENTS, -1);
-        for (i = 0; i < n; i++) {
-            if ((events[i].events & EPOLLERR) ||
-                (events[i].events & EPOLLHUP) ||
-                (!(events[i].events & EPOLLIN))) {
-                // 出错则关闭文件描述符
-                fprintf(stderr, "epoll error\n");
-                close(events[i].data.fd);
-                continue;
-            } else if (listen_sock == events[i].data.fd) {
-                // 接受新的连接
-                while ((conn_sock = accept(listen_sock, NULL, NULL)) > 0) {
-                    // 设置为非阻塞模式
-                    fcntl(conn_sock, F_SETFL, O_NONBLOCK);
-                    event.data.fd = conn_sock;
-                    event.events = EPOLLIN | EPOLLET;
-                    if (epoll_ctl(epollfd, EPOLL_CTL_ADD, conn_sock, &event) == -1) {
-                        perror("epoll_ctl: conn_sock");
-                        exit(EXIT_FAILURE);
-                    }
-                }
-            } else {
-                // 处理数据
-                // 这里可以添加读取和发送数据的代码
-            }
-        }
-    }
-
-    close(listen_sock);
-    return 0;
-}
+struct kevent events[10];
+int n = kevent(kq, NULL, 0, events, 10, NULL);
 ```
 
-在这个示例中，服务器使用 `epoll` 来监控监听套接字上的连接请求和已连接套接字上的数据事件。当有新的连接请求时，服务器接受连接并将新的套接字添加到 `epoll` 的监控列表中。对于已连接的套接字，服务器可以读取数据并进行处理。
-
-### 注意事项
-+ 在使用 `epoll` 时，需要注意正确处理所有可能的错误情况，例如文件描述符无效或网络错误。
-+ 在实际应用中，可能需要根据具体的应用场景和需求进行调整，例如处理半关闭连接、设置超时等。
-+ `epoll` 的性能优势在处理大量并发连接时尤为明显，但在连接数较少时，其优势可能不太明显。
-
-## kqueue
-`kqueue` 是一种高效的 I/O 多路复用机制，它在 FreeBSD 4.1 中首次引入，并被 NetBSD、OpenBSD、macOS 等操作系统支持。`kqueue` 通过在内核态维持状态提供了更高的性能，并且可以同时处理文件描述符事件、文件修改监视、信号、异步 I/O 事件、子进程状态事件等多种事件。
-
-### `kqueue` 基本原理
-`kqueue` 通过 `kevent` 系统调用来监控文件描述符上的事件。每个 `kevent` 由一个 `<ident, filter>` 对标识，其中 `ident` 可以是文件描述符、进程 ID 或信号量等，而 `filter` 指定了事件的类型，如 `EVFILT_READ` 或 `EVFILT_WRITE`。
-
-### `kqueue` 函数
-1. `kqueue()`：创建一个新的 `kqueue` 实例，返回一个文件描述符。
-2. `kevent()`：用于注册感兴趣的事件和获取发生的事件。
-
-### C语言示例
-下面是一个使用 `kqueue` 的简单示例，该示例创建了一个监听特定端口的服务器，使用 `kqueue` 来处理客户端的连接和数据传输。
-
-```c
-#include <sys/types.h>
-#include <sys/event.h>
-#include <sys/time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#define PORT 8080
-#define LISTENQ 1024
-
-int main() {
-    int kq, nfds, fd, flags;
-    struct sockaddr_in addr;
-    struct kevent event;
-
-    kq = kqueue();
-    if (kq == -1) {
-        perror("kqueue");
-        exit(EXIT_FAILURE);
-    }
-
-    fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (fd == -1) {
-        perror("socket");
-        exit(EXIT_FAILURE);
-    }
-
-    flags = fcntl(fd, F_GETFL, 0);
-    if (flags == -1) {
-        perror("fcntl F_GETFL");
-        exit(EXIT_FAILURE);
-    }
-
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
-        perror("fcntl F_SETFL");
-        exit(EXIT_FAILURE);
-    }
-
-    memset(&addr, 0, sizeof(addr));
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    addr.sin_port = htons(PORT);
-
-    if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
-        perror("bind");
-        exit(EXIT_FAILURE);
-    }
-
-    if (listen(fd, LISTENQ) == -1) {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
-
-    EV_SET(&event, fd, EVFILT_READ, EV_ADD, 0, 0, NULL);
-
-    if (kevent(kq, &event, 1, NULL, 0, NULL) == -1) {
-        perror("kevent");
-        exit(EXIT_FAILURE);
-    }
-
-    nfds = kevent(kq, NULL, 0, &event, 1, NULL);
-    if (nfds == -1) {
-        perror("kevent");
-        exit(EXIT_FAILURE);
-    }
-
-    if (nfds > 0) {
-        if (event.flags & EV_ERROR) {
-            perror("kevent error");
-            exit(EXIT_FAILURE);
-        }
-        printf("Data ready to be read\n");
-    }
-
-    close(fd);
-    close(kq);
-    return 0;
-}
-```
-
-在这个示例中，服务器使用 `kqueue` 来监控监听套接字上的连接请求。当有新的连接请求时，服务器接受连接并处理数据。这个示例展示了 `kqueue` 的基本用法，包括创建 `kqueue` 实例、注册事件、等待事件和处理事件。
-
-### 注意事项
-+ `kqueue` 没有最大文件描述符数量的限制，但是需要注意正确处理所有可能的错误情况，例如文件描述符无效或网络错误。
-+ 在实际应用中，可能需要根据具体的应用场景和需求进行调整，例如处理半关闭连接、设置超时等。
-
-## /dev/poll (Linux)
-`/dev/poll`，也被称为 `poll` 或 `/dev/pollselect`，是一种高效的 I/O 多路复用机制，它在 Linux 内核中提供。与 `select` 和 `poll` 相比，`/dev/poll` 能够更高效地处理大量的并发连接，因为它不需要在每次调用时重复传递和检查整个文件描述符集合。
-
-### `/dev/poll` 基本原理
-`/dev/poll` 通过一个字符设备接口来实现 I/O 多路复用。它使用一组独立的系统调用，包括 `poll`、`select` 和 `epoll`，来监控文件描述符上的事件。`/dev/poll` 通过维护一个高效的内部数据结构来跟踪感兴趣的事件，并在事件发生时立即通知应用程序。
-
-### `/dev/poll` 函数
-1. `poll`：与标准的 `poll` 函数类似，但通常与 `/dev/poll` 设备一起使用以提高效率。
-2. `select`：与标准的 `select` 函数类似，但也可以与 `/dev/poll` 一起使用。
-3. `epoll`：是 `/dev/poll` 的现代替代品，提供了更高的性能和更丰富的功能。
-
-### C语言示例
-下面是一个使用 `/dev/poll` 的简单示例，该示例创建了一个监听特定端口的服务器，并使用 `/dev/poll` 来处理客户端的连接和数据传输。
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/poll.h>
-
-#define PORT 8080
-#define QUEUE 5
-
-int main() {
-    int listenfd, connfd, nfds;
-    struct sockaddr_in servaddr, cliaddr;
-    socklen_t clilen;
-    struct pollfd *fds;
-    int i, maxfdp1;
-    char buf[512];
-    char *hello = "Hello, you are connected to the server\n";
-
-    listenfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (listenfd < 0) {
-        perror("socket error");
-        exit(1);
-    }
-
-    memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(PORT);
-
-    if (bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
-        perror("bind error");
-        exit(1);
-    }
-
-    if (listen(listenfd, QUEUE) < 0) {
-        perror("listen error");
-        exit(1);
-    }
-
-    nfds = listenfd + 1;
-    fds = malloc(nfds * sizeof(struct pollfd));
-    if (fds == NULL) {
-        perror("malloc error");
-        exit(1);
-    }
-
-    for (i = 0; i < nfds; i++) {
-        fds[i].events = 0;
-    }
-
-    for (;;) {
-        maxfdp1 = poll(fds, nfds, 5000);
-        if (maxfdp1 < 0) {
-            perror("poll error");
-            exit(1);
-        }
-
-        for (i = 0; i < nfds; i++) {
-            if (fds[i].revents & POLLIN) {
-                if (i == 0) {  // listen socket
-                    clilen = sizeof(cliaddr);
-                    connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
-                    if (connfd < 0) {
-                        perror("accept error");
-                        exit(1);
-                    }
-                    printf("New connection from %s:%d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    fds[connfd].events = POLLIN;
-                } else {  // client socket
-                    int readlen = read(i, buf, sizeof(buf));
-                    if (readlen > 0) {
-                        printf("Received: %s", buf);
-                        write(i, hello, strlen(hello));
-                    } else {
-                        close(i);
-                        fds[i].fd = -1;
-                        fds[i].events = 0;
-                    }
-                }
-            }
-        }
-    }
-
-    close(listenfd);
-    free(fds);
-    return 0;
-}
-```
-
-在这个示例中，服务器使用 `/dev/poll` 来监控监听套接字上的连接请求。当有新的连接请求时，服务器接受连接并将新的套接字添加到 `pollfd` 数组中。然后，服务器继续监控所有连接以接收数据。如果接收到数据，服务器将其回显给客户端。
-
-### 注意事项
-+ `/dev/poll` 是特定于 Linux 的，因此在编写跨平台代码时需要注意。
-+ 在实际应用中，可能需要根据具体的应用场景和需求进行调整，例如处理半关闭连接、设置超时等。
-+ `/dev/poll` 的性能优势在处理大量并发连接时尤为明显，但在连接数较少时，其优势可能不太明显。
-
-`/dev/poll` 和 `poll` 不是一回事，它们之间有以下区别：
-
-1. `poll`** 系统调用**：
-    - `poll` 是一个 POSIX 标准的系统调用，它提供了一种机制，允许应用程序同时监视多个文件描述符（FD），以确定哪些文件描述符已经准备好进行 I/O 操作（如读、写）。
-    - `poll` 通过使用 `pollfd` 结构体数组来监控文件描述符上的事件。每个 `pollfd` 结构体指定了一个文件描述符和要监控的事件类型。
-    - `poll` 函数在所有主流的类 Unix 操作系统中都有实现，包括 Linux、FreeBSD、macOS 等。
-2. `/dev/poll`：
-    - `/dev/poll` 是 Linux 特有的一种 I/O 多路复用机制，它通过一个特殊的字符设备文件（`/dev/poll`）来实现。
-    - 使用 `/dev/poll` 时，应用程序首先通过 `open` 系统调用打开 `/dev/poll` 设备文件，然后使用相关的ioctl调用来注册要监控的文件描述符和事件。
-    - `/dev/poll` 通常与 `poll` 系统调用一起使用，以提高大量文件描述符监控的效率。它允许内核直接向应用程序传递发生的事件，而不需要像标准 `poll` 那样每次都检查所有文件描述符。
-    - `/dev/poll` 是较早的实现，后来被 `epoll` 取代，因为 `epoll` 提供了更高的性能和更好的扩展性。
-
-总结来说，`poll` 是一个通用的系统调用，而 `/dev/poll` 是 Linux 系统上的一个特定实现，用于提高 `poll` 系统调用的效率。在 Linux 系统中，`/dev/poll` 通常作为 `poll` 的后端实现，但在现代 Linux 系统中，`epoll` 是更常用的高性能 I/O 多路复用机制。
-
-## libuv
-`libuv` 是一个跨平台的异步 I/O 库，它提供了事件循环、文件系统操作、网络和其他系统相关的功能。`libuv` 被设计为易于使用，同时提供了高性能的异步 I/O 功能。它主要用于 Node.js，但也被其他项目如 Luvit 和 Julia 等使用。
-
-### `libuv` 的特点包括
-+ 基于不同操作系统的后端，如 Linux 的 `epoll`、BSD 的 `kqueue`、Windows 的 `IOCP`。
-+ 异步 TCP 和 UDP 套接字。
-+ 异步 DNS 解析。
-+ 异步文件系统操作。
-+ 文件系统事件。
-+ 子进程处理。
-+ 信号处理。
-+ 高分辨率时钟。
-+ 线程和同步原语。
-
-### C语言示例
-下面是一个使用 `libuv` 的简单示例，该示例创建了一个简单的回显服务器：
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <uv.h>
-
-void on_read(uv_stream_t* tcp, ssize_t nread, const uv_buf_t* buf) {
-    if (nread > 0) {
-        uv_write_t* write_req = malloc(sizeof(uv_write_t));
-        uv_buf_t write_buf = uv_buf_init(buf->base, nread);
-        uv_write(write_req, tcp, &write_buf, 1, -1, free);
-    } else if (nread < 0) {
-        uv_close((uv_handle_t*)tcp, free);
-    }
-}
-
-int main() {
-    uv_loop_t* loop = uv_default_loop();
-    uv_tcp_t server;
-    uv_tcp_init(loop, &server);
-
-    struct sockaddr_in addr;
-    uv_ip4_addr("0.0.0.0", 8080, &addr);
-
-    uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0);
-    uv_listen((uv_stream_t*)&server, 128, (uv_connection_cb)uv_accept);
-
-    uv_run(loop, UV_RUN_DEFAULT);
-    return 0;
-}
-```
-
-在这个示例中，我们创建了一个 `uv_tcp_t` 服务器，绑定到 `0.0.0.0` 的 `8080` 端口，并开始监听连接。当有数据可读时，`on_read` 回调函数会被调用，并将读取的数据写回客户端。
-
-### 注意事项
-+ `libuv` 的事件循环是异步和非阻塞的，这意味着你的程序可以在不等待 I/O 操作完成的情况下继续执行其他任务。
-+ `libuv` 提供了丰富的 API 来处理各种类型的事件，包括定时器、文件系统事件、网络事件等。
-+ 在使用 `libuv` 时，你需要确保正确地管理内存，例如在异步请求完成后释放分配的内存。
-
-`libuv` 是一个强大的库，它为开发高性能的异步 I/O 应用程序提供了必要的工具和抽象。通过使用 `libuv`，开发者可以编写出既高效又可读的系统级代码。
-
-## libevent
-`libevent` 是一个用C语言编写的轻量级开源高性能事件通知库，它提供了一种机制来执行事件通知，允许程序在单个线程中高效地处理多个事件源，包括IO事件、定时事件和信号事件。这使得开发者能够构建出响应迅速且易于扩展的网络应用程序，特别是在需要处理大量并发连接的场景中。`libevent` 支持多种平台，包括 Linux、Unix 和 Windows，并且提供了跨平台的事件处理机制。
-
-### C语言示例
-下面是一个使用 `libevent` 的简单示例，该示例创建了一个简单的回显服务器：
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <event2/event.h>
-#include <event2/bufferevent.h>
-#include <event2/listener.h>
-
-void read_cb(struct bufferevent *bev, void *ctx) {
-    char buf[1024];
-    size_t len = bufferevent_read(bev, buf, sizeof(buf) - 1);
-    if (len > 0) {
-        buf[len] = '\0';
-        printf("Received: %s\n", buf);
-        bufferevent_write(bev, buf, len);
-    }
-}
-
-void event_cb(struct bufferevent *bev, short events, void *ctx) {
-    if (events & BEV_EVENT_EOF) {
-        printf("Connection closed.\n");
-    } else if (events & BEV_EVENT_ERROR) {
-        printf("Got an error on the connection.\n");
-    }
-    bufferevent_free(bev);
-}
-
-int main(int argc, char **argv) {
-    struct event_base *base = event_base_new();
-    struct evconnlistener *listener;
-    struct sockaddr_in sin;
-    int port = 9999;
-
-    memset(&sin, 0, sizeof(sin));
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = htonl(INADDR_ANY);
-    sin.sin_port = htons(port);
-
-    listener = evconnlistener_new_bind(base, NULL, -1,
-                                      LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE,
-                                      16, (struct sockaddr *)&sin, sizeof(sin));
-
-    evconnlistener_set_cb(listener, read_cb, event_cb, NULL);
-
-    event_base_dispatch(base);
-
-    evconnlistener_free(listener);
-    event_base_free(base);
-
-    return 0;
-}
-```
-
-在这个示例中，我们创建了一个 `event_base`，然后创建了一个 `evconnlistener` 来监听指定端口的连接请求。当有新的连接请求时，`libevent` 会调用我们设置的回调函数 `read_cb` 来处理读事件。在这个回调函数中，我们读取数据并将其回显给客户端。同时，我们设置了 `event_cb` 来处理可能发生的事件，如连接关闭或错误。
-
-### 注意事项
-+ `libevent` 的事件操作只能在事件循环的同一个线程中执行，这意味着如果你需要在多线程环境中使用 `libevent`，你需要确保每个线程都有自己的 `event_base`。
-+ 在实际应用中，可能需要根据具体的应用场景和需求进行调整，例如处理半关闭连接、设置超时等。
-+ `libevent` 提供了丰富的 API 来处理各种类型的事件，包括定时器、文件系统事件、网络事件等。
-
-这个简单的示例展示了 `libevent` 的基本用法，包括创建事件循环、监听端口、处理连接和读写事件。在实际应用中，你可能需要更复杂的逻辑来处理不同的事件和业务需求。
-
-## Boost.Asio
-`Boost.Asio` 是一个跨平台的 C++ 网络和 I/O 库，它使用现代 C++ 语言和一致的异步模型进行程序开发。它提供了管理耗时操作的工具，而不需要开发人员使用基于传统线程和显式锁的并发模型。`Boost.Asio` 可以用来执行同步和异步操作，如 socket 上的 I/O 操作。它的核心作用是异步输入/输出，并且它的核心概念和功能包括 `io_service`、`ip::tcp::socket`、`deadline_timer` 等。
-
-### C语言示例
-下面是一个使用 `Boost.Asio` 的简单示例，该示例创建了一个异步的 TCP 回显客户端：
-
-```c
-#include <boost/asio.hpp>
-#include <iostream>
-
-using boost::asio::ip::tcp;
-
-void read_handler(const boost::system::error_code& ec, std::size_t bytes_transferred) {
-    if (!ec) {
-        std::cout << "Received: " << bytes_transferred << " bytes." << std::endl;
-    }
-}
-
-void write_handler(const boost::system::error_code& ec, std::size_t bytes_transferred) {
-    if (!ec) {
-        std::cout << "Sent: " << bytes_transferred << " bytes." << std::endl;
-    }
-}
-
-int main() {
-    boost::asio::io_service io_service;
-    tcp::socket socket(io_service);
-    tcp::resolver resolver(io_service);
-    boost::asio::connect(socket, resolver.resolve("localhost", "12345"));
-
-    std::string message = "Hello, Boost.Asio!";
-    boost::asio::async_write(socket, boost::asio::buffer(message), write_handler);
-
-    char buffer[1024];
-    boost::asio::async_read(socket, boost::asio::buffer(buffer), read_handler);
-
-    io_service.run();
-
-    return 0;
-}
-```
-
-在这个示例中，我们创建了一个 `io_service` 实例，然后创建了一个 `tcp::socket` 对象。我们使用 `tcp::resolver` 来解析服务器的地址和端口。然后，我们使用 `async_write` 函数异步发送数据，使用 `async_read` 函数异步接收数据。最后，我们调用 `io_service.run()` 来启动事件循环。
-
-请注意，`Boost.Asio` 是 C++ 库，而不是 C 语言库，因此上面的示例是用 C++ 编写的。C 语言没有直接使用 `Boost.Asio` 的能力，但 C++ 代码可以作为 C 语言项目的组成部分。如果你需要在 C 项目中使用类似的异步网络功能，你可能需要寻找或编写一个 C 语言的网络库，或者考虑将你的项目迁移到 C++。
+**特点**：
+- 支持多种事件类型：socket、文件、进程、信号、定时器
+- 支持边缘触发
+- macOS、FreeBSD、NetBSD、OpenBSD 支持
+
+### 7.2 IOCP (Windows)
+
+Windows 的完成端口模型，真正的 proactor 模式：
+
+- 提交 IO 操作后立即返回
+- 操作完成后获得通知
+- 天然支持线程池
+
+### 7.3 libuv / libevent
+
+跨平台事件库，封装了各平台的最优实现：
+
+| 平台 | 后端 |
+|------|------|
+| Linux | epoll |
+| macOS | kqueue |
+| Windows | IOCP |
+| Solaris | /dev/poll |
+
+---
+
+## 八、内核面试要点
+
+### 8.1 常见问题
+
+**Q: epoll 为什么比 select 快？**
+
+A: 三个关键改进：
+1. **状态驻留内核**：fd 集合保存在内核，无需每次复制
+2. **事件驱动**：只返回就绪的 fd，不遍历全部
+3. **回调机制**：设备就绪时主动通知，而非轮询检查
+
+**Q: epoll 的红黑树和就绪链表各有什么作用？**
+
+A: 
+- **红黑树**：存储所有注册的 fd，用于 O(log n) 的增删查改
+- **就绪链表**：存储已就绪的 fd，epoll_wait 直接返回这个链表
+
+**Q: ET 模式为什么要配合非阻塞 IO？**
+
+A: 
+1. ET 模式只在状态变化时通知一次
+2. 如果不一次读完，剩余数据不会再触发通知
+3. 用非阻塞 IO 可以循环读到 EAGAIN，确保读完
+
+**Q: io_uring 如何实现零系统调用？**
+
+A: 
+1. 通过 SQPOLL 模式，内核线程持续轮询 SQ
+2. 用户只需写入 SQE 到共享内存
+3. 内核线程发现后自动处理
+4. 结果写入 CQE，用户直接读取
+
+**Q: 什么时候应该用 io_uring 而不是 epoll？**
+
+A: 
+1. 需要文件异步 IO（epoll 对常规文件无效）
+2. 需要批量提交减少系统调用
+3. 对延迟极度敏感，需要 SQPOLL 零调用模式
+4. 需要更高级功能如链式操作、固定缓冲区
 
 ---
 

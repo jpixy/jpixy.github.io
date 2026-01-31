@@ -826,3 +826,4 @@ private:
 ## 相关文章
 
 - [上一篇：概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
+- [下一篇：平衡树详解](/articles/algorithm/algo-11-平衡树详解/)
