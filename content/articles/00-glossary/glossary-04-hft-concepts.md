@@ -618,19 +618,27 @@ public:
 ```
 
 **典型FPGA交易系统架构**：
-```
-网卡 (with FPGA)
-     ↓
-┌─────────────────────────────────┐
-│  FPGA                           │
-│  ┌─────────┐  ┌─────────┐       │
-│  │ 协议解析 │→│ 策略逻辑 │       │
-│  └─────────┘  └─────────┘       │
-│       ↓            ↓            │
-│  ┌─────────┐  ┌─────────┐       │
-│  │ OrderBook│→│ 订单生成 │→ 网络│
-│  └─────────┘  └─────────┘       │
-└─────────────────────────────────┘
+
+```mermaid
+flowchart TD
+    NIC[网卡 with FPGA]
+    
+    subgraph FPGA
+        PARSE[协议解析]
+        STRATEGY[策略逻辑]
+        OB[OrderBook]
+        ORDER[订单生成]
+        
+        PARSE --> STRATEGY
+        PARSE --> OB
+        OB --> ORDER
+        STRATEGY --> ORDER
+    end
+    
+    NET[网络]
+    
+    NIC --> PARSE
+    ORDER --> NET
 ```
 
 **FPGA开发挑战**：

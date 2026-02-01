@@ -36,20 +36,18 @@ CPU (适合复杂逻辑):              GPU (适合并行计算):
 
 ### 1.1 GPU 软件栈
 
-```
-应用层:    PyTorch / TensorFlow / 自定义CUDA程序
-              │
-              ↓
-框架层:    cuDNN (神经网络) / cuBLAS (线性代数) / NCCL (多卡通信)
-              │
-              ↓
-运行时:    CUDA Runtime API
-              │
-              ↓
-驱动层:    CUDA Driver API  →  NVIDIA内核驱动 (nvidia.ko)
-              │
-              ↓
-硬件:      NVIDIA GPU
+```mermaid
+graph TD
+    APP[应用层<br/>PyTorch / TensorFlow / 自定义CUDA程序]
+    FRAME[框架层<br/>cuDNN 神经网络<br/>cuBLAS 线性代数<br/>NCCL 多卡通信]
+    RUNTIME[运行时<br/>CUDA Runtime API]
+    DRIVER[驱动层<br/>CUDA Driver API → NVIDIA内核驱动 nvidia.ko]
+    HW[硬件<br/>NVIDIA GPU]
+    
+    APP --> FRAME
+    FRAME --> RUNTIME
+    RUNTIME --> DRIVER
+    DRIVER --> HW
 ```
 
 ### 1.2 NVIDIA 驱动管理
@@ -256,31 +254,18 @@ def train(rank, world_size):
 
 **一句话：RDMA 让网卡直接读写远程内存，绕过 CPU 和操作系统，实现微秒级网络延迟**
 
-```
-传统TCP/IP:                      RDMA:
-┌─────────┐   ┌─────────┐       ┌─────────┐   ┌─────────┐
-│   App   │   │   App   │       │   App   │   │   App   │
-└────┬────┘   └────┬────┘       └────┬────┘   └────┬────┘
-     │ copy        │ copy            │             │
-     ↓             ↓                 │             │
-┌─────────┐   ┌─────────┐            │             │
-│ Socket  │   │ Socket  │            │   直接      │   直接
-│ Buffer  │   │ Buffer  │            │   访问      │   访问
-└────┬────┘   └────┬────┘            │             │
-     │             │                 │             │
-     ↓             ↓                 ↓             ↓
-┌─────────┐   ┌─────────┐       ┌─────────┐   ┌─────────┐
-│  TCP/IP │   │  TCP/IP │       │  RDMA   │   │  RDMA   │
-│  Stack  │   │  Stack  │       │  NIC    │   │  NIC    │
-└────┬────┘   └────┬────┘       └────┬────┘   └────┬────┘
-     │             │                 │             │
-     └──────┬──────┘                 └──────┬──────┘
-            │                               │
-     ═══════╧═══════════════════════════════╧═══════
-            网络                             网络
-
-延迟：~100μs                     延迟：~2μs
-CPU占用：高                      CPU占用：极低
+```mermaid
+graph TB
+    subgraph 传统TCPIP["传统TCP/IP (延迟~100μs, CPU占用高)"]
+        APP1[App] -->|copy| SOCK1[Socket Buffer]
+        SOCK1 --> STACK1[TCP/IP Stack]
+        STACK1 --> NET1[网络]
+    end
+    
+    subgraph RDMA["RDMA (延迟~2μs, CPU占用极低)"]
+        APP2[App] -->|直接访问| RDMA_NIC[RDMA NIC]
+        RDMA_NIC --> NET2[网络]
+    end
 ```
 
 ### 2.1 RDMA 技术栈

@@ -17,23 +17,38 @@ tags = ["Linux", "Kernel", "Glibc", "Systemd", "Toolchain", "System"]
 
 **一句话：内核是硬件与软件之间的"翻译官"，管理所有资源分配**
 
-```
-用户空间 (User Space)
-┌─────────────────────────────────────────────────┐
-│  应用程序  │  Shell  │  库 (glibc)  │  服务    │
-└─────────────────────────────────────────────────┘
-                    ↓ 系统调用 (syscall)
-═══════════════════════════════════════════════════
-                    ↓
-内核空间 (Kernel Space)
-┌─────────────────────────────────────────────────┐
-│  进程调度  │  内存管理  │  文件系统  │  网络栈  │
-│  设备驱动  │  中断处理  │  安全模块  │  ...     │
-└─────────────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────────────┐
-│  CPU  │  内存  │  磁盘  │  网卡  │  GPU  │ ...  │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 用户空间["用户空间 (User Space)"]
+        APP[应用程序]
+        SHELL[Shell]
+        LIBC[库 glibc]
+        SVC[服务]
+    end
+    
+    SYSCALL[系统调用 syscall]
+    
+    subgraph 内核空间["内核空间 (Kernel Space)"]
+        SCHED[进程调度]
+        MM[内存管理]
+        FS[文件系统]
+        NET[网络栈]
+        DRV[设备驱动]
+        IRQ[中断处理]
+        SEC[安全模块]
+    end
+    
+    subgraph 硬件
+        CPU
+        MEM[内存]
+        DISK[磁盘]
+        NIC[网卡]
+        GPU
+    end
+    
+    APP & SHELL & LIBC & SVC --> SYSCALL
+    SYSCALL --> SCHED & MM & FS & NET & DRV & IRQ & SEC
+    SCHED & MM & FS & NET & DRV & IRQ --> CPU & MEM & DISK & NIC & GPU
 ```
 
 ### 1.1 内核核心子系统

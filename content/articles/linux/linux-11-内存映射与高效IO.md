@@ -256,12 +256,15 @@ GRUB_CMDLINE_LINUX="transparent_hugepage=never"
 
 ### 3.1 直接IO原理
 
-```
-普通IO:
-应用 → 用户缓冲区 → 页缓存 → 磁盘
-
-直接IO:
-应用 → 用户缓冲区 → 磁盘（绕过页缓存）
+```mermaid
+flowchart LR
+    subgraph 普通IO
+        A1[应用] --> B1[用户缓冲区] --> C1[页缓存] --> D1[磁盘]
+    end
+    
+    subgraph 直接IO
+        A2[应用] --> B2[用户缓冲区] --> D2[磁盘<br/>绕过页缓存]
+    end
 ```
 
 ### 3.2 直接IO使用
@@ -444,14 +447,21 @@ void linux_aio_example(void) {
 
 当我们用传统方式发送一个文件到网络时：
 
-```
-应用程序调用 read():
-  1. 磁盘 → DMA拷贝 → 内核页缓存（Page Cache）
-  2. 内核页缓存 → CPU拷贝 → 用户缓冲区
-  
-应用程序调用 write():
-  3. 用户缓冲区 → CPU拷贝 → Socket发送缓冲区
-  4. Socket发送缓冲区 → DMA拷贝 → 网卡
+```mermaid
+sequenceDiagram
+    participant DISK as 磁盘
+    participant CACHE as 内核页缓存
+    participant USER as 用户缓冲区
+    participant SOCK as Socket发送缓冲区
+    participant NIC as 网卡
+    
+    Note over DISK,USER: read() 调用
+    DISK->>CACHE: 1. DMA拷贝
+    CACHE->>USER: 2. CPU拷贝
+    
+    Note over USER,NIC: write() 调用
+    USER->>SOCK: 3. CPU拷贝
+    SOCK->>NIC: 4. DMA拷贝
 ```
 
 **问题分析**：

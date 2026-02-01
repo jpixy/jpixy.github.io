@@ -18,67 +18,67 @@ tags = ["Linux", "网络栈", "内核", "sk_buff", "NAPI", "HFT"]
 
 ### 1.1 分层结构
 
-```
-用户空间
-─────────────────────────────────────
-│  应用程序 (socket API)
-─────────────────────────────────────
-│  Socket层
-│  ├── AF_INET (IPv4)
-│  ├── AF_INET6 (IPv6)
-│  └── AF_PACKET (原始包)
-─────────────────────────────────────
-│  传输层
-│  ├── TCP (net/ipv4/tcp.c)
-│  └── UDP (net/ipv4/udp.c)
-─────────────────────────────────────
-│  网络层
-│  ├── IP路由 (net/ipv4/ip_*.c)
-│  └── Netfilter框架
-─────────────────────────────────────
-│  链路层
-│  ├── 设备抽象 (net/core/dev.c)
-│  └── 排队规则 (net/sched/)
-─────────────────────────────────────
-│  驱动层
-│  └── 网卡驱动 (drivers/net/)
-─────────────────────────────────────
-硬件
+```mermaid
+graph TB
+    subgraph 用户空间
+        APP[应用程序<br/>socket API]
+    end
+    
+    subgraph Socket层
+        AF_INET[AF_INET IPv4]
+        AF_INET6[AF_INET6 IPv6]
+        AF_PACKET[AF_PACKET 原始包]
+    end
+    
+    subgraph 传输层
+        TCP[TCP<br/>net/ipv4/tcp.c]
+        UDP[UDP<br/>net/ipv4/udp.c]
+    end
+    
+    subgraph 网络层
+        IP[IP路由<br/>net/ipv4/ip_*.c]
+        NETFILTER[Netfilter框架]
+    end
+    
+    subgraph 链路层
+        DEV[设备抽象<br/>net/core/dev.c]
+        QDISC[排队规则<br/>net/sched/]
+    end
+    
+    subgraph 驱动层
+        DRIVER[网卡驱动<br/>drivers/net/]
+    end
+    
+    HW[硬件]
+    
+    APP --> AF_INET & AF_INET6 & AF_PACKET
+    AF_INET & AF_INET6 --> TCP & UDP
+    AF_PACKET --> DEV
+    TCP & UDP --> IP
+    IP --> NETFILTER
+    NETFILTER --> DEV
+    DEV --> QDISC
+    QDISC --> DRIVER
+    DRIVER --> HW
 ```
 
 ### 1.2 数据包接收流程
 
-```
-网卡接收数据包
-     │
-     ▼
-1. 硬件中断 (IRQ)
-     │
-     ▼
-2. 驱动中断处理 (Top Half)
-   ├── 禁用中断
-   └── 触发NAPI
-     │
-     ▼
-3. 软中断处理 (NET_RX_SOFTIRQ)
-   └── NAPI poll
-     │
-     ▼
-4. netif_receive_skb()
-   ├── 分发到协议处理器
-   └── 经过netfilter
-     │
-     ▼
-5. ip_rcv() → ip_local_deliver()
-     │
-     ▼
-6. tcp_v4_rcv() / udp_rcv()
-     │
-     ▼
-7. 复制到socket缓冲区
-     │
-     ▼
-8. 唤醒等待的进程
+```mermaid
+flowchart TD
+    A[网卡接收数据包] --> B[1. 硬件中断 IRQ]
+    B --> C[2. 驱动中断处理 Top Half]
+    C --> C1[禁用中断]
+    C --> C2[触发NAPI]
+    C1 & C2 --> D[3. 软中断处理<br/>NET_RX_SOFTIRQ]
+    D --> D1[NAPI poll]
+    D1 --> E[4. netif_receive_skb]
+    E --> E1[分发到协议处理器]
+    E --> E2[经过netfilter]
+    E1 & E2 --> F[5. ip_rcv → ip_local_deliver]
+    F --> G[6. tcp_v4_rcv / udp_rcv]
+    G --> H[7. 复制到socket缓冲区]
+    H --> I[8. 唤醒等待的进程]
 ```
 
 ## 二、sk_buff结构
@@ -317,28 +317,30 @@ static void net_rx_action(struct softirq_action *h)
 
 ### 4.1 Netfilter钩子点
 
-```
-数据包接收                           数据包发送
-     │                                    ▲
-     ▼                                    │
-┌────────────┐                     ┌────────────┐
-│ PREROUTING │                     │ POSTROUTING│
-└─────┬──────┘                     └─────▲──────┘
-      │                                   │
-      ▼                                   │
-   路由决策 ────────────────────────► 本地处理?
-      │                                   ▲
-      │ 是                                │
-      ▼                                   │
-┌────────────┐                     ┌────────────┐
-│   INPUT    │ ──────────────────► │   OUTPUT   │
-└────────────┘       本地进程       └────────────┘
-      │
-      │ 否(转发)
-      ▼
-┌────────────┐
-│  FORWARD   │
-└────────────┘
+```mermaid
+flowchart LR
+    subgraph 接收路径
+        RX[数据包接收] --> PREROUTING
+        PREROUTING --> ROUTE{路由决策}
+    end
+    
+    subgraph 本地处理
+        INPUT --> PROC[本地进程]
+        PROC --> OUTPUT
+    end
+    
+    subgraph 转发
+        FORWARD
+    end
+    
+    subgraph 发送路径
+        POSTROUTING --> TX[数据包发送]
+    end
+    
+    ROUTE -->|本地| INPUT
+    ROUTE -->|转发| FORWARD
+    FORWARD --> POSTROUTING
+    OUTPUT --> POSTROUTING
 ```
 
 ### 4.2 Netfilter钩子注册

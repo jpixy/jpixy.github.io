@@ -17,34 +17,27 @@ tags = ["Linux", "Storage", "NVMe", "SPDK", "FUSE", "FileSystem"]
 
 **一句话：VFS 是文件系统的"统一接口"，上接应用，下接各种具体文件系统**
 
-```
-应用程序
-    │
-    │  open() / read() / write()
-    ↓
-┌─────────────────────────────────────────────────┐
-│                  VFS (Virtual File System)       │
-│    统一的文件操作接口，抽象不同文件系统的差异      │
-└───────┬───────┬───────┬───────┬───────┬─────────┘
-        │       │       │       │       │
-        ↓       ↓       ↓       ↓       ↓
-      ext4    XFS    Btrfs   NFS   tmpfs  ...
-        │       │       │       │       │
-        └───────┴───────┼───────┴───────┘
-                        ↓
-              Block Layer / Page Cache
-                        │
-                        ↓
-              ┌─────────────────┐
-              │   块设备驱动     │
-              │  NVMe / SATA    │
-              └─────────────────┘
-                        │
-                        ↓
-              ┌─────────────────┐
-              │    存储设备      │
-              │   SSD / HDD     │
-              └─────────────────┘
+```mermaid
+graph TB
+    APP[应用程序<br/>open/read/write]
+    
+    VFS[VFS Virtual File System<br/>统一的文件操作接口<br/>抽象不同文件系统的差异]
+    
+    EXT4[ext4]
+    XFS[XFS]
+    BTRFS[Btrfs]
+    NFS[NFS]
+    TMPFS[tmpfs]
+    
+    BLOCK[Block Layer / Page Cache]
+    DRIVER[块设备驱动<br/>NVMe / SATA]
+    DEVICE[存储设备<br/>SSD / HDD]
+    
+    APP --> VFS
+    VFS --> EXT4 & XFS & BTRFS & NFS & TMPFS
+    EXT4 & XFS & BTRFS --> BLOCK
+    BLOCK --> DRIVER
+    DRIVER --> DEVICE
 ```
 
 ### 1.1 主要文件系统对比

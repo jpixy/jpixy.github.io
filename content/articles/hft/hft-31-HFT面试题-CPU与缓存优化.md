@@ -16,23 +16,26 @@ tags = ["HFT", "面试", "CPU", "缓存", "低延迟"]
 
 ### 标准答案
 
-```
-CPU 缓存层次：
-
-CPU Core 0           CPU Core 1
-┌────────────┐      ┌────────────┐
-│ L1-I  L1-D │      │ L1-I  L1-D │  ~1-4 cycles, 32KB
-│    L2      │      │    L2      │  ~10-12 cycles, 256KB
-└─────┬──────┘      └─────┬──────┘
-      └──────┬────────────┘
-             │
-       ┌─────┴─────┐
-       │    L3     │  ~30-50 cycles, 8-32MB (共享)
-       └─────┬─────┘
-             │
-       ┌─────┴─────┐
-       │   DRAM    │  ~200-300 cycles, 60-100ns
-       └───────────┘
+```mermaid
+graph TB
+    subgraph Core0[CPU Core 0]
+        L1_0[L1-I L1-D<br/>~1-4 cycles, 32KB]
+        L2_0[L2<br/>~10-12 cycles, 256KB]
+        L1_0 --> L2_0
+    end
+    
+    subgraph Core1[CPU Core 1]
+        L1_1[L1-I L1-D<br/>~1-4 cycles, 32KB]
+        L2_1[L2<br/>~10-12 cycles, 256KB]
+        L1_1 --> L2_1
+    end
+    
+    L3[L3<br/>~30-50 cycles, 8-32MB<br/>共享]
+    DRAM[DRAM<br/>~200-300 cycles, 60-100ns]
+    
+    L2_0 --> L3
+    L2_1 --> L3
+    L3 --> DRAM
 ```
 
 **延迟参考值**：

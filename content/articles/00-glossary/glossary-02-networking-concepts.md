@@ -188,17 +188,19 @@ ip link set eth1 master bond0
 **定义**：TCP建立连接的过程，通过三次报文交换确认双方的发送和接收能力。
 
 **过程**：
-```
-客户端                    服务器
-   │                        │
-   │──── SYN (seq=x) ──────→│  1. 客户端发起
-   │                        │
-   │←── SYN+ACK (seq=y,     │  2. 服务器响应
-   │     ack=x+1) ──────────│
-   │                        │
-   │──── ACK (ack=y+1) ────→│  3. 客户端确认
-   │                        │
-   │    连接建立，可传输数据   │
+
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务器
+    
+    C->>S: SYN (seq=x)
+    Note right of S: 1. 客户端发起
+    S->>C: SYN+ACK (seq=y, ack=x+1)
+    Note left of C: 2. 服务器响应
+    C->>S: ACK (ack=y+1)
+    Note right of S: 3. 客户端确认
+    Note over C,S: 连接建立，可传输数据
 ```
 
 **为什么是三次而非两次**：
@@ -220,20 +222,22 @@ setsockopt(listen_fd, SOL_TCP, TCP_FASTOPEN, &qlen, sizeof(qlen));
 **定义**：TCP关闭连接的过程，需要四次报文交换确保双方都完成数据传输。
 
 **过程**：
-```
-客户端                    服务器
-   │                        │
-   │──── FIN ──────────────→│  1. 客户端请求关闭
-   │                        │
-   │←── ACK ────────────────│  2. 服务器确认
-   │                        │
-   │    [服务器可能还有数据]   │
-   │                        │
-   │←── FIN ────────────────│  3. 服务器请求关闭
-   │                        │
-   │──── ACK ──────────────→│  4. 客户端确认
-   │                        │
-   │    进入TIME_WAIT       │
+
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务器
+    
+    C->>S: FIN
+    Note right of S: 1. 客户端请求关闭
+    S->>C: ACK
+    Note left of C: 2. 服务器确认
+    Note over S: [服务器可能还有数据]
+    S->>C: FIN
+    Note left of C: 3. 服务器请求关闭
+    C->>S: ACK
+    Note right of S: 4. 客户端确认
+    Note over C: 进入TIME_WAIT
 ```
 
 **为什么是四次而非三次**：
@@ -637,18 +641,15 @@ ethtool -n eth0 rx-flow-hash tcp4
 - 比DPDK更容易部署（不需要接管网卡）
 
 **XDP处理点**：
-```
-网卡收包
-    ↓
-┌─────────────┐
-│ XDP程序     │ ← 最早处理点，驱动层
-│ - XDP_DROP │     丢弃包
-│ - XDP_PASS │     继续内核处理
-│ - XDP_TX   │     直接发回
-│ - XDP_REDIRECT │ 重定向到其他接口/CPU
-└─────────────┘
-    ↓
-内核网络栈
+
+```mermaid
+flowchart TD
+    NIC[网卡收包] --> XDP[XDP程序<br/>最早处理点，驱动层]
+    XDP --> DROP[XDP_DROP<br/>丢弃包]
+    XDP --> PASS[XDP_PASS<br/>继续内核处理]
+    XDP --> TX[XDP_TX<br/>直接发回]
+    XDP --> REDIRECT[XDP_REDIRECT<br/>重定向到其他接口/CPU]
+    PASS --> STACK[内核网络栈]
 ```
 
 **简单XDP程序**：
@@ -791,17 +792,25 @@ setsockopt(sock, SOL_SOCKET, SO_BUSY_POLL, &busy_poll, sizeof(busy_poll));
 
 **一句话**：用纯路由替代交换，消除 STP，所有链路同时工作。
 
-```
-传统三层 (STP阻塞):         Spine-Leaf (全部Active):
-
-    Core                      Spine  Spine
-      │                         ╲ ╱  ╲ ╱
-   STP阻塞                       ╳    ╳   ← ECMP，负载均衡
-   部分链路                     ╱ ╲  ╱ ╲
-      │                      Leaf Leaf Leaf
-    Agg                         │    │    │
-      │                       服务器群
-    Acc
+```mermaid
+graph TB
+    subgraph 传统三层["传统三层 (STP阻塞)"]
+        Core --> Agg
+        Agg --> Acc
+        Note1[STP阻塞部分链路]
+    end
+    
+    subgraph SpineLeaf["Spine-Leaf (全部Active)"]
+        Spine1[Spine] <--> Spine2[Spine]
+        Spine1 --> Leaf1[Leaf]
+        Spine1 --> Leaf2[Leaf]
+        Spine2 --> Leaf2
+        Spine2 --> Leaf3[Leaf]
+        Leaf1 --> Servers[服务器群]
+        Leaf2 --> Servers
+        Leaf3 --> Servers
+        Note2[ECMP负载均衡<br/>所有链路同时工作]
+    end
 ```
 
 **为什么更好**：无 STP、链路 100% 利用、任意两点最多 2 跳、水平扩展
@@ -858,23 +867,27 @@ VM1 问 "VM2 在哪?"           VM2 启动时，BGP 通告:
 
 **一句话**：分层解耦，底层只管 IP 可达，上层虚拟网络随便折腾。
 
+```mermaid
+graph TB
+    subgraph Overlay["Overlay (虚拟网络)"]
+        O1[租户看到的网络]
+        O2[IP地址可重叠<br/>不同租户用相同10.x]
+        O3[变化频繁<br/>VM创建/删除/迁移]
+    end
+    
+    VXLAN[封装/解封装 VXLAN]
+    
+    subgraph Underlay["Underlay (物理网络)"]
+        U1[只需保证VTEP之间IP可达]
+        U2[配置简单稳定<br/>很少变动]
+        U3[纯三层路由<br/>BGP/OSPF]
+    end
+    
+    Overlay <--> VXLAN
+    VXLAN <--> Underlay
 ```
-┌─────────────────────────────────────────────┐
-│  Overlay (虚拟网络)                          │
-│  - 租户看到的网络                            │
-│  - 可以 IP 地址重叠（不同租户用相同 10.x）   │
-│  - 变化频繁（VM 创建/删除/迁移）             │
-└─────────────────────────────────────────────┘
-              ↑ 封装/解封装 (VXLAN)
-┌─────────────────────────────────────────────┐
-│  Underlay (物理网络)                         │
-│  - 只需保证 VTEP 之间 IP 可达                │
-│  - 配置简单稳定，很少变动                    │
-│  - 纯三层路由 (BGP/OSPF)                    │
-└─────────────────────────────────────────────┘
 
 好处: 上层变化不影响底层，运维职责分离
-```
 
 **详细文章**：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/#五underlay-与-overlay)
 
