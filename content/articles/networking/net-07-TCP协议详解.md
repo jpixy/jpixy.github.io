@@ -283,54 +283,27 @@ sysctl -w net.ipv4.tcp_congestion_control=bbr
 
 ### 完整状态图
 
-```
-                              +---------+
-                              |  CLOSED |
-                              +---------+
-                                   |
-                      被动打开      |  主动打开
-                    +--------------+---------------+
-                    |                              |
-                    v                              v
-              +-----------+                  +-----------+
-              |  LISTEN   |                  | SYN_SENT  |
-              +-----------+                  +-----------+
-                    |                              |
-              收到SYN|                        收到SYN+ACK
-              发送SYN+ACK                      发送ACK
-                    |                              |
-                    v                              v
-              +-----------+                  +-----------+
-              | SYN_RCVD  |----------------->|ESTABLISHED|
-              +-----------+   收到ACK        +-----------+
-                                                   |
-                                           主动关闭|收到FIN
-                                           发送FIN |发送ACK
-                    +---------------+--------------+
-                    |               |
-                    v               v
-              +-----------+   +-----------+
-              | FIN_WAIT_1|   |CLOSE_WAIT |
-              +-----------+   +-----------+
-                    |               |
-              收到ACK|         发送FIN|
-                    v               v
-              +-----------+   +-----------+
-              | FIN_WAIT_2|   | LAST_ACK  |
-              +-----------+   +-----------+
-                    |               |
-              收到FIN|         收到ACK|
-              发送ACK|               v
-                    v         +-----------+
-              +-----------+   |  CLOSED   |
-              | TIME_WAIT |   +-----------+
-              +-----------+
-                    |
-               2MSL超时
-                    v
-              +-----------+
-              |  CLOSED   |
-              +-----------+
+```mermaid
+stateDiagram-v2
+    [*] --> CLOSED
+    
+    CLOSED --> LISTEN: 被动打开
+    CLOSED --> SYN_SENT: 主动打开
+    
+    LISTEN --> SYN_RCVD: 收到SYN<br/>发送SYN+ACK
+    SYN_SENT --> ESTABLISHED: 收到SYN+ACK<br/>发送ACK
+    SYN_RCVD --> ESTABLISHED: 收到ACK
+    
+    ESTABLISHED --> FIN_WAIT_1: 主动关闭<br/>发送FIN
+    ESTABLISHED --> CLOSE_WAIT: 收到FIN<br/>发送ACK
+    
+    FIN_WAIT_1 --> FIN_WAIT_2: 收到ACK
+    FIN_WAIT_2 --> TIME_WAIT: 收到FIN<br/>发送ACK
+    
+    CLOSE_WAIT --> LAST_ACK: 发送FIN
+    LAST_ACK --> CLOSED: 收到ACK
+    
+    TIME_WAIT --> CLOSED: 2MSL超时
 ```
 
 ### 状态查看

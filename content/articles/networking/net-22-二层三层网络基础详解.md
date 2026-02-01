@@ -583,23 +583,25 @@ STP 的三步:
    另一个端口被阻塞 (Blocking)
 
 最终结果:
-     ┌─────────┐
-     │Root(SW0)│ ← 根桥
-     └────┬────┘
-          │DP (Designated Port)
-     ┌────┴────┐
-     │  SW1    │
-     ├──RP─────┤ ← RP: Root Port (到根桥最短)
-     └──┬───┬──┘
-        │DP │BLK ← BLK: Blocked (被阻塞，不转发)
-        │   │
-     ┌──┴───┴──┐
-     │  SW2    │
-     ├──RP─────┤
-     └─────────┘
+
+```mermaid
+graph TD
+    SW0[Root SW0<br/>根桥]
+    SW1[SW1]
+    SW2[SW2]
+    
+    SW0 -->|DP| SW1
+    SW1 -->|RP| SW0
+    SW1 -->|DP| SW2
+    SW1 -.-|BLK| SW2
+    SW2 -->|RP| SW1
+```
+
+- **DP**: Designated Port (指定端口)
+- **RP**: Root Port (到根桥最短路径)
+- **BLK**: Blocked (被阻塞，不转发)
 
 阻塞的链路平时不转发数据，但如果主链路故障，STP 会重新计算，激活备用链路。
-```
 
 ### 6.3 端口状态
 

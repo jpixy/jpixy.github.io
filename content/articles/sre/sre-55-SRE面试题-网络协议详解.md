@@ -18,27 +18,29 @@ tags = ["SRE", "面试", "TCP", "HTTP", "网络", "DNS"]
 
 **标准答案**：
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务端
+    
+    C->>S: SYN, seq=x
+    Note over C: SYN_SENT
+    Note right of S: 第1次：客户端发起连接
+    
+    S->>C: SYN+ACK, seq=y, ack=x+1
+    Note over S: SYN_RECV
+    Note left of C: 第2次：服务端确认并发起
+    
+    C->>S: ACK, ack=y+1
+    Note over C,S: ESTABLISHED
+    Note right of S: 第3次：客户端确认
 ```
-三次握手（Three-way Handshake）：
 
-客户端                     服务端
-   |                          |
-   |------ SYN, seq=x ------->|  第1次：客户端发起连接请求
-   |                          |  客户端进入SYN_SENT状态
-   |                          |
-   |<- SYN+ACK, seq=y, ack=x+1|  第2次：服务端确认并发起连接
-   |                          |  服务端进入SYN_RECV状态
-   |                          |
-   |------ ACK, ack=y+1 ----->|  第3次：客户端确认
-   |                          |  双方进入ESTABLISHED状态
-   |                          |
-
-各字段含义：
-- SYN: 同步标志，发起连接
-- ACK: 确认标志
-- seq: 序列号
-- ack: 确认号（期望收到的下一个序列号）
-```
+**各字段含义**：
+- **SYN**: 同步标志，发起连接
+- **ACK**: 确认标志
+- **seq**: 序列号
+- **ack**: 确认号（期望收到的下一个序列号）
 
 **为什么是三次，不是两次或四次？**
 
@@ -79,31 +81,34 @@ ss -lnt | grep <port>
 
 **标准答案**：
 
+```mermaid
+sequenceDiagram
+    participant A as 主动关闭方
+    participant P as 被动关闭方
+    
+    A->>P: FIN, seq=u
+    Note over A: FIN_WAIT_1
+    Note right of P: 第1次：主动方发起关闭
+    
+    P->>A: ACK, ack=u+1
+    Note over A: FIN_WAIT_2
+    Note over P: CLOSE_WAIT
+    Note left of A: 第2次：被动方确认
+    
+    P->>A: FIN, seq=v
+    Note over P: LAST_ACK
+    Note left of A: 第3次：被动方关闭
+    
+    A->>P: ACK, ack=v+1
+    Note over A: TIME_WAIT (2MSL)
+    Note over P: CLOSED
+    Note right of P: 第4次：主动方确认
 ```
-四次挥手（Four-way Handshake）：
 
-主动关闭方                   被动关闭方
-    |                           |
-    |------ FIN, seq=u -------->|  第1次：主动方发起关闭
-    |                           |  主动方进入FIN_WAIT_1
-    |                           |
-    |<----- ACK, ack=u+1 -------|  第2次：被动方确认
-    |                           |  主动方进入FIN_WAIT_2
-    |                           |  被动方进入CLOSE_WAIT
-    |                           |
-    |<----- FIN, seq=v ---------|  第3次：被动方关闭
-    |                           |  被动方进入LAST_ACK
-    |                           |
-    |------ ACK, ack=v+1 ------>|  第4次：主动方确认
-    |                           |  主动方进入TIME_WAIT
-    |                           |  等待2MSL后进入CLOSED
-    |                           |  被动方收到ACK后进入CLOSED
-
-为什么是四次？
+**为什么是四次？**
 - 关闭是双向的，每个方向需要一个FIN和一个ACK
 - 被动方可能还有数据要发送，不能立即发FIN
 - 因此ACK和FIN需要分开发送
-```
 
 **TCP状态转换**：
 

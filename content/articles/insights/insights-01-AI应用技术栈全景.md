@@ -13,24 +13,49 @@ slug = "insights-AI应用技术栈全景与实践指南"
 
 ### 1.1 基础架构概览
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      AI 应用层 (Application Layer)               │
-├─────────────────────────────────────────────────────────────────┤
-│  Agent 框架  │  RAG 系统  │  Workflow/Chain  │  Fine-tuning     │
-├─────────────────────────────────────────────────────────────────┤
-│                    编排层 (Orchestration Layer)                  │
-│         LangChain │ LlamaIndex │ Semantic Kernel │ Dify         │
-├─────────────────────────────────────────────────────────────────┤
-│                     模型服务层 (Model Serving)                   │
-│    OpenAI API │ Claude API │ vLLM │ TGI │ Ollama │ LocalAI     │
-├─────────────────────────────────────────────────────────────────┤
-│                      基座模型 (Foundation Models)                │
-│   GPT-4 │ Claude │ Llama │ Qwen │ DeepSeek │ Mistral │ Gemma   │
-├─────────────────────────────────────────────────────────────────┤
-│                      基础设施 (Infrastructure)                   │
-│        GPU Cluster │ Vector DB │ Knowledge Base │ MLOps        │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph APP["AI 应用层"]
+        Agent[Agent 框架]
+        RAG[RAG 系统]
+        WF[Workflow/Chain]
+        FT[Fine-tuning]
+    end
+    
+    subgraph ORCH["编排层"]
+        LC[LangChain]
+        LI[LlamaIndex]
+        SK[Semantic Kernel]
+        Dify
+    end
+    
+    subgraph SERVE["模型服务层"]
+        OAI[OpenAI API]
+        CLAUDE[Claude API]
+        vLLM
+        TGI
+        Ollama
+    end
+    
+    subgraph MODELS["基座模型"]
+        GPT4[GPT-4]
+        Claude
+        Llama
+        Qwen
+        DeepSeek
+    end
+    
+    subgraph INFRA["基础设施"]
+        GPU[GPU Cluster]
+        VDB[Vector DB]
+        KB[Knowledge Base]
+        MLOps
+    end
+    
+    APP --> ORCH
+    ORCH --> SERVE
+    SERVE --> MODELS
+    MODELS --> INFRA
 ```
 
 ### 1.2 四大核心技术路线

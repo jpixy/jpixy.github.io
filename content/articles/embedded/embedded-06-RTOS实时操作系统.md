@@ -39,24 +39,17 @@ tags = ["embedded", "rtos", "freertos", "realtime", "multitask"]
 
 ### 2.1 任务状态
 
-```
-                 vTaskResume()
-              ┌─────────────────┐
-              ▼                 │
-         ┌─────────┐      ┌─────┴─────┐
-    ┌───►│ Running │      │ Suspended │
-    │    └────┬────┘      └───────────┘
-    │         │ vTaskSuspend()    ▲
-调度器        │                   │
-    │         ▼                   │
-    │    ┌─────────┐              │
-    └────┤  Ready  │──────────────┘
-         └────┬────┘
-              │ 等待事件/延时
-              ▼
-         ┌─────────┐
-         │ Blocked │
-         └─────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> Ready: 创建任务
+    Ready --> Running: 调度器选中
+    Running --> Ready: 被抢占/时间片用完
+    Running --> Blocked: 等待事件/延时
+    Blocked --> Ready: 事件发生/延时结束
+    Running --> Suspended: vTaskSuspend()
+    Ready --> Suspended: vTaskSuspend()
+    Blocked --> Suspended: vTaskSuspend()
+    Suspended --> Ready: vTaskResume()
 ```
 
 ### 2.2 任务创建

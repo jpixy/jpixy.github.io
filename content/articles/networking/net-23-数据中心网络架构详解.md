@@ -740,61 +740,46 @@ ECMP Hash 的坑:
 
 #### 痛点：服务器单点故障
 
-```
-传统单上行:
-
-     ┌─────┐
-     │Leaf │
-     └──┬──┘
-        │        ← 这条线断了，服务器断网
-        │
-   ┌────┴────┐
-   │ Server  │
-   └─────────┘
-
-双上行 + STP:
-
-   ┌─────┐     ┌─────┐
-   │Leaf1│     │Leaf2│
-   └──┬──┘     └──┬──┘
-      │     ╳     │      ← STP 阻塞一条，还是只有单活
-      │           │
-   ┌──┴───────────┴──┐
-   │     Server      │
-   └─────────────────┘
+```mermaid
+graph TD
+    subgraph 传统单上行
+        L1[Leaf] --> S1[Server]
+        NOTE1[单点故障风险]
+    end
+    
+    subgraph 双上行STP
+        L2[Leaf1] --> S2[Server]
+        L3[Leaf2] -.-|STP阻塞| S2
+        NOTE2[还是只有单活]
+    end
 ```
 
 #### MLAG 解决方案
 
+```mermaid
+graph TD
+    Spine1[Spine] --> Leaf1
+    Spine2[Spine] --> Leaf1
+    Spine1 --> Leaf2
+    Spine2 --> Leaf2
+    
+    Leaf1[Leaf 1<br/>MLAG Member] <-->|Peer Link<br/>控制面同步<br/>数据面备份| Leaf2[Leaf 2<br/>MLAG Member]
+    
+    Leaf1 --> Server
+    Leaf2 --> Server
+    
+    Server[Server<br/>LACP Bond]
 ```
-MLAG 让两台交换机"假装"是一台:
 
-               ┌─────┐     ┌─────┐
-               │Spine│     │Spine│
-               └──┬──┘     └──┬──┘
-                  │           │
-        ┌─────────┴───────────┴─────────┐
-        │                               │
-   ┌────┴────┐    Peer Link        ┌────┴────┐
-   │ Leaf 1  │◄════════════════════►│ Leaf 2  │
-   │         │   (控制面同步)       │         │
-   │  MLAG   │   (数据面备份)       │  MLAG   │
-   │ Member  │                      │ Member  │
-   └────┬────┘                      └────┬────┘
-        │                               │
-        └──────────┬────────────────────┘
-                   │ LACP Bond (服务器看到是一个链路)
-              ┌────┴────┐
-              │ Server  │
-              └─────────┘
+**MLAG 让两台交换机"假装"是一台**
 
-工作原理:
+**工作原理**:
 1. Peer Link 同步 MAC 表、ARP 表、LACP 状态
 2. 服务器配置 Bond（LACP），看到两条线是一个逻辑链路
 3. 两条线同时转发（Active-Active），带宽翻倍
 4. 任一 Leaf 故障，另一台接管，服务器无感知
 
-厂商实现:
+**厂商实现**:
 ┌──────────────┬────────────────┐
 │ 厂商          │ 名称           │
 ├──────────────┼────────────────┤
