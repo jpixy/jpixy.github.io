@@ -1,9 +1,8 @@
 +++
 title = "36.HFT笔试题-SIMD与向量化"
 date = 2026-01-31
-draft = false
+description = "HFT SIMD与向量化笔试题：SSE/AVX指令集、内存对齐、向量化计算、编译器自动向量化深度解析"
 [taxonomies]
-categories = ["HFT"]
 tags = ["HFT", "笔试", "SIMD", "AVX", "向量化", "性能优化"]
 +++
 

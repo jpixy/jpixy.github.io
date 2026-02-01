@@ -1103,7 +1103,7 @@ void vector_push(Vector *v, const void *elem) {
 
 ## 相关链接
 
-- [C Interview Questions](@/articles/c/c-41-C-Interview-Questions.md)
+- [C Interview Questions](@/articles/c/c-21-C-Interview-Questions.md)
 - [12.纯C实现常见的数据结构](@/articles/c/c-12-纯C实现常见的数据结构.md)
 - [09.动态内存管理](@/articles/c/c-09-动态内存管理.md)
 - [算法专题](@/articles/algorithm/_index.md)

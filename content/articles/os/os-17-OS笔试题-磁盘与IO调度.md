@@ -1,9 +1,8 @@
 +++
 title = "17.OS笔试题-磁盘与IO调度"
 date = 2026-01-31
-draft = false
+description = "操作系统磁盘与IO调度笔试题：磁盘结构、调度算法、缓冲区管理、DMA深度解析"
 [taxonomies]
-categories = ["操作系统"]
 tags = ["操作系统", "笔试", "磁盘", "IO调度", "DMA"]
 +++
 

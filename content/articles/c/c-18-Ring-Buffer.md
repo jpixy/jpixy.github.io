@@ -353,8 +353,8 @@ int main(void) {
 
 ## Related Topics
 
-- [18. Volatile and Memory Barriers (HFT)](@/articles/c/c-18-Volatile-Memory-Barriers.md)
-- [Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-22-HFT-Lock-Free数据结构详解.md)
+- [16. Volatile and Memory Barriers (HFT)](@/articles/c/c-16-Volatile-Memory-Barriers.md)
+- [Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
 - [14. IO Multiplexing](@/articles/c/c-14-IO多路复用详解.md)
 
 

@@ -360,9 +360,9 @@ static inline double get_best_ask(const OrderBook *ob) {
 
 ## Related Topics
 
-- [17. Memory Alignment](@/articles/c/c-17-Memory-Alignment.md)
-- [20. Lock-Free Ring Buffer (HFT)](@/articles/c/c-20-Ring-Buffer.md)
-- [Cache-Friendly Data Structures (HFT)](@/articles/cpp/cpp-25-HFT缓存友好数据结构设计.md)
+- [15. Memory Alignment](@/articles/c/c-15-Memory-Alignment.md)
+- [18. Lock-Free Ring Buffer (HFT)](@/articles/c/c-18-Ring-Buffer.md)
+- [Cache-Friendly Data Structures (HFT)](@/articles/cpp/cpp-20-HFT缓存友好数据结构设计.md)
 
 
 ---

@@ -1,9 +1,8 @@
 +++
 title = "16.OS笔试题-文件系统"
 date = 2026-01-31
-draft = false
+description = "操作系统文件系统笔试题：inode、目录结构、硬软链接、VFS、文件描述符深度解析"
 [taxonomies]
-categories = ["操作系统"]
 tags = ["操作系统", "笔试", "文件系统", "inode", "VFS"]
 +++
 

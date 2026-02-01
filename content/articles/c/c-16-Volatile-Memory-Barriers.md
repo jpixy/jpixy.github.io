@@ -382,9 +382,9 @@ clang -fsanitize=thread # Detect races
 
 ## Related Topics
 
-- [17. Memory Alignment and Struct Packing](@/articles/c/c-17-Memory-Alignment.md)
-- [19. Bit Operations and Tricks](@/articles/c/c-19-Bit-Operations.md)
-- [Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-22-HFT-Lock-Free数据结构详解.md)
+- [15. Memory Alignment and Struct Packing](@/articles/c/c-15-Memory-Alignment.md)
+- [17. Bit Operations and Tricks](@/articles/c/c-17-Bit-Operations.md)
+- [Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
 
 
 ---

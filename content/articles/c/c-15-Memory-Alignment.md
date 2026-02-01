@@ -342,7 +342,7 @@ memcpy(&aligned_b, &p.b, sizeof(int));
 
 - [06. Pointers and Memory Model](@/articles/c/c-06-指针基础与内存模型.md)
 - [08. Structs and Unions](@/articles/c/c-08-结构体与联合体.md)
-- [18. Volatile and Memory Barriers (HFT)](@/articles/c/c-18-Volatile-Memory-Barriers.md)
+- [16. Volatile and Memory Barriers (HFT)](@/articles/c/c-16-Volatile-Memory-Barriers.md)
 
 
 ---
