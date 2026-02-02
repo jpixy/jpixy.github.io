@@ -372,6 +372,62 @@ static inline void spin_unlock(spinlock_t *lock)
 - 保证临界区能够完整执行
 - 释放锁后才恢复抢占，其他进程才有机会运行
 
+#### 多 CPU vs 单 CPU 对比
+
+| 场景 | 无 preempt_disable | 有 preempt_disable |
+|------|-------------------|-------------------|
+| **单 CPU** | ❌ 死锁：持锁者被抢占，等锁者无限自旋 | ✅ 安全：不会被抢占 |
+| **多 CPU** | ⚠️ 性能差：持锁者被抢占，其他 CPU 空转 | ✅ 高效：快速完成临界区 |
+
+**多 CPU 不死锁但有问题**：
+```c
+// CPU 0                          // CPU 1
+spin_lock(&lock);                 
+// 被抢占，切换到其他进程          spin_lock(&lock);
+// ...                            // 自旋等待 CPU 0...
+// ...                            // 自旋等待 CPU 0...
+// 终于被调度回来                  // 自旋等待 CPU 0...
+spin_unlock(&lock);               // 获取成功
+```
+多 CPU 上不会死锁，因为 CPU 1 的自旋不影响 CPU 0 被调度回来。但 CPU 1 白白自旋浪费资源。
+
+#### 中断上下文：更严重的问题
+
+```c
+// 错误代码：进程上下文持锁，中断也请求同一锁
+spin_lock(&lock);           // 进程持有锁
+    // ... 发生中断 ...
+    irq_handler() {
+        spin_lock(&lock);   // 中断请求同一锁 → 死锁！
+    }
+spin_unlock(&lock);
+```
+
+**解决方案**：与中断共享的锁必须使用 `spin_lock_irqsave()`：
+
+```c
+unsigned long flags;
+spin_lock_irqsave(&lock, flags);  // 禁中断 + 获取锁
+// 临界区
+spin_unlock_irqrestore(&lock, flags);
+```
+
+#### 嵌套锁：ABBA 死锁
+
+```mermaid
+graph LR
+    subgraph CPU0
+        A1[获取 Lock A] --> A2[请求 Lock B]
+    end
+    subgraph CPU1
+        B1[获取 Lock B] --> B2[请求 Lock A]
+    end
+    A2 -.->|等待| B1
+    B2 -.->|等待| A1
+```
+
+**预防**：始终按固定顺序获取锁（Lock Ordering）。
+
 ### 3.8 ARM 架构：WFE/SEV 指令优化
 
 x86 使用 `PAUSE` 指令优化自旋，ARM 架构则使用 **WFE/SEV** 指令对实现更高效的自旋锁。
@@ -455,10 +511,101 @@ sequenceDiagram
 2. **高效**：事件驱动，无需轮询
 3. **公平**：所有等待者同时被唤醒，配合 ticket/MCS 保证顺序
 
-**注意事项**：
-- `SEVL`（首次 WFE 前）防止错过已发生的事件
-- 需要正确的内存屏障配合（`ldaxr`/`stlr` 提供）
-- 虚拟化场景下 WFE 可能 trap 到 hypervisor
+#### WFE 唤醒源详解
+
+WFE 指令可以被多种事件唤醒：
+
+| 唤醒源 | 说明 |
+|--------|------|
+| **SEV 指令** | 其他 CPU 执行 SEV 发送全局事件 |
+| **事件寄存器** | 本地事件寄存器被设置（SEVL 可设置） |
+| **外部事件** | 中断、调试事件等 |
+| **Exclusive Monitor 清除** | 其他 CPU 修改了被监视的内存 |
+
+#### Exclusive Monitor 机制
+
+ARM 使用 **Exclusive Monitor** 实现原子操作，这是 spinlock 的基础：
+
+```mermaid
+sequenceDiagram
+    participant CPU0
+    participant Monitor as Exclusive Monitor
+    participant Memory
+    
+    CPU0->>Monitor: LDAXR (Load Exclusive)
+    Monitor->>Monitor: 标记地址为 Exclusive
+    CPU0->>Memory: 读取锁值
+    
+    Note over CPU0: 修改锁值
+    
+    CPU0->>Monitor: STXR (Store Exclusive)
+    alt Monitor 仍为 Exclusive
+        Monitor->>Memory: 写入成功
+        Monitor->>CPU0: 返回 0 (成功)
+    else 被其他 CPU 清除
+        Monitor->>CPU0: 返回 1 (失败)
+        CPU0->>CPU0: 重试
+    end
+```
+
+**关键点**：
+- `LDAXR`：Load-Acquire Exclusive Register，带 acquire 语义
+- `STXR`：Store Exclusive Register，只有 monitor 未被清除才成功
+- `STLR`：Store-Release，带 release 语义，用于释放锁
+
+#### 虚拟化场景处理
+
+在虚拟化环境下，WFE 行为可能改变：
+
+```c
+/* Hypervisor 可以配置 WFE 行为 */
+// HCR_EL2.TWE = 1 时，WFE 会 trap 到 EL2
+
+// KVM 处理 WFE trap
+static int handle_wfe(struct kvm_vcpu *vcpu)
+{
+    // 如果 vCPU 应该让出 CPU
+    if (should_yield(vcpu)) {
+        kvm_vcpu_yield_to(vcpu);  // 让出物理 CPU
+    }
+    return 1;  // 继续执行
+}
+```
+
+**虚拟化下的优化**：
+1. **pvspinlock**：半虚拟化自旋锁，通知 hypervisor 让出 CPU
+2. **WFE trap**：hypervisor 可以将自旋的 vCPU 换出
+3. **避免 Lock Holder Preemption**：防止持锁 vCPU 被抢占
+
+#### x86 PAUSE vs ARM WFE 性能对比
+
+| 指标 | x86 PAUSE | ARM WFE |
+|------|-----------|---------|
+| 短自旋 (<100 cycles) | ⭐⭐⭐ 优 | ⭐⭐ 良（WFE 有开销） |
+| 长自旋 (>1000 cycles) | ⭐ 差（空转） | ⭐⭐⭐ 优（休眠） |
+| 功耗 | 中等 | 低 |
+| 唤醒延迟 | ~10 cycles | ~20-50 cycles |
+| 适用架构 | 服务器（性能优先） | 移动/嵌入式（功耗优先） |
+
+**Linux 内核的适配**：
+
+```c
+// include/asm-generic/barrier.h
+#define cpu_relax() barrier()
+
+// arch/arm64/include/asm/processor.h  
+static inline void cpu_relax(void)
+{
+    asm volatile("yield" ::: "memory");
+    // 或者在某些实现中使用 wfe
+}
+
+// arch/x86/include/asm/processor.h
+static inline void cpu_relax(void)
+{
+    asm volatile("rep; nop" ::: "memory");  // PAUSE 指令
+}
+```
 
 ---
 
