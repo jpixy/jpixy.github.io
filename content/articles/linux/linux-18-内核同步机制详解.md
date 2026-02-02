@@ -310,6 +310,156 @@ tail:    MCS 队列尾部编码
 
 **选择原则**：根据竞争者选择最小化的禁止范围。
 
+### 3.7 单 CPU 场景：preempt_disable 与死锁
+
+**问题**：假设只有一个 CPU，如果把 `spin_lock` 中的 `preempt_disable()` 注释掉（即允许抢占），使用 spinlock 会产生死锁吗？
+
+**答案**：会！这是一个经典的死锁场景。
+
+```mermaid
+sequenceDiagram
+    participant A as 进程A
+    participant B as 进程B
+    participant Lock as Spinlock
+    
+    Note over A: 持有锁
+    A->>Lock: spin_lock() 成功
+    A->>A: 执行临界区...
+    
+    Note over A,B: 发生抢占（preempt_disable 被注释）
+    B->>B: 被调度运行
+    B->>Lock: spin_lock() 尝试获取
+    B->>B: 自旋等待...
+    
+    Note over A,B: 死锁！<br/>A 持有锁但被抢占<br/>B 等待锁无限自旋<br/>A 永远无法被调度回来
+```
+
+**死锁推演**：
+
+| 时刻 | 进程A | 进程B | 锁状态 |
+|------|-------|-------|--------|
+| T1 | 获取锁成功 | - | A 持有 |
+| T2 | 执行临界区 | - | A 持有 |
+| T3 | **被抢占** | 开始运行 | A 持有 |
+| T4 | 等待调度 | 尝试获取锁 | A 持有 |
+| T5 | 无法运行 | **无限自旋** | 死锁 |
+
+**关键点**：
+1. 单 CPU 上，spinlock 的"自旋"意味着当前 CPU 不做其他事
+2. 如果持锁者被抢占，它无法释放锁
+3. 新进程自旋时，CPU 被占用，持锁者永远无法被调度
+4. 结果：**死锁**
+
+**正确实现**：
+
+```c
+// Linux 内核 spin_lock 实现
+static inline void spin_lock(spinlock_t *lock)
+{
+    preempt_disable();      // 1. 先禁止抢占
+    do_raw_spin_lock(lock); // 2. 再获取锁
+}
+
+static inline void spin_unlock(spinlock_t *lock)
+{
+    do_raw_spin_unlock(lock); // 1. 先释放锁
+    preempt_enable();         // 2. 再恢复抢占
+}
+```
+
+**为什么 `preempt_disable()` 能解决问题**：
+- 禁止抢占后，持锁进程不会被打断
+- 保证临界区能够完整执行
+- 释放锁后才恢复抢占，其他进程才有机会运行
+
+### 3.8 ARM 架构：WFE/SEV 指令优化
+
+x86 使用 `PAUSE` 指令优化自旋，ARM 架构则使用 **WFE/SEV** 指令对实现更高效的自旋锁。
+
+#### WFE/SEV 指令说明
+
+| 指令 | 全称 | 作用 |
+|------|------|------|
+| **WFE** | Wait For Event | CPU 进入低功耗等待状态，直到收到事件 |
+| **SEV** | Send Event | 向所有 CPU 发送事件，唤醒 WFE 等待者 |
+| **SEVL** | Send Event Local | 只设置本地事件寄存器 |
+
+#### 与 x86 PAUSE 的对比
+
+| 特性 | x86 PAUSE | ARM WFE/SEV |
+|------|-----------|-------------|
+| 功耗 | 降低流水线功耗 | CPU 可完全休眠 |
+| 延迟 | 固定延迟 (~10 cycles) | 事件驱动唤醒 |
+| 唤醒机制 | 无，超时自动继续 | 需要 SEV 显式唤醒 |
+| 适用场景 | 短自旋 | 长短自旋均可 |
+
+#### ARM Spinlock 实现
+
+```c
+/* ARM64 spinlock 实现 (简化版) */
+static inline void arch_spin_lock(arch_spinlock_t *lock)
+{
+    unsigned int tmp;
+    arch_spinlock_t lockval, newval;
+
+    asm volatile(
+    "   sevl\n"                      // 设置本地事件，确保首次不等待
+    "1: wfe\n"                       // 等待事件
+    "   ldaxr   %w0, %2\n"           // 加载锁值（带 acquire）
+    "   eor     %w1, %w0, %w0, ror #16\n"  // 比较 owner 和 next
+    "   cbnz    %w1, 1b\n"           // 不等则继续等待
+    "   add     %w0, %w0, #(1<<16)\n"// next++
+    "   stxr    %w1, %w0, %2\n"      // 尝试存储
+    "   cbnz    %w1, 1b\n"           // 失败则重试
+    : "=&r" (lockval), "=&r" (newval), "+Q" (*lock)
+    :
+    : "memory");
+}
+
+static inline void arch_spin_unlock(arch_spinlock_t *lock)
+{
+    asm volatile(
+    "   stlrh   %w1, %0\n"           // 释放锁（带 release）
+    "   sev\n"                       // 发送事件唤醒等待者
+    : "=Q" (lock->owner)
+    : "r" (lock->owner + 1)
+    : "memory");
+}
+```
+
+#### 工作流程
+
+```mermaid
+sequenceDiagram
+    participant CPU0
+    participant CPU1
+    participant Lock
+    
+    CPU0->>Lock: 获取锁成功
+    CPU0->>CPU0: 执行临界区
+    
+    CPU1->>Lock: 尝试获取锁
+    CPU1->>CPU1: WFE 进入低功耗等待
+    Note over CPU1: CPU 休眠<br/>功耗极低
+    
+    CPU0->>Lock: 释放锁
+    CPU0->>CPU0: SEV 发送事件
+    
+    Note over CPU1: 被唤醒
+    CPU1->>Lock: 再次尝试获取
+    CPU1->>CPU1: 获取成功
+```
+
+**WFE/SEV 的优势**：
+1. **节能**：等待时 CPU 进入低功耗状态，而非空转
+2. **高效**：事件驱动，无需轮询
+3. **公平**：所有等待者同时被唤醒，配合 ticket/MCS 保证顺序
+
+**注意事项**：
+- `SEVL`（首次 WFE 前）防止错过已发生的事件
+- 需要正确的内存屏障配合（`ldaxr`/`stlr` 提供）
+- 虚拟化场景下 WFE 可能 trap 到 hypervisor
+
 ---
 
 ## 四、读写锁
