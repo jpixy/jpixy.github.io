@@ -1043,3 +1043,4 @@ ls -la $OUTPUT_DIR
 
 - [上一篇：高可用与故障切换实战](/articles/sre/sre-36-高可用与故障切换实战/)
 - [下一篇：监控告警排查实战](/articles/sre/sre-38-监控告警排查实战/)
+- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 底层原理详解

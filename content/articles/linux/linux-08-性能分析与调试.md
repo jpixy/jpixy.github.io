@@ -349,3 +349,4 @@ dmesg -T  # 人类可读时间戳
 
 - [上一篇：同步与锁](/articles/linux/linux-07-同步与锁/)
 - [下一篇：Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
+- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 工具的详细原理和使用方法

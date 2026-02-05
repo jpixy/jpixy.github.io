@@ -747,6 +747,7 @@ bpftool prog load prog.o /sys/fs/bpf/test verbose
 
 ## 相关文章
 
-- [eBPF技术深度解析](/articles/linux/linux-35-eBPF技术深度解析/)
+- [上一篇：eBPF技术深度解析](/articles/linux/linux-35-eBPF技术深度解析/)
+- [下一篇：perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
 - [Linux内核网络栈详解](/articles/linux/linux-09-Linux内核网络栈详解/)
 - [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)

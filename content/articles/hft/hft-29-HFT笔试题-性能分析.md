@@ -1154,3 +1154,4 @@ perf stat -e branch-misses,instructions ./optimized
 
 - [上一篇：HFT笔试题-无锁数据结构](/articles/hft/hft-28-HFT笔试题-无锁数据结构/)
 - [下一篇：HFT笔试题-缓存友好编程](/articles/hft/hft-30-HFT笔试题-缓存友好编程/)
+- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 底层原理详解
