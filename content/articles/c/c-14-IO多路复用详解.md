@@ -52,7 +52,7 @@ sequenceDiagram
 **IO 多路复用**：一个线程监控多个 fd，有事件时才处理
 
 ```mermaid
-graph LR
+graph TB
     subgraph "传统模型"
         T1[线程1] --> C1[连接1]
         T2[线程2] --> C2[连接2]
@@ -589,7 +589,7 @@ int main() {
 ### 6.1 性能对比
 
 ```mermaid
-graph LR
+graph TB
     subgraph "10K 连接，100 活跃"
         A[select<br/>遍历 10000] --> B[poll<br/>遍历 10000]
         B --> C[epoll<br/>返回 100]

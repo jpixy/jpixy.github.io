@@ -266,12 +266,16 @@ sendfile(socket_fd, file_fd, NULL, file_size);
 ```
 
 ```mermaid
-graph LR
+graph TB
     subgraph "传统方式"
-        A1[磁盘] --> B1[内核缓冲区] --> C1[用户缓冲区] --> D1[Socket缓冲区] --> E1[网卡]
+        A1[磁盘] --> B1[内核缓冲区]
+        B1 --> C1[用户缓冲区]
+        C1 --> D1[Socket缓冲区]
+        D1 --> E1[网卡]
     end
     subgraph "sendfile"
-        A2[磁盘] --> B2[内核缓冲区] --> E2[网卡]
+        A2[磁盘] --> B2[内核缓冲区]
+        B2 --> E2[网卡]
     end
 ```
 

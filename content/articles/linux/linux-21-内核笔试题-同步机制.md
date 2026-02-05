@@ -457,7 +457,7 @@ static inline void rcu_read_unlock(void) {
 **演进过程**：
 
 ```mermaid
-graph LR
+graph TB
     TAS[TAS Lock] -->|公平性| Ticket[Ticket Lock]
     Ticket -->|缓存效率| MCS[MCS Lock]
     MCS -->|空间优化| Q[qspinlock]

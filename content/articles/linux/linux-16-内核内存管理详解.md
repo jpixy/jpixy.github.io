@@ -169,9 +169,9 @@ sequenceDiagram
 x86-64 使用 **4 级页表**（可扩展到 5 级）：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "虚拟地址 (48位)"
-        VA[63:48 符号扩展 | 47:39 PGD | 38:30 PUD | 29:21 PMD | 20:12 PTE | 11:0 Offset]
+        VA["63:48 符号扩展<br/>47:39 PGD索引<br/>38:30 PUD索引<br/>29:21 PMD索引<br/>20:12 PTE索引<br/>11:0 页内偏移"]
     end
     
     subgraph "页表遍历"
@@ -402,13 +402,19 @@ sequenceDiagram
 内核用 `vm_area_struct` 描述进程地址空间中的每个连续区域：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "进程 mm_struct"
-        MM[mm_struct] --> VMA1[VMA: Text<br/>0x400000-0x401000<br/>r-x]
-        MM --> VMA2[VMA: Data<br/>0x601000-0x602000<br/>rw-]
-        MM --> VMA3[VMA: Heap<br/>0x1000000-0x1001000<br/>rw-]
-        MM --> VMA4[VMA: libc.so<br/>0x7f...-0x7f...<br/>r-x]
-        MM --> VMA5[VMA: Stack<br/>0x7fff...-0x7fff...<br/>rw-]
+        MM[mm_struct]
+        VMA1[VMA: Text<br/>0x400000-0x401000<br/>r-x]
+        VMA2[VMA: Data<br/>0x601000-0x602000<br/>rw-]
+        VMA3[VMA: Heap<br/>0x1000000-0x1001000<br/>rw-]
+        VMA4[VMA: libc.so<br/>0x7f...-0x7f...<br/>r-x]
+        VMA5[VMA: Stack<br/>0x7fff...-0x7fff...<br/>rw-]
+        MM --> VMA1
+        MM --> VMA2
+        MM --> VMA3
+        MM --> VMA4
+        MM --> VMA5
     end
 ```
 

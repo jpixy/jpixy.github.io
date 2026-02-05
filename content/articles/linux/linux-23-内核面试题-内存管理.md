@@ -157,7 +157,7 @@ CR3 ──→ PGD表 ──→ PUD表 ──→ PMD表 ──→ PTE表 ──�
 ```
 
 ```mermaid
-graph LR
+graph TB
     A[虚拟地址] --> B[CR3 寄存器]
     B --> C[PGD 表]
     C --> |PGD 索引| D[PGD 条目]
@@ -801,7 +801,7 @@ enum lru_list {
 ```
 
 ```mermaid
-graph LR
+graph TB
     A[新页面] --> B[活跃列表尾部]
     B --> C{扫描：被访问过?}
     C -->|是| D[清除访问位，保持活跃]

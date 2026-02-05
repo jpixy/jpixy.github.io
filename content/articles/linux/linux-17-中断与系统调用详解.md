@@ -249,7 +249,7 @@ graph TD
 某些"系统调用"不需要真正陷入内核：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "传统方式"
         A1[用户程序] --> B1[syscall]
         B1 --> C1[内核处理]

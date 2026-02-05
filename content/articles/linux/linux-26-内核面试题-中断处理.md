@@ -159,7 +159,7 @@ irqreturn_t shared_irq_handler(int irq, void *dev_id) {
 **执行时机**：
 
 ```mermaid
-graph LR
+graph TB
     A[硬中断处理] --> B[软中断检查点]
     B --> C{有待处理?}
     C -->|是| D[执行 Softirq/Tasklet]

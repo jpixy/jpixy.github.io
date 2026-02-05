@@ -284,7 +284,7 @@ setsockopt(listen_fd, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
 A:
 
 ```mermaid
-graph LR
+graph TB
     SS[慢启动<br/>Slow Start] -->|cwnd >= ssthresh| CA[拥塞避免<br/>Congestion Avoidance]
     CA -->|超时| SS
     CA -->|3个重复ACK| FR[快速恢复<br/>Fast Recovery]
@@ -426,7 +426,7 @@ splice(pipefd[0], NULL, socket_fd, NULL, len, SPLICE_F_MOVE);
 A:
 
 ```mermaid
-graph LR
+graph TB
     subgraph "用户空间"
         SQ[提交队列 SQ]
         CQ[完成队列 CQ]
@@ -555,7 +555,7 @@ echo 4096 > /sys/class/net/eth0/queues/rx-0/rps_flow_cnt
 A:
 
 ```mermaid
-graph LR
+graph TB
     IN[网络入口] --> PREROUTING[PREROUTING]
     PREROUTING --> ROUTE{路由决策}
     ROUTE -->|本机| INPUT[INPUT]

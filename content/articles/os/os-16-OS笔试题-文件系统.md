@@ -35,7 +35,7 @@ D. 每个文件都有唯一的 inode 号
 **inode 结构示意**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "inode 内容"
         A[文件类型] --> B[权限 rwxrwxrwx]
         B --> C[链接计数]
@@ -158,7 +158,7 @@ D. `fd1` 和 `fd2` 的值相同
 **三层结构**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "进程文件描述符表"
         fd1[fd1 = 3]
         fd2[fd2 = 4]
@@ -805,7 +805,7 @@ int fd2 = open("file", O_WRONLY | O_DSYNC);   // 每次 write 后自动 fdatasyn
 **共需 3 次额外磁盘 I/O**（不含 inode 读取）
 
 ```mermaid
-graph LR
+graph TB
     A[inode] --> B[二级间接块]
     B --> |第2项| C[一级间接块]
     C --> |第578项| D[数据块3662]

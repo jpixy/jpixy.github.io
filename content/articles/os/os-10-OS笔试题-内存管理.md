@@ -37,7 +37,7 @@ D. 提高网络传输速度
 4. **按需加载**：只加载需要的页面
 
 ```mermaid
-graph LR
+graph TB
     subgraph 虚拟地址空间
         V1[进程A 4GB]
         V2[进程B 4GB]

@@ -793,7 +793,7 @@ bool push(const T& item) {
 **Q: SPSC 队列在 HFT 中的实际应用场景？**
 
 ```mermaid
-graph LR
+graph TB
     A[网络线程] -->|push 订单| B[SPSC 队列]
     B -->|pop 订单| C[匹配引擎]
     C -->|push 成交| D[SPSC 队列]

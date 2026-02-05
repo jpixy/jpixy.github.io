@@ -107,7 +107,7 @@ struct file {
 **Q2: 这四个对象之间的关系是什么？**
 
 ```mermaid
-graph LR
+graph TB
     subgraph 进程
         TASK["task_struct"]
         FILES["files_struct"]
@@ -613,9 +613,10 @@ fsync(log_fd);  // 批量同步
 ### 标准答案
 
 ```mermaid
-graph LR
+graph TB
     subgraph 缓存IO
-        APP1["应用程序"] --> PC1["页缓存"] --> DISK1["磁盘"]
+        APP1["应用程序"] --> PC1["页缓存"]
+        PC1 --> DISK1["磁盘"]
     end
     
     subgraph 直接IO

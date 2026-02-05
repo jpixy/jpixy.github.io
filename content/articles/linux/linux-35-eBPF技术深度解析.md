@@ -124,7 +124,7 @@ enum bpf_prog_type {
 ### 2.3 Hook 点
 
 ```mermaid
-graph LR
+graph TB
     subgraph "网络路径"
         NIC[网卡] --> XDP[XDP]
         XDP --> TC_IN[TC ingress]
@@ -466,7 +466,7 @@ cleanup:
 XDP 在网卡驱动层处理数据包，性能极高：
 
 ```mermaid
-graph LR
+graph TB
     NIC[网卡] --> XDP{XDP}
     XDP -->|XDP_DROP| DROP[丢弃]
     XDP -->|XDP_TX| TX[发送回网卡]

@@ -56,11 +56,16 @@ graph TD
 ### 1.3 容器核心技术
 
 ```mermaid
-graph LR
-    CONTAINER[容器] --> NS[Namespace<br/>隔离]
-    CONTAINER --> CG[Cgroups<br/>资源控制]
-    CONTAINER --> UFS[UnionFS<br/>分层文件系统]
-    CONTAINER --> SEC[安全机制<br/>Seccomp/AppArmor]
+graph TB
+    CONTAINER[容器]
+    NS[Namespace<br/>隔离]
+    CG[Cgroups<br/>资源控制]
+    UFS[UnionFS<br/>分层文件系统]
+    SEC[安全机制<br/>Seccomp/AppArmor]
+    CONTAINER --> NS
+    CONTAINER --> CG
+    CONTAINER --> UFS
+    CONTAINER --> SEC
 ```
 
 ---
@@ -228,7 +233,7 @@ ip netns exec myns ping 10.0.0.1
 ```
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Host Namespace"
         ETH0[eth0<br/>192.168.1.100]
         VETH0[veth0<br/>10.0.0.1]

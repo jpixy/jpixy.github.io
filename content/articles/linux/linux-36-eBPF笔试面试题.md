@@ -19,7 +19,7 @@ tags = ["Linux", "eBPF", "笔试", "面试", "XDP"]
 **Q: 解释 eBPF 的执行流程，从程序加载到运行？**
 
 ```mermaid
-graph LR
+graph TB
     SRC[C 源码] --> CLANG[Clang 编译]
     CLANG --> OBJ[BPF 目标文件]
     OBJ --> LOADER[用户态加载器]

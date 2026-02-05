@@ -638,7 +638,7 @@ void benchmark_false_sharing() {
 - 访问本地内存快，访问远程内存慢
 
 ```mermaid
-graph LR
+graph TB
     subgraph Node0[Node 0]
         CPU0[CPU 0-7<br/>8 核]
         MEM0[Memory<br/>64GB]

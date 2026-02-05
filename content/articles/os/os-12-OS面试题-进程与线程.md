@@ -167,7 +167,7 @@ __thread int local_counter = 0;  // 每个线程独立副本
 | Socket | 网络/本地 | 通用 | 开销较大 | 网络通信 |
 
 ```mermaid
-graph LR
+graph TB
     subgraph "IPC 速度对比"
         A[共享内存] --> |最快| B[无数据拷贝]
         C[消息队列] --> |中等| D[2次拷贝]

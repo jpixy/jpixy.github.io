@@ -46,7 +46,7 @@ SIMD 向量操作（并行处理）：
 ```
 
 ```mermaid
-graph LR
+graph TB
     subgraph "标量处理"
         A1[a0] --> B1[+] --> C1[c0]
         A2[a1] --> B2[+] --> C2[c1]

@@ -1331,6 +1331,7 @@ $ perf record -z ./program  # 启用压缩
 ## 相关文章
 
 - [上一篇：eBPF笔试面试题](/articles/linux/linux-36-eBPF笔试面试题/)
+- [下一篇：Valgrind内存分析工具深度解析](/articles/linux/linux-38-Valgrind内存分析工具深度解析/)
 - [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
 - [HFT笔试题-性能分析](/articles/hft/hft-29-HFT笔试题-性能分析/)
 - [应用性能分析实战](/articles/sre/sre-37-应用性能分析实战/)

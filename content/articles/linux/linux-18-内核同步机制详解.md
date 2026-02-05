@@ -83,7 +83,7 @@ lock incl (%rdi)    ; LOCK 前缀确保原子性
 3. **Store Buffer**：写操作可能被缓冲，其他 CPU 看不到
 
 ```mermaid
-graph LR
+graph TB
     subgraph "CPU 0"
         A[Store X=1] --> B[Store Buffer]
         B --> C[Cache]
@@ -220,7 +220,7 @@ void ticket_spin_unlock(ticket_spinlock_t *lock) {
 MCS Lock 让每个 CPU 在自己的本地变量上自旋，减少缓存行争用：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "MCS 队列"
         HEAD[Lock Head] --> A[CPU 0 节点<br/>locked=false]
         A --> B[CPU 1 节点<br/>locked=true]
@@ -415,7 +415,7 @@ spin_unlock_irqrestore(&lock, flags);
 #### 嵌套锁：ABBA 死锁
 
 ```mermaid
-graph LR
+graph TB
     subgraph CPU0
         A1[获取 Lock A] --> A2[请求 Lock B]
     end

@@ -149,7 +149,7 @@ D. TLB 缓存的是虚拟地址到物理地址的映射
 - D 正确：TLB 缓存页表项，即 VA → PA 的映射
 
 ```mermaid
-graph LR
+graph TB
     VA[虚拟地址] --> TLB{TLB 查找}
     TLB -->|命中| PA[物理地址]
     TLB -->|未命中| PT[遍历页表]

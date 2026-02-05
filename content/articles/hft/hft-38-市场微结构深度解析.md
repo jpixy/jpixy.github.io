@@ -381,7 +381,7 @@ double estimate_kyle_lambda(const std::vector<Trade>& trades,
 ### 4.3 流动性提供者 vs 流动性消耗者
 
 ```mermaid
-graph LR
+graph TB
     subgraph "流动性提供者 Maker"
         MM[做市商]
         PASSIVE[被动策略]
