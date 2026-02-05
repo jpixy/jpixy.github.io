@@ -76,7 +76,7 @@ graph TB
 **PMU（Performance Monitoring Unit）** 是 CPU 内置的硬件单元，用于监控 CPU 运行时的各种事件。
 
 ```mermaid
-graph LR
+graph TB
     subgraph CPU核心
         A[执行单元]
         B[缓存单元]
@@ -85,26 +85,23 @@ graph LR
     end
 
     subgraph PMU
+        I[事件选择器]
         E[计数器 0]
         F[计数器 1]
-        G[计数器 2]
-        H[计数器 N]
-        I[事件选择器]
+        G[计数器 N]
         J[中断控制器]
     end
 
     A --> E
     B --> F
     C --> G
-    D --> H
+    D --> G
     I --> E
     I --> F
     I --> G
-    I --> H
     E --> J
     F --> J
     G --> J
-    H --> J
     J -->|PMI 中断| K[内核中断处理]
 ```
 
@@ -391,7 +388,7 @@ static void intel_pmu_handle_irq(struct pt_regs *regs) {
 ### 4.4 Ring Buffer 数据传递
 
 ```mermaid
-graph LR
+graph TB
     subgraph 内核空间
         A[PMI 中断处理]
         B[Ring Buffer]
@@ -408,9 +405,9 @@ graph LR
     A -->|写入样本| B
     B --> C
     B --> D
-    F -->|共享内存| B
-    E --> F
-    E -->|读取数据| G
+    B <-->|共享内存| F
+    F --> E
+    E -->|保存| G
 ```
 
 **Ring Buffer 结构**：
@@ -580,7 +577,7 @@ Instructions:
 **LBR** 是 Intel CPU 提供的硬件特性，自动记录最近的分支跳转。
 
 ```mermaid
-graph LR
+graph TB
     subgraph CPU硬件
         A[执行单元]
         B[分支预测器]
@@ -588,11 +585,10 @@ graph LR
     end
 
     subgraph LBR栈结构
-        D[Entry 0: from→to]
-        E[Entry 1: from→to]
-        F[Entry 2: from→to]
-        G[...]
-        H[Entry 31: from→to]
+        D["Entry 0: from→to"]
+        E["Entry 1: from→to"]
+        F["Entry ..."]
+        G["Entry 31: from→to"]
     end
 
     A -->|分支指令| B
@@ -601,7 +597,6 @@ graph LR
     D --> E
     E --> F
     F --> G
-    G --> H
 ```
 
 **LBR 寄存器**：
@@ -650,16 +645,11 @@ perf record --call-graph dwarf,8192 ./program
 ### 6.1 数据处理流程
 
 ```mermaid
-graph LR
+graph TB
     A[perf record] -->|采样| B[perf.data]
     B -->|perf script| C[文本格式调用栈]
     C -->|stackcollapse-perf.pl| D[折叠格式]
     D -->|flamegraph.pl| E[SVG 火焰图]
-
-    subgraph 数据转换
-        C
-        D
-    end
 ```
 
 ### 6.2 各阶段数据格式
