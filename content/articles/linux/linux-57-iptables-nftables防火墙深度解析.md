@@ -414,4 +414,5 @@ iptables-save | iptables-restore-translate -f /etc/nftables.conf
 ## 相关文章
 
 - [上一篇：tc流量控制深度解析](/articles/linux/linux-56-tc流量控制深度解析/)
+- [下一篇：以太网与 PHY 驱动开发](/articles/linux/linux-58-以太网与PHY驱动开发/)
 - [网络安全基础](/articles/security/sec-01-网络安全基础/)

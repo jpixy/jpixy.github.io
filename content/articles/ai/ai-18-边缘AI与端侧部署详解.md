@@ -429,6 +429,242 @@ context = engine.create_execution_context()
 
 ---
 
+## 八、异构计算架构
+
+### 8.1 异构系统设计
+
+```
+异构计算架构（CPU + GPU + NPU/FPGA）：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  异构计算的必要性                                                    │
+│  ━━━━━━━━━━━━━━━━                                                   │
+│  • 不同任务适合不同硬件                                             │
+│  • 单一硬件无法满足所有需求                                         │
+│  • 成本与性能的平衡                                                 │
+│                                                                      │
+│  硬件特点                                                            │
+│  ━━━━━━━━                                                           │
+│  ┌─────────────┬─────────────────────────────────────────────┐      │
+│  │ 硬件        │ 特点                                        │      │
+│  ├─────────────┼─────────────────────────────────────────────┤      │
+│  │ CPU         │ 通用计算、复杂逻辑、低延迟、灵活            │      │
+│  │ GPU         │ 大规模并行、高吞吐、AI 训练/推理            │      │
+│  │ NPU/TPU     │ AI 专用、能效比高、特定算子                 │      │
+│  │ FPGA        │ 可编程、低延迟、定制化                      │      │
+│  │ DSP         │ 信号处理、音频视频                          │      │
+│  └─────────────┴─────────────────────────────────────────────┘      │
+│                                                                      │
+│  典型架构                                                            │
+│  ━━━━━━━━                                                           │
+│                                                                      │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │                    应用层                                    │    │
+│  │  ┌────────────┐ ┌────────────┐ ┌────────────┐              │    │
+│  │  │ 推理任务   │ │ 前后处理   │ │ 业务逻辑   │              │    │
+│  │  └─────┬──────┘ └─────┬──────┘ └─────┬──────┘              │    │
+│  │        │              │              │                      │    │
+│  │  ┌─────▼──────────────▼──────────────▼──────┐               │    │
+│  │  │            运行时调度器                   │               │    │
+│  │  │   (任务分发、负载均衡、内存管理)         │               │    │
+│  │  └───────────────────┬──────────────────────┘               │    │
+│  │                      │                                      │    │
+│  │  ┌─────────┬─────────┴─────────┬─────────────┐              │    │
+│  │  │         │                   │             │              │    │
+│  │  ▼         ▼                   ▼             ▼              │    │
+│  │ ┌───┐   ┌─────┐           ┌─────┐       ┌──────┐           │    │
+│  │ │CPU│   │ GPU │           │ NPU │       │ FPGA │           │    │
+│  │ └───┘   └─────┘           └─────┘       └──────┘           │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 8.2 工作负载划分
+
+```
+工作负载划分策略：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  划分原则                                                            │
+│  ━━━━━━━━                                                           │
+│                                                                      │
+│  1. 按计算特性划分                                                   │
+│  ─────────────────────                                              │
+│  CPU：控制流复杂、分支多、串行依赖                                  │
+│  GPU：大规模并行、SIMD 友好                                         │
+│  NPU：标准 AI 算子（Conv、MatMul）                                  │
+│  FPGA：定制算子、低延迟要求                                         │
+│                                                                      │
+│  2. 按延迟要求划分                                                   │
+│  ─────────────────────                                              │
+│  实时路径：FPGA/NPU（确定性延迟）                                   │
+│  高吞吐路径：GPU（批处理）                                          │
+│  灵活路径：CPU（fallback）                                          │
+│                                                                      │
+│  3. 按能效划分                                                       │
+│  ─────────────────────                                              │
+│  持续任务：NPU（TOPS/W 高）                                         │
+│  突发任务：GPU（峰值性能）                                          │
+│  轻量任务：CPU                                                      │
+│                                                                      │
+│  典型流水线                                                          │
+│  ━━━━━━━━━━                                                         │
+│                                                                      │
+│  视频分析流水线：                                                    │
+│  ┌────────┐    ┌────────┐    ┌────────┐    ┌────────┐              │
+│  │ 解码   │ → │ 预处理 │ → │ 推理   │ → │ 后处理 │              │
+│  │ (GPU)  │    │ (GPU)  │    │ (NPU)  │    │ (CPU)  │              │
+│  └────────┘    └────────┘    └────────┘    └────────┘              │
+│                                                                      │
+│  自动驾驶感知：                                                      │
+│  ┌───────────────────────────────────────────────────────────┐      │
+│  │                      并行处理                              │      │
+│  │  Camera → [GPU预处理] → [NPU检测] ─┐                      │      │
+│  │  LiDAR  → [CPU点云]  → [GPU融合] ─┼→ [CPU决策]           │      │
+│  │  Radar  → [DSP信号]  → [CPU跟踪] ─┘                      │      │
+│  └───────────────────────────────────────────────────────────┘      │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 8.3 Jetson 平台详解
+
+```python
+"""
+NVIDIA Jetson 平台开发指南
+适用于 Jetson Nano / Xavier / Orin
+"""
+
+import numpy as np
+import tensorrt as trt
+import pycuda.driver as cuda
+import pycuda.autoinit
+
+class JetsonInference:
+    """Jetson TensorRT 推理封装"""
+    
+    def __init__(self, engine_path):
+        self.logger = trt.Logger(trt.Logger.WARNING)
+        
+        # 加载引擎
+        with open(engine_path, 'rb') as f:
+            runtime = trt.Runtime(self.logger)
+            self.engine = runtime.deserialize_cuda_engine(f.read())
+        
+        self.context = self.engine.create_execution_context()
+        
+        # 分配内存
+        self._allocate_buffers()
+    
+    def _allocate_buffers(self):
+        self.inputs = []
+        self.outputs = []
+        self.bindings = []
+        self.stream = cuda.Stream()
+        
+        for binding in self.engine:
+            size = trt.volume(self.engine.get_binding_shape(binding))
+            dtype = trt.nptype(self.engine.get_binding_dtype(binding))
+            
+            # 分配 host 和 device 内存
+            host_mem = cuda.pagelocked_empty(size, dtype)
+            device_mem = cuda.mem_alloc(host_mem.nbytes)
+            
+            self.bindings.append(int(device_mem))
+            
+            if self.engine.binding_is_input(binding):
+                self.inputs.append({'host': host_mem, 'device': device_mem})
+            else:
+                self.outputs.append({'host': host_mem, 'device': device_mem})
+    
+    def infer(self, input_data):
+        # 复制输入到 GPU
+        np.copyto(self.inputs[0]['host'], input_data.ravel())
+        cuda.memcpy_htod_async(
+            self.inputs[0]['device'],
+            self.inputs[0]['host'],
+            self.stream
+        )
+        
+        # 执行推理
+        self.context.execute_async_v2(
+            bindings=self.bindings,
+            stream_handle=self.stream.handle
+        )
+        
+        # 复制输出到 CPU
+        cuda.memcpy_dtoh_async(
+            self.outputs[0]['host'],
+            self.outputs[0]['device'],
+            self.stream
+        )
+        
+        self.stream.synchronize()
+        
+        return self.outputs[0]['host'].copy()
+
+
+# Jetson 功耗管理
+def set_jetson_power_mode(mode='MAXN'):
+    """
+    Jetson 功耗模式设置
+    mode: MAXN(最大性能), 15W, 10W, 5W 等
+    """
+    import subprocess
+    
+    if mode == 'MAXN':
+        subprocess.run(['sudo', 'nvpmodel', '-m', '0'])
+    elif mode == '15W':
+        subprocess.run(['sudo', 'nvpmodel', '-m', '2'])
+    elif mode == '10W':
+        subprocess.run(['sudo', 'nvpmodel', '-m', '1'])
+    
+    # 最大化时钟频率
+    subprocess.run(['sudo', 'jetson_clocks'])
+
+
+# 使用示例
+if __name__ == '__main__':
+    # 设置高性能模式
+    set_jetson_power_mode('MAXN')
+    
+    # 加载模型
+    inferencer = JetsonInference('model.trt')
+    
+    # 推理
+    input_data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    output = inferencer.infer(input_data)
+    print(f"Output shape: {output.shape}")
+```
+
+```bash
+# Jetson 模型转换流程
+
+# 1. PyTorch → ONNX
+python export_onnx.py --model resnet50 --output model.onnx
+
+# 2. ONNX → TensorRT (在 Jetson 上执行)
+/usr/src/tensorrt/bin/trtexec \
+    --onnx=model.onnx \
+    --saveEngine=model.trt \
+    --fp16 \
+    --workspace=1024
+
+# 3. 性能测试
+/usr/src/tensorrt/bin/trtexec \
+    --loadEngine=model.trt \
+    --batch=1 \
+    --iterations=1000
+
+# 4. 监控资源使用
+tegrastats  # Jetson 专用监控工具
+```
+
+---
+
 ## 相关文章
 
 - [上一篇：模型部署与Serving详解](/articles/ai/ai-17-模型部署与Serving详解/)

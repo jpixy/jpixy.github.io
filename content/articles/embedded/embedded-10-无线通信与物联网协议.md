@@ -1,9 +1,9 @@
 +++
 title = "10.无线通信与物联网协议"
 date = 2026-01-19
-description = "嵌入式无线通信全景：WiFi、蓝牙BLE、LoRa、NB-IoT、ZigBee技术选型与MQTT协议详解"
+description = "嵌入式无线通信全景：WiFi、蓝牙BLE、LoRa、NB-IoT、ZigBee、UWB技术选型与MQTT协议详解"
 [taxonomies]
-tags = ["embedded", "iot", "wifi", "ble", "lora", "mqtt", "nb-iot"]
+tags = ["embedded", "iot", "wifi", "ble", "lora", "mqtt", "nb-iot", "uwb"]
 +++
 
 # 无线通信与物联网协议
@@ -22,6 +22,7 @@ tags = ["embedded", "iot", "wifi", "ble", "lora", "mqtt", "nb-iot"]
 |-----|------|------|------|------|---------|
 | 短距离高速 | WiFi | 100m | 高 | Mbps级 | 智能家居、视频传输 |
 | 短距离低功耗 | BLE | 50m | 极低 | Kbps级 | 可穿戴、传感器 |
+| 短距离高精度 | UWB | 50m | 中 | Mbps级 | 精确定位、数字钥匙 |
 | 中距离低功耗 | ZigBee | 100m | 低 | 250Kbps | 智能家居网状网络 |
 | 长距离低功耗 | LoRa | 15km | 极低 | 0.3-50Kbps | 农业、资产追踪 |
 | 广域蜂窝 | NB-IoT | 全覆盖 | 低 | 100Kbps | 智慧城市、远程抄表 |
@@ -287,7 +288,311 @@ NB-IoT的省电是精心设计的结果：
 
 ---
 
-## 六、MQTT协议
+## 六、UWB 超宽带技术
+
+### 6.1 UWB 技术原理
+
+UWB（Ultra-Wideband，超宽带）是一种短距离高精度无线技术，最大特点是**厘米级定位精度**。
+
+```
+UWB 技术特点：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  核心特点：                                                          │
+│  ━━━━━━━━                                                           │
+│  • 带宽极宽：500MHz 以上（传统无线技术通常 <100MHz）                │
+│  • 脉冲传输：发送超短脉冲（纳秒级），而非连续载波                   │
+│  • 定位精度：室内可达 10-30cm（对比 WiFi/蓝牙的 1-3 米）            │
+│  • 抗多径：脉冲短于多径延迟，可分辨直接路径                         │
+│  • 穿透性强：可穿透墙壁和障碍物                                     │
+│  • 低功耗：脉冲式发射，平均功耗低                                   │
+│                                                                      │
+│  频段分配（IEEE 802.15.4z）：                                       │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━                                          │
+│  • 低频段：3.1 - 4.8 GHz（Channel 5: 6489.6 MHz 常用）              │
+│  • 高频段：6.0 - 10.6 GHz（Channel 9: 7987.2 MHz 常用）             │
+│  • 每信道带宽：500 MHz                                              │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 6.2 测距原理
+
+UWB 实现高精度定位的核心是**飞行时间测距（ToF）**：
+
+```
+UWB 测距方法：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  1. TWR（Two-Way Ranging，双向测距）                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                │
+│                                                                      │
+│     设备 A                            设备 B                         │
+│        │                                │                            │
+│        │──────── Poll ─────────────────►│  t1                       │
+│        │                                │                            │
+│        │◄─────── Response ──────────────│  t2                       │
+│        │                                │                            │
+│        │──────── Final ────────────────►│  t3                       │
+│        │                                │                            │
+│                                                                      │
+│     距离 = c × (往返时间 - 处理延迟) / 2                            │
+│                                                                      │
+│     DS-TWR（双边双向测距）消除时钟偏差                              │
+│                                                                      │
+│  2. TDoA（Time Difference of Arrival，到达时间差）                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                  │
+│                                                                      │
+│           Anchor 1 ●─────────────●  Anchor 2                        │
+│                    ╲           ╱                                    │
+│                     ╲    △    ╱                                     │
+│                      ╲  Tag  ╱                                      │
+│                       ╲    ╱                                        │
+│                        ●                                            │
+│                    Anchor 3                                          │
+│                                                                      │
+│     Tag 发信号，多个 Anchor 接收                                    │
+│     根据到达时间差计算位置（需要 Anchor 时钟同步）                  │
+│                                                                      │
+│  测距精度对比：                                                      │
+│  ┌───────────────┬───────────────┬───────────────────────────────┐ │
+│  │ 技术           │ 精度          │ 原理                          │ │
+│  ├───────────────┼───────────────┼───────────────────────────────┤ │
+│  │ GPS            │ 3-5 米        │ 卫星信号                      │ │
+│  │ WiFi           │ 1-3 米        │ RSSI/RTT                      │ │
+│  │ BLE            │ 1-2 米        │ RSSI                          │ │
+│  │ UWB            │ 10-30 厘米    │ ToF                           │ │
+│  └───────────────┴───────────────┴───────────────────────────────┘ │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 6.3 UWB 协议标准
+
+```
+UWB 协议演进：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  IEEE 802.15.4a (2007)                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━                                             │
+│  • 首个 UWB 标准                                                    │
+│  • 定义物理层和测距原语                                             │
+│  • 缺乏安全机制                                                     │
+│                                                                      │
+│  IEEE 802.15.4z (2020)                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━                                             │
+│  • 增强测距安全（STS，Scrambled Timestamp Sequence）                │
+│  • 防中继攻击、防重放攻击                                           │
+│  • Apple/Samsung/NXP 主推                                           │
+│  • iPhone 11+ 和新款安卓旗舰支持                                    │
+│                                                                      │
+│  FiRa 联盟（Fine Ranging）                                          │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━                                         │
+│  • 互操作性规范                                                     │
+│  • 成员：Apple, Samsung, Sony, NXP, Qorvo 等                        │
+│  • 定义用例：数字钥匙、设备定位、支付等                             │
+│                                                                      │
+│  CCC（Car Connectivity Consortium）                                 │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                │
+│  • 汽车数字钥匙标准                                                 │
+│  • UWB 用于精确定位解锁                                             │
+│  • 防中继攻击（relay attack）                                       │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 6.4 常用 UWB 芯片
+
+| 芯片 | 厂商 | 特点 | 典型应用 |
+|------|------|------|----------|
+| DW1000 | Qorvo(Decawave) | 最广泛使用，资料丰富 | 工业定位、开发 |
+| DW3000 | Qorvo | 支持 802.15.4z，更安全 | 消费电子、汽车 |
+| SR100T | NXP | 手机级集成度 | 手机、可穿戴 |
+| S3FW5AT | Samsung | 手机内置 | Galaxy 系列 |
+| U1 | Apple | 自研芯片 | iPhone、AirTag |
+
+### 6.5 UWB 应用场景
+
+```
+UWB 典型应用：
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│  1. 精确定位与追踪                                                   │
+│  ━━━━━━━━━━━━━━━━━━━                                                │
+│  • Apple AirTag / Samsung SmartTag+                                 │
+│  • 工厂资产追踪（叉车、工具、人员）                                 │
+│  • 室内导航（机场、商场）                                           │
+│  • AGV/AMR 机器人定位                                               │
+│                                                                      │
+│  2. 安全接入（数字钥匙）                                            │
+│  ━━━━━━━━━━━━━━━━━━━━━                                              │
+│  • 汽车无钥匙进入（BMW、Audi、VW 已商用）                           │
+│  • 智能门锁（靠近自动解锁）                                         │
+│  • 办公楼门禁                                                       │
+│                                                                      │
+│  UWB 钥匙 vs 传统钥匙：                                              │
+│  ┌───────────────┬────────────────┬────────────────────────────┐   │
+│  │ 技术           │ 中继攻击       │ 定位精度                    │   │
+│  ├───────────────┼────────────────┼────────────────────────────┤   │
+│  │ 传统 RF       │ 易受攻击       │ 无                          │   │
+│  │ BLE           │ 可被中继       │ 1-2 米                      │   │
+│  │ UWB           │ 难以中继       │ 10-30 厘米                  │   │
+│  └───────────────┴────────────────┴────────────────────────────┘   │
+│                                                                      │
+│  3. 空间感知交互                                                     │
+│  ━━━━━━━━━━━━━━━━                                                   │
+│  • iPhone 与 HomePod 交接音乐播放                                   │
+│  • 指向性分享（手机指向设备即可传输）                               │
+│  • AR 应用（精确空间定位）                                          │
+│                                                                      │
+│  4. 工业与专业应用                                                   │
+│  ━━━━━━━━━━━━━━━━━━                                                 │
+│  • 港口集装箱定位                                                   │
+│  • 矿井人员追踪                                                     │
+│  • 医院资产管理                                                     │
+│  • 运动分析（足球、篮球训练）                                       │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 6.6 UWB 开发实践
+
+```c
+/*
+ * Qorvo DW3000 基本测距示例（简化）
+ */
+
+#include "dw3000.h"
+
+/* 配置参数 */
+static dwt_config_t config = {
+    .chan            = 5,           /* Channel 5 (6489.6 MHz) */
+    .txPreambLength  = DWT_PLEN_128,
+    .rxPAC           = DWT_PAC8,
+    .txCode          = 9,
+    .rxCode          = 9,
+    .sfdType         = DWT_SFD_IEEE_4Z,
+    .dataRate        = DWT_BR_6M8,
+    .phrMode         = DWT_PHRMODE_STD,
+    .phrRate         = DWT_PHRRATE_STD,
+    .sfdTO           = 129,
+    .stsMode         = DWT_STS_MODE_1,  /* 安全模式 */
+    .stsLength       = DWT_STS_LEN_64,
+};
+
+/* 初始化 */
+int uwb_init(void)
+{
+    /* 复位 */
+    dwt_softreset();
+    
+    /* 初始化 SPI */
+    dwt_initialise(DWT_DW_INIT);
+    
+    /* 配置 */
+    if (dwt_configure(&config) != DWT_SUCCESS) {
+        return -1;
+    }
+    
+    /* 配置天线延迟（需校准） */
+    dwt_settxantennadelay(TX_ANT_DLY);
+    dwt_setrxantennadelay(RX_ANT_DLY);
+    
+    return 0;
+}
+
+/* TWR Initiator（发起测距方） */
+double uwb_twr_initiator(void)
+{
+    uint64_t poll_tx_ts, resp_rx_ts, final_tx_ts;
+    uint64_t poll_rx_ts, resp_tx_ts, final_rx_ts;
+    double tof, distance;
+    
+    /* 发送 Poll 消息 */
+    dwt_writetxdata(sizeof(poll_msg), poll_msg, 0);
+    dwt_writetxfctrl(sizeof(poll_msg), 0, 1);
+    dwt_starttx(DWT_START_TX_IMMEDIATE);
+    
+    /* 等待发送完成 */
+    while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_TXFRS))
+        ;
+    poll_tx_ts = dwt_readtxtimestamplo32();
+    
+    /* 开启接收等待 Response */
+    dwt_rxenable(DWT_START_RX_IMMEDIATE);
+    
+    /* 等待接收 */
+    while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_RXFCG))
+        ;
+    resp_rx_ts = dwt_readrxtimestamplo32();
+    
+    /* 发送 Final 消息 */
+    dwt_writetxdata(sizeof(final_msg), final_msg, 0);
+    dwt_starttx(DWT_START_TX_DELAYED);
+    
+    while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_TXFRS))
+        ;
+    final_tx_ts = dwt_readtxtimestamplo32();
+    
+    /* 接收对方时间戳 */
+    /* ... 解析响应消息获取 poll_rx_ts, resp_tx_ts, final_rx_ts ... */
+    
+    /* 计算 ToF（双边双向测距公式） */
+    int64_t Ra = resp_rx_ts - poll_tx_ts;
+    int64_t Rb = final_rx_ts - resp_tx_ts;
+    int64_t Da = final_tx_ts - resp_rx_ts;
+    int64_t Db = resp_tx_ts - poll_rx_ts;
+    
+    tof = ((Ra * Rb) - (Da * Db)) / (Ra + Rb + Da + Db);
+    
+    /* 转换为距离（光速 × 时间） */
+    distance = tof * DWT_TIME_UNITS * SPEED_OF_LIGHT;
+    
+    return distance;
+}
+
+/* 定位计算（三边定位） */
+typedef struct {
+    double x, y, z;
+} position_t;
+
+position_t uwb_trilateration(double d1, double d2, double d3,
+                             position_t a1, position_t a2, position_t a3)
+{
+    position_t result;
+    
+    /* 三边定位算法：已知到三个锚点的距离，求位置 */
+    /* 建立方程组并求解 */
+    /* ... 具体算法实现 ... */
+    
+    return result;
+}
+```
+
+### 6.7 UWB vs 其他定位技术
+
+| 维度 | UWB | BLE | WiFi | GPS |
+|------|-----|-----|------|-----|
+| 精度 | 10-30 cm | 1-3 m | 1-3 m | 3-5 m |
+| 室内 | 优秀 | 良好 | 良好 | 不可用 |
+| 室外 | 受限 | 受限 | 受限 | 优秀 |
+| 功耗 | 中等 | 极低 | 高 | 高 |
+| 成本 | 较高 | 低 | 中 | 低 |
+| 安全性 | 高 | 中 | 低 | 低 |
+| 部署 | 需锚点 | 需信标 | 现有AP | 无需 |
+
+**选 UWB**：高精度定位、安全接入、防中继攻击
+**选 BLE**：低功耗优先、成本敏感、精度要求不高
+**选 WiFi**：已有基础设施、无额外部署
+**选 GPS**：室外、广域追踪
+
+---
+
+## 七、MQTT协议
 
 ### 6.1 为什么是MQTT
 
@@ -360,7 +665,7 @@ Broker保存主题的最后一条消息：
 
 ---
 
-## 七、实际选型案例
+## 八、实际选型案例
 
 ### 案例1：智能门锁
 
@@ -403,6 +708,8 @@ Broker保存主题的最后一条消息：
 | 全国覆盖 | NB-IoT、4G |
 | 网状组网 | ZigBee、BLE Mesh |
 | 快速上云 | WiFi、NB-IoT |
+| 高精度定位 | UWB |
+| 安全接入 | UWB、BLE |
 
 没有万能的技术，只有合适的选择。深入理解每种技术的特点和限制，才能做出正确的架构决策。
 
