@@ -7,6 +7,7 @@ A personal tech blog built with [Zola](https://www.getzola.org/) - a fast static
 ### Prerequisites
 
 - [Zola](https://www.getzola.org/documentation/getting-started/installation/) (v0.17+)
+- [Node.js](https://nodejs.org/) (v18+) - for password encryption
 - Git
 
 ### Local Development
@@ -15,6 +16,9 @@ A personal tech blog built with [Zola](https://www.getzola.org/) - a fast static
 # Clone the repository
 git clone https://github.com/jpixy/jpixy.github.io.git
 cd jpixy.github.io
+
+# Install Node.js dependencies (first time only)
+npm install
 
 # Start local development server
 make serve
@@ -41,7 +45,10 @@ Visit `http://127.0.0.1:1111` to preview the site.
 │   └── wechat.md        # WeChat page
 ├── static/              # Static assets (CSS, images, JS)
 ├── templates/           # HTML templates
+├── scripts/             # Build scripts
+│   └── encrypt-pages.js # Password encryption script
 ├── public/              # Generated site (git ignored)
+├── package.json         # Node.js dependencies
 └── Makefile             # Build commands
 ```
 
@@ -159,11 +166,13 @@ Use Zola's internal link syntax:
 ### Using Make (Recommended)
 
 ```bash
-make serve      # Start development server
-make build      # Build for production
-make clean      # Remove generated files
-make check      # Check for broken links
-make deploy     # Build and prepare for deployment
+make serve           # Start development server
+make build           # Build for production (without encryption)
+make build-encrypted # Build and encrypt protected pages
+make encrypt         # Encrypt protected pages only
+make clean           # Remove generated files
+make check           # Check for broken links
+make deploy          # Build, encrypt, and prepare for deployment
 ```
 
 ### Using Zola Directly
@@ -175,11 +184,68 @@ zola check                    # Check links
 zola build --base-url "/"     # Build with custom base URL
 ```
 
+## Password Protection
+
+Certain directories are password-protected using [StatiCrypt](https://github.com/robinmoisson/staticrypt). Protected pages are encrypted during the build process and require a password to view.
+
+### Protected Directories
+
+The following directories are currently protected:
+
+- `articles/hft/` - High-Frequency Trading
+- `articles/insights/` - Insights
+- `articles/interview/` - Interview Preparation
+- `articles/leadership/` - Leadership & Management
+- `articles/quant/` - Quantitative Trading
+
+### Local Build with Encryption
+
+```bash
+# Set password and build
+ENCRYPT_PASSWORD=your_password make deploy
+
+# Or step by step:
+make build
+ENCRYPT_PASSWORD=your_password make encrypt
+```
+
+### Modifying Protected Directories
+
+Edit `scripts/encrypt-pages.js` and modify the `PROTECTED_DIRS` array:
+
+```javascript
+const PROTECTED_DIRS = [
+  'hft',
+  'insights', 
+  'interview',
+  'leadership',
+  'quant',
+  // Add or remove directories here
+];
+```
+
+### GitHub Actions Setup
+
+For automatic encryption during deployment, set the `ENCRYPT_PASSWORD` secret in your GitHub repository:
+
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Name: `ENCRYPT_PASSWORD`
+4. Value: Your encryption password
+5. Click **Add secret**
+
+### Password Page Features
+
+- AES-256 encryption
+- "Remember me" option (7 days)
+- Clean, minimal password prompt UI
+- Works on all modern browsers
+
 ## Deployment
 
 ### Automatic (GitHub Actions)
 
-Every push to the `main` branch automatically triggers a build and deployment to GitHub Pages.
+Every push to the `main` branch automatically triggers a build, encryption, and deployment to GitHub Pages.
 
 ### Manual
 

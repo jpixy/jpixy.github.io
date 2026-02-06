@@ -1,0 +1,11 @@
+{
+  "name": "jpixy-blog",
+  "version": "1.0.0",
+  "description": "Johnny's Tech Blog",
+  "scripts": {
+    "encrypt": "node scripts/encrypt-pages.js"
+  },
+  "devDependencies": {
+    "staticrypt": "^3.4.0"
+  }
+}

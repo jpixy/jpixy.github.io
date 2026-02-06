@@ -1,6 +1,9 @@
 # Zola build output
 public/
 
+# Node.js
+node_modules/
+
 # Editor files
 *.swp
 *.swo
