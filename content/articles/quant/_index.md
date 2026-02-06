@@ -33,6 +33,11 @@ template = "section.html"
 - **[09 - 从回测到实盘](/articles/quant/quant-09-从回测到实盘/)** - 实盘系统架构与运维
 - **[21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)** - Python vs C++ vs Rust
 
+### C++ 量化开发
+
+- **[22 - C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)** - 何时需要 C++、环境搭建、实战代码
+- **[23 - C++ 量化系统性能优化](/articles/quant/quant-23-Cpp量化系统性能优化/)** - 延迟分析、内存优化、并发设计
+
 ### 风险管理
 
 - **[06 - 量化交易风险管理与资金管理](/articles/quant/quant-06-量化交易风险管理与资金管理/)** - 仓位、止损、组合管理
