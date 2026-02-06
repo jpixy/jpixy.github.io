@@ -986,4 +986,4 @@ C++ 量化性能优化要点：
 ## 相关文章
 
 - [上一篇：22 - C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)
-- [下一篇：24 - Python C++ 混合量化开发](/articles/quant/quant-24-Python-Cpp混合量化开发/)
+- [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)

@@ -1479,6 +1479,7 @@ print(f"夏普比率: {sharpe:.2f}")
 
 ## 相关文章
 
+- [上一篇：17 - 事件驱动策略](/articles/quant/quant-17-事件驱动策略/)
 - [下一篇：19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)
 - [20 - 极速交易系统详解](/articles/quant/quant-20-极速交易系统详解/)
 - [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)

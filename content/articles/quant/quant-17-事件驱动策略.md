@@ -591,3 +591,4 @@ class EarningsSignalGenerator:
 ## 相关文章
 
 - [上一篇：16 - 市场微结构](/articles/quant/quant-16-市场微结构/)
+- [下一篇：18 - 个人自动化量化交易入门](/articles/quant/quant-18-个人自动化量化交易入门/)

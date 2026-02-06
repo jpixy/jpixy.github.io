@@ -53,6 +53,6 @@ template = "section.html"
 
 ### 特定市场
 
-- **[11 - 加密货币量化交易](/articles/quant/quant-11-加密货币量化交易/)** - 加密市场特点与策略
+- **[11 - 加密货币量化交易](/articles/quant/quant-11-加密货币量化/)** - 加密市场特点与策略
 - **[15 - 外汇量化入门](/articles/quant/quant-15-外汇量化入门/)** - 外汇市场基础
 - **[17 - 事件驱动策略](/articles/quant/quant-17-事件驱动策略/)** - 基于事件的交易策略
