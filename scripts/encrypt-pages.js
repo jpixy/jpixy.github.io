@@ -30,13 +30,13 @@ if (!PASSWORD) {
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public', 'articles');
 
-// 密码页面的自定义模板（匹配博客风格）
-const TEMPLATE_TITLE = "需要密码访问";
-const TEMPLATE_INSTRUCTIONS = "此内容需要密码才能访问";
-const TEMPLATE_PLACEHOLDER = "请输入密码";
-const TEMPLATE_BUTTON = "解锁";
+// 密码页面的自定义模板（英文版本）
+const TEMPLATE_TITLE = "Password Required";
+const TEMPLATE_INSTRUCTIONS = "This content is password protected";
+const TEMPLATE_PLACEHOLDER = "Enter password";
+const TEMPLATE_BUTTON = "Unlock";
 const TEMPLATE_REMEMBER = "7"; // 记住密码天数
-const TEMPLATE_REMEMBER_LABEL = "记住我 7 天";
+const TEMPLATE_REMEMBER_LABEL = "Remember me for 7 days";
 
 /**
  * 递归获取目录下所有 HTML 文件
