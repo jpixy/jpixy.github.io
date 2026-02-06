@@ -26,6 +26,7 @@ template = "section.html"
 - **[04 - 全球量化交易接口与数据](/articles/quant/quant-04-全球量化交易接口与数据/)** - IB、加密货币、全球市场
 - **[19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)** - 开户实操详解
 - **[20 - 极速交易系统详解](/articles/quant/quant-20-极速交易系统详解/)** - CTP vs 飞马 vs 飞创
+- **[24 - A股程序化交易接口：QMT 与 Ptrade](/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade/)** - A股交易接口详解
 
 ### 技术实现
 

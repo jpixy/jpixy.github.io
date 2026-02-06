@@ -986,4 +986,5 @@ C++ 量化性能优化要点：
 ## 相关文章
 
 - [上一篇：22 - C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)
+- [下一篇：24 - A股程序化交易接口：QMT 与 Ptrade](/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade/)
 - [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
