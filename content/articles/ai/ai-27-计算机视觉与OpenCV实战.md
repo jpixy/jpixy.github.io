@@ -864,5 +864,6 @@ OpenCV 开发最佳实践：
 ## 相关文章
 
 - [上一篇：26 - ROCm 与 AMD GPU 开发](/articles/ai/ai-26-ROCm与AMD-GPU开发/)
+- [下一篇：28 - AI 技术栈全景图](/articles/ai/ai-28-AI技术栈全景图/)
 - [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
 - [18 - 边缘 AI 与端侧部署详解](/articles/ai/ai-18-边缘AI与端侧部署详解/)

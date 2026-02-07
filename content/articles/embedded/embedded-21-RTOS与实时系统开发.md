@@ -946,5 +946,6 @@ RTOS 开发最佳实践：
 ## 相关文章
 
 - [上一篇：20 - U-Boot 与 Bootloader 详解](/articles/embedded/embedded-20-U-Boot与Bootloader详解/)
+- [下一篇：22 - 端侧推理引擎对比](/articles/embedded/embedded-22-端侧推理引擎对比/)
 - [09 - 嵌入式 Linux 驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
 - [10 - 无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)

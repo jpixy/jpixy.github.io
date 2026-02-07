@@ -1303,6 +1303,9 @@ ip route show | grep nexthop
 
 ### 专题深入
 - [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
+- [DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
+- [用户态网络协议栈设计](/articles/networking/net-25-用户态网络协议栈设计/)
+- [CXL 与新型内存互联技术](/articles/networking/net-26-CXL与新型内存互联技术/)
 - [网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
 - [OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
 - [AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/)
