@@ -159,7 +159,7 @@ sequenceDiagram
     participant 内存
     participant 设备
     
-    Note over CPU,设备: 传统 I/O（程序控制）
+    Note over CPU,设备: 传统 I/O 程序控制
     CPU->>内存: 读取数据
     CPU->>设备: 写入设备寄存器
     CPU->>内存: 读取数据
@@ -175,7 +175,7 @@ sequenceDiagram
     participant 设备
     
     Note over CPU,设备: DMA I/O
-    CPU->>DMA控制器: 1. 设置 DMA（源/目的地址、大小）
+    CPU->>DMA控制器: 1. 设置 DMA: 源/目的地址、大小
     CPU->>CPU: 执行其他任务
     DMA控制器->>内存: 2. DMA 传输
     内存->>设备: 直接内存访问
@@ -310,10 +310,10 @@ graph TB
         S4["段4: addr, len"]
     end
     
-    S1 --> B1["物理块 (1)"]
-    S2 --> B2["物理块 (2)"]
-    S3 --> B3["物理块 (3)"]
-    S4 --> B4["物理块 (4)"]
+    S1 --> B1["物理块 1"]
+    S2 --> B2["物理块 2"]
+    S3 --> B3["物理块 3"]
+    S4 --> B4["物理块 4"]
 ```
 
 ```c
@@ -401,7 +401,7 @@ int dma_map_sg(struct device *dev, struct scatterlist *sg,
 ```mermaid
 graph TB
     subgraph Deadline["Deadline 调度器"]
-        subgraph SortQ["排序队列（红黑树）- 按扇区号排序"]
+        subgraph SortQ["排序队列 红黑树 - 按扇区号排序"]
             N100[100]
             N50[50]
             N200[200]
@@ -409,7 +409,7 @@ graph TB
             N100 --> N200
         end
         
-        subgraph FIFO["FIFO 队列（读/写分开）- 按到达时间"]
+        subgraph FIFO["FIFO 队列 读/写分开 - 按到达时间"]
             READ["读 FIFO: req1→req2→req3<br>deadline: 500ms"]
             WRITE["写 FIFO: req1→req2→req3<br>deadline: 5000ms"]
         end
@@ -719,7 +719,7 @@ graph TB
             P4[Page 4] & P5[Page 5] & P6[Page 6] & P7[Page 7]
         end
         
-        subgraph AddrSpace["address_space (per inode)"]
+        subgraph AddrSpace["address_space: per inode"]
             subgraph FileA["文件 A"]
                 A0["offset 0-4K → Page 0"]
                 A1["offset 4K-8K → Page 1"]
@@ -791,10 +791,10 @@ Linux 设备驱动模型：
 
 ```mermaid
 graph TB
-    BUS["struct bus_type<br>总线（PCI、USB、I2C...）"]
+    BUS["struct bus_type<br>总线: PCI、USB、I2C..."]
     DRIVER["driver<br>驱动"]
     DEVICE["device<br>设备"]
-    MATCH["匹配 binding<br>probe() 被调用"]
+    MATCH["匹配 binding<br>probe 被调用"]
     
     BUS --> DRIVER
     BUS --> DEVICE

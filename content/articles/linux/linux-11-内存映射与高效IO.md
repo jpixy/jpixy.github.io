@@ -740,7 +740,7 @@ sendfile(sockfd, file_fd, NULL, file_size);
 ```mermaid
 graph TB
     Q1{是否需要修改数据？}
-    Q1 -->|是| A1["传统 read/write<br>（或 mmap 修改后发送）"]
+    Q1 -->|是| A1["传统 read/write<br>或 mmap 修改后发送"]
     Q1 -->|否| Q2{源和目的是什么？}
     
     Q2 -->|文件→Socket| A2[sendfile]

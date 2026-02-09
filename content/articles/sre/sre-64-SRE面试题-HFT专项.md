@@ -251,7 +251,7 @@ graph TB
     GapDetected["Gap Detected"]
     ThresholdCheck{"< 阈值?"}
     WaitReorder["等待乱序包"]
-    RequestRetransmit["请求重传<br/>(使用专门的恢复通道)"]
+    RequestRetransmit["请求重传<br/>使用专门的恢复通道"]
     TimeoutCheck{"超时未恢复?"}
     RequestSnapshot["请求Snapshot"]
     
@@ -769,8 +769,8 @@ pprof --pdf <binary> /tmp/heap.0001.heap > heap.pdf
 ```mermaid
 graph TB
     LB["Load Balancer"]
-    Blue["Blue<br/>(Current)"]
-    Green["Green<br/>(New)"]
+    Blue["Blue<br/>Current"]
+    Green["Green<br/>New"]
     
     LB -->|"当前"| Blue
     LB -.->|"切换后"| Green

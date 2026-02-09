@@ -454,7 +454,7 @@ graph TB
         O1["order-1: 8KB 块链表"]
         O2["order-2: 16KB 块链表"]
         O3["..."]
-        O10["order-10: 4MB 块链表（最大）"]
+        O10["order-10: 4MB 块链表 最大"]
     end
     
     O0 -->|合并| O1
@@ -486,7 +486,7 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph kmem_cache["kmem_cache（对象缓存）<br>例如：task_struct 缓存、inode 缓存、dentry 缓存"]
+    subgraph kmem_cache["kmem_cache 对象缓存<br>例如：task_struct 缓存、inode 缓存、dentry 缓存"]
         subgraph Slab1["Slab 页面 1"]
             O1["obj [用]"]
             O2["obj [用]"]
@@ -838,9 +838,9 @@ vm.swappiness = 10
 ```mermaid
 graph TB
     subgraph 内存水位
-        HIGH["高水位 (high)"]
-        LOW["低水位 (low)"]
-        MIN["最小水位 (min)"]
+        HIGH["高水位 high"]
+        LOW["低水位 low"]
+        MIN["最小水位 min"]
         ZERO["0"]
     end
     

@@ -330,14 +330,14 @@ D. 求所有元素平均值
 
 ```mermaid
 graph TB
-    subgraph 原始["原始向量（8个float）"]
+    subgraph 原始["原始向量 8个float"]
         V["[a0, a1, a2, a3, a4, a5, a6, a7]"]
     end
     subgraph 拆分["拆分"]
         VL["vlow: [a0, a1, a2, a3]"]
         VH["vhigh: [a4, a5, a6, a7]"]
     end
-    subgraph 结果["加法后（4个float）"]
+    subgraph 结果["加法后 4个float"]
         R["[a0+a4, a1+a5, a2+a6, a3+a7]"]
     end
     V --> VL

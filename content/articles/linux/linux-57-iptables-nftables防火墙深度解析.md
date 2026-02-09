@@ -174,10 +174,10 @@ nftables 层级结构：
 ```mermaid
 graph TB
     NFT["nftables"]
-    TABLE["table<br>（类似 iptables 的表）"]
-    CHAIN["chain<br>（类似 iptables 的链）"]
-    RULES["rules（规则）"]
-    SET["set（IP/端口集合）"]
+    TABLE["table<br>类似 iptables 的表"]
+    CHAIN["chain<br>类似 iptables 的链"]
+    RULES["rules 规则"]
+    SET["set IP/端口集合"]
     
     NFT --> TABLE
     TABLE --> CHAIN

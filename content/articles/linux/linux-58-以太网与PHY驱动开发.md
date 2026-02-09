@@ -519,7 +519,7 @@ graph TB
         A[MAC 驱动<br>调用 phylib API 管理 PHY]
     end
 
-    subgraph phylib["phylib (drivers/net/phy/)"]
+    subgraph phylib["phylib: drivers/net/phy/"]
         subgraph PHY核心层
             B1[phy_device: PHY 设备抽象]
             B2[phy_driver: PHY 驱动抽象]

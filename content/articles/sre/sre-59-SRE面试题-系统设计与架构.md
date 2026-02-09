@@ -57,12 +57,12 @@ tags = ["SRE", "面试", "系统设计", "高可用", "分布式", "架构"]
 ```mermaid
 graph TB
     DNS["DNS/CDN"]
-    LB["负载均衡 (主备)"]
+    LB["负载均衡 主备"]
     App1["应用实例"]
     App2["应用实例"]
     App3["应用实例"]
-    Cache["缓存集群<br/>(Redis Cluster)"]
-    DB["数据库<br/>(主从/集群)"]
+    Cache["缓存集群<br/>Redis Cluster"]
+    DB["数据库<br/>主从/集群"]
     
     DNS --> LB
     LB --> App1
@@ -217,11 +217,11 @@ min-replicas-max-lag 10
 
 ```mermaid
 graph TB
-    subgraph UnitA["单元A (华东)"]
+    subgraph UnitA["单元A 华东"]
         A1["用户ID%2=0"]
         A2["全量数据"]
     end
-    subgraph UnitB["单元B (华南)"]
+    subgraph UnitB["单元B 华南"]
         B1["用户ID%2=1"]
         B2["全量数据"]
     end
@@ -470,11 +470,11 @@ Internet → L4(LVS) → L7(Nginx) → 应用服务器
 
 ```mermaid
 graph TB
-    Closed["Closed (关闭)"]
-    Open["Open (打开)"]
-    HalfOpen["Half-Open (半开)"]
+    Closed["Closed 关闭"]
+    Open["Open 打开"]
+    HalfOpen["Half-Open 半开"]
     
-    Closed -->|"失败率>阈值"| Open
+    Closed -->|"失败率大于阈值"| Open
     Open -->|"超时"| HalfOpen
     HalfOpen -->|"成功"| Closed
     HalfOpen -->|"失败"| Open

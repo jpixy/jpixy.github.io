@@ -196,12 +196,12 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph SU-MIMO["SU-MIMO（单用户）"]
+    subgraph SU-MIMO["SU-MIMO 单用户"]
         AP1["AP"] -->|"4 流"| STA1_1["STA1"]
         STA2_1["STA2 等待"]
     end
     
-    subgraph MU-MIMO["MU-MIMO（多用户）"]
+    subgraph MU-MIMO["MU-MIMO 多用户"]
         AP2["AP"] -->|"2 流"| STA1_2["STA1"]
         AP2 -->|"2 流"| STA2_2["STA2"]
     end

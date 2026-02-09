@@ -78,10 +78,10 @@ algorithmic_trading_requirements:
 
 ```mermaid
 graph TB
-    A["交易应用<br/>(毫秒级写入)"]
-    B["本地日志缓冲<br/>(内存映射文件)"]
-    C["实时流处理<br/>(Kafka)"]
-    D["批量归档<br/>(HDFS/S3)"]
+    A["交易应用<br/>毫秒级写入"]
+    B["本地日志缓冲<br/>内存映射文件"]
+    C["实时流处理<br/>Kafka"]
+    D["批量归档<br/>HDFS/S3"]
     E["合规报告<br/>生成器"]
 
     A --> B

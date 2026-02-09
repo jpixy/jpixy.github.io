@@ -38,12 +38,12 @@ tags = ["quant", "algorithmic-trading", "personal-trading", "china-market", "glo
 
 ```mermaid
 graph TB
-    subgraph HFT["高频交易（HFT）的真实面貌"]
+    subgraph HFT["高频交易 HFT 的真实面貌"]
         subgraph 策略类型["HFT 常见策略类型"]
-            A["做市策略（Market Making）<br/>在买卖两侧同时挂单<br/>赚取买卖价差<br/>需要精密的库存管理和风控"]
-            B["统计套利（Statistical Arbitrage）<br/>利用价格的统计规律<br/>配对交易、跨品种套利<br/>需要复杂的数学模型"]
-            C["订单流预测（Order Flow Prediction）<br/>分析订单簿动态<br/>预测短期价格方向<br/>需要高级的机器学习模型"]
-            D["延迟套利（Latency Arbitrage）<br/>利用不同交易所的价格延迟<br/>这个才是纯拼速度的部分<br/>但只是 HFT 的一小部分"]
+            A["做市策略 Market Making<br/>在买卖两侧同时挂单<br/>赚取买卖价差<br/>需要精密的库存管理和风控"]
+            B["统计套利 Statistical Arbitrage<br/>利用价格的统计规律<br/>配对交易、跨品种套利<br/>需要复杂的数学模型"]
+            C["订单流预测 Order Flow Prediction<br/>分析订单簿动态<br/>预测短期价格方向<br/>需要高级的机器学习模型"]
+            D["延迟套利 Latency Arbitrage<br/>利用不同交易所的价格延迟<br/>这个才是纯拼速度的部分<br/>但只是 HFT 的一小部分"]
         end
     end
     HFT --> 结论["正确理解：HFT = 复杂策略 + 极致速度<br/>速度是门槛，策略才是核心竞争力<br/>没有好策略，速度再快也赚不到钱"]
@@ -319,17 +319,17 @@ graph TB
 ```mermaid
 graph TB
     subgraph 中国大陆["中国大陆个人量化路径"]
-        CN1["1️⃣ 商品期货（首选）<br/>CTP接口开放，T+0双向<br/>simnow模拟盘练习<br/>推荐：螺纹钢、豆粕、甲醇"]
-        CN2["2️⃣ 可转债（次选）<br/>T+0交易，门槛低<br/>接口受限，可半自动"]
+        CN1["1️⃣ 商品期货 首选<br/>CTP接口开放，T+0双向<br/>simnow模拟盘练习<br/>推荐：螺纹钢、豆粕、甲醇"]
+        CN2["2️⃣ 可转债 次选<br/>T+0交易，门槛低<br/>接口受限，可半自动"]
         CN3["3️⃣ ETF<br/>成本低，T+1限制<br/>适合中长期策略"]
         CN1 --> CN2 --> CN3
     end
     
     subgraph 国际市场["国际市场个人量化路径"]
-        INT1["1️⃣ 加密货币（门槛最低）<br/>接口完全开放，24/7交易<br/>有测试网模拟<br/>⚠️ 风险高，交易所可能暴雷"]
-        INT2["2️⃣ 美股ETF（IB开户）<br/>成熟市场，策略有效性高<br/>注意PDT规则"]
-        INT3["3️⃣ 美国期货（进阶）<br/>微型合约降低门槛<br/>几乎24小时交易"]
-        INT4["4️⃣ 外汇（高阶）<br/>杠杆高，风险大<br/>需要更多经验"]
+        INT1["1️⃣ 加密货币 门槛最低<br/>接口完全开放，24/7交易<br/>有测试网模拟<br/>⚠️ 风险高，交易所可能暴雷"]
+        INT2["2️⃣ 美股ETF: IB开户<br/>成熟市场，策略有效性高<br/>注意PDT规则"]
+        INT3["3️⃣ 美国期货 进阶<br/>微型合约降低门槛<br/>几乎24小时交易"]
+        INT4["4️⃣ 外汇 高阶<br/>杠杆高，风险大<br/>需要更多经验"]
         INT1 --> INT2 --> INT3 --> INT4
     end
 ```
@@ -1023,7 +1023,7 @@ graph TB
             B4["这对中低频策略完全够用"]
         end
         subgraph 市场选择
-            C1["中国大陆：期货（CTP）首选<br/>T+1 只限制股票，期货是 T+0"]
+            C1["中国大陆：期货 CTP 首选<br/>T+1 只限制股票，期货是 T+0"]
             C2["国际市场：加密货币门槛最低<br/>IB 可交易全球市场"]
         end
         subgraph 核心建议

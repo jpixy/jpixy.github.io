@@ -742,12 +742,12 @@ echo "火焰图已保存到: $OUTPUT"
 ```mermaid
 graph TB
     subgraph 火焰图结构
-        A["main() - 100% 宽度"]
-        B["process() - 60%"]
-        C["calculate() - 40%"]
-        D["parse() - 30%"]
-        E["handle() - 30%"]
-        F["compute() - 40%"]
+        A["main - 100% 宽度"]
+        B["process - 60%"]
+        C["calculate - 40%"]
+        D["parse - 30%"]
+        E["handle - 30%"]
+        F["compute - 40%"]
     end
 
     A --> B
@@ -780,13 +780,13 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph main["main() - 总宽度 100%"]
-        subgraph process["process() - 总宽度 60%"]
-            parse["parse() 30%<br>(平顶=热点)"]
-            handle["handle() 30%<br>(调用子函数)"]
+    subgraph main["main - 总宽度 100%"]
+        subgraph process["process - 总宽度 60%"]
+            parse["parse 30%<br>平顶=热点"]
+            handle["handle 30%<br>调用子函数"]
         end
-        subgraph calculate["calculate() - 总宽度 40%"]
-            compute["compute() 40%<br>(平顶=热点)"]
+        subgraph calculate["calculate - 总宽度 40%"]
+            compute["compute 40%<br>平顶=热点"]
         end
     end
 ```
@@ -817,7 +817,7 @@ graph TB
     subgraph 火焰图示例
         H[handle_request]
         S[serialize]
-        M["memcpy() - 平顶=热点<br>← 真正消耗 CPU"]
+        M["memcpy - 平顶=热点<br>← 真正消耗 CPU"]
     end
 
     H --> S
@@ -830,9 +830,9 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph main["main()"]
-        PD["process_data() 70%<br>← 优先优化"]
-        LM["log_metrics() 30%<br>← 次优先"]
+    subgraph main["main"]
+        PD["process_data 70%<br>← 优先优化"]
+        LM["log_metrics 30%<br>← 次优先"]
     end
 ```
 

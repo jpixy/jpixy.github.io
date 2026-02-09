@@ -686,7 +686,7 @@ graph TB
         E["极致性能优化"]
         F["需要底层控制"]
         G["已有成熟 CUDA 库"]
-        H["特殊硬件特性（Tensor Core 细粒度控制）"]
+        H["特殊硬件特性: Tensor Core 细粒度控制"]
     end
 ```
 

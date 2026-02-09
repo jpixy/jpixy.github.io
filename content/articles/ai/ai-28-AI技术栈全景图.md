@@ -278,7 +278,7 @@ graph TB
     A["model(x)"] --> B["torch.nn.Linear(x)"]
     B --> C["torch.matmul(x, weight)"]
     C --> D["ATen 算子调度"]
-    D --> E["cuBLAS gemm 或 自定义 Kernel<br>（CUDA 算子）"]
+    D --> E["cuBLAS gemm 或 自定义 Kernel<br>CUDA 算子"]
     E --> F["GPU 执行"]
 ```
 
@@ -476,10 +476,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph Target["你的目标区域"]
-        L3["第三层：模型层（了解即可）"]
+        L3["第三层：模型层 了解即可"]
         L4["★ 第四层：推理系统层 ← 核心<br>• vLLM / TensorRT-LLM / llama.cpp<br>• 调度、内存管理、Batching"]
-        L5a["★ 第五层（上半部分）：算子层 ← 辅助<br>• 理解 CUDA Kernel 原理<br>• 不以手写 Kernel 为主业"]
-        L5b["第五层（下半部分）：编译器（不深入）"]
+        L5a["★ 第五层上半部分：算子层 ← 辅助<br>• 理解 CUDA Kernel 原理<br>• 不以手写 Kernel 为主业"]
+        L5b["第五层下半部分：编译器 不深入"]
     end
     
     L3 --> L4

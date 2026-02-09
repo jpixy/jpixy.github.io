@@ -22,10 +22,10 @@ graph TB
         subgraph 股票
             G1["NYSE / NASDAQ 股票"]
             G2["OTC 股票"]
-            G3["ADR（中概股等）"]
-            G4["无 T+1 限制（但有 PDT 规则）"]
+            G3["ADR 中概股等"]
+            G4["无 T+1 限制 但有 PDT 规则"]
         end
-        subgraph ETF["ETF（极其丰富）"]
+        subgraph ETF["ETF - 极其丰富"]
             E1["指数 ETF (SPY, QQQ)"]
             E2["行业 ETF"]
             E3["杠杆/反向 ETF"]
@@ -33,15 +33,15 @@ graph TB
             E5["债券 ETF"]
         end
         subgraph 期权
-            Q1["股票期权（非常活跃）"]
+            Q1["股票期权 非常活跃"]
             Q2["指数期权"]
             Q3["ETF 期权"]
             Q4["个人可参与"]
         end
         subgraph 期货
-            F1["股指期货（ES, NQ）"]
+            F1["股指期货: ES, NQ"]
             F2["商品期货"]
-            F3["微型期货（Micro）降低门槛"]
+            F3["微型期货 Micro 降低门槛"]
         end
         subgraph 加密货币
             C1["Bitcoin, Ethereum 等"]
@@ -71,26 +71,26 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph IB["Interactive Brokers（IB）⭐ 强烈推荐"]
+    subgraph IB["Interactive Brokers IB ⭐ 强烈推荐"]
         subgraph 优点
-            Y1["全球市场覆盖（150+ 市场）"]
+            Y1["全球市场覆盖 150+ 市场"]
             Y2["专业的 API 接口"]
             Y3["低佣金"]
             Y4["支持多种资产类别"]
             Y5["个人可开户"]
         end
         subgraph API接口["API 接口"]
-            A1["TWS API（Java/C++/C#/Python）"]
-            A2["Client Portal API（REST）"]
-            A3["ib_insync（Python 推荐）"]
+            A1["TWS API: Java/C++/C#/Python"]
+            A2["Client Portal API: REST"]
+            A3["ib_insync Python 推荐"]
         end
         subgraph 门槛
-            M1["最低入金要求（不同地区不同）"]
+            M1["最低入金要求 不同地区不同"]
             M2["需要一定编程能力"]
         end
         subgraph 费用
-            F1["市场数据费（可选）"]
-            F2["交易佣金（较低）"]
+            F1["市场数据费 可选"]
+            F2["交易佣金 较低"]
         end
     end
 ```
@@ -119,7 +119,7 @@ ib.disconnect()
 
 ```mermaid
 graph TB
-    subgraph Alpaca["Alpaca（零佣金）"]
+    subgraph Alpaca["Alpaca 零佣金"]
         subgraph 优点
             Y1["零佣金"]
             Y2["简洁的 REST API"]
@@ -129,7 +129,7 @@ graph TB
         end
         subgraph 限制
             X1["仅美股和加密货币"]
-            X2["需要美国税务身份（或特定地区）"]
+            X2["需要美国税务身份或特定地区"]
         end
         D["地址：alpaca.markets"]
     end
@@ -162,15 +162,15 @@ api.submit_order(
 
 ```mermaid
 graph TB
-    subgraph 加密API["加密货币 API（ccxt 统一接口）"]
+    subgraph 加密API["加密货币 API - ccxt 统一接口"]
         subgraph 主流交易所
-            E1["Binance（币安）"]
+            E1["Binance 币安"]
             E2["Coinbase Pro"]
             E3["Kraken"]
-            E4["FTX（已倒闭，注意风险）"]
+            E4["FTX 已倒闭，注意风险"]
             E5["OKX"]
         end
-        subgraph ccxt["ccxt 库（推荐）"]
+        subgraph ccxt["ccxt 库 推荐"]
             C1["统一接口支持 100+ 交易所"]
             C2["Python/JavaScript/PHP"]
             C3["开源免费"]
@@ -183,7 +183,7 @@ graph TB
             Y4["无 PDT 规则"]
         end
         subgraph 风险
-            R1["交易所风险（如 FTX 事件）"]
+            R1["交易所风险 如 FTX 事件"]
             R2["监管不确定性"]
             R3["极端波动"]
         end
@@ -227,22 +227,22 @@ order = exchange.create_market_buy_order('BTC/USDT', 0.01)
 ```mermaid
 graph TB
     subgraph 免费数据["免费美股数据"]
-        subgraph yf["Yahoo Finance（yfinance）"]
+        subgraph yf["Yahoo Finance yfinance"]
             Y1["最常用的免费数据源"]
             Y2["股票、ETF、指数、期权"]
             Y3["历史数据较全"]
             Y4["可能有延迟和缺失"]
         end
         subgraph av["Alpha Vantage"]
-            A1["免费 API（有调用限制）"]
+            A1["免费 API 有调用限制"]
             A2["股票、外汇、加密货币"]
             A3["技术指标内置"]
         end
-        subgraph fred["FRED（联储经济数据）"]
+        subgraph fred["FRED 联储经济数据"]
             F1["宏观经济数据"]
             F2["完全免费"]
         end
-        subgraph quandl["Quandl（部分免费）"]
+        subgraph quandl["Quandl 部分免费"]
             Q1["多种数据类型"]
             Q2["部分免费，高级收费"]
         end
@@ -302,7 +302,7 @@ graph TB
             M2["需要 NLP 处理"]
         end
         subgraph 宏观数据
-            H1["FRED（免费）"]
+            H1["FRED 免费"]
             H2["世界银行数据"]
         end
     end
@@ -320,14 +320,14 @@ graph TB
         subgraph QC["QuantConnect ⭐ 推荐"]
             Q1["免费使用"]
             Q2["多市场数据"]
-            Q3["可对接实盘（IB/Alpaca 等）"]
+            Q3["可对接实盘: IB/Alpaca 等"]
             Q4["Python/C# 支持"]
             Q5["活跃社区"]
             Q6["地址：quantconnect.com"]
         end
-        subgraph QP["Quantopian（已关闭）"]
+        subgraph QP["Quantopian - 已关闭"]
             P1["曾经最流行，2020 年关闭"]
-            P2["代码开源（Zipline）"]
+            P2["代码开源 Zipline"]
         end
         subgraph BS["Blueshift"]
             B1["QuantInsti 旗下"]
@@ -351,7 +351,7 @@ graph TB
             B2["文档详细"]
             B3["活跃维护"]
         end
-        subgraph Lean["Lean（QuantConnect 开源）"]
+        subgraph Lean["Lean QuantConnect 开源"]
             L1["与 QuantConnect 兼容"]
             L2["生产级别"]
             L3["C#/Python"]
@@ -378,14 +378,14 @@ graph TB
 graph TB
     subgraph 美股优势["美股回测相对更可靠"]
         subgraph 市场成熟
-            C1["历史数据长（可回测几十年）"]
+            C1["历史数据长 可回测几十年"]
             C2["数据质量高"]
             C3["市场规则稳定"]
         end
         subgraph 交易限制少
             X1["无 T+1 限制"]
             X2["可做空"]
-            X3["无涨跌停（有熔断）"]
+            X3["无涨跌停 有熔断"]
         end
         subgraph 流动性好
             L1["大盘股滑点小"]
@@ -436,11 +436,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph 海外开户["中国居民海外开户"]
-        subgraph IB["Interactive Brokers（盈透）"]
+        subgraph IB2["Interactive Brokers 盈透"]
             I1["接受中国大陆居民开户"]
             I2["全球市场覆盖"]
             I3["入金：银行电汇"]
-            I4["每年有外汇额度限制（5万美元）"]
+            I4["每年有外汇额度限制 5万美元"]
         end
         subgraph 港美股["老虎证券/富途证券"]
             T1["中国团队，中文界面"]
@@ -468,11 +468,11 @@ graph TB
     subgraph 建议["中国投资者全球量化建议"]
         subgraph 入门阶段
             R1["先在 QuantConnect 学习和回测"]
-            R2["用免费数据（yfinance）研究"]
+            R2["用免费数据 yfinance 研究"]
             R3["模拟交易验证策略"]
         end
         subgraph 开户
-            K1["IB 开户（接受大陆居民）"]
+            K1["IB 开户 接受大陆居民"]
             K2["准备好资金入金渠道"]
             K3["了解 API 使用方法"]
         end
@@ -483,7 +483,7 @@ graph TB
         end
         subgraph 风险考虑
             F1["汇率风险"]
-            F2["时区问题（交易时间）"]
+            F2["时区问题 交易时间"]
             F3["资金出入境限制"]
         end
     end

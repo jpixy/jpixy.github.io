@@ -48,9 +48,9 @@ tags = ["SRE", "故障排查", "方法论", "检查清单", "实战"]
 ```mermaid
 graph TB
     subgraph USE["USE方法"]
-        U["Utilization（使用率）<br/>CPU、内存、磁盘、网络使用率"]
-        S["Saturation（饱和度）<br/>队列长度、等待时间"]
-        E["Errors（错误）<br/>错误计数、错误率"]
+        U["Utilization 使用率<br/>CPU、内存、磁盘、网络使用率"]
+        S["Saturation 饱和度<br/>队列长度、等待时间"]
+        E["Errors 错误<br/>错误计数、错误率"]
     end
 ```
 
@@ -59,9 +59,9 @@ graph TB
 ```mermaid
 graph TB
     subgraph RED["RED方法"]
-        R["Rate（请求率）<br/>QPS、TPS"]
-        E2["Errors（错误率）<br/>5xx比例、失败请求"]
-        D["Duration（延迟）<br/>P50、P90、P99延迟"]
+        R["Rate 请求率<br/>QPS、TPS"]
+        E2["Errors 错误率<br/>5xx比例、失败请求"]
+        D["Duration 延迟<br/>P50、P90、P99延迟"]
     end
 ```
 

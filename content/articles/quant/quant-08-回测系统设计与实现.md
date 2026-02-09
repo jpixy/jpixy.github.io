@@ -81,13 +81,13 @@ graph TB
 ```mermaid
 graph TB
     subgraph 架构对比["回测系统架构对比"]
-        subgraph 向量化["向量化回测（Vectorized）"]
+        subgraph 向量化["向量化回测 Vectorized"]
             V1["用 pandas/numpy 一次性计算"]
             V2["适合简单策略"]
             V3["速度极快"]
             V4["难以处理复杂逻辑"]
         end
-        subgraph 事件驱动["事件驱动回测（Event-Driven）"]
+        subgraph 事件驱动["事件驱动回测 Event-Driven"]
             E1["模拟真实交易流程"]
             E2["逐 bar 处理"]
             E3["可处理复杂逻辑"]
@@ -95,9 +95,9 @@ graph TB
             E5["容易迁移到实盘"]
         end
         subgraph 选择建议
-            S1["研究阶段：向量化（快速迭代）"]
-            S2["验证阶段：事件驱动（更真实）"]
-            S3["准备实盘：事件驱动（易迁移）"]
+            S1["研究阶段：向量化 快速迭代"]
+            S2["验证阶段：事件驱动 更真实"]
+            S3["准备实盘：事件驱动 易迁移"]
         end
     end
 ```
@@ -698,8 +698,8 @@ def parallel_backtest(param_combinations):
 graph TB
     subgraph 要点["回测系统设计要点"]
         subgraph 架构选择
-            A1["研究阶段：向量化（快速）"]
-            A2["验证阶段：事件驱动（真实）"]
+            A1["研究阶段：向量化, 快速"]
+            A2["验证阶段：事件驱动, 真实"]
         end
         subgraph 核心模块
             M1["数据模块：提供历史数据，防止前视偏差"]
@@ -709,7 +709,7 @@ graph TB
         end
         subgraph 陷阱防范
             T1["严格防止前视偏差"]
-            T2["使用完整数据（含退市）"]
+            T2["使用完整数据, 含退市"]
             T3["保守估计交易成本"]
             T4["Walk-forward 验证"]
         end

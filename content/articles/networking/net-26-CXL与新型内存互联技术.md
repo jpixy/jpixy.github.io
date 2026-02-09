@@ -79,7 +79,7 @@ graph TB
     end
     
     subgraph "传输层"
-        D["CXL Flit (256B)"]
+        D["CXL Flit 256B"]
         E["PCIe PHY"]
     end
     
@@ -152,8 +152,8 @@ sequenceDiagram
 ```mermaid
 graph TB
     subgraph "CXL 设备类型"
-        A["Type 1<br/>加速器 (无本地内存)"]
-        B["Type 2<br/>加速器 (有本地内存)"]
+        A["Type 1<br/>加速器: 无本地内存"]
+        B["Type 2<br/>加速器: 有本地内存"]
         C["Type 3<br/>内存扩展器"]
     end
     
@@ -374,8 +374,8 @@ graph TB
     subgraph "内存分层"
         A["L1/L2/L3 Cache"]
         B["本地 DRAM"]
-        C["CXL 内存<br/>(近端)"]
-        D["CXL 内存<br/>(远端)"]
+        C["CXL 内存<br/>近端"]
+        D["CXL 内存<br/>远端"]
     end
     
     A -->|"ns"| B

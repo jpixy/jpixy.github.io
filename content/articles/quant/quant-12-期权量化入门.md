@@ -191,9 +191,9 @@ graph TB
     subgraph 波动率策略["常见波动率策略"]
         subgraph 做多波动率
             D1["预期波动率会上升"]
-            D2["买入 Straddle（同时买 Call 和 Put）"]
-            D3["买入 Strangle（买 OTM Call 和 OTM Put）"]
-            D4["盈利：大幅波动（无论方向）"]
+            D2["买入 Straddle: 同时买 Call 和 Put"]
+            D3["买入 Strangle: 买 OTM Call 和 OTM Put"]
+            D4["盈利：大幅波动, 无论方向"]
             D5["亏损：波动不足以覆盖期权费"]
         end
         subgraph 做空波动率

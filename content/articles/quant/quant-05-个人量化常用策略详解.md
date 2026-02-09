@@ -19,27 +19,27 @@ tags = ["quant", "trading", "strategy", "momentum", "mean-reversion", "factor-in
 ```mermaid
 graph TB
     subgraph 策略类型["主要策略类型"]
-        subgraph 趋势跟踪["趋势跟踪 (Trend Following)"]
+        subgraph 趋势跟踪["趋势跟踪: Trend Following"]
             T1["核心思想：顺势而为，追涨杀跌"]
             T2["持仓周期：中长期"]
             T3["胜率较低，但盈亏比高"]
         end
-        subgraph 均值回归["均值回归 (Mean Reversion)"]
+        subgraph 均值回归["均值回归: Mean Reversion"]
             M1["核心思想：物极必反，逆势操作"]
             M2["持仓周期：短中期"]
             M3["胜率较高，但盈亏比低"]
         end
-        subgraph 动量["动量策略 (Momentum)"]
+        subgraph 动量["动量策略: Momentum"]
             D1["核心思想：强者恒强，弱者恒弱"]
             D2["持仓周期：中期"]
             D3["在不同资产类别间轮动"]
         end
-        subgraph 因子["因子投资 (Factor Investing)"]
+        subgraph 因子["因子投资: Factor Investing"]
             F1["核心思想：根据特定因子选股"]
             F2["持仓周期：中长期"]
             F3["如价值、质量、规模等因子"]
         end
-        subgraph 套利["统计套利 (Statistical Arbitrage)"]
+        subgraph 套利["统计套利: Statistical Arbitrage"]
             S1["核心思想：利用统计关系"]
             S2["持仓周期：短期"]
             S3["如配对交易"]
@@ -77,8 +77,8 @@ graph TB
             A4["但可以在趋势中获利"]
         end
         subgraph 特点
-            T1["胜率低（30-40%）"]
-            T2["盈亏比高（2:1 以上）"]
+            T1["胜率低 30-40%"]
+            T2["盈亏比高 2:1 以上"]
             T3["需要严格止损"]
             T4["适合趋势明显的市场"]
         end
@@ -127,7 +127,7 @@ graph TB
             X1["突破 10 日最低价 → 平多仓"]
             X2["突破 10 日最高价 → 平空仓"]
         end
-        subgraph 仓位管理["仓位管理（ATR 法）"]
+        subgraph 仓位管理["仓位管理 ATR 法"]
             P1["每单位 = 账户 1% / ATR"]
             P2["最多 4 个单位"]
             P3["加仓条件：盈利 0.5 ATR"]
@@ -149,7 +149,7 @@ graph TB
 graph TB
     subgraph 改进["改进方向"]
         subgraph 趋势确认
-            Q1["加入趋势强度过滤（如 ADX）"]
+            Q1["加入趋势强度过滤如 ADX"]
             Q2["多时间框架确认"]
             Q3["成交量确认"]
         end
@@ -175,18 +175,18 @@ graph TB
 ```mermaid
 graph TB
     subgraph 动量效应
-        subgraph 核心发现["核心发现（学术验证）"]
+        subgraph 核心发现["核心发现 - 学术验证"]
             F1["过去表现好的资产，未来一段时间继续表现好"]
             F2["过去表现差的资产，未来一段时间继续表现差"]
-            F3["中期有效（3-12个月）"]
+            F3["中期有效 3-12个月"]
         end
         subgraph 可能原因
             Y1["投资者反应不足"]
             Y2["信息传播延迟"]
-            Y3["行为偏差（锚定、保守）"]
+            Y3["行为偏差: 锚定、保守"]
         end
         subgraph 应用
-            A1["资产类别轮动（股票/债券/商品）"]
+            A1["资产类别轮动: 股票/债券/商品"]
             A2["行业轮动"]
             A3["个股动量选股"]
         end
@@ -198,14 +198,14 @@ graph TB
 ```mermaid
 graph TB
     subgraph ETF轮动["ETF 轮动策略示例"]
-        subgraph 标的池["标的池（示例）"]
-            E1["SPY（美国大盘）"]
-            E2["QQQ（纳斯达克）"]
-            E3["IWM（美国小盘）"]
-            E4["EFA（发达市场）"]
-            E5["EEM（新兴市场）"]
-            E6["TLT（长期国债）"]
-            E7["GLD（黄金）"]
+        subgraph 标的池["标的池 示例"]
+            E1["SPY 美国大盘"]
+            E2["QQQ 纳斯达克"]
+            E3["IWM 美国小盘"]
+            E4["EFA 发达市场"]
+            E5["EEM 新兴市场"]
+            E6["TLT 长期国债"]
+            E7["GLD 黄金"]
         end
         subgraph 规则
             R1["每月末计算过去 N 个月收益"]
@@ -214,8 +214,8 @@ graph TB
             R4["下月末再平衡"]
         end
         subgraph 变体
-            V1["加入绝对收益过滤（负收益不买）"]
-            V2["使用风险调整收益（夏普比）"]
+            V1["加入绝对收益过滤 负收益不买"]
+            V2["使用风险调整收益 夏普比"]
             V3["加入趋势过滤"]
         end
     end
@@ -242,20 +242,20 @@ def momentum_rotation(prices, lookback=6, n_hold=3):
 ```mermaid
 graph TB
     subgraph 双动量["Gary Antonacci 双动量策略"]
-        subgraph 绝对动量["绝对动量（Absolute Momentum）"]
+        subgraph 绝对动量["绝对动量 Absolute Momentum"]
             A1["资产收益 > 无风险利率 → 持有"]
             A2["资产收益 < 无风险利率 → 不持有/持有现金"]
         end
-        subgraph 相对动量["相对动量（Relative Momentum）"]
+        subgraph 相对动量["相对动量 Relative Momentum"]
             R1["比较多个资产的相对强弱"]
             R2["持有最强的资产"]
         end
         subgraph 组合["双动量组合"]
             C1["1. 先用相对动量选择最强资产"]
-            C2["2. 再用绝对动量过滤（避免熊市持有）"]
+            C2["2. 再用绝对动量过滤 避免熊市持有"]
             C3["3. 不满足条件则持有债券/现金"]
         end
-        subgraph GEM["示例（GEM - Global Equity Momentum）"]
+        subgraph GEM["示例 GEM - Global Equity Momentum"]
             G1["标的：美国股票 vs 国际股票"]
             G2["比较过去 12 个月收益"]
             G3["选强者，但需超过国债收益"]
@@ -296,7 +296,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph RSI策略["RSI 均值回归策略"]
-        subgraph RSI指标["RSI（相对强弱指数）"]
+        subgraph RSI指标["RSI 相对强弱指数"]
             I1["衡量价格涨跌的强度"]
             I2["范围 0-100"]
             I3[">70 超买，<30 超卖"]
@@ -364,24 +364,24 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph 经典因子["五大经典因子（Fama-French + Momentum）"]
-        subgraph 市场因子["市场因子（Market）"]
+    subgraph 经典因子["五大经典因子: Fama-French + Momentum"]
+        subgraph 市场因子["市场因子 Market"]
             M1["股票 vs 无风险资产的超额收益"]
             M2["Beta 风险"]
         end
-        subgraph 规模因子["规模因子（Size - SMB）"]
+        subgraph 规模因子["规模因子 Size-SMB"]
             S1["小盘股 vs 大盘股"]
             S2["小公司溢价"]
         end
-        subgraph 价值因子["价值因子（Value - HML）"]
+        subgraph 价值因子["价值因子 Value-HML"]
             V1["高账面市值比 vs 低账面市值比"]
             V2["便宜股票溢价"]
         end
-        subgraph 动量因子["动量因子（Momentum - UMD）"]
+        subgraph 动量因子["动量因子 Momentum-UMD"]
             D1["过去赢家 vs 过去输家"]
             D2["趋势延续"]
         end
-        subgraph 质量因子["质量因子（Quality）"]
+        subgraph 质量因子["质量因子 Quality"]
             Q1["高盈利质量 vs 低盈利质量"]
             Q2["ROE、毛利率等"]
         end
@@ -395,16 +395,16 @@ graph TB
     subgraph 因子流程["因子策略构建流程"]
         subgraph S1["1. 因子计算"]
             A1["获取财务数据"]
-            A2["计算因子值（如 P/B, ROE）"]
+            A2["计算因子值如 P/B, ROE"]
             A3["数据清洗和标准化"]
         end
         subgraph S2["2. 因子排名"]
             B1["对所有股票按因子值排名"]
-            B2["分成若干组（如 5 分位）"]
+            B2["分成若干组如 5 分位"]
         end
         subgraph S3["3. 组合构建"]
             C1["做多高分位组"]
-            C2["（可选）做空低分位组"]
+            C2["可选 做空低分位组"]
             C3["等权或市值加权"]
         end
         subgraph S4["4. 定期再平衡"]
@@ -422,9 +422,9 @@ graph TB
     subgraph 价值策略["价值策略示例"]
         目标["目标：买入便宜的股票"]
         subgraph 因子选择
-            F1["P/E（市盈率）"]
-            F2["P/B（市净率）"]
-            F3["P/S（市销率）"]
+            F1["P/E 市盈率"]
+            F2["P/B 市净率"]
+            F3["P/S 市销率"]
             F4["EV/EBITDA"]
         end
         subgraph 规则
@@ -436,7 +436,7 @@ graph TB
             R6["6. 每季度再平衡"]
         end
         subgraph 注意
-            N1["价值陷阱（便宜有便宜的道理）"]
+            N1["价值陷阱 便宜有便宜的道理"]
             N2["需要结合质量因子"]
             N3["A 股价值因子效果不稳定"]
         end
@@ -465,9 +465,9 @@ graph TB
             Y4["趋势 + 均值回归互补"]
         end
         subgraph 示例组合
-            S1["40%：趋势跟踪（期货）"]
-            S2["30%：动量轮动（ETF）"]
-            S3["30%：因子投资（股票）"]
+            S1["40%：趋势跟踪 期货"]
+            S2["30%：动量轮动 ETF"]
+            S3["30%：因子投资 股票"]
         end
     end
 ```
@@ -487,8 +487,8 @@ graph TB
             P3["实际上仍是股票主导"]
         end
         subgraph 做法["风险平价做法"]
-            F1["低波动资产（债券）：高权重"]
-            F2["高波动资产（股票）：低权重"]
+            F1["低波动资产 债券：高权重"]
+            F2["高波动资产 股票：低权重"]
             F3["各资产风险贡献相等"]
         end
         计算["计算：权重 ∝ 1 / 波动率"]
@@ -506,7 +506,7 @@ graph TB
     subgraph 评估清单["策略评估检查清单"]
         subgraph 收益指标
             R1["□ 年化收益率"]
-            R2["□ 超额收益（vs 基准）"]
+            R2["□ 超额收益 vs 基准"]
             R3["□ 收益稳定性"]
         end
         subgraph 风险指标

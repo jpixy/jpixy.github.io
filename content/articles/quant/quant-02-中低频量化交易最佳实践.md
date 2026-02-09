@@ -81,7 +81,7 @@ graph TB
             A3["基于持久的市场规律"]
         end
         subgraph T2["2. 简单"]
-            B1["参数少（理想 < 5 个）"]
+            B1["参数少 理想小于5个"]
             B2["规则清晰"]
             B3["易于理解和解释"]
         end
@@ -112,19 +112,19 @@ graph TB
 ```mermaid
 graph TB
     subgraph 陷阱["常见回测陷阱及解决"]
-        subgraph P1["Look-ahead Bias（前视偏差）"]
+        subgraph P1["Look-ahead Bias 前视偏差"]
             P1A["❌ 问题：使用了未来才知道的信息"]
             P1B["✅ 解决：严格使用截止到决策时刻的数据"]
         end
-        subgraph P2["Survivorship Bias（幸存者偏差）"]
+        subgraph P2["Survivorship Bias 幸存者偏差"]
             P2A["❌ 问题：只用存活的股票，忽略退市的"]
             P2B["✅ 解决：使用包含退市股票的完整数据"]
         end
-        subgraph P3["Overfitting（过拟合）"]
+        subgraph P3["Overfitting 过拟合"]
             P3A["❌ 问题：过度优化参数，拟合噪音"]
             P3B["✅ 解决：简化参数、样本外测试、Walk-forward"]
         end
-        subgraph P4["Data Snooping（数据窥探）"]
+        subgraph P4["Data Snooping 数据窥探"]
             P4A["❌ 问题：反复测试直到发现有效策略"]
             P4B["✅ 解决：留出真正未见过的测试集"]
         end
@@ -203,14 +203,14 @@ graph TB
             M2B["例：每只股票投入总资金的 5%"]
             M2C["自动再平衡"]
         end
-        subgraph M3["波动率调整法（推荐）"]
+        subgraph M3["波动率调整法 - 推荐"]
             M3A["根据标的波动率调整仓位"]
             M3B["高波动 → 低仓位"]
             M3C["低波动 → 高仓位"]
             M3D["保持风险贡献一致"]
         end
         subgraph M4["Kelly 公式"]
-            M4A["f = (bp - q) / b"]
+            M4A["f = bp - q / b"]
             M4B["b=赔率, p=胜率, q=败率"]
             M4C["理论最优，实践中用一半 Kelly"]
         end
@@ -309,11 +309,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph 系统架构["自动化交易系统架构"]
-        A["数据源（行情）"] --> B["策略引擎（信号生成）"]
-        B --> C["风控模块（检查）"]
-        C --> D["执行模块（下单）"]
-        D --> E["交易接口（券商API）"]
-        E --> F["监控告警（日志/通知）"]
+        A["数据源: 行情"] --> B["策略引擎: 信号生成"]
+        B --> C["风控模块: 检查"]
+        C --> D["执行模块: 下单"]
+        D --> E["交易接口: 券商API"]
+        E --> F["监控告警: 日志/通知"]
     end
 ```
 
@@ -362,7 +362,7 @@ graph TB
         end
         subgraph D2["行为变化"]
             D2A["策略容量变小"]
-            D2B["竞争加剧（策略拥挤）"]
+            D2B["竞争加剧 策略拥挤"]
             D2C["市场结构变化"]
         end
         subgraph D3["应对方法"]

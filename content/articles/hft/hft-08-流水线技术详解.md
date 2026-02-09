@@ -225,10 +225,10 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph BAD["传统布局（伪共享）"]
+    subgraph BAD["传统布局 伪共享"]
         B1["write_pos | read_pos | data...<br/>← 同一缓存行，互相失效"]
     end
-    subgraph GOOD["优化布局（填充）"]
+    subgraph GOOD["优化布局 填充"]
         G1["write_pos | padding[56]<br/>← 独立缓存行"]
         G2["read_pos | padding[56]<br/>← 独立缓存行"]
         G3["data[0][1][2]..."]

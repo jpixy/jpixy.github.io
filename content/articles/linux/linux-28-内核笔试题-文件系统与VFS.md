@@ -112,7 +112,7 @@ graph TB
     
     ADDR["address_space<br/>host, i_pages<br/>a_ops"]
     
-    PCACHE["页缓存<br/>(Page Cache)"]
+    PCACHE["页缓存<br/>Page Cache"]
     
     FILE_OPS["file_operations<br/>.read, .write<br/>.open, .release"]
     
@@ -287,8 +287,8 @@ graph TB
         H1["[1]"] --> D2["dentry 'bar'"]
         H2["[2]"] --> D3["dentry 'baz'"]
         H3["[3]"] --> D4["dentry 'qux'"]
-        D1 --> D1C["dentry (哈希冲突)"]
-        D2 --> D2C["dentry (哈希冲突)"]
+        D1 --> D1C["dentry 哈希冲突"]
+        D2 --> D2C["dentry 哈希冲突"]
     end
 ```
 
@@ -345,7 +345,7 @@ void d_instantiate(struct dentry *entry, struct inode *inode) {
 stateDiagram-v2
     [*] --> 未使用: d_alloc()
     
-    未使用: d_inode=NULL<br/>(负面 dentry)
+    未使用: d_inode=NULL<br/>负面 dentry
     使用中: d_count > 0<br/>d_inode != NULL
     LRU缓存: d_count = 0<br/>可被回收
     
@@ -618,7 +618,7 @@ graph TB
 graph TB
     subgraph 每个页面
         GRAB["1. grab_cache_page_write_begin()<br/>查找或分配页面，并锁定"]
-        BEGIN["2. a_ops->write_begin()<br/>准备页面（可能需要读取部分块）"]
+        BEGIN["2. a_ops->write_begin()<br/>准备页面 可能需要读取部分块"]
         COPY["3. copy_from_user()<br/>从用户空间复制数据到页面"]
         END["4. a_ops->write_end()<br/>标记页面为脏 (SetPageDirty)<br/>标记 inode 为脏<br/>解锁页面"]
         BALANCE["5. balance_dirty_pages_ratelimited()<br/>如果脏页过多，可能触发同步写回"]
@@ -834,12 +834,12 @@ stateDiagram-v2
 
 ```mermaid
 stateDiagram-v2
-    ActiveLRU: Active LRU (活动链表)
-    InactiveLRU: Inactive LRU (非活动链表)
+    ActiveLRU: Active LRU 活动链表
+    InactiveLRU: Inactive LRU 非活动链表
     Reclaimed: 回收
     
     ActiveLRU --> InactiveLRU: 老化
-    InactiveLRU --> ActiveLRU: 访问（激活）
+    InactiveLRU --> ActiveLRU: 访问 激活
     InactiveLRU --> Reclaimed: 回收
 ```
 
@@ -1125,8 +1125,8 @@ fdatasync() 可能跳过的元数据：
 
 ```mermaid
 graph TB
-    subgraph 日志区域["Ext4 日志区域 (循环使用)"]
-        SB["日志超级块 (Journal Superblock)<br/>日志大小、块大小、第一个有效事务、序列号"]
+    subgraph 日志区域["Ext4 日志区域 循环使用"]
+        SB["日志超级块 Journal Superblock<br/>日志大小、块大小、第一个有效事务、序列号"]
         
         subgraph TX1["事务 1"]
             DESC1["描述符块<br/>记录事务中修改的块"]

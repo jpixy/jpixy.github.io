@@ -104,8 +104,8 @@ cabinet_layout:
 ```mermaid
 graph TB
     Exchange["Exchange Gateway"]
-    Primary["Primary Switch<br/>(Arista)"]
-    Secondary["Secondary Switch<br/>(Arista)"]
+    Primary["Primary Switch<br/>Arista"]
+    Secondary["Secondary Switch<br/>Arista"]
     TS1["Trading Server 1"]
     TS2["Trading Server 2"]
     MD["Market Data"]
@@ -311,14 +311,14 @@ class NetworkRedundancy:
 
 ```mermaid
 graph TB
-    GPS["GPS Antenna<br/>(屋顶安装)"]
-    GM["PTP Grandmaster<br/>(Meinberg M1000)<br/>Accuracy: <100ns"]
-    BC1["Boundary Clock 1<br/>(Switch)"]
-    BC2["Boundary Clock 2<br/>(Switch)"]
-    BC3["Boundary Clock 3<br/>(Switch)"]
-    S1["Server (Slave)"]
-    S2["Server (Slave)"]
-    S3["Server (Slave)"]
+    GPS["GPS Antenna<br/>屋顶安装"]
+    GM["PTP Grandmaster<br/>Meinberg M1000<br/>Accuracy: 100ns"]
+    BC1["Boundary Clock 1<br/>Switch"]
+    BC2["Boundary Clock 2<br/>Switch"]
+    BC3["Boundary Clock 3<br/>Switch"]
+    S1["Server Slave"]
+    S2["Server Slave"]
+    S3["Server Slave"]
     
     GPS --> GM
     GM -->|PTP Domain 0| BC1
@@ -513,18 +513,18 @@ int64_t get_rx_timestamp(struct msghdr* msg) {
 
 ```mermaid
 graph TB
-    subgraph FeedA["主电源路径 (Feed A)"]
+    subgraph FeedA["主电源路径 Feed A"]
         A1["市电输入 A"]
         A2["UPS A<br/>电池后备: 15分钟<br/>效率: >96%"]
-        A3["PDU A（智能）<br/>每路监控/远程控制"]
+        A3["PDU A 智能型<br/>每路监控/远程控制"]
         A4["服务器 PSU A"]
         A1 --> A2 --> A3 --> A4
     end
     
-    subgraph FeedB["备用电源路径 (Feed B)"]
-        B1["市电输入 B<br/>（独立变电站）"]
+    subgraph FeedB["备用电源路径 Feed B"]
+        B1["市电输入 B<br/>独立变电站"]
         B2["UPS B<br/>电池后备: 15分钟<br/>效率: >96%"]
-        B3["PDU B（智能）<br/>每路监控/远程控制"]
+        B3["PDU B 智能型<br/>每路监控/远程控制"]
         B4["服务器 PSU B"]
         B1 --> B2 --> B3 --> B4
     end
@@ -706,24 +706,24 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph Primary["主站点 (Primary Site)"]
-        TE1["Trading Engine<br/>(Active)"]
-        MD1["Market Data<br/>(Active)"]
-        OS1["Order State<br/>(Primary)"]
+    subgraph Primary["主站点 Primary Site"]
+        TE1["Trading Engine<br/>Active"]
+        MD1["Market Data<br/>Active"]
+        OS1["Order State<br/>Primary"]
         TE1 --> MD1
         MD1 --> OS1
     end
-    subgraph Secondary["DR站点 (Secondary Site)"]
-        TE2["Trading Engine<br/>(Standby)"]
-        MD2["Market Data<br/>(Standby)"]
-        OS2["Order State<br/>(Replica)"]
+    subgraph Secondary["DR站点 Secondary Site"]
+        TE2["Trading Engine<br/>Standby"]
+        MD2["Market Data<br/>Standby"]
+        OS2["Order State<br/>Replica"]
         TE2 --> MD2
         MD2 --> OS2
     end
     
-    TE1 -->|"实时同步<br/>(延迟<1ms)"| TE2
+    TE1 -->|"实时同步<br/>延迟1ms"| TE2
     MD1 -->|"实时同步"| MD2
-    OS1 -->|"实时复制<br/>(WAL shipping)"| OS2
+    OS1 -->|"实时复制<br/>WAL shipping"| OS2
 ```
 
 **DR目标**：

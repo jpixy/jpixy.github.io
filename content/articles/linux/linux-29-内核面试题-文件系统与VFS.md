@@ -411,7 +411,7 @@ graph TB
     
     subgraph 内核空间
         VFS["VFS 层"]
-        PC["页缓存<br/>(Page Cache)"]
+        PC["页缓存<br/>Page Cache"]
         FS["文件系统"]
     end
     
@@ -497,7 +497,7 @@ flowchart TB
     GRAB["获取或分配页面"]
     COPY["复制数据到页面"]
     DIRTY["标记页面为脏"]
-    RETURN["返回（数据在缓存中）"]
+    RETURN["返回 数据在缓存中"]
     
     subgraph 后台写回
         TIMER["定时器到期 / 内存压力"]

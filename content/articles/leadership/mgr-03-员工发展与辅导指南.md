@@ -168,10 +168,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph GROW模型
-        G["G - Goal（目标）<br/>你的职业目标是什么？<br/>理想的工作状态是怎样的？"]
-        R["R - Reality（现状）<br/>目前的情况是怎样的？<br/>距离目标有哪些差距？"]
-        O["O - Options（选择）<br/>有哪些可能的路径？<br/>各有什么优缺点？"]
-        W["W - Will（意愿与行动）<br/>你决定采取什么行动？<br/>具体计划是什么？"]
+        G["G - Goal 目标<br/>你的职业目标是什么？<br/>理想的工作状态是怎样的？"]
+        R["R - Reality 现状<br/>目前的情况是怎样的？<br/>距离目标有哪些差距？"]
+        O["O - Options 选择<br/>有哪些可能的路径？<br/>各有什么优缺点？"]
+        W["W - Will 意愿与行动<br/>你决定采取什么行动？<br/>具体计划是什么？"]
     end
     G --> R --> O --> W
 ```
@@ -230,9 +230,9 @@ graph TB
 ```mermaid
 graph TB
     subgraph "SBI 反馈模型"
-        S["Situation（情境）<br/>具体的时间、地点、场景"]
-        B["Behavior（行为）<br/>可观察的具体行为，而非主观判断"]
-        I["Impact（影响）<br/>这个行为产生的效果"]
+        S["Situation 情境<br/>具体的时间、地点、场景"]
+        B["Behavior 行为<br/>可观察的具体行为，而非主观判断"]
+        I["Impact 影响<br/>这个行为产生的效果"]
         
         S --> B --> I
     end
@@ -250,7 +250,7 @@ graph TB
 ```mermaid
 graph TB
     A["1. 请求许可<br/>'我想给你一些反馈，现在方便吗？'"]
-    B["2. 描述观察（SBI）<br/>具体、客观、基于事实"]
+    B["2. 描述观察 SBI<br/>具体、客观、基于事实"]
     C["3. 表达影响<br/>对工作、团队、你自己的影响"]
     D["4. 询问视角<br/>'你是怎么看这件事的？'"]
     E["5. 共同探讨<br/>'下次我们可以怎么做会更好？'"]
@@ -307,9 +307,9 @@ graph TB
 graph TB
     subgraph 70-20-10学习模型
         A["70% 工作实践"]
-        A1["拉伸任务（略超能力的挑战）"]
+        A1["拉伸任务: 略超能力的挑战"]
         A2["跨领域项目"]
-        A3["问题解决（troubleshooting）"]
+        A3["问题解决 troubleshooting"]
         A4["轮岗/换组"]
         A --> A1
         A --> A2
@@ -318,7 +318,7 @@ graph TB
         
         B["20% 向他人学习"]
         B1["导师制度"]
-        B2["Shadowing（跟随学习）"]
+        B2["Shadowing 跟随学习"]
         B3["结对编程"]
         B4["反馈和 coaching"]
         B --> B1

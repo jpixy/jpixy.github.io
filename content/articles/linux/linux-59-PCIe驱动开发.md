@@ -66,21 +66,21 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph 事务层["事务层 (Transaction Layer)"]
+    subgraph 事务层["事务层 Transaction Layer"]
         T1[生成/解析 TLP]
         T2[支持事务类型：Memory, IO, Config, Message]
         T3[流量控制]
         T4[事务排序规则]
     end
 
-    subgraph 数据链路层["数据链路层 (Data Link Layer)"]
+    subgraph 数据链路层["数据链路层 Data Link Layer"]
         D1[包装 TLP 为 DLLP]
         D2[CRC 校验]
         D3[ACK/NAK 机制]
         D4[重传机制]
     end
 
-    subgraph 物理层["物理层 (Physical Layer)"]
+    subgraph 物理层["物理层 Physical Layer"]
         P1[8b/10b 或 128b/130b 编码]
         P2[串行/解串]
         P3[电气规范]

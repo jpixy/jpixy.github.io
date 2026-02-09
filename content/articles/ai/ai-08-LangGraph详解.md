@@ -34,8 +34,8 @@ graph TB
         L2[Prompt 模板]
         L3[文档加载器]
         L4[向量存储]
-        L5["Chain（链式调用）"]
-        L6["Tools（工具调用）"]
+        L5["Chain 链式调用"]
+        L6["Tools 工具调用"]
     end
     
     subgraph LGExtends["LangGraph 基于 LangChain 构建"]
@@ -80,7 +80,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph LangChainCore["LangChain 核心"]
-        subgraph Chain["Chain（链）- 严格线性执行"]
+        subgraph Chain["Chain 链 - 严格线性执行"]
             S1[Step 1] --> S2[Step 2] --> S3[Step 3]
         end
         
@@ -97,7 +97,7 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph LangGraphCore["LangGraph 核心 - Graph（图）"]
+    subgraph LangGraphCore["LangGraph 核心 - Graph 图"]
         START[START] --> A[Node A]
         A --> B[Node B]
         A --> C["Node C<br/>← 条件分支"]

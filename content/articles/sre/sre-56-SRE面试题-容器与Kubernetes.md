@@ -78,9 +78,9 @@ Docker基于Linux内核的三大技术：
 ```mermaid
 graph TB
     subgraph Container["容器"]
-        Writable["可写层（容器运行时）"]
+        Writable["可写层 容器运行时"]
     end
-    subgraph Image["镜像（只读）"]
+    subgraph Image["镜像 只读"]
         App["应用层"]
         Deps["依赖层"]
         Base["基础镜像层"]

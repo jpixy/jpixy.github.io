@@ -238,7 +238,7 @@ uint8_t switches = (GPIOB->IDR >> 8) & 0x0F;  // 读取PB8-PB11
 
 ```mermaid
 graph TB
-    A["1. 上电/复位<br/>• 从0x00000000读取初始栈指针MSP<br/>• 从0x00000004读取复位向量Reset_Handler"] --> B["2. Reset_Handler执行<br/>• 初始化.data段（Flash→RAM）<br/>• 清零.bss段<br/>• 调用SystemInit（配置时钟等）<br/>• 调用__libc_init_array（C++构造函数）<br/>• 跳转到main"]
+    A["1. 上电/复位<br/>• 从0x00000000读取初始栈指针MSP<br/>• 从0x00000004读取复位向量Reset_Handler"] --> B["2. Reset_Handler执行<br/>• 初始化.data段 Flash→RAM<br/>• 清零.bss段<br/>• 调用SystemInit 配置时钟等<br/>• 调用__libc_init_array C++构造函数<br/>• 跳转到main"]
     B --> C["3. main函数<br/>• HAL_Init<br/>• SystemClock_Config<br/>• 外设初始化<br/>• 主循环"]
 ```
 

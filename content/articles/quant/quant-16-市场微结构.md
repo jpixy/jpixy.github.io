@@ -19,19 +19,19 @@ tags = ["quant", "market-microstructure", "orderbook", "market-maker", "executio
 ```mermaid
 graph TB
     subgraph 交易场所分类
-        subgraph 交易所["交易所（Exchange）"]
+        subgraph 交易所["交易所 Exchange"]
             A1["集中化、有组织的市场"]
             A2["标准化合约"]
             A3["透明的订单簿"]
             A4["例：NYSE、NASDAQ、上交所、深交所"]
         end
-        subgraph OTC["场外市场（OTC）"]
+        subgraph OTC["场外市场 OTC"]
             B1["分散化、双边交易"]
             B2["定制化合约"]
             B3["透明度低"]
             B4["例：外汇、债券、衍生品"]
         end
-        subgraph 暗池["暗池（Dark Pool）"]
+        subgraph 暗池["暗池 Dark Pool"]
             C1["不公开显示订单"]
             C2["大宗交易、减少市场冲击"]
             C3["机构常用"]
@@ -49,7 +49,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph 市场参与者角色
-        subgraph 做市商["做市商（Market Maker）"]
+        subgraph 做市商["做市商 Market Maker"]
             A1["持续提供买卖报价"]
             A2["赚取买卖价差"]
             A3["提供流动性"]
@@ -60,7 +60,7 @@ graph TB
             B2["关注执行成本"]
             B3["使用算法交易"]
         end
-        subgraph HFT["高频交易者（HFT）"]
+        subgraph HFT["高频交易者 HFT"]
             C1["极短持仓周期"]
             C2["速度优势"]
             C3["提供流动性/套利"]
@@ -274,7 +274,7 @@ print(f"VWAP to buy 2000: {ob.vwap_impact('buy', 2000):.2f}")
 graph TB
     subgraph 价格发现过程
         subgraph 信息反映到价格
-            A1["1. 新信息产生（如财报发布）"]
+            A1["1. 新信息产生: 如财报发布"]
             A2["2. 知情交易者下单"]
             A3["3. 订单簿变化"]
             A4["4. 价格调整"]

@@ -391,15 +391,15 @@ systemctl restart postgresql
 
 ```mermaid
 graph TB
-    subgraph partition["脑裂（Split Brain）：网络分区"]
+    subgraph partition["脑裂 Split Brain: 网络分区"]
         subgraph left["分区1"]
-            A["节点A<br/>(认为自己是主)"]
-            C1["客户端1<br/>(写入A)"]
+            A["节点A<br/>认为自己是主"]
+            C1["客户端1<br/>写入A"]
             C1 --> A
         end
         subgraph right["分区2"]
-            B["节点B<br/>(认为自己是主)"]
-            C2["客户端2<br/>(写入B)"]
+            B["节点B<br/>认为自己是主"]
+            C2["客户端2<br/>写入B"]
             C2 --> B
         end
     end

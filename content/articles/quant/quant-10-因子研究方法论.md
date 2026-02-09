@@ -57,7 +57,7 @@ tags = ["quant", "factor-investing", "alpha", "research", "ic-analysis"]
 graph TB
     subgraph 因子来源["因子创意来源"]
         subgraph 学术文献
-            X1["经典因子（Fama-French 五因子等）"]
+            X1["经典因子: Fama-French 五因子等"]
             X2["学术论文中的新发现"]
             X3["注意发表偏差和数据窥探"]
         end
@@ -489,8 +489,8 @@ graph TB
             G2["历史有效只是偶然"]
         end
         subgraph 衰减速度
-            SD1["技术面因子：快（周~月）"]
-            SD2["基本面因子：慢（年）"]
+            SD1["技术面因子：快, 周~月"]
+            SD2["基本面因子：慢, 年"]
             SD3["另类因子：取决于数据独特性"]
         end
     end

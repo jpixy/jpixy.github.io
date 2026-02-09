@@ -397,24 +397,24 @@ groups:
 ```mermaid
 graph TB
     subgraph 数据采集层
-        C1["Prometheus（指标）"]
-        C2["Filebeat/Fluentd（日志）"]
-        C3["Jaeger Agent（追踪）"]
+        C1["Prometheus 指标"]
+        C2["Filebeat/Fluentd 日志"]
+        C3["Jaeger Agent 追踪"]
     end
     
     subgraph 数据传输层
-        T1["Kafka/Pulsar（缓冲）"]
-        T2["Collector（处理）"]
+        T1["Kafka/Pulsar 缓冲"]
+        T2["Collector 处理"]
     end
     
     subgraph 存储层
-        S1["Prometheus/Thanos（指标）"]
-        S2["Elasticsearch/Loki（日志）"]
-        S3["Jaeger/Tempo（追踪）"]
+        S1["Prometheus/Thanos 指标"]
+        S2["Elasticsearch/Loki 日志"]
+        S3["Jaeger/Tempo 追踪"]
     end
     
     subgraph 展示层
-        D1["Grafana（统一Dashboard）"]
+        D1["Grafana 统一Dashboard"]
         D2["告警管理"]
         D3["关联分析"]
     end

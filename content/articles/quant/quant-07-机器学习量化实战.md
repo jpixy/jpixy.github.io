@@ -36,16 +36,16 @@ tags = ["quant", "machine-learning", "feature-engineering", "xgboost", "deep-lea
 graph TB
     subgraph ML场景["ML 适合的场景"]
         subgraph 适合["✅ 适合"]
-            S1["多因子选股（特征多，非线性关系）"]
-            S2["另类数据处理（文本、图像）"]
+            S1["多因子选股: 特征多，非线性关系"]
+            S2["另类数据处理: 文本、图像"]
             S3["高维模式识别"]
-            S4["预测收益方向（分类问题）"]
+            S4["预测收益方向 分类问题"]
         end
         subgraph 不适合["❌ 不太适合"]
-            N1["简单趋势策略（传统方法够用）"]
+            N1["简单趋势策略 传统方法够用"]
             N2["数据量少的场景"]
             N3["需要高度可解释性"]
-            N4["高频交易（延迟要求太高）"]
+            N4["高频交易 延迟要求太高"]
         end
         subgraph 提醒["⚠️ 关键提醒"]
             W1["ML 不是魔法，金融数据信噪比极低"]
@@ -77,10 +77,10 @@ graph TB
 graph TB
     subgraph 特征类型["量化交易常用特征"]
         subgraph 价格特征
-            J1["收益率（日、周、月）"]
-            J2["动量（过去 N 日收益）"]
-            J3["波动率（历史波动、ATR）"]
-            J4["价格位置（相对高低点）"]
+            J1["收益率: 日、周、月"]
+            J2["动量: 过去 N 日收益"]
+            J3["波动率: 历史波动、ATR"]
+            J4["价格位置: 相对高低点"]
         end
         subgraph 技术指标
             T1["RSI、MACD、布林带"]
@@ -88,10 +88,10 @@ graph TB
             T3["成交量指标"]
         end
         subgraph 基本面特征
-            F1["估值指标（P/E, P/B, P/S）"]
-            F2["盈利指标（ROE, 毛利率）"]
-            F3["成长指标（营收增长、利润增长）"]
-            F4["质量指标（资产负债率）"]
+            F1["估值指标: P/E, P/B, P/S"]
+            F2["盈利指标: ROE, 毛利率"]
+            F3["成长指标: 营收增长、利润增长"]
+            F4["质量指标: 资产负债率"]
         end
         subgraph 另类数据
             L1["舆情分数"]
@@ -154,7 +154,7 @@ graph TB
     subgraph 预处理["特征预处理要点"]
         subgraph 标准化["标准化/归一化"]
             B1["Z-score 标准化"]
-            B2["截面标准化（每期在所有股票中排名）"]
+            B2["截面标准化: 每期在所有股票中排名"]
             B3["分位数转换"]
         end
         subgraph 缺失值["缺失值处理"]
@@ -163,8 +163,8 @@ graph TB
             Q3["不要用未来数据填充"]
         end
         subgraph 异常值["异常值处理"]
-            Y1["Winsorize（截尾）"]
-            Y2["MAD（中位数绝对偏差）"]
+            Y1["Winsorize 截尾"]
+            Y2["MAD: 中位数绝对偏差"]
             Y3["保守处理，不要过度清洗"]
         end
         subgraph 时间对齐
@@ -307,8 +307,8 @@ graph TB
     subgraph 防过拟合["过拟合控制策略"]
         subgraph S1["1. 简化模型"]
             A1["减少特征数量"]
-            A2["减少模型复杂度（浅树、少参数）"]
-            A3["使用正则化（L1/L2）"]
+            A2["减少模型复杂度: 浅树、少参数"]
+            A3["使用正则化 L1/L2"]
         end
         subgraph S2["2. 时间序列验证"]
             B1["绝对不能随机分割"]
@@ -337,7 +337,7 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph WF["Walk-Forward 验证流程（时间 →）"]
+    subgraph WF["Walk-Forward 验证流程"]
         subgraph P1["期间1"]
             T1["训练1"] --> Test1["测试1"]
         end
@@ -408,12 +408,12 @@ graph TB
     subgraph 预测目标["预测目标设计"]
         subgraph 回归目标
             H1["预测未来 N 日收益率"]
-            H2["预测 Alpha（超额收益）"]
+            H2["预测 Alpha: 超额收益"]
             H3["难度较大，信噪比低"]
         end
-        subgraph 分类目标["分类目标（推荐）"]
-            F1["预测涨跌方向（二分类）"]
-            F2["预测收益分组（多分类）"]
+        subgraph 分类目标["分类目标 推荐"]
+            F1["预测涨跌方向 二分类"]
+            F2["预测收益分组 多分类"]
             F3["简化问题，更稳定"]
         end
         subgraph 排序目标
@@ -509,8 +509,8 @@ class MLStrategy:
 graph TB
     subgraph 评估要点["ML 策略评估要点"]
         subgraph 不只看收益
-            S1["IC（信息系数）：预测值与实际收益的相关性"]
-            S2["IR（信息比率）：IC 的稳定性"]
+            S1["IC 信息系数：预测值与实际收益的相关性"]
+            S2["IR 信息比率：IC 的稳定性"]
             S3["分组收益单调性"]
         end
         subgraph IC分析["IC 分析"]
@@ -550,10 +550,10 @@ graph TB
         subgraph 实际效果
             X1["学术上有很多 paper"]
             X2["实践中效果存疑"]
-            X3["传统 ML（XGBoost）往往更稳定"]
+            X3["传统 ML 如 XGBoost 往往更稳定"]
         end
         subgraph 适用场景
-            S1["另类数据（文本、图像）"]
+            S1["另类数据: 文本、图像"]
             S2["超高频数据"]
             S3["有足够多数据的场景"]
         end
@@ -570,16 +570,16 @@ graph TB
 graph TB
     subgraph DL建议["深度学习使用建议"]
         subgraph 网络设计
-            W1["保持简单（2-3 层）"]
-            W2["使用 Dropout（0.3-0.5）"]
+            W1["保持简单 2-3 层"]
+            W2["使用 Dropout 0.3-0.5"]
             W3["Batch Normalization"]
-            W4["早停（Early Stopping）"]
+            W4["早停 Early Stopping"]
         end
         subgraph 训练技巧
-            X1["小学习率（0.0001）"]
+            X1["小学习率 0.0001"]
             X2["小 batch size"]
             X3["更多正则化"]
-            X4["数据增强（如果可行）"]
+            X4["数据增强 如果可行"]
         end
         subgraph 验证
             Y1["同样用 Walk-forward"]

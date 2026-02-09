@@ -138,7 +138,7 @@ graph TB
     end
     
     subgraph "PagedAttention 解决方案"
-        E["按页分配（如 16 tokens/page）"]
+        E["按页分配 如 16 tokens/page"]
         F["非连续存储，逻辑连续"]
         G["按需分配，动态扩展"]
     end
@@ -382,7 +382,7 @@ graph TB
     end
     
     subgraph "FlashAttention 解决方案"
-        D["分块计算（Tiling）"]
+        D["分块计算 Tiling"]
         E["在 SRAM 中完成"]
         F["Online Softmax"]
         G["重计算代替存储"]
@@ -1053,7 +1053,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph W1["Week 1: 编译和使用"]
-        A1["编译 NCNN（Linux、Android）"]
+        A1["编译 NCNN: Linux、Android"]
         A2["运行 benchmark 示例"]
         A3["部署 MobileNet 分类模型"]
     end
@@ -1062,7 +1062,7 @@ graph TB
         B1["PyTorch → ONNX"]
         B2["ONNX → NCNN"]
         B3["处理不支持的算子"]
-        B4["模型优化（ncnnoptimize）"]
+        B4["模型优化 ncnnoptimize"]
     end
     
     subgraph W3["Week 3-4: 源码阅读"]

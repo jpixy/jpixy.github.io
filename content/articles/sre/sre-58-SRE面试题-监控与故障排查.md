@@ -251,12 +251,12 @@ SpanContext：跨服务传递的上下文
 ```mermaid
 graph TB
     subgraph Trace["Trace ID: abc123"]
-        Gateway["API Gateway<br/>(50ms)"]
-        UserService["User Service<br/>(30ms)"]
-        UserMySQL["MySQL Query<br/>(10ms)"]
-        OrderService["Order Service<br/>(100ms)"]
-        Redis["Redis Get<br/>(5ms)"]
-        OrderMySQL["MySQL Query<br/>(80ms) ← 瓶颈"]
+        Gateway["API Gateway<br/>50ms"]
+        UserService["User Service<br/>30ms"]
+        UserMySQL["MySQL Query<br/>10ms"]
+        OrderService["Order Service<br/>100ms"]
+        Redis["Redis Get<br/>5ms"]
+        OrderMySQL["MySQL Query<br/>80ms 瓶颈"]
     end
     
     Gateway --> UserService

@@ -85,7 +85,7 @@ tags = ["leadership", "management", "incident-response", "on-call", "sre", "inte
 ```mermaid
 graph TB
     A["1. 检测<br/>告警/用户报告/监控发现"] --> B["2. 响应<br/>On-Call 确认，初步评估"]
-    B --> C["3. 止血<br/>恢复服务优先（回滚/切流/降级）"]
+    B --> C["3. 止血<br/>恢复服务优先: 回滚/切流/降级"]
     C --> D["4. 根因<br/>深入分析根本原因"]
     D --> E["5. 修复<br/>彻底解决问题"]
     E --> F["6. 复盘<br/>Postmortem，防止再发"]

@@ -110,7 +110,7 @@ tags = ["quant", "CTP", "futures", "china-market", "broker", "account-opening"]
 ```mermaid
 graph TB
     subgraph 开户流程["互联网开户步骤"]
-        S1["步骤1：联系客户经理<br/>（开户前最重要！）<br/>谈费率、获取专属链接"]
+        S1["步骤1：联系客户经理<br/>开户前最重要！<br/>谈费率、获取专属链接"]
         S2["步骤2：下载开户APP<br/>期货公司APP或期货开户云"]
         S3["步骤3：填写基本信息<br/>上传身份证、填写客户经理工号"]
         S4["步骤4：视频验证<br/>2-5分钟视频通话"]

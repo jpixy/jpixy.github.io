@@ -653,7 +653,7 @@ class RecoveryManager:
 ```mermaid
 graph TB
     subgraph 运维流程["日常运维流程"]
-        subgraph 盘前每日["盘前（每日）"]
+        subgraph 盘前每日["盘前 每日"]
             Q1["检查系统状态"]
             Q2["检查资金和持仓"]
             Q3["检查策略参数"]
@@ -664,7 +664,7 @@ graph TB
             P2["关注异常告警"]
             P3["不轻易人工干预"]
         end
-        subgraph 盘后每日["盘后（每日）"]
+        subgraph 盘后每日["盘后 每日"]
             H1["核对持仓和成交"]
             H2["记录当日盈亏"]
             H3["检查系统日志"]
@@ -689,7 +689,7 @@ graph TB
 graph TB
     subgraph 部署实践["部署最佳实践"]
         subgraph 服务器选择
-            S1["云服务器（稳定性）"]
+            S1["云服务器 稳定性"]
             S2["选择靠近交易所的地区"]
             S3["考虑备用服务器"]
         end

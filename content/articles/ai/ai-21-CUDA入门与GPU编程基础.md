@@ -45,7 +45,7 @@ CUDA（Compute Unified Device Architecture）是 NVIDIA 推出的并行计算平
 
 ```mermaid
 graph TB
-    subgraph CPU["CPU（延迟优化）"]
+    subgraph CPU["CPU 延迟优化"]
         C1["Core 1<br/>ALU + L1/L2"]
         C2["Core 2<br/>ALU + L1/L2"]
         C3["Core 3<br/>ALU + L1/L2"]
@@ -53,7 +53,7 @@ graph TB
         L3["大容量 L3 Cache"]
     end
     
-    subgraph GPU["GPU（吞吐量优化）"]
+    subgraph GPU["GPU 吞吐量优化"]
         SM1["SM: CUDA Cores ×128"]
         SM2["SM: CUDA Cores ×128"]
         SM3["SM: CUDA Cores ×128"]
@@ -82,19 +82,19 @@ graph TB
 graph TB
     GPU["GPU"]
     
-    subgraph GPC["GPC (Graphics Processing Cluster)"]
-        subgraph TPC["TPC (Texture Processing Cluster)"]
-            subgraph SM["SM (Streaming Multiprocessor)"]
+    subgraph GPC["GPC: Graphics Processing Cluster"]
+        subgraph TPC["TPC: Texture Processing Cluster"]
+            subgraph SM["SM: Streaming Multiprocessor"]
                 WS["Warp Scheduler × 2"]
-                CUDA["CUDA Cores (FP32/INT32)<br/>128 个 per SM"]
-                TC["Tensor Cores (矩阵运算加速)"]
-                SMem["Shared Memory / L1 Cache (128KB)<br/>Register File (256KB)"]
+                CUDA["CUDA Cores FP32/INT32<br/>128 个 per SM"]
+                TC["Tensor Cores 矩阵运算加速"]
+                SMem["Shared Memory / L1 Cache 128KB<br/>Register File 256KB"]
             end
         end
     end
     
-    L2["L2 Cache (数 MB)"]
-    Global["Global Memory (HBM/GDDR, 数十 GB)"]
+    L2["L2 Cache 数 MB"]
+    Global["Global Memory HBM/GDDR 数十 GB"]
     
     GPU --> GPC --> L2 --> Global
 ```
@@ -133,20 +133,19 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph Grid["Grid（网格）"]
-        subgraph Row1[""]
-            B00["Block(0,0)"]
-            B10["Block(1,0)"]
-            B20["Block(2,0)"]
-            B30["Block(3,0)"]
-        end
-        subgraph Row2[""]
-            B01["Block(0,1)"]
-            B11["Block(1,1)"]
-            B21["Block(2,1)"]
-            B31["Block(3,1)"]
-        end
+    subgraph Grid["Grid"]
+        B00["Block 0,0"]
+        B10["Block 1,0"]
+        B20["Block 2,0"]
+        B30["Block 3,0"]
+        B01["Block 0,1"]
+        B11["Block 1,1"]
+        B21["Block 2,1"]
+        B31["Block 3,1"]
     end
+    
+    B00 --- B10 --- B20 --- B30
+    B01 --- B11 --- B21 --- B31
 ```
 
 | 概念 | 说明 |

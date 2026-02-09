@@ -18,9 +18,9 @@ tags = ["quant", "trading", "algorithmic-trading", "personal-finance"]
 
 ```mermaid
 graph TB
-    subgraph 机构优势["机构优势（个人难以竞争）"]
+    subgraph 机构优势["机构优势 - 个人难以竞争"]
         subgraph 速度
-            S1["Co-location（服务器放交易所旁边）"]
+            S1["Co-location - 服务器放交易所旁边"]
             S2["专用网络和硬件"]
             S3["微秒级延迟"]
             S4["个人延迟：几十到几百毫秒"]
@@ -37,7 +37,7 @@ graph TB
             R4["更多的策略容量"]
         end
     end
-    结论["结论：高频交易（HFT）不是个人的战场"]
+    结论["结论：高频交易 HFT 不是个人的战场"]
     机构优势 --> 结论
 ```
 
@@ -60,7 +60,7 @@ graph TB
         subgraph 时间优势
             T1["不需要每月/每季度交成绩单"]
             T2["可以等待更长时间"]
-            T3["可以接受更大的回撤（自己的钱）"]
+            T3["可以接受更大的回撤 - 自己的钱"]
         end
         subgraph 成本优势
             C1["不需要高薪团队"]
@@ -82,7 +82,7 @@ graph TB
         end
         subgraph 优势["✅ 利用个人优势"]
             Y1["小盘股/小市场"]
-            Y2["另类数据（个人观察）"]
+            Y2["另类数据 - 个人观察"]
             Y3["长期持有策略"]
             Y4["多市场分散"]
         end
@@ -151,12 +151,12 @@ graph TB
 ```mermaid
 graph TB
     subgraph 语言选择["个人量化常用语言"]
-        subgraph Python["Python（推荐入门）"]
-            P1["✅ 生态丰富（pandas, numpy, sklearn）"]
+        subgraph Python["Python 推荐入门"]
+            P1["✅ 生态丰富: pandas, numpy, sklearn"]
             P2["✅ 学习曲线平缓"]
-            P3["✅ 大量量化库（backtrader, zipline, vnpy）"]
+            P3["✅ 大量量化库: backtrader, zipline, vnpy"]
             P4["✅ 社区支持好"]
-            P5["⚠️ 速度较慢（但中低频足够）"]
+            P5["⚠️ 速度较慢 但中低频足够"]
         end
         subgraph 其他["其他选择"]
             O1["R：统计分析强，金融建模"]
@@ -189,18 +189,18 @@ graph TB
 graph TB
     subgraph 开发环境["推荐开发环境"]
         subgraph 本地开发
-            L1["Jupyter Notebook/Lab（研究和回测）"]
-            L2["VS Code / PyCharm（策略开发）"]
-            L3["Anaconda（环境管理）"]
+            L1["Jupyter Notebook/Lab - 研究和回测"]
+            L2["VS Code / PyCharm - 策略开发"]
+            L3["Anaconda - 环境管理"]
         end
         subgraph 实盘部署
-            D1["云服务器（阿里云/AWS）"]
+            D1["云服务器 - 阿里云/AWS"]
             D2["Docker 容器化"]
-            D3["定时任务（cron）"]
+            D3["定时任务 cron"]
             D4["监控和告警"]
         end
         subgraph 版本控制
-            V1["Git（代码管理）"]
+            V1["Git - 代码管理"]
             V2["策略版本记录"]
             V3["回测结果存档"]
         end
@@ -220,7 +220,7 @@ flowchart TD
     C["3. 数据处理<br/>清洗、特征工程"]
     D["4. 策略开发<br/>编写交易逻辑"]
     E["5. 回测验证<br/>历史数据测试"]
-    F["6. 策略优化<br/>参数调优（注意过拟合）"]
+    F["6. 策略优化<br/>参数调优 注意过拟合"]
     G["7. 模拟交易<br/>Paper Trading"]
     H["8. 实盘交易<br/>小资金开始"]
     I["9. 监控迭代<br/>持续优化"]
@@ -276,7 +276,7 @@ graph TB
             E2C["✅ 解决：加入真实的成本估算"]
         end
         subgraph E3["❌ 回测陷阱"]
-            E3A["使用未来数据（Look-ahead bias）"]
+            E3A["使用未来数据 Look-ahead bias"]
             E3B["幸存者偏差"]
             E3C["✅ 解决：严格的回测框架"]
         end
@@ -302,25 +302,25 @@ graph TB
 ```mermaid
 graph TB
     subgraph 学习路径["个人量化学习路径"]
-        subgraph 阶段1["阶段1：基础（1-3个月）"]
+        subgraph 阶段1["阶段1：基础 1-3个月"]
             A1["Python 编程基础"]
             A2["pandas/numpy 数据处理"]
             A3["基础金融知识"]
             A4["技术分析入门"]
         end
-        subgraph 阶段2["阶段2：入门（3-6个月）"]
+        subgraph 阶段2["阶段2：入门 3-6个月"]
             B1["回测框架使用"]
-            B2["简单策略实现（均线、动量）"]
+            B2["简单策略实现: 均线、动量"]
             B3["理解回测陷阱"]
             B4["风险管理基础"]
         end
-        subgraph 阶段3["阶段3：进阶（6-12个月）"]
+        subgraph 阶段3["阶段3：进阶 6-12个月"]
             C1["因子研究"]
             C2["机器学习应用"]
             C3["多策略组合"]
             C4["模拟交易"]
         end
-        subgraph 阶段4["阶段4：实战（持续）"]
+        subgraph 阶段4["阶段4：实战 持续"]
             D1["小资金实盘"]
             D2["策略迭代"]
             D3["心态管理"]

@@ -484,7 +484,7 @@ $ mkimage -C none -A arm64 -T script -d boot.cmd boot.scr
 ```mermaid
 graph TB
     subgraph 1. 准备工作
-        P1["获取硬件规格书（原理图、芯片手册）<br/>确定 SoC 类型<br/>确定外设配置（DDR 型号和容量、Flash 类型）<br/>选择参考板"]
+        P1["获取硬件规格书: 原理图、芯片手册<br/>确定 SoC 类型<br/>确定外设配置: DDR 型号和容量、Flash 类型<br/>选择参考板"]
     end
     
     subgraph 2. 创建板级目录

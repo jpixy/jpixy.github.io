@@ -1398,14 +1398,14 @@ ema = quant_cpp.calculate_ema(prices.tolist(), 20)  # C++ 计算
 
 ```mermaid
 graph TB
-    subgraph Python层["Python 层（策略研究、高层逻辑）"]
+    subgraph Python层["Python 层: 策略研究、高层逻辑"]
         P1["Jupyter 策略研究"]
         P2["回测框架"]
         P3["参数优化"]
         P4["可视化"]
     end
     
-    subgraph Cpp层["C++ 层（性能敏感模块）"]
+    subgraph Cpp层["C++ 层: 性能敏感模块"]
         C1["订单簿管理"]
         C2["行情解析"]
         C3["高频计算"]
@@ -1566,7 +1566,7 @@ graph TB
         subgraph 技术栈
             B1["C++17/20 + CMake + vcpkg"]
             B2["Boost + spdlog + nlohmann/json"]
-            B3["pybind11（与 Python 混合）"]
+            B3["pybind11: 与 Python 混合"]
         end
         subgraph 最佳实践
             C1["先 Python 原型，再 C++ 优化"]

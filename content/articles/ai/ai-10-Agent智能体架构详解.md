@@ -286,7 +286,7 @@ graph TB
 
 ```mermaid
 graph TB
-    A[用户问题] --> B["Planner<br/>一次性生成完整计划（不执行）"]
+    A[用户问题] --> B["Planner<br/>一次性生成完整计划 不执行"]
     B --> C["完整计划 + 依赖关系"]
     C --> D["Worker<br/>按顺序执行所有步骤"]
     D --> E["Solver<br/>综合所有结果回答"]

@@ -1404,7 +1404,7 @@ graph TB
         MD[行情服务器]
         TG[交易网关]
     end
-    subgraph INT["内部网络（InfiniBand/RoCE）"]
+    subgraph INT["内部网络 InfiniBand/RoCE"]
         MDR["行情接收机<br/>(DPDK)"]
         TDS["交易发送机<br/>(DPDK)"]
         SE["策略引擎<br/>(低延迟处理)"]

@@ -26,9 +26,9 @@ tags = ["security", "dpi", "ids", "ips", "networking", "suricata", "snort"]
 
 ```mermaid
 graph TB
-    subgraph DPI["DPI (技术)"]
-        IDS["IDS<br>(检测告警)"]
-        IPS["IPS<br>(检测+阻断)"]
+    subgraph DPI["DPI 技术"]
+        IDS["IDS<br>检测告警"]
+        IPS["IPS<br>检测+阻断"]
     end
 ```
 
@@ -78,7 +78,7 @@ graph TB
 ```mermaid
 graph TB
     INT[Internet] --> FW[Firewall] --> IPS[IPS] --> SW[Switch] --> INTERNAL[Internal]
-    SW -->|镜像| IDS["IDS<br>(深度分析)"]
+    SW -->|镜像| IDS["IDS<br>深度分析"]
 ```
 
 IPS 快速阻断，IDS 详细分析和取证
@@ -98,10 +98,10 @@ IPS 快速阻断，IDS 详细分析和取证
 ```mermaid
 graph TB
     IN[数据包进入] --> S1["1. 包重组<br>• IP 分片重组<br>• TCP 流重组"]
-    S1 --> S2["2. 协议识别<br>• 端口匹配（不可靠）<br>• 协议指纹匹配<br>• 统计/机器学习方法"]
+    S1 --> S2["2. 协议识别<br>• 端口匹配 - 不可靠<br>• 协议指纹匹配<br>• 统计/机器学习方法"]
     S2 --> S3["3. 协议解析<br>• HTTP: Method, URI, Headers, Body<br>• DNS: Query, Response<br>• TLS: SNI, Certificate"]
-    S3 --> S4["4. 内容检测<br>• 特征匹配（Signature）<br>• 正则表达式<br>• 行为分析<br>• 恶意软件检测"]
-    S4 --> S5["5. 动作<br>• 告警 (Alert)<br>• 阻断 (Drop/Reject)<br>• 日志记录<br>• 提取文件"]
+    S3 --> S4["4. 内容检测<br>• 特征匹配 Signature<br>• 正则表达式<br>• 行为分析<br>• 恶意软件检测"]
+    S4 --> S5["5. 动作<br>• 告警 Alert<br>• 阻断 Drop/Reject<br>• 日志记录<br>• 提取文件"]
 ```
 
 ### 2.2 协议识别技术
@@ -130,13 +130,13 @@ graph TB
 
 ```mermaid
 graph TB
-    S0["(0)"] -->|h| H["(h)"]
-    S0 -->|s| S["(s)"]
-    H -->|e| HE["(he)*"]
-    H -->|i| HI["(hi)"]
-    HI -->|s| HIS["(his)*"]
-    HE -->|r| HER["(her)"]
-    HER -->|s| HERS["(hers)*"]
+    S0["0"] -->|h| H["h"]
+    S0 -->|s| S["s"]
+    H -->|e| HE["he *"]
+    H -->|i| HI["hi"]
+    HI -->|s| HIS["his *"]
+    HE -->|r| HER["her"]
+    HER -->|s| HERS["hers *"]
     S -->|h| H
 ```
 

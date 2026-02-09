@@ -443,11 +443,11 @@ echo 0 > /proc/irq/XX/smp_affinity
 
 ```mermaid
 graph TB
-    NUMA["NUMA 节点域（最高层）"]
+    NUMA["NUMA 节点域 最高层"]
     DIE["Die 域"]
-    LLC["LLC 域（共享 L3 缓存）"]
-    MC["MC 域（多核）"]
-    SMT["SMT 域（超线程）"]
+    LLC["LLC 域 共享 L3 缓存"]
+    MC["MC 域 多核"]
+    SMT["SMT 域 超线程"]
     
     NUMA --> DIE
     DIE --> LLC

@@ -20,27 +20,27 @@ tags = ["quant", "trading", "china", "api", "data"]
 graph TB
     subgraph 品种["中国大陆个人可交易品种"]
         subgraph 股票市场
-            G1["A 股（上海、深圳）"]
-            G2["港股通（通过沪港通/深港通）"]
+            G1["A 股 - 上海、深圳"]
+            G2["港股通 - 通过沪港通/深港通"]
             G3["北交所股票"]
         end
         subgraph 基金
-            J1["ETF（场内交易）"]
-            J2["LOF（场内交易）"]
-            J3["场外基金（T+1或更长）"]
+            J1["ETF 场内交易"]
+            J2["LOF 场内交易"]
+            J3["场外基金 T+1或更长"]
         end
         subgraph 期货
-            Q1["商品期货（需开户）"]
-            Q2["股指期货（50万门槛）"]
+            Q1["商品期货 需开户"]
+            Q2["股指期货 50万门槛"]
             Q3["国债期货"]
         end
         subgraph 期权
             QQ1["50ETF/300ETF 期权"]
             QQ2["商品期权"]
-            QQ3["个股期权（有限）"]
+            QQ3["个股期权 有限"]
         end
         subgraph 债券
-            Z1["可转债（T+0，个人较常用）"]
+            Z1["可转债 T+0 个人较常用"]
             Z2["国债"]
             Z3["企业债"]
         end
@@ -74,22 +74,22 @@ graph TB
 ```mermaid
 graph TB
     subgraph A股接口["A股程序化交易接口"]
-        subgraph 官方["券商官方接口（有限）"]
+        subgraph 官方["券商官方接口 - 有限"]
             G1["大多数券商不对个人开放程序化接口"]
-            G2["部分券商有条件开放（如资金量要求）"]
+            G2["部分券商有条件开放: 如资金量要求"]
             G3["需咨询具体券商"]
         end
         subgraph 第三方接口
-            subgraph QMT["QMT（迅投）"]
+            subgraph QMT["QMT 迅投"]
                 Q1["部分券商支持"]
                 Q2["需申请，有一定门槛"]
                 Q3["较专业的量化平台"]
             end
-            subgraph PTrade["PTrade（恒生）"]
+            subgraph PTrade["PTrade 恒生"]
                 P1["机构级别"]
                 P2["个人较难获取"]
             end
-            subgraph easytrader["easytrader（开源）"]
+            subgraph easytrader["easytrader 开源"]
                 E1["模拟客户端操作"]
                 E2["非官方，有风险"]
                 E3["稳定性不保证"]
@@ -112,17 +112,17 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph 期货接口["期货程序化接口（相对开放）"]
-        subgraph CTP["CTP 接口（推荐）"]
+    subgraph 期货接口["期货程序化接口 - 相对开放"]
+        subgraph CTP["CTP 接口 - 推荐"]
             C1["期货公司官方接口"]
             C2["个人可申请"]
             C3["稳定可靠"]
             C4["需要编程能力"]
         end
         subgraph Python封装["Python 封装"]
-            P1["vnpy（国内最流行）"]
+            P1["vnpy: 国内最流行"]
             P2["ctpbee"]
-            P3["openctp（仿真/回测）"]
+            P3["openctp: 仿真/回测"]
         end
         subgraph 申请流程
             A1["1. 在期货公司开户"]
@@ -131,7 +131,7 @@ graph TB
             A4["4. 连接开发"]
         end
         subgraph 其他接口
-            O1["飞创（Femas）"]
+            O1["飞创 Femas"]
             O2["易盛"]
             O3["恒生 UFT"]
         end
@@ -169,14 +169,14 @@ graph TB
             T2["接口与股票相同"]
         end
         subgraph 常用方式
-            F1["QMT（如券商支持）"]
-            F2["easytrader（非官方）"]
-            F3["券商 API（如有）"]
+            F1["QMT: 如券商支持"]
+            F2["easytrader: 非官方"]
+            F3["券商 API: 如有"]
         end
         subgraph 量化优势["可转债量化优势"]
             Y1["T+0 交易"]
-            Y2["无涨跌停限制（有临停）"]
-            Y3["品种数量适中（约 500 只）"]
+            Y2["无涨跌停限制, 有临停"]
+            Y3["品种数量适中, 约 500 只"]
             Y4["适合日内和短线策略"]
         end
     end
@@ -191,14 +191,14 @@ graph TB
 ```mermaid
 graph TB
     subgraph 免费数据["免费数据获取"]
-        subgraph Tushare["Tushare（推荐）"]
+        subgraph Tushare["Tushare: 推荐"]
             T1["国内最流行的免费数据源"]
             T2["A股、基金、期货、可转债数据"]
             T3["需注册，有积分限制"]
             T4["高级功能需付费"]
             T5["地址：tushare.pro"]
         end
-        subgraph AKShare["AKShare（推荐）"]
+        subgraph AKShare["AKShare: 推荐"]
             A1["完全免费开源"]
             A2["数据覆盖广"]
             A3["更新活跃"]
@@ -289,7 +289,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph 在线平台["国内在线量化平台"]
-        subgraph JQ["聚宽（JoinQuant）⭐ 推荐"]
+        subgraph JQ["聚宽 JoinQuant ⭐ 推荐"]
             J1["最流行的国内量化平台"]
             J2["免费额度较多"]
             J3["数据覆盖全"]
@@ -297,13 +297,13 @@ graph TB
             J5["支持股票、期货、ETF"]
             J6["地址：joinquant.com"]
         end
-        subgraph RQ["米筐（RiceQuant）"]
+        subgraph RQ["米筐 RiceQuant"]
             R1["专业级平台"]
             R2["数据质量高"]
             R3["部分功能收费"]
             R4["地址：ricequant.com"]
         end
-        subgraph UQ["优矿（Uqer）"]
+        subgraph UQ["优矿 Uqer"]
             U1["通联数据旗下"]
             U2["因子研究强"]
             U3["地址：uqer.datayes.com"]
@@ -321,7 +321,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph 本地框架["本地回测框架"]
-        subgraph vnpy["vnpy（推荐）"]
+        subgraph vnpy["vnpy: 推荐"]
             V1["国内最流行的开源框架"]
             V2["支持回测和实盘"]
             V3["期货支持最好"]
@@ -372,7 +372,7 @@ graph TB
             H1["涨跌停时可能无法成交"]
             H2["新股/次新股数据特殊"]
             H3["停牌数据处理"]
-            H4["制度变化（如注册制）"]
+            H4["制度变化, 如注册制"]
         end
     end
 ```
@@ -388,9 +388,9 @@ graph TB
             T1C["T+1 限制"]
         end
         subgraph T2["2. 真实成本估算"]
-            T2A["佣金（约万2-万3）"]
-            T2B["印花税（卖出千1）"]
-            T2C["滑点（估算0.1-0.3%）"]
+            T2A["佣金: 约万2-万3"]
+            T2B["印花税: 卖出千1"]
+            T2C["滑点: 估算0.1-0.3%"]
         end
         subgraph T3["3. 使用全市场数据"]
             T3A["包含退市股票"]
@@ -419,14 +419,14 @@ graph TB
     subgraph 路径["中国个人量化推荐路径"]
         subgraph 入门阶段
             R1["在聚宽学习和回测"]
-            R2["用免费数据（AKShare/Tushare）"]
+            R2["用免费数据: AKShare/Tushare"]
             R3["先做 ETF/可转债策略"]
             R4["模拟交易 3-6 个月"]
         end
         subgraph 进阶阶段
             J1["搭建本地回测环境"]
-            J2["学习 vnpy（如做期货）"]
-            J3["申请 CTP 接口（期货）"]
+            J2["学习 vnpy: 如做期货"]
+            J3["申请 CTP 接口: 期货"]
             J4["小资金实盘验证"]
         end
         subgraph 稳定阶段
@@ -455,7 +455,7 @@ graph TB
             C3["适合择时和轮动"]
         end
         subgraph 进阶["进阶：商品期货"]
-            J1["接口开放（CTP）"]
+            J1["接口开放: CTP"]
             J2["T+0 双向"]
             J3["杠杆需注意风险"]
         end

@@ -191,7 +191,7 @@ graph TB
         C["文本"]
         D["LLM"]
         E["文本输出"]
-        F["TTS（可选）"]
+        F["TTS 可选"]
         G["语音输出"]
         
         A --> B --> C --> D --> E --> F --> G
@@ -291,7 +291,7 @@ graph TB
         B["缓冲<br/>chunk_size"]
         C["语音编码<br/>~50-100ms"]
         D["LLM 推理<br/>~100-500ms"]
-        E["TTS（可选）<br/>~100-200ms"]
+        E["TTS 可选<br/>~100-200ms"]
     end
     
     A --> B --> C --> D --> E

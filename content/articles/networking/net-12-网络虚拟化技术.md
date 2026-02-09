@@ -62,7 +62,7 @@ graph TB
     VM1[vm1] --> Bridge
     VM2[vm2] --> Bridge
     VM3[vm3] --> Bridge
-    Bridge[bridge] --> ETH0["eth0（物理网卡）"]
+    Bridge[bridge] --> ETH0["eth0 物理网卡"]
 ```
 
 **创建bridge**：
@@ -109,9 +109,9 @@ ip tuntap add tap0 mode tap
 
 ```mermaid
 graph TB
-    ETH0["eth0（物理）"] --> MV0["macvlan0<br/>(MAC-A)"]
-    ETH0 --> MV1["macvlan1<br/>(MAC-B)"]
-    ETH0 --> MV2["macvlan2<br/>(MAC-C)"]
+    ETH0["eth0 物理"] --> MV0["macvlan0<br/>MAC-A"]
+    ETH0 --> MV1["macvlan1<br/>MAC-B"]
+    ETH0 --> MV2["macvlan2<br/>MAC-C"]
 ```
 
 **模式**：
@@ -313,7 +313,7 @@ ip link add vxlan100 type vxlan id 100 \
 graph TB
     C1[容器1] --> V1[veth1]
     C2[容器2] --> V2[veth2]
-    V1 --> Docker0["docker0 (bridge)"]
+    V1 --> Docker0["docker0 bridge"]
     V2 --> Docker0
     Docker0 --> ETH0[eth0]
     ETH0 --> External[外部网络]
@@ -347,14 +347,14 @@ docker run -p 8080:80 nginx
 **VXLAN模式**：
 ```mermaid
 graph TB
-    subgraph Node1["Node1 (192.168.1.1)"]
-        Pod1["Pod1 (10.244.0.2)"]
+    subgraph Node1["Node1 192.168.1.1"]
+        Pod1["Pod1 10.244.0.2"]
         F1[flannel.1]
         Pod1 --> F1
     end
     
-    subgraph Node2["Node2 (192.168.1.2)"]
-        Pod2["Pod2 (10.244.1.2)"]
+    subgraph Node2["Node2 192.168.1.2"]
+        Pod2["Pod2 10.244.1.2"]
         F2[flannel.1]
         Pod2 --> F2
     end

@@ -79,10 +79,10 @@ tags = ["系统设计", "面试", "Feed", "Timeline", "推拉模式"]
 ```mermaid
 graph TB
     subgraph Feed系统整体架构
-        Client["客户端<br/>App / Web / Mobile"] --> Gateway["API Gateway<br/>(认证、限流、路由)"]
+        Client["客户端<br/>App / Web / Mobile"] --> Gateway["API Gateway<br/>认证、限流、路由"]
         Gateway --> Publish["发布服务<br/>POST /tweets"]
         Gateway --> Feed["Feed 服务<br/>GET /feed"]
-        Publish --> Fanout["扇出服务 (Fanout)"]
+        Publish --> Fanout["扇出服务 Fanout"]
         Feed --> Fanout
         Fanout --> Storage["存储层"]
         
@@ -108,8 +108,8 @@ graph TB
 
 ```mermaid
 graph TB
-    A["用户A发推"] --> B["获取粉丝列表<br/>(A有1000个粉丝)"]
-    B --> C["写入每个粉丝的Feed缓存<br/>(并发写入1000次)"]
+    A["用户A发推"] --> B["获取粉丝列表<br/>A有1000个粉丝"]
+    B --> C["写入每个粉丝的Feed缓存<br/>并发写入1000次"]
 ```
 
 | 读取 | 说明 |
@@ -124,10 +124,10 @@ graph TB
 
 ```mermaid
 graph TB
-    A1["用户A发推"] --> B1["只写入自己的推文表<br/>(O(1))"]
+    A1["用户A发推"] --> B1["只写入自己的推文表<br/>O-1 复杂度"]
     
-    C1["用户B读取Feed"] --> D1["获取关注列表<br/>(B关注了500人)"]
-    D1 --> E1["查询每个人的最新推文<br/>(查询500次，聚合排序)"]
+    C1["用户B读取Feed"] --> D1["获取关注列表<br/>B关注了500人"]
+    D1 --> E1["查询每个人的最新推文<br/>查询500次，聚合排序"]
 ```
 
 | 优点 | 缺点 |
@@ -147,7 +147,7 @@ graph TB
 
 ```mermaid
 graph TB
-    A["用户发推"] --> B{"是否大V?<br/>(粉丝>10000)"}
+    A["用户发推"] --> B{"是否大V?<br/>粉丝数大于10000"}
     B -->|是| C["只写推文表<br/>不扇出"]
     B -->|否| D["写推文表<br/>+扇出到粉丝Feed"]
 ```
@@ -204,7 +204,7 @@ graph TB
     Kafka --> W1["Fanout Worker 1"]
     Kafka --> W2["Fanout Worker 2"]
     Kafka --> WN["Fanout Worker N"]
-    W1 --> Redis["Redis Cluster<br/>(写入各粉丝的 Feed 缓存)"]
+    W1 --> Redis["Redis Cluster<br/>写入各粉丝的 Feed 缓存"]
     W2 --> Redis
     WN --> Redis
 ```
@@ -411,8 +411,8 @@ Response:
 
 ```mermaid
 graph TB
-    Client["客户端"] --> CDN["CDN 缓存<br/>静态资源(图片、视频)"]
-    CDN --> LocalCache["本地缓存 (Caffeine)<br/>热点推文、用户信息<br/>TTL: 30秒"]
+    Client["客户端"] --> CDN["CDN 缓存<br/>静态资源: 图片、视频"]
+    CDN --> LocalCache["本地缓存 Caffeine<br/>热点推文、用户信息<br/>TTL: 30秒"]
     LocalCache --> Redis["Redis 集群<br/>Feed、计数器、会话<br/>TTL: 7天"]
     Redis --> MySQL["MySQL<br/>持久化存储"]
 ```

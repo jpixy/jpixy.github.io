@@ -310,7 +310,7 @@ graph TB
     end
     
     subgraph 内核["内核空间"]
-        FILE1["file 1<br>(f_pos, f_flags)"]
+        FILE1["file 1<br>f_pos, f_flags"]
         FILE2["file 2"]
         FILE3["file 3"]
         FILE4["file 4"]
