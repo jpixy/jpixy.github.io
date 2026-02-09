@@ -67,18 +67,21 @@ HFT公司对SRE的要求远超普通互联网公司。本文汇总HFT SRE面试�
 **答案**：
 
 ```
-Tick-to-Trade延迟分解：
+**Tick-to-Trade延迟分解**：
 
-Market Data       Order
-Received    ───────────────────────►  Sent
-    │                                    │
-    ▼                                    ▼
-┌───────┐  ┌───────┐  ┌───────┐  ┌──────────┐
-│ NIC RX│→│ Parse │→│Strategy│→│ Risk+Send│
-│  ~1µs │  │ ~1µs  │  │ ~5µs  │  │   ~3µs   │
-└───────┘  └───────┘  └───────┘  └──────────┘
+```mermaid
+graph TB
+    MD["Market Data<br/>Received"]
+    NIC["NIC RX<br/>~1µs"]
+    Parse["Parse<br/>~1µs"]
+    Strategy["Strategy<br/>~5µs"]
+    Risk["Risk+Send<br/>~3µs"]
+    Order["Order<br/>Sent"]
+    
+    MD --> NIC --> Parse --> Strategy --> Risk --> Order
+```
 
-测量方法：
+**测量方法**：
 1. 硬件时间戳
    - 使用SO_TIMESTAMPING获取NIC RX/TX时间戳
    - 需要支持硬件时间戳的网卡
@@ -241,24 +244,25 @@ UDP组播丢包处理策略：
    - 使用序列号检测gap
    - 记录丢包统计
 
-2. 恢复机制
-   ┌──────────────┐
-   │ Gap Detected │
-   └──────┬───────┘
-          │
-    ┌─────▼─────┐
-    │ < 阈值?   │─── 是 ──→ 等待乱序包
-    └─────┬─────┘
-          │ 否
-    ┌─────▼─────┐
-    │ 请求重传  │ ← 使用专门的恢复通道
-    └─────┬─────┘
-          │
-    ┌─────▼─────┐
-    │ 超时未恢复│─── 是 ──→ 请求Snapshot
-    └───────────┘
+**2. 恢复机制**
 
-3. 防丢包优化
+```mermaid
+graph TB
+    GapDetected["Gap Detected"]
+    ThresholdCheck{"< 阈值?"}
+    WaitReorder["等待乱序包"]
+    RequestRetransmit["请求重传<br/>(使用专门的恢复通道)"]
+    TimeoutCheck{"超时未恢复?"}
+    RequestSnapshot["请求Snapshot"]
+    
+    GapDetected --> ThresholdCheck
+    ThresholdCheck -->|是| WaitReorder
+    ThresholdCheck -->|否| RequestRetransmit
+    RequestRetransmit --> TimeoutCheck
+    TimeoutCheck -->|是| RequestSnapshot
+```
+
+**3. 防丢包优化**
    - 增大socket缓冲区
      setsockopt(sock, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size))
    
@@ -758,21 +762,21 @@ pprof --pdf <binary> /tmp/heap.0001.heap > heap.pdf
 **答案**：
 
 ```
-零停机部署方案
+**零停机部署方案**
 
-方案1: 蓝绿部署
-================
-┌─────────┐     ┌─────────┐
-│  Blue   │ ←── │  Load   │
-│(Current)│     │Balancer │
-└─────────┘     └────┬────┘
-                     │
-┌─────────┐          │
-│  Green  │ ←────────┘ (切换后)
-│  (New)  │
-└─────────┘
+**方案1: 蓝绿部署**
 
-步骤：
+```mermaid
+graph TB
+    LB["Load Balancer"]
+    Blue["Blue<br/>(Current)"]
+    Green["Green<br/>(New)"]
+    
+    LB -->|"当前"| Blue
+    LB -.->|"切换后"| Green
+```
+
+**步骤**：
 1. 部署新版本到Green
 2. 预热Green环境
 3. 验证Green健康

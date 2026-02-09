@@ -137,14 +137,19 @@ Prometheus(边缘) → Prometheus(中心) → Grafana
 ```
 
 **四个黄金信号Dashboard**：
-```
-┌─────────────────────────────────────────┐
-│ 延迟(Latency)      │ 流量(Traffic)      │
-│ [P50/P90/P99图表]  │ [QPS趋势图]        │
-├─────────────────────────────────────────┤
-│ 错误(Errors)       │ 饱和度(Saturation) │
-│ [错误率图表]       │ [CPU/内存使用率]   │
-└─────────────────────────────────────────┘
+
+```mermaid
+graph TB
+    subgraph Dashboard["四个黄金信号 Dashboard"]
+        subgraph TopRow[" "]
+            Latency["延迟 Latency<br/>P50/P90/P99图表"]
+            Traffic["流量 Traffic<br/>QPS趋势图"]
+        end
+        subgraph BottomRow[" "]
+            Errors["错误 Errors<br/>错误率图表"]
+            Saturation["饱和度 Saturation<br/>CPU/内存使用率"]
+        end
+    end
 ```
 
 ### 变量与模板
@@ -421,16 +426,16 @@ sampling:
 
 ### 统一可观测性平台
 
-```
-┌─────────────────────────────────────────────────┐
-│                  Grafana                        │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐        │
-│  │ Metrics  │ │  Logs    │ │  Traces  │        │
-│  │Dashboard │ │ Explorer │ │ Explorer │        │
-│  └────┬─────┘ └────┬─────┘ └────┬─────┘        │
-└───────┼────────────┼────────────┼───────────────┘
-        ↓            ↓            ↓
-   Prometheus      Loki        Jaeger/Tempo
+```mermaid
+graph TB
+    subgraph Grafana["Grafana"]
+        MetricsDash["Metrics Dashboard"]
+        LogsExplorer["Logs Explorer"]
+        TracesExplorer["Traces Explorer"]
+    end
+    MetricsDash --> Prometheus
+    LogsExplorer --> Loki
+    TracesExplorer --> Jaeger["Jaeger/Tempo"]
 ```
 
 ### 关联查询

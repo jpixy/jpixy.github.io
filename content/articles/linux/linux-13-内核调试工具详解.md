@@ -17,20 +17,14 @@ tags = ["Linux", "Debug", "Crash", "GDB", "Ftrace", "BPFtrace", "eBPF"]
 
 **一句话：Crash 是分析内核崩溃转储 (vmcore) 的"尸检工具"**
 
-```
-系统崩溃 (Kernel Panic)
-        ↓
-┌───────────────────────────────┐
-│  Kdump 捕获内存转储            │
-│  生成 vmcore 文件              │
-└───────────────────────────────┘
-        ↓
-┌───────────────────────────────┐
-│  crash 工具分析                │
-│  - 查看崩溃时的调用栈          │
-│  - 检查数据结构               │
-│  - 定位问题根因                │
-└───────────────────────────────┘
+```mermaid
+graph TB
+    PANIC["系统崩溃<br/>(Kernel Panic)"]
+    KDUMP["Kdump 捕获内存转储<br/>生成 vmcore 文件"]
+    CRASH["crash 工具分析<br/>- 查看崩溃时的调用栈<br/>- 检查数据结构<br/>- 定位问题根因"]
+    
+    PANIC --> KDUMP
+    KDUMP --> CRASH
 ```
 
 ### 1.1 配置 Kdump
@@ -130,19 +124,11 @@ crash> search -s "pattern"
 
 **一句话：GDB 是程序员的"显微镜"，可以暂停程序执行并检查内部状态**
 
-```
-程序执行 ─────────────────────────→
-          ↑
-       断点触发
-          ↓
-    ┌─────────────┐
-    │   GDB控制   │
-    │  - 查看变量  │
-    │  - 单步执行  │
-    │  - 修改内存  │
-    └─────────────┘
-          ↓
-       继续执行 ──────────────────→
+```mermaid
+graph TB
+    EXEC1["程序执行"] --> BP["断点触发"]
+    BP --> GDB["GDB控制<br/>- 查看变量<br/>- 单步执行<br/>- 修改内存"]
+    GDB --> CONT["继续执行"]
 ```
 
 ### 2.1 编译调试版本
@@ -259,15 +245,15 @@ gdb ./program /tmp/core.program.1234
 
 **一句话：Ftrace 是内核自带的"追踪雷达"，可以追踪内核函数调用和事件**
 
-```
-内核函数调用：
-do_sys_open() ──→ do_filp_open() ──→ path_openat() ──→ ...
-      │                │                  │
-      └────────────────┴──────────────────┘
-                       ↓
-              Ftrace 记录每次调用
-                       ↓
-              /sys/kernel/debug/tracing/trace
+```mermaid
+graph TB
+    subgraph 内核函数调用
+        F1["do_sys_open()"] --> F2["do_filp_open()"]
+        F2 --> F3["path_openat()"]
+        F3 --> F4["..."]
+    end
+    F1 & F2 & F3 --> FTRACE["Ftrace 记录每次调用"]
+    FTRACE --> OUT["/sys/kernel/debug/tracing/trace"]
 ```
 
 ### 3.1 Ftrace 基本使用
@@ -393,24 +379,16 @@ cat $TRACE_DIR/trace
 
 **一句话：BPFtrace 是可编程的"内核探针"，用脚本语言追踪任何内核/用户态事件**
 
-```
-BPFtrace脚本
-     │
-     ↓  编译
-┌─────────────┐
-│  eBPF字节码  │
-└─────────────┘
-     │
-     ↓  加载到内核
-┌─────────────────────────────────────────┐
-│   内核 eBPF 虚拟机                       │
-│   - 挂载到tracepoint/kprobe/uprobe      │
-│   - 安全沙箱执行                         │
-│   - 零拷贝数据传递                       │
-└─────────────────────────────────────────┘
-     │
-     ↓  输出
-   追踪结果
+```mermaid
+graph TB
+    SCRIPT["BPFtrace脚本"]
+    BYTECODE["eBPF字节码"]
+    VM["内核 eBPF 虚拟机<br/>- 挂载到tracepoint/kprobe/uprobe<br/>- 安全沙箱执行<br/>- 零拷贝数据传递"]
+    RESULT["追踪结果"]
+    
+    SCRIPT -->|编译| BYTECODE
+    BYTECODE -->|加载到内核| VM
+    VM -->|输出| RESULT
 ```
 
 ### 4.1 BPFtrace 安装

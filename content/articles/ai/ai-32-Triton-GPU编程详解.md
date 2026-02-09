@@ -71,7 +71,7 @@ graph TB
 ### 1.3 Triton 的定位
 
 ```mermaid
-graph LR
+graph TB
     subgraph "抽象层次"
         A["Python/PyTorch"]
         B["Triton"]
@@ -646,7 +646,7 @@ graph TB
 **向量加法对比**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "CUDA (~50行)"
         A["__global__ void kernel(...)"]
         B["int idx = blockIdx.x * blockDim.x + threadIdx.x"]
@@ -719,7 +719,7 @@ output = fused_gelu(x)
 **CuTeDSL**：基于 CUTLASS 的 DSL，更接近硬件。
 
 ```mermaid
-graph LR
+graph TB
     subgraph "GPU Kernel DSL 生态"
         A["Triton (OpenAI)"]
         B["TileLang (字节)"]

@@ -269,44 +269,21 @@ Host internal-db
 ### 2.1 iptables 深度解析
 
 **表和链结构**：
-```
-                               ┌─────────────────┐
-                               │    网络数据包    │
-                               └────────┬────────┘
-                                        │
-                               ┌────────▼────────┐
-                               │   PREROUTING    │
-                               │  (nat, mangle)  │
-                               └────────┬────────┘
-                                        │
-                    ┌───────────────────┼───────────────────┐
-                    │                   │                   │
-                    ▼                   │                   │
-            ┌───────────────┐           │           ┌───────────────┐
-            │    INPUT      │           │           │   FORWARD     │
-            │ (filter,mangle)│          │           │(filter,mangle)│
-            └───────┬───────┘           │           └───────┬───────┘
-                    │                   │                   │
-                    ▼                   │                   ▼
-            ┌───────────────┐           │           ┌───────────────┐
-            │   本地进程     │           │           │  POSTROUTING  │
-            └───────┬───────┘           │           │  (nat,mangle) │
-                    │                   │           └───────┬───────┘
-                    ▼                   │                   │
-            ┌───────────────┐           │                   │
-            │    OUTPUT     │           │                   │
-            │(filter,nat,mangle)│       │                   │
-            └───────┬───────┘           │                   │
-                    │                   │                   │
-                    └───────────────────┴───────────────────┘
-                                        │
-                               ┌────────▼────────┐
-                               │   POSTROUTING   │
-                               │   (nat,mangle)  │
-                               └────────┬────────┘
-                                        │
-                                        ▼
-                                     网络
+```mermaid
+graph TB
+    PKT[网络数据包] --> PRE["PREROUTING<br>(nat, mangle)"]
+    
+    PRE --> IN["INPUT<br>(filter, mangle)"]
+    PRE --> FWD["FORWARD<br>(filter, mangle)"]
+    
+    IN --> LOCAL[本地进程]
+    LOCAL --> OUT["OUTPUT<br>(filter, nat, mangle)"]
+    
+    FWD --> POST1["POSTROUTING<br>(nat, mangle)"]
+    OUT --> POST2["POSTROUTING<br>(nat, mangle)"]
+    
+    POST1 --> NET[网络]
+    POST2 --> NET
 ```
 
 **表的优先级**：raw → mangle → nat → filter
@@ -522,24 +499,23 @@ ufw status verbose
 
 ### 3.1 auditd 架构
 
-```
-┌─────────────────────────────────────────────────────┐
-│                     User Space                       │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐             │
-│  │ auditctl │  │ ausearch │  │ aureport │             │
-│  └────┬────┘  └────┬────┘  └────┬────┘             │
-│       │            │            │                    │
-│       └────────────┴────────────┘                    │
-│                    │                                  │
-│           ┌────────▼────────┐                        │
-│           │     auditd      │──────▶ /var/log/audit/ │
-│           └────────┬────────┘                        │
-├────────────────────┼────────────────────────────────┤
-│                    │       Kernel Space              │
-│           ┌────────▼────────┐                        │
-│           │  Audit Subsystem │                        │
-│           └─────────────────┘                        │
-└─────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph UserSpace["User Space"]
+        auditctl
+        ausearch
+        aureport
+        auditd[auditd] --> LOG[/var/log/audit/]
+        auditctl --> auditd
+        ausearch --> auditd
+        aureport --> auditd
+    end
+    
+    subgraph KernelSpace["Kernel Space"]
+        AUDIT[Audit Subsystem]
+    end
+    
+    auditd <--> AUDIT
 ```
 
 ### 3.2 auditd 配置

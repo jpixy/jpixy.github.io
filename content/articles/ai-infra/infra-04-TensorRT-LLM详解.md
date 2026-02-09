@@ -93,7 +93,7 @@ graph TB
 ### 2.2 工作流程
 
 ```mermaid
-graph LR
+graph TB
     subgraph "TensorRT-LLM 工作流"
         S1[模型转换<br>HuggingFace → TRT-LLM]
         S2[引擎构建<br>build]
@@ -214,7 +214,7 @@ graph TB
 **Tensor Parallel 实现**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "TP=4 示例"
         Input --> Split
         Split --> GPU0[GPU 0: 1/4 权重]
@@ -247,7 +247,7 @@ graph TB
 ### 5.2 Executor API
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Executor 模式"
         E1[提交请求]
         E2[异步执行]
@@ -333,7 +333,7 @@ model_repository/
 ### 7.3 动态 Batching 配置
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Triton Batching"
         DB[Dynamic Batching]
         IFB[In-flight Batching]
@@ -422,7 +422,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[理解 TensorRT 基础] --> L2[学习构建流程]
     L2 --> L3[实践模型部署]
     L3 --> L4[性能调优]

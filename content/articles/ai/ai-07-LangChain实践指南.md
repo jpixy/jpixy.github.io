@@ -25,19 +25,15 @@ LangChain 是构建 LLM 应用的主流框架，本文系统性地介绍 LangCha
 
 ### 1.2 生态系统
 
-```
-┌─────────────────────────────────────────────────┐
-│                LangChain 生态                    │
-├─────────────────────────────────────────────────┤
-│  langchain-core    核心抽象和接口                │
-│  langchain         主框架                        │
-│  langchain-community 社区集成                   │
-│  langchain-openai  OpenAI 集成                  │
-│  langgraph         图工作流                      │
-│  langserve         API 部署                      │
-│  langsmith         可观测性平台                  │
-└─────────────────────────────────────────────────┘
-```
+| 组件 | 说明 |
+|------|------|
+| langchain-core | 核心抽象和接口 |
+| langchain | 主框架 |
+| langchain-community | 社区集成 |
+| langchain-openai | OpenAI 集成 |
+| langgraph | 图工作流 |
+| langserve | API 部署 |
+| langsmith | 可观测性平台 |
 
 ### 1.3 核心抽象
 

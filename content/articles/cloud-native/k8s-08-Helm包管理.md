@@ -25,19 +25,16 @@ Values：Chart的配置参数
 
 ### 1.2 Helm架构
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Helm Client                            │
-│  (helm install/upgrade/rollback/uninstall)                  │
-├─────────────────────────────────────────────────────────────┤
-│                     Kubernetes API                          │
-├─────────────────────────────────────────────────────────────┤
-│                    Kubernetes Cluster                       │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    Release                           │   │
-│  │  (Deployment, Service, ConfigMap, Secret, ...)      │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    HELM["Helm Client<br>(helm install/upgrade/rollback/uninstall)"]
+    API[Kubernetes API]
+    
+    subgraph CLUSTER["Kubernetes Cluster"]
+        REL["Release<br>(Deployment, Service, ConfigMap, Secret, ...)"]
+    end
+    
+    HELM --> API --> CLUSTER
 ```
 
 ---

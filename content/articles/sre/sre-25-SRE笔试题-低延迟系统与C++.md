@@ -547,24 +547,31 @@ DPDK路径 (延迟 ~1-5μs):
 
 **DPDK架构图**：
 
-```
-┌─────────────────────────────────────────────┐
-│                  应用程序                     │
-├─────────────────────────────────────────────┤
-│        DPDK Libraries (rte_*)                │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐        │
-│  │ rte_ring│ │rte_mbuf │ │rte_ether│  ...   │
-│  └─────────┘ └─────────┘ └─────────┘        │
-├─────────────────────────────────────────────┤
-│         Poll Mode Drivers (PMD)              │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐        │
-│  │  ixgbe  │ │  i40e   │ │  mlx5   │  ...   │
-│  └─────────┘ └─────────┘ └─────────┘        │
-├─────────────────────────────────────────────┤
-│         UIO / VFIO (内核模块)                 │
-├─────────────────────────────────────────────┤
-│                  网卡硬件                     │
-└─────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph App["应用程序"]
+        AppLogic["应用逻辑"]
+    end
+    subgraph DPDK["DPDK Libraries (rte_*)"]
+        rte_ring["rte_ring"]
+        rte_mbuf["rte_mbuf"]
+        rte_ether["rte_ether"]
+    end
+    subgraph PMD["Poll Mode Drivers (PMD)"]
+        ixgbe["ixgbe"]
+        i40e["i40e"]
+        mlx5["mlx5"]
+    end
+    subgraph UIO["UIO / VFIO (内核模块)"]
+        UIODriver["用户态驱动接口"]
+    end
+    subgraph NIC["网卡硬件"]
+        Hardware["物理网卡"]
+    end
+    App --> DPDK
+    DPDK --> PMD
+    PMD --> UIO
+    UIO --> NIC
 ```
 
 **完整代码示例**：

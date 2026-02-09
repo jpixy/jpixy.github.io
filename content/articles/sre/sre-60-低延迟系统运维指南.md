@@ -18,27 +18,34 @@ tags = ["SRE", "HFT", "低延迟", "运维", "性能优化"]
 
 ### 1.1 延迟分解模型
 
-```
-总延迟 = 网络延迟 + 内核延迟 + 应用延迟
+**总延迟 = 网络延迟 + 内核延迟 + 应用延迟**
 
-网络延迟:
-├── 线缆传播延迟 (Wire Delay): ~5ns/m
-├── 交换机延迟 (Switch Latency): 100ns-1µs
-├── NIC处理延迟: 1-10µs (software) / <1µs (kernel bypass)
-└── 协议栈延迟: 10-50µs (kernel) / <1µs (DPDK/Onload)
+**网络延迟：**
 
-内核延迟:
-├── 系统调用开销: 100-500ns
-├── 调度延迟: 1-100µs
-├── 中断处理: 1-10µs
-└── 内存分配: 100ns-10µs
+| 组件 | 延迟范围 |
+|------|----------|
+| 线缆传播延迟 (Wire Delay) | ~5ns/m |
+| 交换机延迟 (Switch Latency) | 100ns-1µs |
+| NIC处理延迟 | 1-10µs (software) / <1µs (kernel bypass) |
+| 协议栈延迟 | 10-50µs (kernel) / <1µs (DPDK/Onload) |
 
-应用延迟:
-├── 消息解析: 100ns-1µs
-├── 业务逻辑: 100ns-10µs
-├── 序列化: 100ns-1µs
-└── 锁竞争: 0-无限
-```
+**内核延迟：**
+
+| 组件 | 延迟范围 |
+|------|----------|
+| 系统调用开销 | 100-500ns |
+| 调度延迟 | 1-100µs |
+| 中断处理 | 1-10µs |
+| 内存分配 | 100ns-10µs |
+
+**应用延迟：**
+
+| 组件 | 延迟范围 |
+|------|----------|
+| 消息解析 | 100ns-1µs |
+| 业务逻辑 | 100ns-10µs |
+| 序列化 | 100ns-1µs |
+| 锁竞争 | 0-无限 |
 
 ### 1.2 测量点设计
 
@@ -484,33 +491,43 @@ echo "=== 调优完成 ==="
 
 ### 4.2 BIOS设置
 
-```
-# 推荐BIOS配置
+**推荐BIOS配置：**
 
-处理器配置:
-├── Intel Hyper-Threading: Disabled
-├── Intel Turbo Boost: Disabled (或 Enabled with frequency pinning)
-├── C-States: Disabled (C1E, C3, C6等)
-├── C1E Enhanced Halt State: Disabled
-├── Package C-State: C0/C1 state
-└── Hardware P-States: Disabled
+**处理器配置：**
 
-内存配置:
-├── Memory Frequency: Maximum supported
-├── NUMA: Enabled
-├── Memory Patrol Scrub: Disabled
-└── Memory Thermal Throttling: Disabled
+| 选项 | 推荐设置 |
+|------|----------|
+| Intel Hyper-Threading | Disabled |
+| Intel Turbo Boost | Disabled (或 Enabled with frequency pinning) |
+| C-States | Disabled (C1E, C3, C6等) |
+| C1E Enhanced Halt State | Disabled |
+| Package C-State | C0/C1 state |
+| Hardware P-States | Disabled |
 
-电源管理:
-├── Power Profile: Maximum Performance
-├── Energy Efficient Turbo: Disabled
-└── Workload Configuration: I/O Sensitive
+**内存配置：**
 
-其他:
-├── SR-IOV: Enabled (如需虚拟化)
-├── VT-d: Enabled
-└── Serial Port: Disabled (减少中断)
-```
+| 选项 | 推荐设置 |
+|------|----------|
+| Memory Frequency | Maximum supported |
+| NUMA | Enabled |
+| Memory Patrol Scrub | Disabled |
+| Memory Thermal Throttling | Disabled |
+
+**电源管理：**
+
+| 选项 | 推荐设置 |
+|------|----------|
+| Power Profile | Maximum Performance |
+| Energy Efficient Turbo | Disabled |
+| Workload Configuration | I/O Sensitive |
+
+**其他：**
+
+| 选项 | 推荐设置 |
+|------|----------|
+| SR-IOV | Enabled (如需虚拟化) |
+| VT-d | Enabled |
+| Serial Port | Disabled (减少中断) |
 
 ### 4.3 网卡配置详解
 
@@ -877,38 +894,45 @@ echo -e "\n=== 检查完成 ==="
 
 ### 6.2 异常响应流程
 
-```
-延迟异常响应流程
-==================
+**延迟异常响应流程：**
 
-1. 立即行动 (<1分钟)
-   ├── 确认影响范围
-   ├── 检查是否影响交易
-   └── 决定是否需要熔断
-
-2. 快速诊断 (<5分钟)
-   ├── 检查延迟指标趋势
-   ├── 检查系统资源使用
-   ├── 检查网络丢包
-   └── 检查进程状态
-
-3. 定位根因
-   ├── perf record分析热点
-   ├── 检查内核日志
-   ├── 检查抖动来源
-   └── 对比历史基线
-
-4. 恢复行动
-   ├── 重启受影响服务
-   ├── 切换备用系统
-   ├── 调整配置参数
-   └── 扩容/降级
-
-5. 事后分析
-   ├── 详细时间线
-   ├── 根因分析
-   ├── 改进措施
-   └── 更新runbook
+```mermaid
+graph TB
+    subgraph P1["1. 立即行动 (<1分钟)"]
+        A1["确认影响范围"]
+        A2["检查是否影响交易"]
+        A3["决定是否需要熔断"]
+    end
+    
+    subgraph P2["2. 快速诊断 (<5分钟)"]
+        B1["检查延迟指标趋势"]
+        B2["检查系统资源使用"]
+        B3["检查网络丢包"]
+        B4["检查进程状态"]
+    end
+    
+    subgraph P3["3. 定位根因"]
+        C1["perf record分析热点"]
+        C2["检查内核日志"]
+        C3["检查抖动来源"]
+        C4["对比历史基线"]
+    end
+    
+    subgraph P4["4. 恢复行动"]
+        D1["重启受影响服务"]
+        D2["切换备用系统"]
+        D3["调整配置参数"]
+        D4["扩容/降级"]
+    end
+    
+    subgraph P5["5. 事后分析"]
+        E1["详细时间线"]
+        E2["根因分析"]
+        E3["改进措施"]
+        E4["更新runbook"]
+    end
+    
+    P1 --> P2 --> P3 --> P4 --> P5
 ```
 
 ## 总结

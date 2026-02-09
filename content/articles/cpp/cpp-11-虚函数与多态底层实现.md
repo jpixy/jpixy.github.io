@@ -36,18 +36,18 @@ public:
 // 内存布局（简化）：
 // 
 // Base的vtable:
-// ┌────────────────────┐
-// │ &Base::foo         │  slot 0
-// │ &Base::bar         │  slot 1
-// │ &Base::~Base       │  slot 2
-// └────────────────────┘
+// | slot | 函数 |
+// |------|------|
+// | 0 | &Base::foo |
+// | 1 | &Base::bar |
+// | 2 | &Base::~Base |
 //
 // Derived的vtable:
-// ┌────────────────────┐
-// │ &Derived::foo      │  slot 0 (覆盖)
-// │ &Base::bar         │  slot 1 (继承)
-// │ &Derived::~Derived │  slot 2 (覆盖)
-// └────────────────────┘
+// | slot | 函数 | 说明 |
+// |------|------|------|
+// | 0 | &Derived::foo | 覆盖 |
+// | 1 | &Base::bar | 继承 |
+// | 2 | &Derived::~Derived | 覆盖 |
 ```
 
 ### 1.2 vptr的位置
@@ -236,15 +236,13 @@ public:
 };
 
 // C的内存布局：
-// ┌────────────────┐
-// │ vptr_A         │ → C's vtable for A
-// │ A's members    │
-// ├────────────────┤
-// │ vptr_B         │ → C's vtable for B
-// │ B's members    │
-// ├────────────────┤
-// │ C's members    │
-// └────────────────┘
+// | 偏移 | 内容 | 说明 |
+// |------|------|------|
+// | 0 | vptr_A | → C's vtable for A |
+// | +8 | A's members | |
+// | +X | vptr_B | → C's vtable for B |
+// | +X+8 | B's members | |
+// | +Y | C's members | |
 
 void multipleVptrs() {
     C c;

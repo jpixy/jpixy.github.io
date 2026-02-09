@@ -121,11 +121,15 @@ void main_loop(void) {
 
 ### 2.2 硬件设计
 
-```
-STM32 ─┬─ TIM1_CH1 ──► H桥驱动 ──► 电机
-       ├─ GPIO ──────► 方向控制
-       ├─ TIM2 ◄────── 编码器反馈
-       └─ ADC ◄─────── 电流采样
+```mermaid
+graph TB
+    MCU[STM32]
+    
+    MCU -->|TIM1_CH1| H[H桥驱动]
+    H --> M[电机]
+    MCU -->|GPIO| DIR[方向控制]
+    ENC[编码器反馈] -->|TIM2| MCU
+    CUR[电流采样] -->|ADC| MCU
 ```
 
 ### 2.3 核心代码
@@ -268,21 +272,23 @@ void log_data_to_sd(uint16_t *data, uint8_t channels) {
 
 ### 4.2 架构设计
 
-```
-┌─────────────────────────────────────────────────┐
-│                  应用层                          │
-│  ┌─────────┐  ┌──────────┐  ┌─────────────┐    │
-│  │ Modbus  │  │   MQTT   │  │  Web Server │    │
-│  │ Master  │  │  Client  │  │  (HTTP)     │    │
-│  └────┬────┘  └────┬─────┘  └──────┬──────┘    │
-├───────┼────────────┼───────────────┼───────────┤
-│       │            │               │            │
-│  ┌────┴────┐  ┌────┴─────┐  ┌─────┴─────┐     │
-│  │ RS485   │  │  WiFi    │  │  Ethernet │     │
-│  │ Driver  │  │  Driver  │  │  Driver   │     │
-│  └─────────┘  └──────────┘  └───────────┘     │
-│                  驱动层                          │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 应用层
+        Modbus["Modbus Master"]
+        MQTT["MQTT Client"]
+        Web["Web Server<br/>(HTTP)"]
+    end
+    
+    subgraph 驱动层
+        RS485["RS485 Driver"]
+        WiFi["WiFi Driver"]
+        Ethernet["Ethernet Driver"]
+    end
+    
+    Modbus --> RS485
+    MQTT --> WiFi
+    Web --> Ethernet
 ```
 
 ### 4.3 任务设计（FreeRTOS）

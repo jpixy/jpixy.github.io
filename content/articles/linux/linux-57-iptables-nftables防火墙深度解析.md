@@ -169,13 +169,20 @@ iptables -A FORWARD -p tcp -d 192.168.1.100 --dport 22 -j ACCEPT
 
 ### 4.1 基本概念
 
-```bash
-# nftables 层级
-nftables
-├── table (类似 iptables 的表)
-│   ├── chain (类似 iptables 的链)
-│   │   └── rules (规则)
-│   └── set (IP/端口集合)
+nftables 层级结构：
+
+```mermaid
+graph TB
+    NFT["nftables"]
+    TABLE["table<br>（类似 iptables 的表）"]
+    CHAIN["chain<br>（类似 iptables 的链）"]
+    RULES["rules（规则）"]
+    SET["set（IP/端口集合）"]
+    
+    NFT --> TABLE
+    TABLE --> CHAIN
+    TABLE --> SET
+    CHAIN --> RULES
 ```
 
 ### 4.2 基本命令

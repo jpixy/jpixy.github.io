@@ -89,70 +89,45 @@ graph TB
 
 **参考答案**：
 
-```
-VFS 核心数据结构关系：
-
-进程 A                              进程 B
-   │                                   │
-   ▼                                   ▼
-┌──────────────────┐            ┌──────────────────┐
-│ task_struct      │            │ task_struct      │
-│  └─ files        │            │  └─ files        │
-│      └─ fd_array │            │      └─ fd_array │
-│         [3]──────┼────┐       │         [5]──────┼────┐
-└──────────────────┘    │       └──────────────────┘    │
-                        │                               │
-                        ▼                               ▼
-                 ┌─────────────┐                 ┌─────────────┐
-                 │ struct file │                 │ struct file │
-                 │  f_pos: 100 │                 │  f_pos: 500 │
-                 │  f_mode: RW │                 │  f_mode: R  │
-                 │  f_op ──────┼─────┐           │  f_op ──────┼─────┐
-                 │  f_path ────┼──┐  │           │  f_path ────┼──┐  │
-                 └─────────────┘  │  │           └─────────────┘  │  │
-                                  │  │                            │  │
-                    ┌─────────────┘  │           ┌────────────────┘  │
-                    ▼                │           ▼                   │
-            ┌─────────────┐          │   ┌─────────────┐             │
-            │struct dentry│◀─────────┼───│struct dentry│             │
-            │ d_name:"foo"│          │   │ d_name:"bar"│             │
-            │ d_inode ────┼──────────┼───┼─────────────┘             │
-            │ d_parent ───┼──┐       │   │                           │
-            └─────────────┘  │       │   └───────────────────────────┘
-                             │       │
-            ┌────────────────┘       │
-            ▼                        ▼
-     ┌─────────────┐          ┌─────────────────┐
-     │struct dentry│          │ file_operations │
-     │ d_name:"dir"│          │  .read          │
-     │ d_inode ────┼──┐       │  .write         │
-     └─────────────┘  │       │  .open          │
-                      │       │  .release       │
-                      ▼       └─────────────────┘
-               ┌─────────────┐
-               │ struct inode│
-               │  i_ino: 1234│
-               │  i_mode     │
-               │  i_size     │
-               │  i_sb ──────┼──────────────────────┐
-               │  i_op       │                      │
-               │  i_fop      │                      ▼
-               │  i_mapping ─┼───┐         ┌───────────────┐
-               └─────────────┘   │         │ super_block   │
-                                 │         │  s_type       │
-                                 ▼         │  s_op         │
-                        ┌────────────────┐ │  s_root       │
-                        │ address_space  │ │  s_bdev       │
-                        │  host (inode)  │ └───────────────┘
-                        │  i_pages       │
-                        │  a_ops         │
-                        └────────────────┘
-                                 │
-                                 ▼
-                        ┌────────────────┐
-                        │   页缓存       │
-                        │ (Page Cache)  │
-                        └────────────────┘
+```mermaid
+graph TB
+    subgraph 进程A["进程 A"]
+        TASK_A["task_struct<br/>files → fd_array[3]"]
+    end
+    
+    subgraph 进程B["进程 B"]
+        TASK_B["task_struct<br/>files → fd_array[5]"]
+    end
+    
+    FILE_A["struct file<br/>f_pos: 100<br/>f_mode: RW"]
+    FILE_B["struct file<br/>f_pos: 500<br/>f_mode: R"]
+    
+    DENTRY_FOO["struct dentry<br/>d_name: 'foo'"]
+    DENTRY_BAR["struct dentry<br/>d_name: 'bar'"]
+    DENTRY_DIR["struct dentry<br/>d_name: 'dir'"]
+    
+    INODE["struct inode<br/>i_ino: 1234<br/>i_mode, i_size"]
+    
+    SB["super_block<br/>s_type, s_op<br/>s_root, s_bdev"]
+    
+    ADDR["address_space<br/>host, i_pages<br/>a_ops"]
+    
+    PCACHE["页缓存<br/>(Page Cache)"]
+    
+    FILE_OPS["file_operations<br/>.read, .write<br/>.open, .release"]
+    
+    TASK_A --> FILE_A
+    TASK_B --> FILE_B
+    FILE_A --> DENTRY_FOO
+    FILE_B --> DENTRY_BAR
+    FILE_A --> FILE_OPS
+    FILE_B --> FILE_OPS
+    DENTRY_FOO --> DENTRY_DIR
+    DENTRY_BAR --> INODE
+    DENTRY_DIR --> INODE
+    INODE --> SB
+    INODE --> ADDR
+    ADDR --> PCACHE
 ```
 
 **关键关系说明**：
@@ -305,40 +280,25 @@ struct dentry {
 
 **dentry 缓存架构**：
 
+```mermaid
+graph TB
+    subgraph 哈希表["dentry 哈希表"]
+        H0["[0]"] --> D1["dentry 'foo'"]
+        H1["[1]"] --> D2["dentry 'bar'"]
+        H2["[2]"] --> D3["dentry 'baz'"]
+        H3["[3]"] --> D4["dentry 'qux'"]
+        D1 --> D1C["dentry (哈希冲突)"]
+        D2 --> D2C["dentry (哈希冲突)"]
+    end
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    dentry 哈希表                             │
-│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐          │
-│  │ [0] │ │ [1] │ │ [2] │ │ [3] │ │ ... │ │ [n] │          │
-│  └──┬──┘ └──┬──┘ └──┬──┘ └──┬──┘ └─────┘ └─────┘          │
-│     │       │       │       │                               │
-│     ▼       ▼       ▼       ▼                               │
-│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐                          │
-│  │dentry│ │dentry│ │dentry│ │dentry│                       │
-│  │"foo" │ │"bar" │ │"baz" │ │"qux" │                       │
-│  └──┬──┘ └──┬──┘ └─────┘ └─────┘                          │
-│     │       │                                               │
-│     ▼       ▼                                               │
-│  ┌─────┐ ┌─────┐                                           │
-│  │dentry│ │dentry│  (哈希冲突链)                            │
-│  └─────┘ └─────┘                                           │
-└─────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────────┐
-│                    LRU 链表                                  │
-│                                                             │
-│  最近使用 ◀─────────────────────────────────▶ 最少使用      │
-│                                                             │
-│  ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐          │
-│  │dentry│◀─▶│dentry│◀─▶│dentry│◀─▶│dentry│◀─▶│dentry│      │
-│  │ ref:0│   │ ref:0│   │ ref:0│   │ ref:0│   │ ref:0│      │
-│  └─────┘   └─────┘   └─────┘   └─────┘   └─────┘          │
-│                                                   ▲         │
-│                                                   │         │
-│                                              内存压力时      │
-│                                              从这里回收      │
-└─────────────────────────────────────────────────────────────┘
-```
+**LRU 链表：**
+
+| 位置 | 状态 | 说明 |
+|------|------|------|
+| 最近使用 (头部) | ref:0 | 刚被释放引用的 dentry |
+| ↓ | ref:0 | 按使用时间排序 |
+| 最少使用 (尾部) | ref:0 | 内存压力时从这里回收 |
 
 **负面 dentry（Negative Dentry）**：
 
@@ -523,48 +483,31 @@ int link_path_walk(const char *name, struct nameidata *nd) {
 
 **参考答案**：
 
-```
-read() 系统调用流程：
-
-用户空间: read(fd, buf, count)
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│ SYSCALL_DEFINE3(read, fd, buf, count)                       │
-│    │                                                        │
-│    ├─▶ 1. fdget_pos(): 获取 file 结构                        │
-│    │      └─▶ current->files->fd_array[fd]                  │
-│    │                                                        │
-│    ├─▶ 2. vfs_read()                                        │
-│    │      │                                                 │
-│    │      ├─▶ 检查权限 (MAY_READ)                            │
-│    │      │                                                 │
-│    │      ├─▶ 选择读取方法:                                   │
-│    │      │   if (file->f_op->read_iter)                    │
-│    │      │       call_read_iter()                          │
-│    │      │   else if (file->f_op->read)                    │
-│    │      │       file->f_op->read()                        │
-│    │      │                                                 │
-│    │      └─▶ 更新文件位置 f_pos                             │
-│    │                                                        │
-│    └─▶ 3. 返回读取字节数                                      │
-└─────────────────────────────────────────────────────────────┘
-    │
-    ▼ 以 ext4 为例
-┌─────────────────────────────────────────────────────────────┐
-│ ext4_file_read_iter()                                       │
-│    │                                                        │
-│    └─▶ generic_file_read_iter()                             │
-│           │                                                 │
-│           ├─▶ 如果是直接 I/O (O_DIRECT):                     │
-│           │      mapping->a_ops->direct_IO()                │
-│           │      └─▶ 绕过页缓存，直接读磁盘                   │
-│           │                                                 │
-│           └─▶ 否则使用页缓存:                                 │
-│                  filemap_read()                             │
-│                     │                                       │
-│                     └─▶ 见下图                               │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 用户空间
+        USER["read(fd, buf, count)"]
+    end
+    
+    subgraph 内核空间
+        SYSCALL["SYSCALL_DEFINE3(read)"]
+        FDGET["1. fdget_pos()<br/>获取 file 结构"]
+        VFS_READ["2. vfs_read()<br/>检查权限 (MAY_READ)"]
+        SELECT["选择读取方法:<br/>read_iter 或 read"]
+        UPDATE["更新文件位置 f_pos"]
+        RETURN["3. 返回读取字节数"]
+        
+        EXT4["ext4_file_read_iter()"]
+        GENERIC["generic_file_read_iter()"]
+        DIRECT["direct_IO()<br/>绕过页缓存"]
+        FILEMAP["filemap_read()<br/>使用页缓存"]
+    end
+    
+    USER --> SYSCALL
+    SYSCALL --> FDGET --> VFS_READ --> SELECT --> UPDATE --> RETURN
+    RETURN --> EXT4 --> GENERIC
+    GENERIC -->|O_DIRECT| DIRECT
+    GENERIC -->|普通读取| FILEMAP
 ```
 
 **页缓存读取流程**：
@@ -652,104 +595,60 @@ void ondemand_readahead(struct address_space *mapping,
 
 **参考答案**：
 
-```
-write() 系统调用流程：
-
-用户空间: write(fd, buf, count)
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│ vfs_write()                                                 │
-│    │                                                        │
-│    ├─▶ 检查权限 (MAY_WRITE)                                  │
-│    │                                                        │
-│    └─▶ file->f_op->write_iter()                             │
-│           │                                                 │
-│           └─▶ generic_file_write_iter()                     │
-│                  │                                          │
-│                  ├─▶ generic_write_checks(): 检查限制        │
-│                  │                                          │
-│                  ├─▶ file_remove_privs(): 移除 SUID/SGID     │
-│                  │                                          │
-│                  └─▶ generic_perform_write()                │
-│                         │                                   │
-│                         └─▶ 见下图                           │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    USER["用户空间: write(fd, buf, count)"]
+    VFS["vfs_write()"]
+    CHECK_PERM["检查权限 (MAY_WRITE)"]
+    WRITE_ITER["file->f_op->write_iter()"]
+    GENERIC["generic_file_write_iter()"]
+    CHECKS["generic_write_checks()<br/>检查限制"]
+    PRIVS["file_remove_privs()<br/>移除 SUID/SGID"]
+    PERFORM["generic_perform_write()"]
+    
+    USER --> VFS --> CHECK_PERM --> WRITE_ITER --> GENERIC
+    GENERIC --> CHECKS --> PRIVS --> PERFORM
 ```
 
 **写入页缓存流程**：
 
-```
-generic_perform_write() 流程：
+**generic_perform_write() 流程：**
 
-┌─────────────────────────────────────────────────────────────┐
-│ 对于每个要写入的页面:                                         │
-│                                                             │
-│    ┌─────────────────────────────────────────────────────┐ │
-│    │ 1. grab_cache_page_write_begin()                    │ │
-│    │    └─▶ 查找或分配页面，并锁定                         │ │
-│    └─────────────────────────────────────────────────────┘ │
-│              │                                              │
-│              ▼                                              │
-│    ┌─────────────────────────────────────────────────────┐ │
-│    │ 2. a_ops->write_begin()                             │ │
-│    │    └─▶ 准备页面（可能需要读取部分块）                  │ │
-│    └─────────────────────────────────────────────────────┘ │
-│              │                                              │
-│              ▼                                              │
-│    ┌─────────────────────────────────────────────────────┐ │
-│    │ 3. copy_from_user()                                 │ │
-│    │    └─▶ 从用户空间复制数据到页面                       │ │
-│    └─────────────────────────────────────────────────────┘ │
-│              │                                              │
-│              ▼                                              │
-│    ┌─────────────────────────────────────────────────────┐ │
-│    │ 4. a_ops->write_end()                               │ │
-│    │    ├─▶ 标记页面为脏 (SetPageDirty)                   │ │
-│    │    ├─▶ 标记 inode 为脏 (mark_inode_dirty)            │ │
-│    │    └─▶ 解锁页面                                      │ │
-│    └─────────────────────────────────────────────────────┘ │
-│              │                                              │
-│              ▼                                              │
-│    ┌─────────────────────────────────────────────────────┐ │
-│    │ 5. balance_dirty_pages_ratelimited()                │ │
-│    │    └─▶ 如果脏页过多，可能触发同步写回                  │ │
-│    └─────────────────────────────────────────────────────┘ │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-        │
-        │ write() 返回（数据在页缓存中）
-        │
-        ▼ 异步写回（后台）
-┌─────────────────────────────────────────────────────────────┐
-│                    脏页写回机制                              │
-│                                                             │
-│  触发条件:                                                   │
-│  1. 定时器到期（dirty_writeback_centisecs，默认 5s）         │
-│  2. 脏页比例超过阈值（dirty_background_ratio，默认 10%）      │
-│  3. 内存压力（需要回收页面）                                  │
-│  4. 显式同步（sync, fsync, fdatasync）                       │
-│                                                             │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │ writeback 内核线程                                   │   │
-│  │    │                                                │   │
-│  │    └─▶ wb_workfn()                                  │   │
-│  │           │                                         │   │
-│  │           └─▶ wb_do_writeback()                     │   │
-│  │                  │                                  │   │
-│  │                  └─▶ wb_writeback()                 │   │
-│  │                         │                           │   │
-│  │                         └─▶ writeback_sb_inodes()   │   │
-│  │                                │                    │   │
-│  │                                └─▶ __writeback_single_inode()
-│  │                                       │             │   │
-│  │                                       └─▶ do_writepages()
-│  │                                              │      │   │
-│  │                                              └─▶ a_ops->writepages()
-│  │                                                     │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 每个页面
+        GRAB["1. grab_cache_page_write_begin()<br/>查找或分配页面，并锁定"]
+        BEGIN["2. a_ops->write_begin()<br/>准备页面（可能需要读取部分块）"]
+        COPY["3. copy_from_user()<br/>从用户空间复制数据到页面"]
+        END["4. a_ops->write_end()<br/>标记页面为脏 (SetPageDirty)<br/>标记 inode 为脏<br/>解锁页面"]
+        BALANCE["5. balance_dirty_pages_ratelimited()<br/>如果脏页过多，可能触发同步写回"]
+    end
+    
+    GRAB --> BEGIN --> COPY --> END --> BALANCE
+```
+write() 返回（数据在页缓存中），异步写回在后台进行。
+
+**脏页写回机制：**
+
+**触发条件：**
+1. 定时器到期（dirty_writeback_centisecs，默认 5s）
+2. 脏页比例超过阈值（dirty_background_ratio，默认 10%）
+3. 内存压力（需要回收页面）
+4. 显式同步（sync, fsync, fdatasync）
+
+```mermaid
+graph TB
+    WB["writeback 内核线程"]
+    WORKFN["wb_workfn()"]
+    DO_WB["wb_do_writeback()"]
+    WRITEBACK["wb_writeback()"]
+    SB_INODES["writeback_sb_inodes()"]
+    SINGLE["__writeback_single_inode()"]
+    PAGES["do_writepages()"]
+    AOPS["a_ops->writepages()"]
+    
+    WB --> WORKFN --> DO_WB --> WRITEBACK --> SB_INODES --> SINGLE --> PAGES --> AOPS
+```
 ```
 
 **脏页回写参数**：
@@ -804,34 +703,30 @@ struct address_space {
 
 **页缓存数据结构**：
 
-```
-页缓存使用 XArray（前身是 Radix Tree）索引：
+**页缓存使用 XArray（前身是 Radix Tree）索引：**
 
-┌─────────────────────────────────────────────────────────────┐
-│                    address_space                             │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │ i_pages (xarray)                                     │   │
-│  │                                                      │   │
-│  │              Root                                    │   │
-│  │               │                                      │   │
-│  │       ┌───────┼───────┐                             │   │
-│  │       ▼       ▼       ▼                             │   │
-│  │    ┌─────┐ ┌─────┐ ┌─────┐                         │   │
-│  │    │Node │ │Node │ │Node │  (内部节点)              │   │
-│  │    └──┬──┘ └──┬──┘ └──┬──┘                         │   │
-│  │       │       │       │                             │   │
-│  │    ┌──┴──┐ ┌──┴──┐ ┌──┴──┐                         │   │
-│  │    ▼     ▼ ▼     ▼ ▼     ▼                         │   │
-│  │  ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐              │   │
-│  │  │Page│ │Page│ │Page│ │Page│ │Page│ │Page│ (叶子节点) │   │
-│  │  │ 0  │ │ 1  │ │ 2  │ │ 3  │ │1000│ │1001│          │   │
-│  │  └───┘ └───┘ └───┘ └───┘ └───┘ └───┘              │   │
-│  │                                                      │   │
-│  │  页面通过文件偏移量（page index）索引                  │   │
-│  │  index = offset >> PAGE_SHIFT                       │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph address_space
+        ROOT["Root (i_pages xarray)"]
+        N1["Node"] 
+        N2["Node"]
+        N3["Node"]
+        P0["Page 0"]
+        P1["Page 1"]
+        P2["Page 2"]
+        P3["Page 3"]
+        P1000["Page 1000"]
+        P1001["Page 1001"]
+        
+        ROOT --> N1 & N2 & N3
+        N1 --> P0 & P1
+        N2 --> P2 & P3
+        N3 --> P1000 & P1001
+    end
 ```
+
+**说明：** 页面通过文件偏移量（page index）索引，`index = offset >> PAGE_SHIFT`
 
 **address_space_operations**：
 
@@ -916,73 +811,36 @@ enum pageflags {
 
 **页面状态转换图**：
 
+**页面生命周期：**
+
+```mermaid
+stateDiagram-v2
+    [*] --> NewPage: 分配新页面
+    
+    NewPage: New Page<br/>!Uptodate, !Dirty, Locked
+    CleanPage: Clean Page<br/>Uptodate, !Dirty, !Locked, Referenced
+    DirtyPage: Dirty Page<br/>Uptodate, Dirty, !Writeback
+    WritebackPage: Writeback Page<br/>Uptodate, Dirty→!Dirty, Writeback, Locked
+    Reclaim: 回收页面
+    
+    NewPage --> CleanPage: 从磁盘读取完成
+    CleanPage --> DirtyPage: write() 修改
+    DirtyPage --> WritebackPage: 开始写回
+    WritebackPage --> CleanPage: writeback 完成
+    WritebackPage --> Reclaim: 内存压力
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    页面生命周期                               │
-└─────────────────────────────────────────────────────────────┘
 
-分配新页面
-    │
-    ▼
-┌─────────────────┐
-│    New Page     │
-│  !Uptodate      │
-│  !Dirty         │
-│  Locked         │
-└────────┬────────┘
-         │
-         │ 从磁盘读取完成
-         ▼
-┌─────────────────┐
-│    Clean Page   │◀─────────────────────────┐
-│  Uptodate       │                          │
-│  !Dirty         │                          │
-│  !Locked        │                          │
-│  Referenced     │                          │ writeback 完成
-└────────┬────────┘                          │
-         │                                    │
-         │ write() 修改                       │
-         ▼                                    │
-┌─────────────────┐                          │
-│    Dirty Page   │                          │
-│  Uptodate       │                          │
-│  Dirty          │                          │
-│  !Writeback     │                          │
-└────────┬────────┘                          │
-         │                                    │
-         │ 开始写回                            │
-         ▼                                    │
-┌─────────────────┐                          │
-│ Writeback Page  │──────────────────────────┘
-│  Uptodate       │
-│  Dirty→!Dirty   │
-│  Writeback      │
-│  Locked         │
-└────────┬────────┘
-         │
-         │ 内存压力
-         ▼
-┌─────────────────┐
-│   Reclaim       │
-│  (回收页面)      │
-└─────────────────┘
+**LRU 状态机：**
 
-
-LRU 状态机：
-                        激活
-        ┌──────────────────────────────────┐
-        │                                  │
-        ▼                                  │
-┌─────────────────┐              ┌─────────────────┐
-│   Active LRU    │              │  Inactive LRU   │
-│  (活动链表)      │─────────────▶│  (非活动链表)    │
-└─────────────────┘    老化      └────────┬────────┘
-        ▲                                 │
-        │                                 │ 回收
-        │ 访问                            ▼
-        │                        ┌─────────────────┐
-        └────────────────────────│    回收        │
-                                 └─────────────────┘
+```mermaid
+stateDiagram-v2
+    ActiveLRU: Active LRU (活动链表)
+    InactiveLRU: Inactive LRU (非活动链表)
+    Reclaimed: 回收
+    
+    ActiveLRU --> InactiveLRU: 老化
+    InactiveLRU --> ActiveLRU: 访问（激活）
+    InactiveLRU --> Reclaimed: 回收
 ```
 
 **页面状态检查函数**：
@@ -1022,50 +880,37 @@ void unlock_page(struct page *page);
 
 **参考答案**：
 
+**缓存 I/O：**
+
+```mermaid
+sequenceDiagram
+    participant U as 用户空间
+    participant P as 页缓存
+    participant D as 磁盘
+    
+    U->>P: read()
+    P->>D: 缓存未命中
+    D-->>P: 数据
+    P-->>U: copy_to_user
+    
+    U->>P: write()
+    Note over P: copy_from_user, 标记脏页
+    P-->>U: 返回（数据在缓存）
+    P->>D: 异步写回
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    缓存 I/O                                  │
-└─────────────────────────────────────────────────────────────┘
 
-用户空间                    页缓存                    磁盘
-    │                         │                        │
-    │  read()                 │                        │
-    ├─────────────────────────▶                        │
-    │                         │   缓存未命中            │
-    │                         ├────────────────────────▶
-    │                         │◀────────────────────────
-    │                         │   数据在页缓存          │
-    │◀─────────────────────────                        │
-    │  copy_to_user           │                        │
-    │                         │                        │
-    │  write()                │                        │
-    ├─────────────────────────▶                        │
-    │  copy_from_user         │                        │
-    │                         │   标记脏页              │
-    │◀─────────────────────────                        │
-    │  返回（数据在缓存）       │                        │
-    │                         │   异步写回              │
-    │                         ├────────────────────────▶
-    │                         │                        │
+**直接 I/O (O_DIRECT)：**
 
-┌─────────────────────────────────────────────────────────────┐
-│                    直接 I/O (O_DIRECT)                       │
-└─────────────────────────────────────────────────────────────┘
-
-用户空间                    页缓存                    磁盘
-    │                         │                        │
-    │  read() O_DIRECT        │                        │
-    ├─────────────────────────┼────────────────────────▶
-    │                     绕过│                        │
-    │◀────────────────────────┼────────────────────────
-    │  直接 DMA 到用户缓冲区   │                        │
-    │                         │                        │
-    │  write() O_DIRECT       │                        │
-    ├─────────────────────────┼────────────────────────▶
-    │  直接 DMA 从用户缓冲区   │                        │
-    │◀────────────────────────┼────────────────────────
-    │  返回（数据已在磁盘）    │                        │
-    │                         │                        │
+```mermaid
+sequenceDiagram
+    participant U as 用户空间
+    participant D as 磁盘
+    
+    U->>D: read() O_DIRECT<br/>绕过页缓存
+    D-->>U: 直接 DMA 到用户缓冲区
+    
+    U->>D: write() O_DIRECT
+    D-->>U: 返回（数据已在磁盘）
 ```
 
 **比较表**：
@@ -1261,148 +1106,90 @@ fdatasync() 可能跳过的元数据：
 
 **参考答案**：
 
-```
-Ext4 日志模式：
+**Ext4 日志模式：**
 
-1. journal（最安全，最慢）
-   - 数据和元数据都写入日志
-   - 流程：数据→日志 → 元数据→日志 → 提交 → 数据→磁盘 → 元数据→磁盘
-   
-2. ordered（默认，平衡）
-   - 只有元数据写入日志
-   - 数据先于元数据写入磁盘
-   - 流程：数据→磁盘 → 元数据→日志 → 提交 → 元数据→磁盘
+| 模式 | 安全性 | 速度 | 说明 |
+|------|--------|------|------|
+| journal | 最安全 | 最慢 | 数据和元数据都写入日志 |
+| ordered（默认） | 平衡 | 中等 | 只有元数据写入日志，数据先于元数据写入磁盘 |
+| writeback | 最不安全 | 最快 | 只有元数据写入日志，数据和元数据顺序不保证 |
 
-3. writeback（最快，最不安全）
-   - 只有元数据写入日志
-   - 数据和元数据顺序不保证
-   - 流程：元数据→日志 → 提交 → 数据/元数据→磁盘（顺序不定）
-```
+**写入流程：**
+- **journal**: 数据→日志 → 元数据→日志 → 提交 → 数据→磁盘 → 元数据→磁盘
+- **ordered**: 数据→磁盘 → 元数据→日志 → 提交 → 元数据→磁盘
+- **writeback**: 元数据→日志 → 提交 → 数据/元数据→磁盘（顺序不定）
 
 **日志结构**：
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Ext4 日志区域                             │
-│                                                             │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │            日志超级块 (Journal Superblock)           │   │
-│  │  - 日志大小                                          │   │
-│  │  - 块大小                                            │   │
-│  │  - 第一个有效事务                                    │   │
-│  │  - 序列号                                            │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                           │                                 │
-│                           ▼                                 │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    事务 1                            │   │
-│  │  ┌──────────────┐                                   │   │
-│  │  │ 描述符块     │ - 记录事务中修改的块               │   │
-│  │  └──────────────┘                                   │   │
-│  │  ┌──────────────┐                                   │   │
-│  │  │ 数据/元数据块│ - 实际修改的内容                   │   │
-│  │  │ ...          │                                   │   │
-│  │  └──────────────┘                                   │   │
-│  │  ┌──────────────┐                                   │   │
-│  │  │ 提交块       │ - 事务提交标记                     │   │
-│  │  └──────────────┘                                   │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                           │                                 │
-│                           ▼                                 │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    事务 2                            │   │
-│  │  ...                                                │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                           │                                 │
-│                           ▼ (循环使用)                      │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+**Ext4 日志区域：**
+
+```mermaid
+graph TB
+    subgraph 日志区域["Ext4 日志区域 (循环使用)"]
+        SB["日志超级块 (Journal Superblock)<br/>日志大小、块大小、第一个有效事务、序列号"]
+        
+        subgraph TX1["事务 1"]
+            DESC1["描述符块<br/>记录事务中修改的块"]
+            DATA1["数据/元数据块<br/>实际修改的内容"]
+            COMMIT1["提交块<br/>事务提交标记"]
+        end
+        
+        subgraph TX2["事务 2"]
+            DESC2["描述符块"]
+            DATA2["数据/元数据块"]
+            COMMIT2["提交块"]
+        end
+    end
+    
+    SB --> TX1
+    TX1 --> TX2
 ```
 
 **日志写入流程（ordered 模式）**：
 
-```
-写文件操作（ordered 模式）：
+**写文件操作（ordered 模式）：**
 
-1. 开始事务
-   jbd2_journal_start()
-   
-2. 修改元数据（在内存中）
-   - inode
-   - 位图
-   - 目录项
-   
-3. 获取日志信用
-   jbd2_journal_get_write_access()
-   
-4. 标记缓冲区为脏
-   jbd2_journal_dirty_metadata()
-   
-5. 提交事务
-   jbd2_journal_stop()
-   
-6. 后台提交流程：
-   ┌─────────────────────────────────────────────────────┐
-   │ a. 等待数据写入完成（ordered 模式）                   │
-   │    filemap_fdatawait_range()                        │
-   │                                                     │
-   │ b. 写入描述符块                                      │
-   │    journal_write_metadata_buffer()                  │
-   │                                                     │
-   │ c. 写入元数据块到日志                                 │
-   │    submit_bh(WRITE)                                 │
-   │                                                     │
-   │ d. 写入提交块                                        │
-   │    journal_write_commit_record()                    │
-   │                                                     │
-   │ e. 等待日志写入完成                                   │
-   │                                                     │
-   │ f. checkpoint: 将日志中的块写入最终位置              │
-   │    jbd2_log_do_checkpoint()                         │
-   └─────────────────────────────────────────────────────┘
-```
+| 步骤 | 函数 | 说明 |
+|------|------|------|
+| 1. 开始事务 | `jbd2_journal_start()` | |
+| 2. 修改元数据 | - | inode、位图、目录项（在内存中） |
+| 3. 获取日志信用 | `jbd2_journal_get_write_access()` | |
+| 4. 标记缓冲区为脏 | `jbd2_journal_dirty_metadata()` | |
+| 5. 提交事务 | `jbd2_journal_stop()` | |
+
+**后台提交流程：**
+
+| 步骤 | 函数 | 说明 |
+|------|------|------|
+| a | `filemap_fdatawait_range()` | 等待数据写入完成（ordered 模式） |
+| b | `journal_write_metadata_buffer()` | 写入描述符块 |
+| c | `submit_bh(WRITE)` | 写入元数据块到日志 |
+| d | `journal_write_commit_record()` | 写入提交块 |
+| e | - | 等待日志写入完成 |
+| f | `jbd2_log_do_checkpoint()` | checkpoint: 将日志中的块写入最终位置 |
 
 **崩溃恢复**：
 
-```
-系统崩溃后恢复流程：
+**系统崩溃后恢复流程：**
 
-1. 挂载文件系统
-   mount()
-   
-2. 检测需要恢复
-   jbd2_journal_load()
-   
-3. 扫描日志
-   ┌─────────────────────────────────────────────────────┐
-   │ a. 读取日志超级块                                    │
-   │    jbd2_journal_read_superblock()                   │
-   │                                                     │
-   │ b. 从第一个有效事务开始扫描                           │
-   │                                                     │
-   │ c. 对每个事务：                                       │
-   │    - 检查提交块是否存在（完整事务）                   │
-   │    - 如果完整，标记需要重放                          │
-   │    - 如果不完整，停止扫描                            │
-   └─────────────────────────────────────────────────────┘
-   
-4. 重放完整事务
-   jbd2_journal_recover()
-   ┌─────────────────────────────────────────────────────┐
-   │ a. 读取描述符块，获取修改的块列表                     │
-   │                                                     │
-   │ b. 对每个修改的块：                                   │
-   │    - 从日志读取                                      │
-   │    - 写入最终位置                                    │
-   │                                                     │
-   │ c. 等待写入完成                                       │
-   └─────────────────────────────────────────────────────┘
+| 步骤 | 函数 | 说明 |
+|------|------|------|
+| 1. 挂载文件系统 | `mount()` | |
+| 2. 检测需要恢复 | `jbd2_journal_load()` | |
+| 3. 扫描日志 | | 见下方详细流程 |
+| 4. 重放完整事务 | `jbd2_journal_recover()` | 见下方详细流程 |
+| 5. 清空日志 | `jbd2_journal_skip_recovery()` | |
+| 6. 文件系统就绪 | | |
 
-5. 清空日志
-   jbd2_journal_skip_recovery()
-   
-6. 文件系统就绪
-```
+**扫描日志流程：**
+- a. 读取日志超级块 (`jbd2_journal_read_superblock()`)
+- b. 从第一个有效事务开始扫描
+- c. 对每个事务：检查提交块是否存在（完整事务），如果完整则标记需要重放，如果不完整则停止扫描
+
+**重放事务流程：**
+- a. 读取描述符块，获取修改的块列表
+- b. 对每个修改的块：从日志读取，写入最终位置
+- c. 等待写入完成
 
 ---
 

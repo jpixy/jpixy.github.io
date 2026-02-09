@@ -101,17 +101,21 @@ tags = ["interview", "system-design", "architecture", "url-shortener"]
 
 ### 3.1 整体架构
 
-```
-用户 → CDN/负载均衡 → API Gateway
-                          │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-   短链创建服务      短链重定向服务      统计服务
-        │                 │                 │
-        ↓                 ↓                 ↓
-   分布式ID生成器    Redis缓存层        消息队列
-        │                 │                 │
-        └────────────→ MySQL集群 ←─────────┘
+```mermaid
+graph TB
+    U["用户"] --> CDN["CDN/负载均衡"] --> GW["API Gateway"]
+
+    GW --> CS["短链创建服务"]
+    GW --> RS["短链重定向服务"]
+    GW --> SS["统计服务"]
+
+    CS --> ID["分布式ID生成器"]
+    RS --> Redis["Redis缓存层"]
+    SS --> MQ["消息队列"]
+
+    ID --> MySQL["MySQL集群"]
+    Redis --> MySQL
+    MQ --> MySQL
 ```
 
 ### 3.2 核心组件

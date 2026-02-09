@@ -158,19 +158,12 @@ tags = ["interview", "microservices", "service-discovery", "api-gateway", "load-
 
 ### 4.2 网关架构
 
-```
-客户端
-   ↓
-┌─────────────────────────────────────┐
-│            API Gateway              │
-│   认证 → 限流 → 路由 → 负载均衡     │
-└─────────────────┬───────────────────┘
-                  ↓
-    ┌─────────────┼─────────────┐
-    ↓             ↓             ↓
-┌───────┐    ┌───────┐    ┌───────┐
-│服务A  │    │服务B  │    │服务C  │
-└───────┘    └───────┘    └───────┘
+```mermaid
+graph TB
+    Client[客户端] --> Gateway["API Gateway<br/>认证 → 限流 → 路由 → 负载均衡"]
+    Gateway --> SvcA[服务A]
+    Gateway --> SvcB[服务B]
+    Gateway --> SvcC[服务C]
 ```
 
 ### 4.3 主流网关
@@ -282,21 +275,21 @@ tags = ["interview", "microservices", "service-discovery", "api-gateway", "load-
 
 ### 6.2 架构
 
-```
-┌───────┐  ┌───────┐  ┌───────┐
-│ Web   │  │Mobile │  │ IoT   │
-└───┬───┘  └───┬───┘  └───┬───┘
-    ↓          ↓          ↓
-┌───────┐  ┌───────┐  ┌───────┐
-│Web BFF│  │App BFF│  │IoT BFF│
-└───┬───┘  └───┬───┘  └───┬───┘
-    └──────────┼──────────┘
-               ↓
-    ┌──────────┼──────────┐
-    ↓          ↓          ↓
-┌───────┐  ┌───────┐  ┌───────┐
-│服务A  │  │服务B  │  │服务C  │
-└───────┘  └───────┘  └───────┘
+```mermaid
+graph TB
+    Web[Web] --> WebBFF[Web BFF]
+    Mobile[Mobile] --> AppBFF[App BFF]
+    IoT[IoT] --> IoTBFF[IoT BFF]
+    
+    WebBFF --> SvcA[服务A]
+    WebBFF --> SvcB[服务B]
+    WebBFF --> SvcC[服务C]
+    AppBFF --> SvcA
+    AppBFF --> SvcB
+    AppBFF --> SvcC
+    IoTBFF --> SvcA
+    IoTBFF --> SvcB
+    IoTBFF --> SvcC
 ```
 
 ### 6.3 适用场景
@@ -318,24 +311,26 @@ tags = ["interview", "microservices", "service-discovery", "api-gateway", "load-
 
 ### 7.2 架构
 
-```
-┌─────────────────────────────────────┐
-│              控制平面                │
-│         (Istiod等)                  │
-└─────────────────┬───────────────────┘
-                  ↓ 配置下发
-┌─────────────────────────────────────┐
-│              数据平面                │
-│   ┌───────────────────────────────┐ │
-│   │ ┌────────┐     ┌────────┐    │ │
-│   │ │ App A  │     │ App B  │    │ │
-│   │ └────────┘     └────────┘    │ │
-│   │ ┌────────┐     ┌────────┐    │ │
-│   │ │Sidecar │←───→│Sidecar │    │ │
-│   │ │(Envoy) │     │(Envoy) │    │ │
-│   │ └────────┘     └────────┘    │ │
-│   └───────────────────────────────┘ │
-└─────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph ControlPlane["控制平面"]
+        Istiod["Istiod等"]
+    end
+    
+    subgraph DataPlane["数据平面"]
+        subgraph PodA["Pod A"]
+            AppA["App A"]
+            SidecarA["Sidecar (Envoy)"]
+        end
+        subgraph PodB["Pod B"]
+            AppB["App B"]
+            SidecarB["Sidecar (Envoy)"]
+        end
+    end
+    
+    Istiod -->|配置下发| SidecarA
+    Istiod -->|配置下发| SidecarB
+    SidecarA <--> SidecarB
 ```
 
 ### 7.3 优势

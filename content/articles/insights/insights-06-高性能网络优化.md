@@ -15,23 +15,15 @@ slug = "insights-高性能网络与协议栈优化技术全景"
 
 **关键词**: `Kernel Network Stack`, `Context Switch`, `Memory Copy`, `Interrupt`, `Lock Contention`, `SKB`, `Socket Buffer`
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Application                             │
-├─────────────────────────────────────────────────────────────┤
-│                    System Call (上下文切换)                   │
-├─────────────────────────────────────────────────────────────┤
-│                      Socket Layer                            │
-├─────────────────────────────────────────────────────────────┤
-│           TCP/UDP Layer (协议处理、锁竞争)                    │
-├─────────────────────────────────────────────────────────────┤
-│              IP Layer (路由查找、Netfilter)                   │
-├─────────────────────────────────────────────────────────────┤
-│            Driver Layer (中断处理、内存拷贝)                   │
-├─────────────────────────────────────────────────────────────┤
-│                         NIC                                  │
-└─────────────────────────────────────────────────────────────┘
-```
+| 层级 | 组件 | 瓶颈说明 |
+|------|------|---------|
+| 应用层 | Application | - |
+| | System Call | 上下文切换 |
+| | Socket Layer | - |
+| 传输层 | TCP/UDP Layer | 协议处理、锁竞争 |
+| 网络层 | IP Layer | 路由查找、Netfilter |
+| 驱动层 | Driver Layer | 中断处理、内存拷贝 |
+| 硬件层 | NIC | - |
 
 | 瓶颈点 | 问题描述 | 性能影响 |
 | :--- | :--- | :--- |
@@ -54,24 +46,14 @@ slug = "insights-高性能网络与协议栈优化技术全景"
 
 **关键词**: `Kernel Bypass`, `Zero Copy`, `Polling`, `Busy Loop`, `Lockless`, `Per-CPU`, `Batch Processing`
 
-```
-                    ┌─────────────────────────────────────┐
-                    │        解决网络瓶颈的技术路径         │
-                    └─────────────────────────────────────┘
-                                      │
-          ┌───────────────────────────┼───────────────────────────┐
-          │                           │                           │
-          ▼                           ▼                           ▼
-   ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
-   │  内核优化    │           │ 内核旁路     │           │  硬件卸载   │
-   │  (eBPF/XDP) │           │(DPDK/VPP)   │           │(SmartNIC)   │
-   └─────────────┘           └─────────────┘           └─────────────┘
-         │                         │                         │
-         ▼                         ▼                         ▼
-   ┌───────────┐            ┌───────────┐            ┌───────────┐
-   │保留内核生态│            │最高性能   │            │CPU零开销  │
-   │渐进式优化 │            │用户态控制 │            │可编程性   │
-   └───────────┘            └───────────┘            └───────────┘
+```mermaid
+graph TB
+    A[解决网络瓶颈的技术路径] --> B[内核优化<br/>eBPF/XDP]
+    A --> C[内核旁路<br/>DPDK/VPP]
+    A --> D[硬件卸载<br/>SmartNIC]
+    B --> B1[保留内核生态<br/>渐进式优化]
+    C --> C1[最高性能<br/>用户态控制]
+    D --> D1[CPU零开销<br/>可编程性]
 ```
 
 ---
@@ -111,11 +93,10 @@ slug = "insights-高性能网络与协议栈优化技术全景"
 **关键词**: `Click Modular Router`, `Packet Processing Graph`, `Element`, `Handler`, `Push/Pull`
 
 **Click 架构**：
-```
-┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐
-│From │ → │Classi│ → │ IP  │ → │ TCP │ → │ To  │
-│Device│   │fier │   │Route│   │Process│  │Device│
-└─────┘   └─────┘   └─────┘   └─────┘   └─────┘
+
+```mermaid
+graph TB
+    A[From Device] --> B[Classifier] --> C[IP Route] --> D[TCP Process] --> E[To Device]
 ```
 
 - 每个 **Element** 是独立的处理模块
@@ -186,23 +167,15 @@ slug = "insights-高性能网络与协议栈优化技术全景"
 
 ### 4.2 架构与核心组件
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Application                               │
-├──────────┬──────────┬──────────┬──────────┬────────────────────┤
-│  Mempool │   Ring   │   Mbuf   │  Timer   │   Hash/LPM/ACL     │
-├──────────┴──────────┴──────────┴──────────┴────────────────────┤
-│                    Environment Abstraction Layer (EAL)           │
-├─────────────────────────────────────────────────────────────────┤
-│                      Poll Mode Drivers (PMD)                     │
-├─────────────────────────────────────────────────────────────────┤
-│              UIO / VFIO (用户态驱动框架)                          │
-├─────────────────────────────────────────────────────────────────┤
-│                        Hugepages (大页内存)                       │
-├─────────────────────────────────────────────────────────────────┤
-│                            NIC                                   │
-└─────────────────────────────────────────────────────────────────┘
-```
+| 层级 | 组件 |
+|------|------|
+| Application | 应用程序 |
+| 库层 | Mempool / Ring / Mbuf / Timer / Hash/LPM/ACL |
+| EAL | Environment Abstraction Layer (环境抽象层) |
+| PMD | Poll Mode Drivers (轮询模式驱动) |
+| 驱动框架 | UIO / VFIO (用户态驱动框架) |
+| 内存 | Hugepages (大页内存) |
+| 硬件 | NIC |
 
 | 组件 | 说明 |
 | :--- | :--- |
@@ -253,22 +226,12 @@ slug = "insights-高性能网络与协议栈优化技术全景"
 **关键词**: `OVS`, `Open vSwitch`, `OpenFlow`, `Datapath`, `vswitchd`, `ovsdb`, `Flow Table`, `Megaflow`
 
 **架构**：
-```
-┌─────────────────────────────────────────────────────────┐
-│                    ovs-vswitchd (用户态)                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │  OpenFlow    │  │    OVSDB     │  │   Ofproto    │  │
-│  │  Controller  │  │   Server     │  │   Library    │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-├─────────────────────────────────────────────────────────┤
-│                     Datapath (内核/DPDK)                 │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │   Flow Cache (Megaflow/Microflow)                 │  │
-│  └───────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────────┤
-│                   Physical/Virtual NICs                  │
-└─────────────────────────────────────────────────────────┘
-```
+
+| 层级 | 组件 |
+|------|------|
+| **ovs-vswitchd (用户态)** | OpenFlow Controller / OVSDB Server / Ofproto Library |
+| **Datapath (内核/DPDK)** | Flow Cache (Megaflow/Microflow) |
+| **底层** | Physical/Virtual NICs |
 
 ### 5.2 OVS 数据路径
 
@@ -313,24 +276,18 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 **关键词**: `OVN`, `Logical Switch`, `Logical Router`, `Northbound DB`, `Southbound DB`, `ovn-controller`, `Distributed Gateway`
 
 **OVN 架构**：
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         CMS (Cloud Management System)        │
-│                     (OpenStack/Kubernetes/etc.)              │
-├─────────────────────────────────────────────────────────────┤
-│                      OVN Northbound DB                       │
-│              (Logical Switches, Routers, ACLs)               │
-├─────────────────────────────────────────────────────────────┤
-│                         ovn-northd                           │
-├─────────────────────────────────────────────────────────────┤
-│                      OVN Southbound DB                       │
-│              (Physical Bindings, Flows)                      │
-├───────────────┬─────────────────────┬───────────────────────┤
-│ ovn-controller│    ovn-controller   │    ovn-controller     │
-│   (Node 1)    │      (Node 2)       │      (Node 3)         │
-├───────────────┼─────────────────────┼───────────────────────┤
-│      OVS      │        OVS          │        OVS            │
-└───────────────┴─────────────────────┴───────────────────────┘
+
+```mermaid
+graph TB
+    CMS[CMS<br/>Cloud Management System<br/>OpenStack/Kubernetes] --> NB[OVN Northbound DB<br/>Logical Switches, Routers, ACLs]
+    NB --> ND[ovn-northd]
+    ND --> SB[OVN Southbound DB<br/>Physical Bindings, Flows]
+    SB --> OC1[ovn-controller<br/>Node 1]
+    SB --> OC2[ovn-controller<br/>Node 2]
+    SB --> OC3[ovn-controller<br/>Node 3]
+    OC1 --> OVS1[OVS]
+    OC2 --> OVS2[OVS]
+    OC3 --> OVS3[OVS]
 ```
 
 **OVN 核心功能**：
@@ -361,39 +318,30 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 **eBPF 定义**：内核内的可编程虚拟机，允许在内核中安全运行用户定义的代码，无需修改内核或加载模块。
 
 **架构**：
-```
-┌─────────────────────────────────────────────────────────────┐
-│                       User Space                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │  BPF Program │  │   Loader     │  │   BPF Maps       │   │
-│  │  (C/Rust)    │  │  (libbpf)    │  │  (read/write)    │   │
-│  └──────────────┘  └──────────────┘  └──────────────────┘   │
-├─────────────────────────────────────────────────────────────┤
-│                       Kernel Space                           │
-│  ┌────────────┐  ┌────────────┐  ┌─────────────────────┐    │
-│  │  Verifier  │→ │    JIT     │→ │   Attach Point      │    │
-│  │  (安全检查) │  │  (编译)    │  │   (Hook)            │    │
-│  └────────────┘  └────────────┘  └─────────────────────┘    │
-│                                                              │
-│  Attach Points: XDP, TC, Socket, Tracing, cgroup, etc.       │
-└─────────────────────────────────────────────────────────────┘
-```
+
+| 空间 | 组件 | 说明 |
+|------|------|------|
+| **User Space** | BPF Program (C/Rust) | 用户编写的 eBPF 程序 |
+| | Loader (libbpf) | 加载器 |
+| | BPF Maps | 数据共享 (read/write) |
+| **Kernel Space** | Verifier → JIT → Attach Point | 安全检查 → 编译 → Hook 挂载 |
+| | Attach Points | XDP, TC, Socket, Tracing, cgroup, etc. |
 
 ### 6.2 XDP (eXpress Data Path)
 
 **关键词**: `XDP`, `eXpress Data Path`, `XDP_DROP`, `XDP_PASS`, `XDP_TX`, `XDP_REDIRECT`, `XDP_ABORTED`, `AF_XDP`
 
 **XDP 处理位置**：
-```
-┌───────┐   ┌───────┐   ┌──────────────┐   ┌──────────────┐
-│  NIC  │ → │  XDP  │ → │ Driver/NAPI  │ → │ Kernel Stack │
-└───────┘   └───────┘   └──────────────┘   └──────────────┘
-                 │
-                 ├── XDP_DROP (丢弃)
-                 ├── XDP_PASS (继续)
-                 ├── XDP_TX (原端口发回)
-                 ├── XDP_REDIRECT (重定向)
-                 └── XDP_ABORTED (错误)
+
+```mermaid
+graph TB
+    NIC[NIC] --> XDP[XDP]
+    XDP --> Driver[Driver/NAPI] --> Kernel[Kernel Stack]
+    XDP -.-> DROP[XDP_DROP 丢弃]
+    XDP -.-> PASS[XDP_PASS 继续]
+    XDP -.-> TX[XDP_TX 原端口发回]
+    XDP -.-> REDIRECT[XDP_REDIRECT 重定向]
+    XDP -.-> ABORTED[XDP_ABORTED 错误]
 ```
 
 **XDP 模式**：
@@ -458,25 +406,11 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 **AF_XDP 定义**：将 XDP 处理后的数据包直接送到用户态 socket，绕过内核协议栈。
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      User Space                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │                    Application                        │   │
-│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐ │   │
-│  │  │ Fill Ring│  │ Comp Ring│  │ Rx Ring  │  │Tx Ring│ │   │
-│  │  └──────────┘  └──────────┘  └──────────┘  └───────┘ │   │
-│  │                       UMEM                            │   │
-│  └──────────────────────────────────────────────────────┘   │
-├─────────────────────────────────────────────────────────────┤
-│                      Kernel Space                            │
-│  ┌──────────────┐                                           │
-│  │   XDP Prog   │ → XDP_REDIRECT → AF_XDP Socket            │
-│  └──────────────┘                                           │
-├─────────────────────────────────────────────────────────────┤
-│                          NIC                                 │
-└─────────────────────────────────────────────────────────────┘
-```
+| 层级 | 组件 |
+|------|------|
+| **User Space** | Application (Fill Ring / Comp Ring / Rx Ring / Tx Ring + UMEM) |
+| **Kernel Space** | XDP Prog → XDP_REDIRECT → AF_XDP Socket |
+| **硬件** | NIC |
 
 **性能**：接近 DPDK，但保留内核生态兼容性。
 
@@ -492,15 +426,10 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 ### 7.2 向量处理 vs 标量处理
 
-```
-标量处理 (Scalar):
-  Packet1: [Rx] → [Parse] → [Lookup] → [Forward] → [Tx]
-  Packet2: [Rx] → [Parse] → [Lookup] → [Forward] → [Tx]
-  Packet3: [Rx] → [Parse] → [Lookup] → [Forward] → [Tx]
-  
-向量处理 (Vector):
-  [Rx] × 256 → [Parse] × 256 → [Lookup] × 256 → [Forward] × 256 → [Tx] × 256
-```
+| 处理模式 | 流程 |
+|----------|------|
+| **标量处理 (Scalar)** | 每个包依次完整处理：Packet1 [Rx→Parse→Lookup→Forward→Tx]，Packet2 [Rx→Parse→Lookup→Forward→Tx]... |
+| **向量处理 (Vector)** | 批量处理：[Rx]×256 → [Parse]×256 → [Lookup]×256 → [Forward]×256 → [Tx]×256 |
 
 | 对比 | 标量处理 | 向量处理 |
 | :--- | :--- | :--- |
@@ -510,20 +439,21 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 ### 7.3 VPP 架构
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      VPP Runtime                             │
-├─────────────────────────────────────────────────────────────┤
-│                    Processing Graph                          │
-│  ┌──────┐   ┌──────┐   ┌──────┐   ┌──────┐   ┌──────┐      │
-│  │dpdk- │ → │ ip4- │ → │ ip4- │ → │  tx  │ → │dpdk- │      │
-│  │input │   │input │   │lookup│   │ fwd  │   │output│      │
-│  └──────┘   └──────┘   └──────┘   └──────┘   └──────┘      │
-├──────────┬──────────┬──────────┬──────────┬────────────────┤
-│   VLIB   │   VNET   │   VAPI   │  Plugins │                │
-├──────────┴──────────┴──────────┴──────────┴────────────────┤
-│                         DPDK / Native                        │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph VPP Runtime
+        subgraph Processing Graph
+            A[dpdk-input] --> B[ip4-input] --> C[ip4-lookup] --> D[tx-fwd] --> E[dpdk-output]
+        end
+    end
+    subgraph Libraries
+        F[VLIB]
+        G[VNET]
+        H[VAPI]
+        I[Plugins]
+    end
+    Processing Graph --> Libraries
+    Libraries --> J[DPDK / Native]
 ```
 
 | 组件 | 说明 |
@@ -575,24 +505,12 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 ### 8.2 架构与模式
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      User Space                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │                    Application                        │   │
-│  │                 (pcap/pfring API)                     │   │
-│  └──────────────────────────────────────────────────────┘   │
-├─────────────────────────────────────────────────────────────┤
-│                      PF_RING Library                         │
-├───────────────────┬───────────────────┬─────────────────────┤
-│   Standard Mode   │    ZC (Zero Copy) │    FPGA Mode        │
-│  (kernel bypass)  │   (DNA/LibZero)   │  (hardware accel)   │
-├───────────────────┴───────────────────┴─────────────────────┤
-│                      PF_RING Kernel Module                   │
-├─────────────────────────────────────────────────────────────┤
-│                           NIC                                │
-└─────────────────────────────────────────────────────────────┘
-```
+| 层级 | 组件 |
+|------|------|
+| **User Space** | Application (pcap/pfring API) |
+| **PF_RING Library** | Standard Mode / ZC (Zero Copy) / FPGA Mode |
+| **Kernel** | PF_RING Kernel Module |
+| **硬件** | NIC |
 
 | 模式 | 说明 | 性能 |
 | :--- | :--- | :--- |
@@ -663,31 +581,20 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 **DPU 定义**：独立的基础设施处理单元，拥有独立 CPU、内存和网络加速器，可卸载主机 CPU 的数据中心基础设施功能。
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         Host Server                          │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │                    Application                        │   │
-│  │                    Workloads                          │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                             │                                │
-│                           PCIe                               │
-│                             │                                │
-├─────────────────────────────────────────────────────────────┤
-│                           DPU                                │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
-│  │ ARM Cores │  │Crypto Eng│  │Network   │  │Storage   │    │
-│  │ (8-16核)  │  │(加解密)  │  │Accelerator│ │Accelerator│   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘    │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │               Embedded OS (Linux/UEFI)                │   │
-│  │          运行: OVS, IPsec, NVMe-oF, Firewall          │   │
-│  └──────────────────────────────────────────────────────┘   │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │                 High-speed Network                    │   │
-│  │                  (100G/200G/400G)                     │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Host Server
+        APP[Application Workloads]
+    end
+    APP -->|PCIe| DPU
+    subgraph DPU
+        ARM[ARM Cores<br/>8-16核]
+        CRYPTO[Crypto Engine<br/>加解密]
+        NET[Network Accelerator]
+        STORAGE[Storage Accelerator]
+        OS[Embedded OS Linux/UEFI<br/>运行: OVS, IPsec, NVMe-oF, Firewall]
+        NETWORK[High-speed Network<br/>100G/200G/400G]
+    end
 ```
 
 **主流 DPU 产品**：
@@ -717,17 +624,12 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 **关键词**: `OVS Offload`, `TC Flower`, `ASAP2`, `Representor`, `E-Switch`, `Switchdev`
 
 **卸载架构**：
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      OVS-vswitchd                            │
-│              (Slow Path, 首包处理)                           │
-├─────────────────────────────────────────────────────────────┤
-│                   TC Flower / Representor                    │
-├─────────────────────────────────────────────────────────────┤
-│                  SmartNIC E-Switch (Fast Path)               │
-│                    (硬件流表匹配转发)                         │
-└─────────────────────────────────────────────────────────────┘
-```
+
+| 层级 | 组件 | 说明 |
+|------|------|------|
+| **Slow Path** | OVS-vswitchd | 首包处理 |
+| **接口层** | TC Flower / Representor | 流规则下发 |
+| **Fast Path** | SmartNIC E-Switch | 硬件流表匹配转发 |
 
 **工作原理**：
 1. 首包经过 OVS 软件处理，生成流表项
@@ -819,25 +721,21 @@ ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk \
 
 ### 11.2 选型建议
 
-```
-                            需要多高的性能？
-                                  │
-                    ┌─────────────┼─────────────┐
-                    │             │             │
-                极致性能      高性能        中等性能
-                    │             │             │
-                    ▼             ▼             ▼
-               ┌────────┐   ┌────────┐   ┌────────┐
-               │DPDK/VPP│   │eBPF/XDP│   │优化内核│
-               │SmartNIC│   │AF_XDP  │   │  栈    │
-               └────────┘   └────────┘   └────────┘
-                    │             │
-                    ▼             ▼
-            是否需要通用协议栈？  是否需要与K8s集成？
-                    │             │
-              ┌─────┴─────┐ ┌─────┴─────┐
-              │           │ │           │
-          需要自研    使用VPP  使用Cilium  使用OVS
+```mermaid
+graph TB
+    Q1[需要多高的性能？]
+    Q1 --> P1[极致性能]
+    Q1 --> P2[高性能]
+    Q1 --> P3[中等性能]
+    P1 --> S1[DPDK/VPP<br/>SmartNIC]
+    P2 --> S2[eBPF/XDP<br/>AF_XDP]
+    P3 --> S3[优化内核栈]
+    S1 --> Q2[是否需要通用协议栈？]
+    Q2 --> R1[需要自研]
+    Q2 --> R2[使用VPP]
+    S2 --> Q3[是否需要与K8s集成？]
+    Q3 --> R3[使用Cilium]
+    Q3 --> R4[使用OVS]
 ```
 
 ---

@@ -55,26 +55,21 @@ Level 4: 智能化（AIOps、自愈系统）
 
 ### 2.1 Ansible 架构
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Control Node                          │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │
-│  │  Inventory  │  │  Playbook   │  │   Modules   │      │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘      │
-│         └────────────────┴────────────────┘              │
-│                          │                               │
-│                    ┌─────▼─────┐                        │
-│                    │  Ansible  │                        │
-│                    │  Engine   │                        │
-│                    └─────┬─────┘                        │
-└──────────────────────────┼──────────────────────────────┘
-                           │ SSH (默认) / WinRM
-         ┌─────────────────┼─────────────────┐
-         ▼                 ▼                 ▼
-   ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │ Managed  │      │ Managed  │      │ Managed  │
-   │  Node 1  │      │  Node 2  │      │  Node N  │
-   └──────────┘      └──────────┘      └──────────┘
+```mermaid
+graph TB
+    subgraph ControlNode["Control Node"]
+        INV[Inventory]
+        PB[Playbook]
+        MOD[Modules]
+        ENGINE[Ansible Engine]
+        INV --> ENGINE
+        PB --> ENGINE
+        MOD --> ENGINE
+    end
+    
+    ENGINE -->|"SSH / WinRM"| N1[Managed Node 1]
+    ENGINE -->|"SSH / WinRM"| N2[Managed Node 2]
+    ENGINE -->|"SSH / WinRM"| NN[Managed Node N]
 ```
 
 **核心特点**：
@@ -220,26 +215,21 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s
 
 ### 3.1 Terraform 架构
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Terraform Core                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │
-│  │ Config Files│  │   State     │  │  Providers  │      │
-│  │    (.tf)    │  │ (.tfstate)  │  │  (Plugins)  │      │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘      │
-│         └────────────────┴────────────────┘              │
-│                          │                               │
-│                    ┌─────▼─────┐                        │
-│                    │   Plan    │                        │
-│                    │   Apply   │                        │
-│                    └─────┬─────┘                        │
-└──────────────────────────┼──────────────────────────────┘
-                           │ API Calls
-         ┌─────────────────┼─────────────────┐
-         ▼                 ▼                 ▼
-   ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │   AWS    │      │   GCP    │      │  Azure   │
-   └──────────┘      └──────────┘      └──────────┘
+```mermaid
+graph TB
+    subgraph TFCore["Terraform Core"]
+        CFG["Config Files (.tf)"]
+        STATE["State (.tfstate)"]
+        PROV[Providers/Plugins]
+        EXEC["Plan / Apply"]
+        CFG --> EXEC
+        STATE --> EXEC
+        PROV --> EXEC
+    end
+    
+    EXEC -->|"API Calls"| AWS[AWS]
+    EXEC -->|"API Calls"| GCP[GCP]
+    EXEC -->|"API Calls"| AZ[Azure]
 ```
 
 **工作流程**：

@@ -121,7 +121,7 @@ resources:
 ### 3.3 Device Plugin
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Device Plugin"
         DP[NVIDIA Device Plugin]
         DP --> GPU0[GPU 0]
@@ -347,7 +347,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[Slurm 基础] --> L2[作业编写]
     L2 --> L3[调度策略]
     L3 --> L4[K8s GPU]

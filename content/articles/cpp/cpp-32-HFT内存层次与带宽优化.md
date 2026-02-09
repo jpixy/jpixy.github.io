@@ -312,25 +312,33 @@ int traverseWithPrefetch(Node* head) {
 
 ### 6.1 NUMA架构
 
-```
-NUMA (Non-Uniform Memory Access)
+**NUMA (Non-Uniform Memory Access)**：
 
-┌─────────────────┐     ┌─────────────────┐
-│    Node 0       │     │    Node 1       │
-│  ┌───┐ ┌───┐   │     │   ┌───┐ ┌───┐  │
-│  │CPU│ │CPU│   │     │   │CPU│ │CPU│  │
-│  └───┘ └───┘   │     │   └───┘ └───┘  │
-│       │         │     │        │        │
-│  ┌─────────┐   │     │   ┌─────────┐   │
-│  │ Memory  │←──┼──┬──┼──→│ Memory  │   │
-│  └─────────┘   │  │  │   └─────────┘   │
-└─────────────────┘  │  └─────────────────┘
-                     │
-              QPI/UPI Interconnect
-
-本地内存访问: ~70ns
-远程内存访问: ~100-150ns (1.5x-2x)
+```mermaid
+graph TB
+    subgraph Node0[Node 0]
+        CPU0A[CPU]
+        CPU0B[CPU]
+        MEM0[Memory]
+        CPU0A --> MEM0
+        CPU0B --> MEM0
+    end
+    
+    subgraph Node1[Node 1]
+        CPU1A[CPU]
+        CPU1B[CPU]
+        MEM1[Memory]
+        CPU1A --> MEM1
+        CPU1B --> MEM1
+    end
+    
+    MEM0 <-->|QPI/UPI Interconnect| MEM1
 ```
+
+| 访问类型 | 延迟 |
+|----------|------|
+| 本地内存访问 | ~70ns |
+| 远程内存访问 | ~100-150ns (1.5x-2x) |
 
 ### 6.2 NUMA感知编程
 

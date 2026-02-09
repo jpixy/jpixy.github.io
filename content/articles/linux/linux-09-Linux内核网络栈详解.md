@@ -318,7 +318,7 @@ static void net_rx_action(struct softirq_action *h)
 ### 4.1 Netfilter钩子点
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph 接收路径
         RX[数据包接收] --> PREROUTING
         PREROUTING --> ROUTE{路由决策}
@@ -398,21 +398,12 @@ static void __exit my_exit(void)
 
 ### 5.1 conntrack原理
 
-```
-                    ┌─────────────────┐
-                    │  conntrack表     │
-                    │  (哈希表)        │
-                    └────────┬────────┘
-                             │
-    ┌────────────────────────┼────────────────────────┐
-    │                        │                        │
-┌───▼───┐              ┌─────▼─────┐              ┌───▼───┐
-│ Tuple │              │  Tuple    │              │ Tuple │
-│ (src) │              │  (src)    │              │ (src) │
-│ (dst) │              │  (dst)    │              │ (dst) │
-│ proto │              │  proto    │              │ proto │
-│ state │              │  state    │              │ state │
-└───────┘              └───────────┘              └───────┘
+```mermaid
+graph TB
+    CT["conntrack表<br/>(哈希表)"]
+    CT --> T1["Tuple 1<br/>src, dst<br/>proto, state"]
+    CT --> T2["Tuple 2<br/>src, dst<br/>proto, state"]
+    CT --> T3["Tuple 3<br/>src, dst<br/>proto, state"]
 ```
 
 ### 5.2 查看conntrack表
@@ -454,35 +445,31 @@ sysctl -w net.netfilter.nf_conntrack_tcp_timeout_time_wait=60
 
 ### 6.1 TCP连接状态
 
-```
-客户端                                          服务端
-   │                                              │
-   │ ─────── SYN ─────────────────────────────►  │ LISTEN
-   │                                              │
-CONNECTING                                        │
-   │                                              │
-   │ ◄────── SYN+ACK ─────────────────────────── │ SYN_RCVD
-   │                                              │
-   │ ─────── ACK ─────────────────────────────►  │
-   │                                              │
-ESTABLISHED ◄──────────────────────────────────► ESTABLISHED
-   │                                              │
-   │ ─────── FIN ─────────────────────────────►  │
-   │                                              │
-FIN_WAIT_1                                        │
-   │ ◄────── ACK ─────────────────────────────── │ CLOSE_WAIT
-   │                                              │
-FIN_WAIT_2                                        │
-   │                                              │
-   │ ◄────── FIN ─────────────────────────────── │ LAST_ACK
-   │                                              │
-   │ ─────── ACK ─────────────────────────────►  │
-   │                                              │
-TIME_WAIT ──────────────────────────────────────► CLOSED
-   │
-   │ (2MSL timeout)
-   │
-CLOSED
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务端
+    
+    Note over S: LISTEN
+    C->>S: SYN
+    Note over C: CONNECTING
+    S->>C: SYN+ACK
+    Note over S: SYN_RCVD
+    C->>S: ACK
+    Note over C,S: ESTABLISHED
+    
+    C->>S: FIN
+    Note over C: FIN_WAIT_1
+    S->>C: ACK
+    Note over S: CLOSE_WAIT
+    Note over C: FIN_WAIT_2
+    S->>C: FIN
+    Note over S: LAST_ACK
+    C->>S: ACK
+    Note over C: TIME_WAIT
+    Note over S: CLOSED
+    Note over C: 2MSL timeout
+    Note over C: CLOSED
 ```
 
 ### 6.2 内核TCP参数

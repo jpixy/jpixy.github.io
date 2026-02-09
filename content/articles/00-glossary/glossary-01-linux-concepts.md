@@ -80,7 +80,7 @@ void worker() {
 **关键组件**：
 
 ```mermaid
-flowchart LR
+flowchart TB
     VA[虚拟地址]
     
     subgraph MMU
@@ -180,13 +180,18 @@ perf stat -e dTLB-load-misses,dTLB-loads ./app
 ```
 
 **NUMA拓扑示例**：
-```
-Node 0                    Node 1
-┌──────────┐              ┌──────────┐
-│ CPU 0-7  │              │ CPU 8-15 │
-│          │←── QPI/UPI ──→│          │
-│ Memory A │              │ Memory B │
-└──────────┘              └──────────┘
+
+```mermaid
+graph TB
+    subgraph Node0[Node 0]
+        CPU0[CPU 0-7]
+        MemA[Memory A]
+    end
+    subgraph Node1[Node 1]
+        CPU1[CPU 8-15]
+        MemB[Memory B]
+    end
+    Node0 <-->|QPI/UPI| Node1
 ```
 
 **优化策略**：
@@ -281,16 +286,16 @@ class Statistics {
 **定义**：进程中用于标识打开文件/Socket/管道等资源的非负整数。是用户空间访问内核资源的句柄。
 
 **文件描述符表**：
-```
-进程                          内核
-┌───────────────┐            ┌──────────────────┐
-│ fd 表         │            │ 系统打开文件表    │
-│ 0 → stdin     │ ─────────→ │ 文件位置、状态    │
-│ 1 → stdout    │            │ inode引用        │
-│ 2 → stderr    │            └──────────────────┘
-│ 3 → socket    │
-│ 4 → file      │
-└───────────────┘
+
+```mermaid
+graph TB
+    subgraph 进程
+        FD[fd 表<br/>0 → stdin<br/>1 → stdout<br/>2 → stderr<br/>3 → socket<br/>4 → file]
+    end
+    subgraph 内核
+        SFT[系统打开文件表<br/>文件位置、状态<br/>inode引用]
+    end
+    FD --> SFT
 ```
 
 **文件描述符限制**：
@@ -519,17 +524,18 @@ while (true) {
 **定义**：Linux 5.1+引入的高性能异步I/O接口，通过共享内存的环形缓冲区减少系统调用。
 
 **架构**：
-```
-用户空间              内核空间
-┌──────────┐         ┌──────────┐
-│ 提交队列  │ ──────→ │  处理    │
-│ (SQ)     │         │          │
-└──────────┘         └──────────┘
-                           │
-┌──────────┐         ┌─────┴────┐
-│ 完成队列  │ ←────── │  完成    │
-│ (CQ)     │         │          │
-└──────────┘         └──────────┘
+
+```mermaid
+graph TB
+    subgraph 用户空间
+        SQ[提交队列 SQ]
+        CQ[完成队列 CQ]
+    end
+    subgraph 内核空间
+        Process[处理]
+        Complete[完成]
+    end
+    SQ --> Process --> Complete --> CQ
 ```
 
 **优势**：

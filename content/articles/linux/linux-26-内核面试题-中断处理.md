@@ -667,24 +667,28 @@ pci_free_irq_vectors(pdev);
 
 **Q2: 多队列网卡如何利用 MSI-X？**
 
-```
 网卡多队列 + MSI-X：
-                  ┌─────────┐
-                  │ 网卡    │
-                  │         │
-                  │ Queue 0 ├──── MSI-X 0 ──→ CPU 0
-                  │ Queue 1 ├──── MSI-X 1 ──→ CPU 1
-                  │ Queue 2 ├──── MSI-X 2 ──→ CPU 2
-                  │ Queue 3 ├──── MSI-X 3 ──→ CPU 3
-                  │         │
-                  └─────────┘
+
+```mermaid
+graph TB
+    subgraph NIC["网卡"]
+        Q0["Queue 0"]
+        Q1["Queue 1"]
+        Q2["Queue 2"]
+        Q3["Queue 3"]
+    end
+    
+    Q0 -->|"MSI-X 0"| CPU0["CPU 0"]
+    Q1 -->|"MSI-X 1"| CPU1["CPU 1"]
+    Q2 -->|"MSI-X 2"| CPU2["CPU 2"]
+    Q3 -->|"MSI-X 3"| CPU3["CPU 3"]
+```
 
 优势：
 1. 每个队列独立中断
 2. 中断分布到多个 CPU
 3. 并行处理，提高吞吐
 4. 减少锁竞争
-```
 
 ---
 

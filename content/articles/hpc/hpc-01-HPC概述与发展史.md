@@ -55,7 +55,7 @@ graph TB
 ### 2.1 发展阶段
 
 ```mermaid
-graph LR
+graph TB
     subgraph "HPC 发展"
         S1[1960s<br>向量机] --> S2[1980s<br>MPP]
         S2 --> S3[2000s<br>集群]
@@ -187,7 +187,7 @@ graph TB
 ### 5.2 异构计算
 
 ```mermaid
-graph LR
+graph TB
     subgraph "异构架构"
         CPU[CPU<br>控制 + 串行] --> GPU[GPU<br>大规模并行]
     end
@@ -254,7 +254,7 @@ graph TB
 ### 7.2 学习路径
 
 ```mermaid
-graph LR
+graph TB
     L1[C/C++ 基础] --> L2[并行概念]
     L2 --> L3[MPI 编程]
     L3 --> L4[GPU 编程]
@@ -338,7 +338,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     S1[理解概念] --> S2[学习并行编程]
     S2 --> S3[实践 GPU 计算]
     S3 --> S4[了解分布式系统]

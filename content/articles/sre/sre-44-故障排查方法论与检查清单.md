@@ -43,29 +43,36 @@ tags = ["SRE", "故障排查", "方法论", "检查清单", "实战"]
 
 ## 1.2 排查思维框架
 
-```
-USE方法（资源角度）：
-├── Utilization（使用率）
-│   └── CPU、内存、磁盘、网络使用率
-├── Saturation（饱和度）
-│   └── 队列长度、等待时间
-└── Errors（错误）
-    └── 错误计数、错误率
+**USE方法（资源角度）：**
 
-RED方法（服务角度）：
-├── Rate（请求率）
-│   └── QPS、TPS
-├── Errors（错误率）
-│   └── 5xx比例、失败请求
-└── Duration（延迟）
-    └── P50、P90、P99延迟
-
-黄金信号：
-├── 延迟（Latency）
-├── 流量（Traffic）
-├── 错误（Errors）
-└── 饱和度（Saturation）
+```mermaid
+graph TB
+    subgraph USE["USE方法"]
+        U["Utilization（使用率）<br/>CPU、内存、磁盘、网络使用率"]
+        S["Saturation（饱和度）<br/>队列长度、等待时间"]
+        E["Errors（错误）<br/>错误计数、错误率"]
+    end
 ```
+
+**RED方法（服务角度）：**
+
+```mermaid
+graph TB
+    subgraph RED["RED方法"]
+        R["Rate（请求率）<br/>QPS、TPS"]
+        E2["Errors（错误率）<br/>5xx比例、失败请求"]
+        D["Duration（延迟）<br/>P50、P90、P99延迟"]
+    end
+```
+
+**黄金信号：**
+
+| 信号 | 说明 |
+|------|------|
+| 延迟（Latency） | 请求响应时间 |
+| 流量（Traffic） | 请求量 |
+| 错误（Errors） | 错误率 |
+| 饱和度（Saturation） | 资源使用程度 |
 
 ## 1.3 五问法（5 Whys）
 
@@ -298,21 +305,15 @@ netstat -s                      # 协议统计
 
 ## 3.1 事故响应阶段
 
-```
-1. 检测（Detection）
-   └─→ 监控告警 / 用户报告 / 例行检查
-
-2. 响应（Response）
-   └─→ 确认问题 / 组建团队 / 开始记录
-
-3. 缓解（Mitigation）
-   └─→ 快速止损 / 恢复服务 / 临时方案
-
-4. 修复（Resolution）
-   └─→ 根因分析 / 永久修复 / 验证修复
-
-5. 复盘（Postmortem）
-   └─→ 时间线梳理 / 根因总结 / 改进措施
+```mermaid
+graph TB
+    D["1. 检测 Detection<br/>监控告警 / 用户报告 / 例行检查"]
+    R["2. 响应 Response<br/>确认问题 / 组建团队 / 开始记录"]
+    M["3. 缓解 Mitigation<br/>快速止损 / 恢复服务 / 临时方案"]
+    F["4. 修复 Resolution<br/>根因分析 / 永久修复 / 验证修复"]
+    P["5. 复盘 Postmortem<br/>时间线梳理 / 根因总结 / 改进措施"]
+    
+    D --> R --> M --> F --> P
 ```
 
 ## 3.2 事故响应模板
@@ -519,64 +520,49 @@ journalctl -f
 
 ## 5.1 性能分析工具
 
-```
-CPU分析：
-├── top/htop        实时监控
-├── mpstat          CPU统计
-├── perf            性能profiling
-└── async-profiler  Java CPU分析
-
-内存分析：
-├── free            内存概览
-├── vmstat          虚拟内存统计
-├── smem            进程内存分析
-└── valgrind        内存泄漏检测
-
-磁盘分析：
-├── iostat          IO统计
-├── iotop           进程IO
-├── fio             性能测试
-└── ncdu            目录分析
-
-网络分析：
-├── ss/netstat      连接状态
-├── iftop           流量监控
-├── tcpdump         抓包
-└── mtr             路径分析
-```
+| 分类 | 工具 | 用途 |
+|------|------|------|
+| **CPU分析** | top/htop | 实时监控 |
+| | mpstat | CPU统计 |
+| | perf | 性能profiling |
+| | async-profiler | Java CPU分析 |
+| **内存分析** | free | 内存概览 |
+| | vmstat | 虚拟内存统计 |
+| | smem | 进程内存分析 |
+| | valgrind | 内存泄漏检测 |
+| **磁盘分析** | iostat | IO统计 |
+| | iotop | 进程IO |
+| | fio | 性能测试 |
+| | ncdu | 目录分析 |
+| **网络分析** | ss/netstat | 连接状态 |
+| | iftop | 流量监控 |
+| | tcpdump | 抓包 |
+| | mtr | 路径分析 |
 
 ## 5.2 日志分析工具
 
-```
-命令行：
-├── grep/awk/sed    文本处理
-├── jq              JSON处理
-└── lnav            日志浏览器
-
-集中式：
-├── ELK Stack       日志平台
-├── Loki            轻量级日志
-└── Splunk          商业方案
-```
+| 分类 | 工具 | 用途 |
+|------|------|------|
+| **命令行** | grep/awk/sed | 文本处理 |
+| | jq | JSON处理 |
+| | lnav | 日志浏览器 |
+| **集中式** | ELK Stack | 日志平台 |
+| | Loki | 轻量级日志 |
+| | Splunk | 商业方案 |
 
 ## 5.3 监控工具
 
-```
-指标监控：
-├── Prometheus      指标收集
-├── Grafana         可视化
-└── node_exporter   系统指标
-
-追踪：
-├── Jaeger          分布式追踪
-├── Zipkin          追踪系统
-└── SkyWalking      APM
-
-告警：
-├── Alertmanager    告警管理
-├── PagerDuty       事件管理
-└── Opsgenie        值班管理
-```
+| 分类 | 工具 | 用途 |
+|------|------|------|
+| **指标监控** | Prometheus | 指标收集 |
+| | Grafana | 可视化 |
+| | node_exporter | 系统指标 |
+| **追踪** | Jaeger | 分布式追踪 |
+| | Zipkin | 追踪系统 |
+| | SkyWalking | APM |
+| **告警** | Alertmanager | 告警管理 |
+| | PagerDuty | 事件管理 |
+| | Opsgenie | 值班管理 |
 
 ---
 

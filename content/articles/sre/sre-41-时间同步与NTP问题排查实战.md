@@ -44,21 +44,27 @@ tags = ["SRE", "NTP", "时间同步", "chrony", "排查", "实战"]
 
 ## 1.2 时间同步协议
 
+```mermaid
+graph TB
+    S0["Stratum 0<br/>原子钟、GPS等"]
+    S1["Stratum 1<br/>直接连接Stratum 0"]
+    S2["Stratum 2<br/>从Stratum 1同步"]
+    S3["..."]
+    S15["Stratum 15<br/>最大层级"]
+    
+    S0 --> S1 --> S2 --> S3 --> S15
 ```
-NTP (Network Time Protocol)
-├── Stratum 0: 原子钟、GPS等
-├── Stratum 1: 直接连接Stratum 0的服务器
-├── Stratum 2: 从Stratum 1同步
-├── ...
-└── Stratum 15: 最大层级
 
-精度：毫秒级
+**NTP (Network Time Protocol)**
+- 精度：毫秒级
 
-常用工具：
-- ntpd (传统)
-- chronyd (现代，推荐)
-- systemd-timesyncd (轻量级)
-```
+**常用工具：**
+
+| 工具 | 说明 |
+|------|------|
+| ntpd | 传统 |
+| chronyd | 现代，推荐 |
+| systemd-timesyncd | 轻量级 |
 
 ---
 

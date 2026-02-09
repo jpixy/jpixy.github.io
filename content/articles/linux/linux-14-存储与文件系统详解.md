@@ -118,53 +118,45 @@ mount -o noatime,nodiratime,nobarrier,discard /dev/nvme0n1p1 /mnt/fast
 
 **一句话：NVMe 是专为 SSD 设计的高性能存储协议，通过 PCIe 直连 CPU**
 
-```
-传统存储 (SATA/SAS):
-CPU → 南桥/PCH → SATA控制器 → SSD
-     多层转发，延迟高
+**传统存储 vs NVMe：**
 
-NVMe:
-CPU ←──── PCIe ────→ NVMe SSD
-     直连，延迟低
-     
-性能对比：
-SATA SSD:  延迟 ~100μs, IOPS ~100K
-NVMe SSD:  延迟 ~10μs,  IOPS ~1M+
-```
+| 存储类型 | 路径 | 延迟 | IOPS |
+|----------|------|------|------|
+| SATA SSD | CPU → 南桥/PCH → SATA控制器 → SSD（多层转发） | ~100μs | ~100K |
+| NVMe SSD | CPU ←→ PCIe ←→ NVMe SSD（直连） | ~10μs | ~1M+ |
 
 ### 2.1 NVMe 架构
 
+```mermaid
+graph TB
+    subgraph NVMe_SSD["NVMe SSD"]
+        subgraph Controller["NVMe Controller"]
+            subgraph SQ["Submission Queues"]
+                SQ1["SQ1"]
+                SQ2["SQ2"]
+                SQ3["SQ3"]
+                SQn["SQn"]
+            end
+            CMD["Command Processing"]
+            subgraph CQ["Completion Queues"]
+                CQ1["CQ1"]
+                CQ2["CQ2"]
+                CQ3["CQ3"]
+                CQn["CQn"]
+            end
+        end
+        FLASH["Flash Memory"]
+    end
+    
+    SQ1 & SQ2 & SQ3 & SQn --> CMD
+    CMD --> CQ1 & CQ2 & CQ3 & CQn
 ```
-┌─────────────────────────────────────────────────┐
-│                    NVMe SSD                      │
-│  ┌─────────────────────────────────────────┐    │
-│  │        NVMe Controller                   │    │
-│  │  ┌─────┐ ┌─────┐ ┌─────┐     ┌─────┐   │    │
-│  │  │ SQ1 │ │ SQ2 │ │ SQ3 │ ... │ SQn │   │    │  Submission Queues
-│  │  └──┬──┘ └──┬──┘ └──┬──┘     └──┬──┘   │    │
-│  │     │       │       │           │       │    │
-│  │     ↓       ↓       ↓           ↓       │    │
-│  │  ┌─────────────────────────────────┐   │    │
-│  │  │      Command Processing          │   │    │
-│  │  └─────────────────────────────────┘   │    │
-│  │     │       │       │           │       │    │
-│  │     ↓       ↓       ↓           ↓       │    │
-│  │  ┌─────┐ ┌─────┐ ┌─────┐     ┌─────┐   │    │  Completion Queues
-│  │  │ CQ1 │ │ CQ2 │ │ CQ3 │ ... │ CQn │   │    │
-│  │  └─────┘ └─────┘ └─────┘     └─────┘   │    │
-│  └─────────────────────────────────────────┘    │
-│                                                  │
-│  ┌─────────────────────────────────────────┐    │
-│  │              Flash Memory                │    │
-│  └─────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────┘
 
-特点：
+**特点：**
 - 多队列（最多64K个队列）
 - 每个队列最多64K个命令
 - 支持多核心并行
 - 每个CPU核心可以有独立队列
-```
 
 ### 2.2 NVMe 管理命令
 
@@ -237,40 +229,30 @@ blockdev --setra 256 /dev/nvme0n1
 
 **一句话：SPDK 绕过内核直接操作 NVMe，实现极致低延迟存储**
 
-```
-传统内核 I/O:                    SPDK 用户态 I/O:
-┌─────────┐                      ┌─────────┐
-│ 应用程序 │                      │ 应用程序 │
-└────┬────┘                      └────┬────┘
-     │ syscall                        │ 直接调用
-     ↓                                ↓
-┌─────────┐                      ┌─────────┐
-│  VFS    │                      │  SPDK   │
-└────┬────┘                      │  库     │
-     │                           └────┬────┘
-     ↓                                │ 用户态驱动
-┌─────────┐                           │
-│ Block   │                           │
-│ Layer   │                           │
-└────┬────┘                           │
-     │                                │
-     ↓                                │
-┌─────────┐                           │
-│ NVMe    │                           │
-│ Driver  │                           │
-└────┬────┘                           │
-     │                                │
-═════╧════════════════════════════════╧═════
-     │                                │
-     ↓                                ↓
-┌─────────────────────────────────────────┐
-│              NVMe SSD                    │
-└─────────────────────────────────────────┘
+**传统内核 I/O vs SPDK 用户态 I/O：**
 
-延迟对比：
-内核 I/O: ~10-20μs
-SPDK:     ~2-5μs
+```mermaid
+graph TB
+    subgraph 传统内核IO["传统内核 I/O"]
+        APP1["应用程序"] -->|syscall| VFS["VFS"]
+        VFS --> BLOCK["Block Layer"]
+        BLOCK --> NVME_DRV["NVMe Driver"]
+    end
+    
+    subgraph SPDK_IO["SPDK 用户态 I/O"]
+        APP2["应用程序"] -->|直接调用| SPDK["SPDK 库"]
+        SPDK -->|用户态驱动| NVME_SSD
+    end
+    
+    NVME_DRV --> NVME_SSD["NVMe SSD"]
 ```
+
+**延迟对比：**
+
+| 方式 | 延迟 |
+|------|------|
+| 内核 I/O | ~10-20μs |
+| SPDK | ~2-5μs |
 
 ### 3.1 SPDK 核心特性
 
@@ -415,29 +397,21 @@ int main(int argc, char **argv)
 
 **一句话：FUSE 让你用普通程序实现文件系统，无需修改内核**
 
+```mermaid
+graph TB
+    APP["用户程序<br/>open(\"/mnt/myfs/file\")"]
+    VFS["VFS"]
+    FUSE_MOD["FUSE Kernel Module<br/>将VFS请求转发到用户态"]
+    DEV["/dev/fuse"]
+    FUSE_PROC["用户态文件系统进程<br/>libfuse + 你的实现"]
+    
+    APP --> VFS
+    VFS --> FUSE_MOD
+    FUSE_MOD -->|/dev/fuse| DEV
+    DEV --> FUSE_PROC
 ```
-用户程序
-    │
-    │  open("/mnt/myfs/file")
-    ↓
-┌─────────────────────────────────────────────────┐
-│                  VFS                             │
-└───────────────────┬─────────────────────────────┘
-                    │
-                    ↓
-┌─────────────────────────────────────────────────┐
-│              FUSE Kernel Module                  │
-│        将VFS请求转发到用户态                      │
-└───────────────────┬─────────────────────────────┘
-                    │ /dev/fuse
-                    ↓
-┌─────────────────────────────────────────────────┐
-│              用户态文件系统进程                   │
-│         libfuse  +  你的实现                     │
-└─────────────────────────────────────────────────┘
 
-示例：sshfs、s3fs、glusterfs
-```
+> **示例**：sshfs、s3fs、glusterfs
 
 ### 4.1 FUSE 编程示例
 

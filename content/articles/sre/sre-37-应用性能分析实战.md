@@ -24,14 +24,18 @@ tags = ["SRE", "性能", "火焰图", "APM", "排查", "实战"]
 - Y轴：调用栈深度（从下到上是调用关系）
 - 颜色：通常随机分配，便于区分
 
-示例结构：
-┌──────────────────────────────────────────────────────────┐
-│                        main                               │ ← 入口函数
-├─────────────────────────────┬────────────────────────────┤
-│        handleRequest        │        processData          │ ← 被调用函数
-├──────────────┬──────────────┼────────────┬───────────────┤
-│   parseJSON  │   validate   │   query    │   serialize   │ ← 更深层调用
-├──────────────┴──────────────┴────────────┴───────────────┤
+示例结构（Mermaid表示火焰图层级）：
+
+```mermaid
+graph TB
+    main["main (入口函数)"]
+    main --> handleRequest["handleRequest"]
+    main --> processData["processData"]
+    handleRequest --> parseJSON["parseJSON"]
+    handleRequest --> validate["validate"]
+    processData --> query["query"]
+    processData --> serialize["serialize"]
+```
 
 宽度越大，表示该函数（及其子调用）占用时间越多
 "平顶"（plateau）表示该函数本身消耗CPU
@@ -288,34 +292,48 @@ node --prof-process --preprocess -j isolate-*.log | ./stackcollapse-v8.pl | ./fl
 
 ## 2.1 追踪概念
 
+**分布式追踪核心概念：**
+
+| 概念 | 说明 |
+|------|------|
+| Trace（追踪） | 一个请求的完整调用链 |
+| Span（跨度） | 单个操作的执行 |
+| TraceID | 追踪ID（整个请求共享） |
+| SpanID | 当前跨度ID |
+| ParentSpanID | 父跨度ID |
+| Operation | 操作名称 |
+| StartTime | 开始时间 |
+| Duration | 持续时间 |
+| Tags | 标签（key-value） |
+| Logs | 日志事件 |
+
+**示例请求追踪：**
+
+```mermaid
+graph TB
+    Client["客户端"]
+    Gateway["API网关<br/>Span1"]
+    UserSvc["用户服务<br/>Span2"]
+    UserDB["数据库<br/>Span3"]
+    OrderSvc["订单服务<br/>Span4"]
+    Cache["缓存<br/>Span5"]
+    OrderDB["数据库<br/>Span6"]
+    
+    Client --> Gateway
+    Gateway --> UserSvc
+    UserSvc --> UserDB
+    Gateway --> OrderSvc
+    OrderSvc --> Cache
+    OrderSvc --> OrderDB
 ```
-分布式追踪核心概念：
 
-Trace（追踪）：一个请求的完整调用链
-├── Span（跨度）：单个操作的执行
-│   ├── TraceID      追踪ID（整个请求共享）
-│   ├── SpanID       当前跨度ID
-│   ├── ParentSpanID 父跨度ID
-│   ├── Operation    操作名称
-│   ├── StartTime    开始时间
-│   ├── Duration     持续时间
-│   ├── Tags         标签（key-value）
-│   └── Logs         日志事件
-
-示例请求追踪：
-[客户端] → [API网关] → [用户服务] → [数据库]
-              │
-              └→ [订单服务] → [缓存]
-                              └→ [数据库]
-
-TraceID: abc123
-├── Span1: API网关 (SpanID: 001, ParentID: null)
-│   ├── Span2: 用户服务 (SpanID: 002, ParentID: 001)
-│   │   └── Span3: 查询数据库 (SpanID: 003, ParentID: 002)
-│   └── Span4: 订单服务 (SpanID: 004, ParentID: 001)
-│       ├── Span5: 读取缓存 (SpanID: 005, ParentID: 004)
-│       └── Span6: 查询数据库 (SpanID: 006, ParentID: 004)
-```
+**TraceID: abc123 调用链结构：**
+- Span1: API网关 (SpanID: 001, ParentID: null)
+  - Span2: 用户服务 (SpanID: 002, ParentID: 001)
+    - Span3: 查询数据库 (SpanID: 003, ParentID: 002)
+  - Span4: 订单服务 (SpanID: 004, ParentID: 001)
+    - Span5: 读取缓存 (SpanID: 005, ParentID: 004)
+    - Span6: 查询数据库 (SpanID: 006, ParentID: 004)
 
 ## 2.2 Jaeger使用
 
@@ -469,46 +487,55 @@ defer span.End()
 
 ### 常见性能问题模式
 
+**模式1：单个Span过长**
+
+```mermaid
+graph TB
+    subgraph API["API 请求"]
+        SlowQuery["慢查询<br/>(占用80%时间)"]
+        Return1["返回"]
+    end
+    SlowQuery --> Return1
 ```
-模式1：单个Span过长
-┌─────────────────────────────────────────┐
-│ API                                      │
-├────────────────────────────────┬────────┤
-│ 慢查询 (占用80%时间)           │ 返回  │
-└────────────────────────────────┴────────┘
-原因：数据库慢查询、外部API慢
-解决：优化查询、添加缓存、设置超时
 
+- **原因**：数据库慢查询、外部API慢
+- **解决**：优化查询、添加缓存、设置超时
 
-模式2：串行调用
-┌─────────────────────────────────────────────────────────┐
-│ API                                                      │
-├─────────┬─────────┬─────────┬─────────┬─────────┬──────┤
-│ 调用A   │ 调用B   │ 调用C   │ 调用D   │ 调用E   │ 返回 │
-└─────────┴─────────┴─────────┴─────────┴─────────┴──────┘
-原因：可并行的调用被串行执行
-解决：改为并行调用
+**模式2：串行调用**
 
-
-模式3：N+1查询
-┌───────────────────────────────────────────────────────────┐
-│ API                                                        │
-├────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────────┤
-│ Q1 │ Q2 │ Q3 │ Q4 │ Q5 │... │Q98 │Q99 │Q100│返回│        │
-└────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────────┘
-原因：循环中单独查询
-解决：批量查询、JOIN查询
-
-
-模式4：长时间等待
-┌─────────────────────────────────────────────────────────┐
-│ API                                                      │
-├────────┬─────────────────────────────────────┬──────────┤
-│ 获取锁 │ ← 等待锁 (空白期)                  │ 业务处理 │
-└────────┴─────────────────────────────────────┴──────────┘
-原因：锁竞争、资源争用
-解决：减少锁粒度、优化并发
+```mermaid
+graph TB
+    subgraph API["API 请求"]
+        A["调用A"] --> B["调用B"] --> C["调用C"] --> D["调用D"] --> E["调用E"] --> Return2["返回"]
+    end
 ```
+
+- **原因**：可并行的调用被串行执行
+- **解决**：改为并行调用
+
+**模式3：N+1查询**
+
+```mermaid
+graph TB
+    subgraph API["API 请求"]
+        Q1["Q1"] --> Q2["Q2"] --> Q3["Q3"] --> Q4["..."] --> Q99["Q99"] --> Q100["Q100"] --> Return3["返回"]
+    end
+```
+
+- **原因**：循环中单独查询
+- **解决**：批量查询、JOIN查询
+
+**模式4：长时间等待**
+
+```mermaid
+graph TB
+    subgraph API["API 请求"]
+        Lock["获取锁"] --> Wait["等待锁<br/>(空白期)"] --> Process["业务处理"]
+    end
+```
+
+- **原因**：锁竞争、资源争用
+- **解决**：减少锁粒度、优化并发
 
 ---
 
@@ -944,7 +971,6 @@ py-spy dump --pid <PID>
 
 ## 4.2 常见性能问题
 
-```
 | 症状 | 可能原因 | 分析方法 |
 |------|----------|----------|
 | CPU高 | 计算密集、死循环 | CPU火焰图 |
@@ -953,7 +979,6 @@ py-spy dump --pid <PID>
 | GC频繁 | 对象分配多 | GC日志、alloc火焰图 |
 | 线程阻塞 | 锁竞争、IO | 线程dump、锁分析 |
 | 延迟抖动 | GC、资源竞争 | 追踪、分布分析 |
-```
 
 ## 4.3 性能诊断脚本
 

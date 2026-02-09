@@ -37,7 +37,7 @@ graph TB
 | **操作系统** | 无 | 简单固件 | 完整 Linux |
 
 ```mermaid
-graph LR
+graph TB
     subgraph "演进路线"
         A["传统 NIC<br/>纯硬件转发"]
         B["SmartNIC<br/>部分可编程"]
@@ -173,7 +173,7 @@ graph TB
 ### 3.3 安全功能
 
 ```mermaid
-graph LR
+graph TB
     subgraph "DPU 安全功能"
         A["防火墙<br/>L3/L4 过滤"]
         B["DPI<br/>深度包检测"]
@@ -426,7 +426,7 @@ snap_nvme_controller_create \
 ### 7.1 IPsec 卸载
 
 ```mermaid
-graph LR
+graph TB
     subgraph "IPsec 卸载"
         A["明文数据"]
         B["DPU Crypto 引擎"]
@@ -479,7 +479,7 @@ doca_flow_pipe_add_entry(0, pipe, &match, NULL, NULL, &fwd, 0, NULL, &entry);
 ### 8.1 GPUDirect RDMA
 
 ```mermaid
-graph LR
+graph TB
     subgraph "服务器 1"
         A["GPU 0"]
         B["DPU"]
@@ -588,7 +588,7 @@ graph TB
 ### 10.1 技术趋势
 
 ```mermaid
-graph LR
+graph TB
     subgraph "DPU 发展趋势"
         A["更高带宽<br/>800G/1.6T"]
         B["更多算力<br/>更多 ARM 核"]

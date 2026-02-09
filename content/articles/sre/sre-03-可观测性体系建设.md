@@ -167,21 +167,27 @@ Span {
 
 ### 分层指标
 
-```
-业务指标
-  ├── 订单成功率
-  ├── 支付转化率
-  └── 用户活跃度
-
-应用指标
-  ├── 接口QPS/延迟/错误率
-  ├── 线程池使用率
-  └── 缓存命中率
-
-基础设施指标
-  ├── CPU/内存/磁盘/网络
-  ├── 容器资源使用
-  └── 数据库连接数
+```mermaid
+graph TB
+    subgraph 业务指标
+        B1["订单成功率"]
+        B2["支付转化率"]
+        B3["用户活跃度"]
+    end
+    
+    subgraph 应用指标
+        A1["接口QPS/延迟/错误率"]
+        A2["线程池使用率"]
+        A3["缓存命中率"]
+    end
+    
+    subgraph 基础设施指标
+        I1["CPU/内存/磁盘/网络"]
+        I2["容器资源使用"]
+        I3["数据库连接数"]
+    end
+    
+    业务指标 --> 应用指标 --> 基础设施指标
 ```
 
 ### 指标命名规范
@@ -388,25 +394,32 @@ groups:
 
 ### 平台架构
 
-```
-数据采集层
-├── Prometheus（指标）
-├── Filebeat/Fluentd（日志）
-└── Jaeger Agent（追踪）
-         ↓
-数据传输层
-├── Kafka/Pulsar（缓冲）
-└── Collector（处理）
-         ↓
-存储层
-├── Prometheus/Thanos（指标）
-├── Elasticsearch/Loki（日志）
-└── Jaeger/Tempo（追踪）
-         ↓
-展示层
-├── Grafana（统一Dashboard）
-├── 告警管理
-└── 关联分析
+```mermaid
+graph TB
+    subgraph 数据采集层
+        C1["Prometheus（指标）"]
+        C2["Filebeat/Fluentd（日志）"]
+        C3["Jaeger Agent（追踪）"]
+    end
+    
+    subgraph 数据传输层
+        T1["Kafka/Pulsar（缓冲）"]
+        T2["Collector（处理）"]
+    end
+    
+    subgraph 存储层
+        S1["Prometheus/Thanos（指标）"]
+        S2["Elasticsearch/Loki（日志）"]
+        S3["Jaeger/Tempo（追踪）"]
+    end
+    
+    subgraph 展示层
+        D1["Grafana（统一Dashboard）"]
+        D2["告警管理"]
+        D3["关联分析"]
+    end
+    
+    数据采集层 --> 数据传输层 --> 存储层 --> 展示层
 ```
 
 ### 数据关联

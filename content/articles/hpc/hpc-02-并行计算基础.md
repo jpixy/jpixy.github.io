@@ -91,7 +91,7 @@ graph TB
 ### 3.2 分布式内存模型
 
 ```mermaid
-graph LR
+graph TB
     subgraph "分布式内存"
         P1[进程1<br>内存1] <-->|消息| P2[进程2<br>内存2]
         P2 <-->|消息| P3[进程3<br>内存3]
@@ -135,7 +135,7 @@ graph TB
 ### 4.1 设计步骤
 
 ```mermaid
-graph LR
+graph TB
     S1[分解] --> S2[通信]
     S2 --> S3[聚合]
     S3 --> S4[映射]
@@ -271,7 +271,7 @@ T = α + n/β
 ### 7.1 MapReduce
 
 ```mermaid
-graph LR
+graph TB
     subgraph "MapReduce"
         INPUT[输入] --> MAP[Map]
         MAP --> SHUFFLE[Shuffle]
@@ -283,7 +283,7 @@ graph LR
 ### 7.2 流水线
 
 ```mermaid
-graph LR
+graph TB
     subgraph "流水线"
         S1[阶段1] --> S2[阶段2] --> S3[阶段3]
     end
@@ -328,7 +328,7 @@ graph TB
 ### 8.2 模型并行
 
 ```mermaid
-graph LR
+graph TB
     subgraph "模型并行"
         GPU1[GPU 1<br>Layer 0-10]
         GPU2[GPU 2<br>Layer 11-20]
@@ -400,7 +400,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[理解概念] --> L2[学习 OpenMP]
     L2 --> L3[学习 MPI]
     L3 --> L4[学习 GPU 并行]

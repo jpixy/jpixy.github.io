@@ -16,70 +16,36 @@ GPU Kernel 开发是 AI Infra 的核心技能。本文深入讲解如何编写�
 
 ### 1.1 性能瓶颈分析
 
-```
-GPU Kernel 性能瓶颈类型：
+**GPU Kernel 性能瓶颈类型：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  Compute Bound（计算受限）                                          │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━                                          │
-│  • 计算指令是瓶颈                                                   │
-│  • 内存带宽足够，ALU 饱和                                           │
-│  • 优化：增加计算指令级并行（ILP）                                  │
-│  • 例子：小矩阵乘法、复杂数学函数                                   │
-│                                                                      │
-│  Memory Bound（内存受限）                                            │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━                                           │
-│  • 内存访问是瓶颈                                                   │
-│  • ALU 空闲等待数据                                                 │
-│  • 优化：减少内存访问、使用缓存                                     │
-│  • 例子：向量加法、Softmax                                          │
-│                                                                      │
-│  Latency Bound（延迟受限）                                          │
-│  ━━━━━━━━━━━━━━━━━━━━━━━                                            │
-│  • 指令延迟无法隐藏                                                 │
-│  • 线程数不足                                                       │
-│  • 优化：增加 Occupancy、使用更多线程                               │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| 瓶颈类型 | 特征 | 优化方向 | 示例 |
+|----------|------|----------|------|
+| **Compute Bound（计算受限）** | 计算指令是瓶颈；内存带宽足够，ALU 饱和 | 增加计算指令级并行（ILP） | 小矩阵乘法、复杂数学函数 |
+| **Memory Bound（内存受限）** | 内存访问是瓶颈；ALU 空闲等待数据 | 减少内存访问、使用缓存 | 向量加法、Softmax |
+| **Latency Bound（延迟受限）** | 指令延迟无法隐藏；线程数不足 | 增加 Occupancy、使用更多线程 | - |
 
 ### 1.2 Roofline Model
 
-```
-Roofline 模型：性能上限分析
+**Roofline 模型：性能上限分析**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  GFLOPS                                                              │
-│     ▲                                                                │
-│     │                    ┌────────────────────── 峰值算力            │
-│     │                   /│                                           │
-│     │                  / │                                           │
-│     │     Memory      /  │  Compute                                  │
-│     │     Bound      /   │  Bound                                    │
-│     │              /     │                                           │
-│     │            /       │                                           │
-│     │          /         │                                           │
-│     │        /           │                                           │
-│     │      /             │                                           │
-│     │    /               │                                           │
-│     └──/─────────────────┼──────────────────────► 算术强度           │
-│                          脊点                     (FLOPS/Byte)       │
-│                                                                      │
-│  算术强度 = 计算量 / 内存访问量                                     │
-│  脊点 = 峰值算力 / 峰值带宽                                         │
-│                                                                      │
-│  RTX 4090 示例：                                                    │
-│  • 峰值算力：82.6 TFLOPS (FP32)                                     │
-│  • 峰值带宽：1 TB/s                                                 │
-│  • 脊点：82.6 FLOPS/Byte                                            │
-│                                                                      │
-│  如果算术强度 < 脊点 → Memory Bound                                 │
-│  如果算术强度 > 脊点 → Compute Bound                                │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Roofline["Roofline Model"]
+        MB["Memory Bound<br/>(斜率区域)"] --> RP["Ridge Point<br/>(脊点)"]
+        RP --> CB["Compute Bound<br/>(平台区域)"]
+    end
 ```
+
+**核心概念：**
+- **算术强度** = 计算量 / 内存访问量 (FLOPS/Byte)
+- **脊点** = 峰值算力 / 峰值带宽
+- 如果算术强度 < 脊点 → Memory Bound
+- 如果算术强度 > 脊点 → Compute Bound
+
+**RTX 4090 示例：**
+- 峰值算力：82.6 TFLOPS (FP32)
+- 峰值带宽：1 TB/s
+- 脊点：82.6 FLOPS/Byte
 
 ### 1.3 优化策略
 
@@ -123,50 +89,16 @@ Roofline 模型：性能上限分析
 
 ### 2.1 GEMM 优化层次
 
-```
-GEMM 优化演进：
+**GEMM 优化演进：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  Level 0：朴素实现                                                   │
-│  ━━━━━━━━━━━━━━━━━━━                                                │
-│  • 每个线程计算一个输出元素                                         │
-│  • 每次计算读取一行和一列                                           │
-│  • 性能：~100 GFLOPS                                                │
-│                                                                      │
-│  Level 1：共享内存分块                                               │
-│  ━━━━━━━━━━━━━━━━━━━━━━                                             │
-│  • 将矩阵分成 Tile                                                  │
-│  • 加载 Tile 到共享内存                                             │
-│  • 减少全局内存访问                                                 │
-│  • 性能：~1 TFLOPS                                                  │
-│                                                                      │
-│  Level 2：寄存器分块                                                 │
-│  ━━━━━━━━━━━━━━━━━━━━                                               │
-│  • 每个线程计算多个输出元素                                         │
-│  • 数据复用在寄存器中                                               │
-│  • 性能：~5 TFLOPS                                                  │
-│                                                                      │
-│  Level 3：向量化加载                                                 │
-│  ━━━━━━━━━━━━━━━━━━━━                                               │
-│  • 使用 float4 加载                                                 │
-│  • 更高的内存带宽利用                                               │
-│  • 性能：~10 TFLOPS                                                 │
-│                                                                      │
-│  Level 4：双缓冲                                                     │
-│  ━━━━━━━━━━━━━━━━                                                   │
-│  • 加载下一块的同时计算当前块                                       │
-│  • 隐藏内存延迟                                                     │
-│  • 性能：~15 TFLOPS                                                 │
-│                                                                      │
-│  Level 5：Tensor Core                                                │
-│  ━━━━━━━━━━━━━━━━━━━━                                               │
-│  • 使用 wmma API                                                    │
-│  • 矩阵碎片化计算                                                   │
-│  • 性能：~150+ TFLOPS                                               │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| 优化级别 | 技术 | 性能 |
+|----------|------|------|
+| **Level 0：朴素实现** | 每个线程计算一个输出元素；每次计算读取一行和一列 | ~100 GFLOPS |
+| **Level 1：共享内存分块** | 将矩阵分成 Tile；加载 Tile 到共享内存；减少全局内存访问 | ~1 TFLOPS |
+| **Level 2：寄存器分块** | 每个线程计算多个输出元素；数据复用在寄存器中 | ~5 TFLOPS |
+| **Level 3：向量化加载** | 使用 float4 加载；更高的内存带宽利用 | ~10 TFLOPS |
+| **Level 4：双缓冲** | 加载下一块的同时计算当前块；隐藏内存延迟 | ~15 TFLOPS |
+| **Level 5：Tensor Core** | 使用 wmma API；矩阵碎片化计算 | ~150+ TFLOPS |
 
 ### 2.2 分块 GEMM 实现
 
@@ -330,39 +262,32 @@ __global__ void gemm_double_buffer(
 
 ### 3.1 Tensor Core 基础
 
-```
-Tensor Core 概述：
+**Tensor Core 概述：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  Tensor Core 功能：                                                  │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 一条指令完成 D = A * B + C 矩阵运算                              │
-│  • 每个 Tensor Core：4x4x4 矩阵乘加                                 │
-│  • Warp 级操作：处理更大的 16x16x16 片段                            │
-│                                                                      │
-│  支持的数据类型：                                                    │
-│  ━━━━━━━━━━━━━━━                                                    │
-│  • FP16 x FP16 → FP16/FP32                                          │
-│  • BF16 x BF16 → FP32                                               │
-│  • TF32 x TF32 → FP32 (Ampere+)                                     │
-│  • INT8 x INT8 → INT32                                              │
-│  • FP8 (Hopper+)                                                    │
-│                                                                      │
-│  性能对比（RTX 4090）：                                             │
-│  ━━━━━━━━━━━━━━━━━━━━━                                              │
-│  • FP32 CUDA Cores:  82.6 TFLOPS                                    │
-│  • FP16 Tensor Core: 330 TFLOPS                                     │
-│  • INT8 Tensor Core: 660 TOPS                                       │
-│                                                                      │
-│  限制：                                                              │
-│  ━━━━━                                                              │
-│  • 必须使用特定的矩阵尺寸（16x16, 8x32等）                          │
-│  • Warp 级协作操作                                                  │
-│  • 需要对齐的内存访问                                               │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**功能：**
+- 一条指令完成 D = A * B + C 矩阵运算
+- 每个 Tensor Core：4x4x4 矩阵乘加
+- Warp 级操作：处理更大的 16x16x16 片段
+
+**支持的数据类型：**
+- FP16 x FP16 → FP16/FP32
+- BF16 x BF16 → FP32
+- TF32 x TF32 → FP32 (Ampere+)
+- INT8 x INT8 → INT32
+- FP8 (Hopper+)
+
+**性能对比（RTX 4090）：**
+
+| 类型 | 性能 |
+|------|------|
+| FP32 CUDA Cores | 82.6 TFLOPS |
+| FP16 Tensor Core | 330 TFLOPS |
+| INT8 Tensor Core | 660 TOPS |
+
+**限制：**
+- 必须使用特定的矩阵尺寸（16x16, 8x32等）
+- Warp 级协作操作
+- 需要对齐的内存访问
 
 ### 3.2 WMMA API
 
@@ -514,44 +439,31 @@ __global__ void gemm_tensor_core_optimized(
 
 ### 4.1 CUTLASS 概述
 
-```
-CUTLASS (CUDA Templates for Linear Algebra Subroutines)：
+**CUTLASS (CUDA Templates for Linear Algebra Subroutines)：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  什么是 CUTLASS：                                                    │
-│  ━━━━━━━━━━━━━━━                                                    │
-│  • NVIDIA 开源的高性能 GEMM 模板库                                  │
-│  • C++ 模板元编程                                                   │
-│  • 支持各种数据类型和布局                                           │
-│  • FlashAttention 等项目的基础                                      │
-│                                                                      │
-│  架构层次：                                                          │
-│  ━━━━━━━━━━                                                         │
-│                                                                      │
-│  ┌─────────────────────────────────────────────────┐                │
-│  │               Device Level                       │                │
-│  │  Grid of Thread Blocks                          │                │
-│  ├─────────────────────────────────────────────────┤                │
-│  │            Thread Block Level                    │                │
-│  │  Tile iteration, shared memory management       │                │
-│  ├─────────────────────────────────────────────────┤                │
-│  │              Warp Level                          │                │
-│  │  Tensor Core mma, register tiles                │                │
-│  ├─────────────────────────────────────────────────┤                │
-│  │             Thread Level                         │                │
-│  │  Scalar operations, predication                 │                │
-│  └─────────────────────────────────────────────────┘                │
-│                                                                      │
-│  核心组件：                                                          │
-│  ━━━━━━━━━━                                                         │
-│  • Gemm：矩阵乘法模板                                               │
-│  • Epilogue：后处理（bias、激活函数）                               │
-│  • Layout：内存布局                                                 │
-│  • Tile Iterator：数据加载迭代器                                    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+**什么是 CUTLASS：**
+- NVIDIA 开源的高性能 GEMM 模板库
+- C++ 模板元编程
+- 支持各种数据类型和布局
+- FlashAttention 等项目的基础
+
+**架构层次：**
+
+```mermaid
+graph TB
+    Device["Device Level<br/>Grid of Thread Blocks"]
+    Block["Thread Block Level<br/>Tile iteration, shared memory management"]
+    Warp["Warp Level<br/>Tensor Core mma, register tiles"]
+    Thread["Thread Level<br/>Scalar operations, predication"]
+    
+    Device --> Block --> Warp --> Thread
 ```
+
+**核心组件：**
+- **Gemm**：矩阵乘法模板
+- **Epilogue**：后处理（bias、激活函数）
+- **Layout**：内存布局
+- **Tile Iterator**：数据加载迭代器
 
 ### 4.2 CUTLASS 使用示例
 
@@ -968,79 +880,33 @@ ncu --diff v1.ncu-rep v2.ncu-rep
 
 ### 7.2 优化指标
 
-```
-关键性能指标：
+**关键性能指标：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  Compute Throughput                                                 │
-│  ━━━━━━━━━━━━━━━━━━━                                                │
-│  • SM 利用率                                                        │
-│  • 目标：>80%                                                       │
-│                                                                      │
-│  Memory Throughput                                                  │
-│  ━━━━━━━━━━━━━━━━━━                                                 │
-│  • Global Memory 带宽利用率                                         │
-│  • Shared Memory 带宽利用率                                         │
-│  • 目标：接近峰值带宽                                               │
-│                                                                      │
-│  Occupancy                                                          │
-│  ━━━━━━━━━━━                                                        │
-│  • 活跃 Warp / 最大 Warp                                            │
-│  • 目标：根据 Kernel 特性，通常 >50%                                │
-│                                                                      │
-│  Stall 分析                                                         │
-│  ━━━━━━━━━━                                                         │
-│  • Memory Dependency：内存等待                                      │
-│  • Execution Dependency：执行依赖                                   │
-│  • Synchronization：同步等待                                        │
-│                                                                      │
-│  指令级                                                              │
-│  ━━━━━━━                                                            │
-│  • IPC (Instructions Per Cycle)                                     │
-│  • 分支发散率                                                       │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| 指标类别 | 具体指标 | 目标 |
+|----------|----------|------|
+| **Compute Throughput** | SM 利用率 | >80% |
+| **Memory Throughput** | Global Memory 带宽利用率；Shared Memory 带宽利用率 | 接近峰值带宽 |
+| **Occupancy** | 活跃 Warp / 最大 Warp | 根据 Kernel 特性，通常 >50% |
+| **Stall 分析** | Memory Dependency（内存等待）；Execution Dependency（执行依赖）；Synchronization（同步等待） | 尽量减少 |
+| **指令级** | IPC (Instructions Per Cycle)；分支发散率 | 高 IPC，低发散率 |
 
 ---
 
 ## 八、实战练习
 
-```
-Kernel 开发练习：
+**Kernel 开发练习：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  初级                                                                │
-│  ━━━━                                                               │
-│  1. 向量加法（基础 → 向量化）                                       │
-│  2. 矩阵转置（处理 Bank Conflict）                                  │
-│  3. 归约求和（树形归约）                                            │
-│  4. 直方图（原子操作）                                              │
-│                                                                      │
-│  中级                                                                │
-│  ━━━━                                                               │
-│  5. GEMM（朴素 → 共享内存 → 分块）                                  │
-│  6. Softmax（在线算法）                                             │
-│  7. LayerNorm / RMSNorm                                             │
-│  8. 1D/2D 卷积                                                      │
-│                                                                      │
-│  高级                                                                │
-│  ━━━━                                                               │
-│  9.  GEMM with Tensor Core (WMMA)                                   │
-│  10. 简化版 FlashAttention                                          │
-│  11. Fused GEMM + Activation                                        │
-│  12. 多头注意力 Kernel                                              │
-│                                                                      │
-│  每个练习目标：                                                      │
-│  • 实现正确性                                                       │
-│  • 使用 Nsight 分析                                                 │
-│  • 迭代优化至合理性能                                               │
-│  • 与 cuBLAS/cuDNN 对比                                             │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| 级别 | 练习内容 |
+|------|----------|
+| **初级** | 1. 向量加法（基础 → 向量化）；2. 矩阵转置（处理 Bank Conflict）；3. 归约求和（树形归约）；4. 直方图（原子操作） |
+| **中级** | 5. GEMM（朴素 → 共享内存 → 分块）；6. Softmax（在线算法）；7. LayerNorm / RMSNorm；8. 1D/2D 卷积 |
+| **高级** | 9. GEMM with Tensor Core (WMMA)；10. 简化版 FlashAttention；11. Fused GEMM + Activation；12. 多头注意力 Kernel |
+
+**每个练习目标：**
+- 实现正确性
+- 使用 Nsight 分析
+- 迭代优化至合理性能
+- 与 cuBLAS/cuDNN 对比
 
 ---
 

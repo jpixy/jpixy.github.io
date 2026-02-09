@@ -664,10 +664,7 @@ void mcs_unlock(mcs_lock_t *lock, struct mcs_node *node) {
 
 // 2. 轻度竞争（1个等待者）
 // 使用 pending 位，在锁上自旋
-// ┌───────┬────────┬────────┐
-// │locked │pending │  tail  │
-// │  (1)  │  (1)   │  (16)  │
-// └───────┴────────┴────────┘
+// qspinlock 位布局：locked(1位) | pending(1位) | tail(16位)
 
 // 3. 重度竞争（多个等待者）
 // 回退到 MCS 队列

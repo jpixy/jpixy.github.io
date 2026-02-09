@@ -216,11 +216,9 @@ qa_chain = RetrievalQA.from_chain_type(
 
 MCP (Model Context Protocol) 是 Anthropic 提出的**开放协议标准**，用于标准化 AI 模型与外部数据源、工具的连接方式。
 
-```
-┌─────────────┐     MCP Protocol     ┌─────────────┐
-│   AI 应用    │ ←─────────────────→ │  MCP Server │
-│  (Client)   │    JSON-RPC 2.0     │   (工具/数据) │
-└─────────────┘                      └─────────────┘
+```mermaid
+graph TB
+    Client[AI 应用<br/>Client] <-->|MCP Protocol<br/>JSON-RPC 2.0| Server[MCP Server<br/>工具/数据]
 ```
 
 ### 4.2 MCP 核心概念
@@ -257,18 +255,16 @@ tools = [
 
 ### 5.1 LangChain 核心组件
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    LangChain 生态                        │
-├─────────────────────────────────────────────────────────┤
-│  langchain-core    │ 核心抽象：LCEL、Runnable           │
-│  langchain         │ 链、Agent、Memory 等高层封装       │
-│  langchain-community│ 第三方集成（各类工具、数据库）      │
-│  langgraph         │ 图结构工作流、状态机               │
-│  langserve         │ 将 Chain 部署为 REST API          │
-│  langsmith         │ 可观测性、调试、评估平台           │
-└─────────────────────────────────────────────────────────┘
-```
+**LangChain 生态**：
+
+| 组件 | 说明 |
+|------|------|
+| langchain-core | 核心抽象：LCEL、Runnable |
+| langchain | 链、Agent、Memory 等高层封装 |
+| langchain-community | 第三方集成（各类工具、数据库） |
+| langgraph | 图结构工作流、状态机 |
+| langserve | 将 Chain 部署为 REST API |
+| langsmith | 可观测性、调试、评估平台 |
 
 ### 5.2 LCEL (LangChain Expression Language)
 
@@ -336,17 +332,12 @@ Agent 是具有**自主决策能力**的 AI 系统，能够：
 
 ### 6.2 Agent 核心架构
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Agent 系统                          │
-├─────────────────────────────────────────────────────────┤
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │
-│  │ Planning│→ │Reasoning│→ │ Action  │→ │ Memory  │    │
-│  │ 任务规划 │  │  推理   │  │ 工具调用 │  │ 记忆存储 │    │
-│  └─────────┘  └─────────┘  └─────────┘  └─────────┘    │
-├─────────────────────────────────────────────────────────┤
-│  Tools: 搜索、代码执行、文件操作、API调用、浏览器控制...   │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Agent系统
+        Planning[Planning<br/>任务规划] --> Reasoning[Reasoning<br/>推理] --> Action[Action<br/>工具调用] --> Memory[Memory<br/>记忆存储]
+    end
+    Action --> Tools[Tools: 搜索、代码执行、文件操作、API调用、浏览器控制...]
 ```
 
 ### 6.3 Agent 框架对比
@@ -554,15 +545,13 @@ LayerNorm   # 层归一化
 
 ### 9.4 Transformer 架构速览
 
-```
-Input → Embedding → [Encoder/Decoder Blocks] → Output
-                           ↓
-            ┌──────────────────────────────┐
-            │ Multi-Head Self-Attention    │
-            │ Add & Norm                   │
-            │ Feed Forward Network         │
-            │ Add & Norm                   │
-            └──────────────────────────────┘
+```mermaid
+graph TB
+    Input --> Embedding --> Blocks[Encoder/Decoder Blocks] --> Output
+    
+    subgraph Blocks[Block内部结构]
+        Attn[Multi-Head Self-Attention] --> AN1[Add & Norm] --> FFN[Feed Forward Network] --> AN2[Add & Norm]
+    end
 ```
 
 **关键概念**：
@@ -658,21 +647,14 @@ FP32 → FP16 → INT8 → INT4
 
 ### 11.3 部署架构
 
-```
-                    ┌─────────────────┐
-                    │   负载均衡器     │
-                    └────────┬────────┘
-                             │
-        ┌────────────────────┼────────────────────┐
-        ↓                    ↓                    ↓
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│  推理实例 1    │   │  推理实例 2    │   │  推理实例 N    │
-│   (vLLM)      │   │   (vLLM)      │   │   (vLLM)      │
-└───────────────┘   └───────────────┘   └───────────────┘
-        ↓                    ↓                    ↓
-┌─────────────────────────────────────────────────────────┐
-│                    模型存储 (S3/NFS)                     │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    LB[负载均衡器] --> I1[推理实例 1<br/>vLLM]
+    LB --> I2[推理实例 2<br/>vLLM]
+    LB --> IN[推理实例 N<br/>vLLM]
+    I1 --> Storage[(模型存储<br/>S3/NFS)]
+    I2 --> Storage
+    IN --> Storage
 ```
 
 ---

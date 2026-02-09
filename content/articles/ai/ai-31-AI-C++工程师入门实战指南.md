@@ -49,7 +49,7 @@ graph TB
 对于希望在 AI 领域深度使用 C++ 的工程师，推荐以下两个方向：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "方向一：推理系统开发"
         A1["云端 LLM Serving"]
         A2["高并发请求处理"]
@@ -86,7 +86,7 @@ graph LR
 推理系统（Inference System / Serving Framework）是将训练好的 AI 模型部署为可用服务的软件系统。它处于模型和用户之间，负责：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "推理系统职责"
         A["接收请求"] --> B["调度分配"]
         B --> C["显存管理"]
@@ -175,7 +175,7 @@ graph TB
 #### 2.2.4 性能优化
 
 ```mermaid
-graph LR
+graph TB
     subgraph "优化层次"
         A["算子优化<br/>FlashAttention"]
         B["调度优化<br/>Prefill/Decode 分离"]
@@ -557,7 +557,7 @@ public:
 **4. 量化技术**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "量化精度"
         A["FP32"] --> B["FP16/BF16"]
         B --> C["INT8"]
@@ -600,26 +600,33 @@ graph TB
 
 **阅读顺序**：
 
-```
-Week 1-2: 理解整体架构
-├── 编译运行，熟悉使用
-├── 阅读 main.cpp，理解入口流程
-└── 阅读 common.h/cpp，理解参数处理
-
-Week 3-4: 深入模型加载
-├── ggml.h: 核心数据结构（ggml_tensor, ggml_context）
-├── llama.cpp: llama_model_load() 函数
-└── 理解 GGUF 格式
-
-Week 5-6: 理解推理流程
-├── llama_decode(): 核心推理循环
-├── llama_build_graph(): 计算图构建
-└── ggml_compute_forward(): 算子执行
-
-Week 7-8: CUDA 后端
-├── ggml-cuda.cu: CUDA kernel 实现
-├── mul_mat 矩阵乘法优化
-└── 理解量化 kernel（如 dequantize_q4_K）
+```mermaid
+graph TB
+    subgraph W1["Week 1-2: 理解整体架构"]
+        A1["编译运行，熟悉使用"]
+        A2["阅读 main.cpp，理解入口流程"]
+        A3["阅读 common.h/cpp，理解参数处理"]
+    end
+    
+    subgraph W2["Week 3-4: 深入模型加载"]
+        B1["ggml.h: 核心数据结构<br/>(ggml_tensor, ggml_context)"]
+        B2["llama.cpp: llama_model_load() 函数"]
+        B3["理解 GGUF 格式"]
+    end
+    
+    subgraph W3["Week 5-6: 理解推理流程"]
+        C1["llama_decode(): 核心推理循环"]
+        C2["llama_build_graph(): 计算图构建"]
+        C3["ggml_compute_forward(): 算子执行"]
+    end
+    
+    subgraph W4["Week 7-8: CUDA 后端"]
+        D1["ggml-cuda.cu: CUDA kernel 实现"]
+        D2["mul_mat 矩阵乘法优化"]
+        D3["理解量化 kernel<br/>(如 dequantize_q4_K)"]
+    end
+    
+    W1 --> W2 --> W3 --> W4
 ```
 
 **关键数据结构**：
@@ -686,7 +693,7 @@ graph TB
 **项目一：简易 LLM Serving（2-3 周）**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "项目架构"
         A["HTTP Server<br/>cpp-httplib"]
         B["Request Queue<br/>线程安全队列"]
@@ -961,7 +968,7 @@ graph TB
 ### 3.2 核心工作内容
 
 ```mermaid
-graph LR
+graph TB
     subgraph "边缘 AI 工程师工作流"
         A["模型压缩<br/>量化/剪枝/蒸馏"]
         B["模型转换<br/>ONNX/TFLite/NCNN"]
@@ -1043,28 +1050,35 @@ graph TB
 
 **NCNN 学习路径**：
 
-```
-Week 1: 编译和使用
-├── 编译 NCNN（Linux、Android）
-├── 运行 benchmark 示例
-└── 部署 MobileNet 分类模型
-
-Week 2: 模型转换
-├── PyTorch → ONNX
-├── ONNX → NCNN
-├── 处理不支持的算子
-└── 模型优化（ncnnoptimize）
-
-Week 3-4: 源码阅读
-├── Mat 数据结构
-├── Layer 基类设计
-├── Net 加载和推理流程
-└── ARM NEON 优化实现
-
-Week 5-6: 实战项目
-├── 实现完整的目标检测 Demo
-├── 优化推理速度
-└── 集成到 Android 应用
+```mermaid
+graph TB
+    subgraph W1["Week 1: 编译和使用"]
+        A1["编译 NCNN（Linux、Android）"]
+        A2["运行 benchmark 示例"]
+        A3["部署 MobileNet 分类模型"]
+    end
+    
+    subgraph W2["Week 2: 模型转换"]
+        B1["PyTorch → ONNX"]
+        B2["ONNX → NCNN"]
+        B3["处理不支持的算子"]
+        B4["模型优化（ncnnoptimize）"]
+    end
+    
+    subgraph W3["Week 3-4: 源码阅读"]
+        C1["Mat 数据结构"]
+        C2["Layer 基类设计"]
+        C3["Net 加载和推理流程"]
+        C4["ARM NEON 优化实现"]
+    end
+    
+    subgraph W4["Week 5-6: 实战项目"]
+        D1["实现完整的目标检测 Demo"]
+        D2["优化推理速度"]
+        D3["集成到 Android 应用"]
+    end
+    
+    W1 --> W2 --> W3 --> W4
 ```
 
 **NCNN 推理代码示例**：
@@ -1170,7 +1184,7 @@ model_int8 = convert(model_prepared)
 **2. 剪枝**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "剪枝类型"
         A["非结构化剪枝<br/>按权重大小"]
         B["结构化剪枝<br/>按通道/层"]
@@ -1208,7 +1222,7 @@ graph TB
 **4. 算子融合**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "融合前"
         A1["Conv"]
         B1["BatchNorm"]
@@ -1242,20 +1256,42 @@ python export.py --weights yolov8n.pt --format onnx --simplify
 
 **项目二：Android AI 相机（3-4 周）**
 
-```
-项目结构：
-├── app/
-│   ├── src/main/
-│   │   ├── java/com/example/aicamera/
-│   │   │   ├── MainActivity.java
-│   │   │   └── CameraHandler.java
-│   │   └── cpp/
-│   │       ├── CMakeLists.txt
-│   │       ├── native-lib.cpp
-│   │       └── yolo_detector.cpp
-│   └── build.gradle
-├── ncnn/                  # NCNN 预编译库
-└── models/               # 模型文件
+```mermaid
+graph TB
+    subgraph "项目结构"
+        Root["项目根目录"]
+        
+        App["app/"]
+        SrcMain["src/main/"]
+        Java["java/com/example/aicamera/"]
+        MainActivity["MainActivity.java"]
+        CameraHandler["CameraHandler.java"]
+        Cpp["cpp/"]
+        CMake["CMakeLists.txt"]
+        NativeLib["native-lib.cpp"]
+        YoloDetector["yolo_detector.cpp"]
+        BuildGradle["build.gradle"]
+        
+        NCNN["ncnn/<br/>(NCNN 预编译库)"]
+        Models["models/<br/>(模型文件)"]
+    end
+    
+    Root --> App
+    Root --> NCNN
+    Root --> Models
+    
+    App --> SrcMain
+    App --> BuildGradle
+    
+    SrcMain --> Java
+    SrcMain --> Cpp
+    
+    Java --> MainActivity
+    Java --> CameraHandler
+    
+    Cpp --> CMake
+    Cpp --> NativeLib
+    Cpp --> YoloDetector
 ```
 
 **JNI 接口设计**：

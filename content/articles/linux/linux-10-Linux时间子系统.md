@@ -256,23 +256,18 @@ cat /proc/self/maps | grep vdso
 
 ### 3.1 PTP架构
 
-```
-        ┌─────────────────┐
-        │   GPS Receiver  │
-        │  (Grandmaster)  │
-        └────────┬────────┘
-                 │ PTP
-        ┌────────▼────────┐
-        │  Network Switch │
-        │ (Boundary Clock)│
-        └────────┬────────┘
-                 │ PTP
-    ┌────────────┼────────────┐
-    │            │            │
-┌───▼───┐    ┌───▼───┐    ┌───▼───┐
-│Server1│    │Server2│    │Server3│
-│(Slave)│    │(Slave)│    │(Slave)│
-└───────┘    └───────┘    └───────┘
+```mermaid
+graph TB
+    GPS["GPS Receiver<br/>(Grandmaster)"]
+    SW["Network Switch<br/>(Boundary Clock)"]
+    S1["Server1<br/>(Slave)"]
+    S2["Server2<br/>(Slave)"]
+    S3["Server3<br/>(Slave)"]
+    
+    GPS -->|PTP| SW
+    SW -->|PTP| S1
+    SW -->|PTP| S2
+    SW -->|PTP| S3
 ```
 
 ### 3.2 PTP配置

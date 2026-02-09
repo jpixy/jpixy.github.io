@@ -24,27 +24,18 @@ tags = ["linux", "storage", "lvm", "san", "filesystem"]
 
 ### 1.2 Linux 存储栈
 
-```
-┌─────────────────────────────────────────────┐
-│              Applications                    │
-├─────────────────────────────────────────────┤
-│              VFS (Virtual File System)      │
-├─────────────────────────────────────────────┤
-│    ext4    │   XFS    │   Btrfs   │  ZFS   │
-├─────────────────────────────────────────────┤
-│              Block Layer                     │
-│    (I/O Schedulers, Device Mapper, MD)      │
-├─────────────────────────────────────────────┤
-│              LVM / Software RAID            │
-├─────────────────────────────────────────────┤
-│              SCSI Layer                      │
-├─────────────────────────────────────────────┤
-│              Device Drivers                  │
-│   (SATA, SAS, NVMe, FC, iSCSI)             │
-├─────────────────────────────────────────────┤
-│              Hardware                        │
-│   (HDD, SSD, NVMe, SAN LUNs)               │
-└─────────────────────────────────────────────┘
+```mermaid
+graph TB
+    APP[Applications]
+    VFS[VFS - Virtual File System]
+    FS[ext4 / XFS / Btrfs / ZFS]
+    BLOCK["Block Layer<br>(I/O Schedulers, Device Mapper, MD)"]
+    LVM[LVM / Software RAID]
+    SCSI[SCSI Layer]
+    DRV["Device Drivers<br>(SATA, SAS, NVMe, FC, iSCSI)"]
+    HW["Hardware<br>(HDD, SSD, NVMe, SAN LUNs)"]
+    
+    APP --> VFS --> FS --> BLOCK --> LVM --> SCSI --> DRV --> HW
 ```
 
 ---
@@ -155,28 +146,20 @@ node.conn[0].iscsi.MaxRecvDataSegmentLength = 262144
 ### 2.4 Multipath I/O (MPIO)
 
 **多路径原理**：
-```
-┌─────────────┐
-│    Server   │
-│  ┌───────┐  │
-│  │Multipath│ │
-│  └───┬───┘  │
-│      │      │
-│  ┌───┴───┐  │
-│  │       │  │
-│ HBA1   HBA2 │
-└──┬──────┬───┘
-   │      │
-   │      │  FC Fabric
-   │      │
-┌──┴──────┴───┐
-│  SAN Switch  │
-└──────┬──────┘
-       │
-   ┌───┴───┐
-   │Storage│
-   │ Array │
-   └───────┘
+```mermaid
+graph TB
+    subgraph Server
+        MP[Multipath]
+        HBA1[HBA1]
+        HBA2[HBA2]
+        MP --> HBA1
+        MP --> HBA2
+    end
+    
+    HBA1 -->|FC Fabric| SW[SAN Switch]
+    HBA2 -->|FC Fabric| SW
+    
+    SW --> ST[Storage Array]
 ```
 
 **配置多路径**：
@@ -288,25 +271,31 @@ echo 64 > /sys/block/sda/device/queue_depth
 
 ### 3.1 LVM 架构
 
-```
-┌─────────────────────────────────────────────┐
-│              Logical Volumes (LV)           │
-│   ┌─────────┐  ┌─────────┐  ┌─────────┐    │
-│   │  root   │  │  home   │  │  data   │    │
-│   │  20GB   │  │  50GB   │  │ 100GB   │    │
-│   └────┬────┘  └────┬────┘  └────┬────┘    │
-├────────┴────────────┴────────────┴─────────┤
-│              Volume Group (VG)              │
-│                  vg_data                    │
-│                  200GB                      │
-├─────────────────────────────────────────────┤
-│              Physical Volumes (PV)          │
-│   ┌─────────┐  ┌─────────┐  ┌─────────┐    │
-│   │  /dev/  │  │  /dev/  │  │  /dev/  │    │
-│   │  sda1   │  │  sdb1   │  │  sdc1   │    │
-│   │  100GB  │  │  50GB   │  │  50GB   │    │
-│   └─────────┘  └─────────┘  └─────────┘    │
-└─────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph LV["Logical Volumes (LV)"]
+        LV_ROOT["root<br>20GB"]
+        LV_HOME["home<br>50GB"]
+        LV_DATA["data<br>100GB"]
+    end
+    
+    subgraph VG["Volume Group (VG) - vg_data - 200GB"]
+        POOL[Storage Pool]
+    end
+    
+    subgraph PV["Physical Volumes (PV)"]
+        PV1["/dev/sda1<br>100GB"]
+        PV2["/dev/sdb1<br>50GB"]
+        PV3["/dev/sdc1<br>50GB"]
+    end
+    
+    LV_ROOT --> POOL
+    LV_HOME --> POOL
+    LV_DATA --> POOL
+    
+    POOL --> PV1
+    POOL --> PV2
+    POOL --> PV3
 ```
 
 ### 3.2 LVM 基础操作

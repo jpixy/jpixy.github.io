@@ -103,7 +103,7 @@ graph TB
 ### 2.4 GPUDirect
 
 ```mermaid
-graph LR
+graph TB
     subgraph "GPUDirect RDMA"
         GPU1[GPU] <-->|直接| NIC[网卡]
         NIC <-->|网络| NIC2[远程网卡]
@@ -136,7 +136,7 @@ GPU 集合通信优化库
 ### 3.3 Ring AllReduce
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Ring AllReduce"
         G0[GPU 0] -->|发送| G1[GPU 1]
         G1 -->|发送| G2[GPU 2]
@@ -223,7 +223,7 @@ graph TB
 ### 5.1 计算通信重叠
 
 ```mermaid
-graph LR
+graph TB
     subgraph "重叠执行"
         C1[Layer 1 计算]
         A1[Layer 0 通信]
@@ -299,7 +299,7 @@ graph TB
 ### 7.2 模型并行通信
 
 ```mermaid
-graph LR
+graph TB
     subgraph "模型并行"
         GPU0[GPU 0: Layer 0-10]
         GPU1[GPU 1: Layer 11-20]
@@ -387,7 +387,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[理解拓扑] --> L2[学习 NCCL]
     L2 --> L3[分布式训练]
     L3 --> L4[性能调优]

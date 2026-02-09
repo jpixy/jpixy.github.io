@@ -16,98 +16,66 @@ ROCm（Radeon Open Compute）是 AMD 的开源 GPU 计算平台，对标 NVIDIA 
 
 ### 1.1 ROCm 生态
 
-```
-ROCm 软件栈：
+**ROCm 软件栈：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  应用层                                                              │
-│  ━━━━━━                                                             │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                   │
-│  │  PyTorch    │ │ TensorFlow  │ │    JAX      │                   │
-│  │  (ROCm)     │ │   (ROCm)    │ │   (ROCm)    │                   │
-│  └──────┬──────┘ └──────┬──────┘ └──────┬──────┘                   │
-│         │               │               │                            │
-│  ════════════════════════════════════════════════════════════════   │
-│                                                                      │
-│  库层                                                                │
-│  ━━━━                                                               │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │
-│  │ MIOpen  │ │ rocBLAS │ │ rocFFT  │ │rocSPARSE│ │ RCCL    │       │
-│  │(cuDNN)  │ │(cuBLAS) │ │(cuFFT)  │ │(cuSPARSE)│(NCCL)   │       │
-│  └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘       │
-│       │           │           │           │           │              │
-│  ════════════════════════════════════════════════════════════════   │
-│                                                                      │
-│  编程模型层                                                          │
-│  ━━━━━━━━━━                                                         │
-│  ┌─────────────────────────────────────────────────────────────┐    │
-│  │                      HIP Runtime                            │    │
-│  │              (对标 CUDA Runtime)                            │    │
-│  └──────────────────────────┬──────────────────────────────────┘    │
-│                              │                                       │
-│  ════════════════════════════════════════════════════════════════   │
-│                                                                      │
-│  驱动层                                                              │
-│  ━━━━━━                                                             │
-│  ┌─────────────────────────────────────────────────────────────┐    │
-│  │               ROCr (User-mode Driver)                       │    │
-│  │               HSA Runtime                                   │    │
-│  └──────────────────────────┬──────────────────────────────────┘    │
-│                              │                                       │
-│  ┌─────────────────────────────────────────────────────────────┐    │
-│  │              amdgpu (Kernel Driver)                         │    │
-│  └─────────────────────────────────────────────────────────────┘    │
-│                                                                      │
-│  硬件层                                                              │
-│  ━━━━━━                                                             │
-│  ┌─────────────────────────────────────────────────────────────┐    │
-│  │         AMD GPU (MI300, MI250, RX 7000 Series)              │    │
-│  └─────────────────────────────────────────────────────────────┘    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph App["应用层"]
+        PT["PyTorch (ROCm)"]
+        TF["TensorFlow (ROCm)"]
+        JAX["JAX (ROCm)"]
+    end
+    
+    subgraph Lib["库层"]
+        MIOpen["MIOpen (cuDNN)"]
+        rocBLAS["rocBLAS (cuBLAS)"]
+        rocFFT["rocFFT (cuFFT)"]
+        rocSPARSE["rocSPARSE (cuSPARSE)"]
+        RCCL["RCCL (NCCL)"]
+    end
+    
+    HIP["HIP Runtime (对标 CUDA Runtime)"]
+    
+    subgraph Driver["驱动层"]
+        ROCr["ROCr / HSA Runtime"]
+        amdgpu["amdgpu (Kernel Driver)"]
+    end
+    
+    HW["AMD GPU (MI300, MI250, RX 7000 Series)"]
+    
+    App --> Lib --> HIP --> Driver --> HW
 ```
 
 ### 1.2 AMD GPU 架构
 
-```
-AMD GPU 架构（CDNA3 / MI300）：
+**AMD GPU 架构（CDNA3 / MI300）：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  Compute Unit (CU) - 对标 NVIDIA SM                                 │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                 │
-│  • 每个 CU 有 64 个流处理器（Stream Processors）                    │
-│  • 4 个 SIMD 单元，每个 16 宽                                       │
-│  • 64KB LDS（Local Data Share，类似 Shared Memory）                 │
-│  • 16KB L1 Cache                                                    │
-│                                                                      │
-│  Wavefront（波前）- 对标 NVIDIA Warp                                │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                 │
-│  • 64 个线程为一组（CUDA 是 32）                                    │
-│  • SIMT 执行模型                                                    │
-│  • 每个 CU 可调度多个 Wavefront                                     │
-│                                                                      │
-│  MI300X 规格：                                                       │
-│  ━━━━━━━━━━━━━                                                      │
-│  • 304 CUs                                                          │
-│  • 192GB HBM3                                                       │
-│  • 5.3 TB/s 内存带宽                                                │
-│  • 1.3 PFLOPS FP16                                                  │
-│  • 653 TFLOPS FP32                                                  │
-│                                                                      │
-│  对比 H100：                                                         │
-│  ┌──────────────┬────────────────┬────────────────┐                 │
-│  │ 指标         │ MI300X         │ H100           │                 │
-│  ├──────────────┼────────────────┼────────────────┤                 │
-│  │ FP16 算力    │ 1.3 PFLOPS     │ 1.98 PFLOPS    │                 │
-│  │ 内存容量     │ 192GB          │ 80GB           │                 │
-│  │ 内存带宽     │ 5.3 TB/s       │ 3.35 TB/s      │                 │
-│  │ TDP          │ 750W           │ 700W           │                 │
-│  └──────────────┴────────────────┴────────────────┘                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**Compute Unit (CU) - 对标 NVIDIA SM：**
+- 每个 CU 有 64 个流处理器（Stream Processors）
+- 4 个 SIMD 单元，每个 16 宽
+- 64KB LDS（Local Data Share，类似 Shared Memory）
+- 16KB L1 Cache
+
+**Wavefront（波前）- 对标 NVIDIA Warp：**
+- 64 个线程为一组（CUDA 是 32）
+- SIMT 执行模型
+- 每个 CU 可调度多个 Wavefront
+
+**MI300X 规格：**
+- 304 CUs
+- 192GB HBM3
+- 5.3 TB/s 内存带宽
+- 1.3 PFLOPS FP16
+- 653 TFLOPS FP32
+
+**MI300X vs H100 对比：**
+
+| 指标 | MI300X | H100 |
+|------|--------|------|
+| FP16 算力 | 1.3 PFLOPS | 1.98 PFLOPS |
+| 内存容量 | 192GB | 80GB |
+| 内存带宽 | 5.3 TB/s | 3.35 TB/s |
+| TDP | 750W | 700W |
 
 ---
 
@@ -173,45 +141,43 @@ $ ./test
 
 ### 3.1 HIP 与 CUDA 对应关系
 
-```
-HIP 与 CUDA API 对照：
+**HIP 与 CUDA API 对照：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  关键字/函数                                                         │
-│  ━━━━━━━━━━━━                                                       │
-│  CUDA                        │  HIP                                 │
-│  ───────────────────────────────────────────────────                │
-│  __global__                  │  __global__                          │
-│  __device__                  │  __device__                          │
-│  __shared__                  │  __shared__                          │
-│  __constant__                │  __constant__                        │
-│  cudaMalloc                  │  hipMalloc                           │
-│  cudaMemcpy                  │  hipMemcpy                           │
-│  cudaFree                    │  hipFree                             │
-│  cudaDeviceSynchronize       │  hipDeviceSynchronize                │
-│  cudaStream_t                │  hipStream_t                         │
-│  cudaEvent_t                 │  hipEvent_t                          │
-│                                                                      │
-│  内置变量                                                            │
-│  ━━━━━━━━                                                           │
-│  threadIdx.x                 │  threadIdx.x (相同)                  │
-│  blockIdx.x                  │  blockIdx.x (相同)                   │
-│  blockDim.x                  │  blockDim.x (相同)                   │
-│  gridDim.x                   │  gridDim.x (相同)                    │
-│  warpSize (32)               │  warpSize (64) ← 注意不同！          │
-│                                                                      │
-│  库对应                                                              │
-│  ━━━━━━                                                             │
-│  cuBLAS                      │  rocBLAS                             │
-│  cuDNN                       │  MIOpen                              │
-│  cuFFT                       │  rocFFT                              │
-│  cuRAND                      │  rocRAND                             │
-│  NCCL                        │  RCCL                                │
-│  Thrust                      │  rocThrust                           │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**关键字/函数：**
+
+| CUDA | HIP |
+|------|-----|
+| `__global__` | `__global__` |
+| `__device__` | `__device__` |
+| `__shared__` | `__shared__` |
+| `__constant__` | `__constant__` |
+| `cudaMalloc` | `hipMalloc` |
+| `cudaMemcpy` | `hipMemcpy` |
+| `cudaFree` | `hipFree` |
+| `cudaDeviceSynchronize` | `hipDeviceSynchronize` |
+| `cudaStream_t` | `hipStream_t` |
+| `cudaEvent_t` | `hipEvent_t` |
+
+**内置变量：**
+
+| CUDA | HIP | 备注 |
+|------|-----|------|
+| `threadIdx.x` | `threadIdx.x` | 相同 |
+| `blockIdx.x` | `blockIdx.x` | 相同 |
+| `blockDim.x` | `blockDim.x` | 相同 |
+| `gridDim.x` | `gridDim.x` | 相同 |
+| `warpSize` (32) | `warpSize` (64) | **注意不同！** |
+
+**库对应：**
+
+| CUDA | HIP/ROCm |
+|------|----------|
+| cuBLAS | rocBLAS |
+| cuDNN | MIOpen |
+| cuFFT | rocFFT |
+| cuRAND | rocRAND |
+| NCCL | RCCL |
+| Thrust | rocThrust |
 
 ### 3.2 HIP 编程示例
 
@@ -461,28 +427,20 @@ int main() {
 
 ### 5.1 MIOpen 概述
 
-```
-MIOpen - AMD 的深度学习库（对标 cuDNN）：
+**MIOpen - AMD 的深度学习库（对标 cuDNN）：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  支持的操作：                                                        │
-│  ━━━━━━━━━━━                                                        │
-│  • Convolution（前向、后向、权重梯度）                              │
-│  • Pooling（Max、Average、Global）                                  │
-│  • Normalization（BatchNorm、LayerNorm）                            │
-│  • Activation（ReLU、Sigmoid、Tanh、Softmax）                       │
-│  • RNN（LSTM、GRU）                                                 │
-│  • Fusion（算子融合）                                               │
-│                                                                      │
-│  性能特点：                                                          │
-│  ━━━━━━━━━                                                          │
-│  • 自动算法选择                                                     │
-│  • 即时编译（JIT）优化                                              │
-│  • Find DB 缓存最优算法                                             │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**支持的操作：**
+- Convolution（前向、后向、权重梯度）
+- Pooling（Max、Average、Global）
+- Normalization（BatchNorm、LayerNorm）
+- Activation（ReLU、Sigmoid、Tanh、Softmax）
+- RNN（LSTM、GRU）
+- Fusion（算子融合）
+
+**性能特点：**
+- 自动算法选择
+- 即时编译（JIT）优化
+- Find DB 缓存最优算法
 
 ### 5.2 MIOpen 卷积示例
 
@@ -569,29 +527,21 @@ void conv2d_miopen() {
 
 ### 6.1 概述
 
-```
-Composable Kernel (CK) - AMD 的高性能 Kernel 模板库：
+**Composable Kernel (CK) - AMD 的高性能 Kernel 模板库：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  功能：                                                              │
-│  ━━━━━                                                              │
-│  • 高性能 GEMM                                                      │
-│  • Attention / FlashAttention                                       │
-│  • 可组合的 Kernel 模块                                             │
-│  • 类似 NVIDIA CUTLASS                                              │
-│                                                                      │
-│  特点：                                                              │
-│  ━━━━━                                                              │
-│  • C++ 模板元编程                                                   │
-│  • 针对 AMD GPU 优化                                                │
-│  • 支持多种数据类型                                                 │
-│  • 高度可配置                                                       │
-│                                                                      │
-│  GitHub: ROCm/composable_kernel                                     │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**功能：**
+- 高性能 GEMM
+- Attention / FlashAttention
+- 可组合的 Kernel 模块
+- 类似 NVIDIA CUTLASS
+
+**特点：**
+- C++ 模板元编程
+- 针对 AMD GPU 优化
+- 支持多种数据类型
+- 高度可配置
+
+**GitHub**: ROCm/composable_kernel
 
 ### 6.2 CK GEMM 示例
 
@@ -791,42 +741,15 @@ __builtin_amdgcn_readfirstlane(val);  // 读取第一个 lane 的值
 
 ## 九、最佳实践
 
-```
-ROCm 开发最佳实践：
+**ROCm 开发最佳实践：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  代码迁移                                                            │
-│  ━━━━━━━━                                                           │
-│  • 使用 hipify 作为起点                                             │
-│  • 手动检查 warpSize 相关代码                                       │
-│  • 测试覆盖 edge cases                                              │
-│                                                                      │
-│  性能                                                                │
-│  ━━━━                                                               │
-│  • 使用 rocprof 分析瓶颈                                            │
-│  • 注意 64 线程 wavefront                                           │
-│  • 充分利用 LDS                                                     │
-│                                                                      │
-│  库选择                                                              │
-│  ━━━━━━                                                             │
-│  • 优先使用 MIOpen、rocBLAS                                         │
-│  • 复杂 Kernel 考虑 Composable Kernel                               │
-│                                                                      │
-│  调试                                                                │
-│  ━━━━                                                               │
-│  • 使用 rocgdb 调试                                                 │
-│  • 检查 hipGetLastError()                                           │
-│  • 开启 AMD_LOG_LEVEL 获取详细日志                                  │
-│                                                                      │
-│  跨平台                                                              │
-│  ━━━━━━                                                             │
-│  • 使用条件编译支持双平台                                           │
-│  • 抽象 warpSize 差异                                               │
-│  • 充分测试两个平台                                                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| 类别 | 建议 |
+|------|------|
+| **代码迁移** | 使用 hipify 作为起点；手动检查 warpSize 相关代码；测试覆盖 edge cases |
+| **性能** | 使用 rocprof 分析瓶颈；注意 64 线程 wavefront；充分利用 LDS |
+| **库选择** | 优先使用 MIOpen、rocBLAS；复杂 Kernel 考虑 Composable Kernel |
+| **调试** | 使用 rocgdb 调试；检查 `hipGetLastError()`；开启 AMD_LOG_LEVEL 获取详细日志 |
+| **跨平台** | 使用条件编译支持双平台；抽象 warpSize 差异；充分测试两个平台 |
 
 ---
 

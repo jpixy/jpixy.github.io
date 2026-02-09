@@ -38,20 +38,22 @@ tags = ["ai", "agent", "jupyter", "langchain", "langgraph", "automation"]
 
 **设计一个 AI Agent，自动改写 Notebook，消除人工介入依赖。**
 
-```
-┌──────────────────┐                    ┌──────────────────┐
-│   原始 Notebook   │                    │  优化后 Notebook  │
-│  (无法一键执行)    │  ═══ AI 改写 ═══▶  │  (可一键执行)      │
-│                  │                    │                  │
-│  [MD] 请执行...   │                    │  [Code] !pip...  │
-│  [Code] import   │                    │  [Code] import   │
-│  [MD] 请创建...   │                    │  [Code] 写文件... │
-└──────────────────┘                    └──────────────────┘
-                                               │
-                                               ▼
-                                        ┌──────────────────┐
-                                        │   HTML 执行报告   │
-                                        └──────────────────┘
+```mermaid
+graph TB
+    subgraph Input["原始 Notebook<br/>无法一键执行"]
+        A1["[MD] 请执行..."]
+        A2["[Code] import"]
+        A3["[MD] 请创建..."]
+    end
+    
+    subgraph Output["优化后 Notebook<br/>可一键执行"]
+        B1["[Code] !pip..."]
+        B2["[Code] import"]
+        B3["[Code] 写文件..."]
+    end
+    
+    Input -->|AI 改写| Output
+    Output --> C[HTML 执行报告]
 ```
 
 **核心思路**：
@@ -100,90 +102,25 @@ tags = ["ai", "agent", "jupyter", "langchain", "langgraph", "automation"]
 
 ### 3.2 迭代流程图
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         START                                    │
-│                    输入：原始 Notebook                            │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     STEP 1: ANALYZE                              │
-│                     分析 Notebook                                │
-│            扫描所有 Cell，识别人工介入指令                         │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-│                    OPTIMIZATION LOOP                             │
-│                      (迭代优化循环)                               │
-│                                                                  │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                  STEP 2: TRANSFORM                        │  │
-│  │                  LLM 生成转换代码                          │  │
-│  │         将人工指令转换为等价的 Code Cell                    │  │
-│  └───────────────────────────┬───────────────────────────────┘  │
-│                              │                                   │
-│                              ▼                                   │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                  STEP 3: REBUILD                          │  │
-│  │                  重构 Notebook                            │  │
-│  │         插入/替换 Cell，生成新版 Notebook                   │  │
-│  └───────────────────────────┬───────────────────────────────┘  │
-│                              │                                   │
-│                              ▼                                   │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                  STEP 4: EXECUTE                          │  │
-│  │                  执行 Notebook                            │  │
-│  │         使用 papermill 执行，捕获结果                       │  │
-│  └───────────────────────────┬───────────────────────────────┘  │
-│                              │                                   │
-│                    ┌─────────┴─────────┐                        │
-│                    ▼                   ▼                        │
-│              ┌──────────┐        ┌──────────┐                   │
-│              │ SUCCESS  │        │  ERROR   │                   │
-│              └────┬─────┘        └────┬─────┘                   │
-│                   │                   │                         │
-│                   │                   ▼                         │
-│                   │    ┌───────────────────────────────────┐    │
-│                   │    │        STEP 5: DIAGNOSE           │    │
-│                   │    │        LLM 分析错误原因            │    │
-│                   │    │        生成修复方案                │    │
-│                   │    └───────────────┬───────────────────┘    │
-│                   │                    │                        │
-│                   │                    ▼                        │
-│                   │    ┌───────────────────────────────────┐    │
-│                   │    │        STEP 6: FIX                │    │
-│                   │    │        应用修复                    │    │
-│                   │    │        更新 Notebook              │    │
-│                   │    └───────────────┬───────────────────┘    │
-│                   │                    │                        │
-│                   │         ┌──────────┴──────────┐             │
-│                   │         ▼                     ▼             │
-│                   │   [retry < max]         [retry >= max]      │
-│                   │         │                     │             │
-│                   │         │                     ▼             │
-│                   │         │              ┌──────────────┐     │
-│                   │         │              │  GIVE UP     │     │
-│                   │         │              │  输出错误报告  │     │
-│                   │         │              └──────────────┘     │
-│                   │         │                                   │
-│                   │         └──────────────────┐                │
-│                   │                            │                │
-└ ─ ─ ─ ─ ─ ─ ─ ─ ─│─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─│─ ─ ─ ─ ─ ─ ─ ─┘
-                   │                            │
-                   │         ┌──────────────────┘
-                   │         │ (loop back)
-                   ▼         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                          END                                     │
-│                       输出结果                                   │
-│                                                                  │
-│  成功：                         失败：                           │
-│  - optimized.ipynb (优化版)     - error_report.md               │
-│  - output.ipynb (执行结果)      - 最后尝试的 notebook            │
-│  - report.html (HTML报告)       - 所有尝试记录                   │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    START["START<br/>输入：原始 Notebook"] --> ANALYZE["STEP 1: ANALYZE<br/>分析 Notebook<br/>扫描所有 Cell，识别人工介入指令"]
+    
+    ANALYZE --> TRANSFORM["STEP 2: TRANSFORM<br/>LLM 生成转换代码<br/>将人工指令转换为等价的 Code Cell"]
+    
+    TRANSFORM --> REBUILD["STEP 3: REBUILD<br/>重构 Notebook<br/>插入/替换 Cell，生成新版 Notebook"]
+    
+    REBUILD --> EXECUTE["STEP 4: EXECUTE<br/>执行 Notebook<br/>使用 papermill 执行，捕获结果"]
+    
+    EXECUTE --> Result{结果}
+    Result -->|SUCCESS| END_SUCCESS["END<br/>成功输出<br/>- optimized.ipynb<br/>- output.ipynb<br/>- report.html"]
+    Result -->|ERROR| DIAGNOSE["STEP 5: DIAGNOSE<br/>LLM 分析错误原因<br/>生成修复方案"]
+    
+    DIAGNOSE --> FIX["STEP 6: FIX<br/>应用修复<br/>更新 Notebook"]
+    
+    FIX --> Retry{"重试判断"}
+    Retry -->|"retry < max"| TRANSFORM
+    Retry -->|"retry >= max"| END_FAIL["END<br/>失败输出<br/>- error_report.md<br/>- 最后尝试的 notebook<br/>- 所有尝试记录"]
 ```
 
 ### 3.3 迭代示例
@@ -236,38 +173,30 @@ Round 3: 修复文件
 
 ### 4.2 LangGraph 状态机设计
 
+**LangGraph Workflow**
+
+**State (状态对象)**:
+
+```json
+{
+  "notebook": "NotebookObject",
+  "version": 1,
+  "instructions": [],
+  "errors": [],
+  "attempts": [],
+  "status": "pending"
+}
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     LangGraph Workflow                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  State (状态对象):                                               │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  {                                                       │    │
-│  │    "notebook": NotebookObject,    // 当前 Notebook       │    │
-│  │    "version": 1,                  // 版本号              │    │
-│  │    "instructions": [...],         // 识别到的人工指令     │    │
-│  │    "errors": [],                  // 错误历史            │    │
-│  │    "attempts": [],                // 修复尝试记录        │    │
-│  │    "status": "pending"            // 状态               │    │
-│  │  }                                                       │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  Nodes (节点):                                                   │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐   │
-│  │ analyze │ │transform│ │ rebuild │ │ execute │ │   fix   │   │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘   │
-│                                                                  │
-│  Edges (边):                                                     │
-│  analyze ─────────────────────────────────▶ transform           │
-│  transform ───────────────────────────────▶ rebuild             │
-│  rebuild ─────────────────────────────────▶ execute             │
-│  execute ──── [success] ──────────────────▶ END                 │
-│  execute ──── [error] ────────────────────▶ fix                 │
-│  fix ──────── [retry < max] ──────────────▶ transform           │
-│  fix ──────── [retry >= max] ─────────────▶ END                 │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**Nodes (节点)**: `analyze` → `transform` → `rebuild` → `execute` → `fix`
+
+```mermaid
+graph TB
+    analyze --> transform --> rebuild --> execute
+    execute -->|success| END
+    execute -->|error| fix
+    fix -->|"retry < max"| transform
+    fix -->|"retry >= max"| END
 ```
 
 ### 4.3 核心 Tools 设计
@@ -286,29 +215,14 @@ Round 3: 修复文件
 
 **关键：让 LLM 知道之前尝试过什么，避免重复失败。**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Memory Context                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  传递给 LLM 的上下文：                                           │
-│                                                                  │
-│  1. 当前错误信息                                                 │
-│     └─ Error: ModuleNotFoundError: pandas                       │
-│                                                                  │
-│  2. 相关代码片段                                                 │
-│     └─ Cell[5]: import pandas as pd                             │
-│                                                                  │
-│  3. 已尝试的修复（避免重复）                                      │
-│     └─ Attempt 1: 添加 !pip install numpy  → 仍然失败            │
-│     └─ Attempt 2: 添加 !pip install np     → 仍然失败            │
-│                                                                  │
-│  4. Notebook 上下文                                              │
-│     └─ 其他 Cell 的 import 语句                                  │
-│     └─ Markdown 中提到的相关信息                                  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+**Memory Context - 传递给 LLM 的上下文**：
+
+| 类别 | 内容 |
+|------|------|
+| 当前错误信息 | `Error: ModuleNotFoundError: pandas` |
+| 相关代码片段 | `Cell[5]: import pandas as pd` |
+| 已尝试的修复（避免重复） | Attempt 1: 添加 `!pip install numpy` → 仍然失败<br/>Attempt 2: 添加 `!pip install np` → 仍然失败 |
+| Notebook 上下文 | 其他 Cell 的 import 语句<br/>Markdown 中提到的相关信息 |
 
 ---
 
@@ -320,36 +234,13 @@ Round 3: 修复文件
 
 **识别流程**：
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Analyze Notebook                               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│               For each Markdown Cell:                            │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│            Layer 1: Pattern Matching (快速筛选)                   │
-│                                                                  │
-│  Patterns:                                                       │
-│  - "请(执行|运行|输入|创建|下载|设置)..."                         │
-│  - "pip install|wget|curl|mkdir|chmod..."                       │
-│  - "```bash" or "```bash"                                      │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                   ┌─────────┴─────────┐
-                   ▼                   ▼
-             [匹配成功]            [未匹配]
-                   │                   │
-                   ▼                   ▼
-┌──────────────────────────┐         Skip
-│  Layer 2: LLM Confirm    │
-│  LLM 确认是否为人工指令   │
-│  提取具体操作内容         │
-└──────────────────────────┘
+```mermaid
+graph TB
+    A[Analyze Notebook] --> B[For each Markdown Cell]
+    B --> C["Layer 1: Pattern Matching (快速筛选)<br/>Patterns:<br/>- 请(执行|运行|输入|创建|下载|设置)...<br/>- pip install|wget|curl|mkdir|chmod..."]
+    C --> D{匹配结果}
+    D -->|匹配成功| E["Layer 2: LLM Confirm<br/>LLM 确认是否为人工指令<br/>提取具体操作内容"]
+    D -->|未匹配| F[Skip]
 ```
 
 **输出示例**：
@@ -416,47 +307,11 @@ Round 3: 修复文件
 
 **诊断流程**：
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Execution Error                              │
-│         ModuleNotFoundError: No module named 'pandas'           │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    Error Classification                          │
-│                                                                  │
-│  - ModuleNotFoundError  → 缺少依赖                               │
-│  - FileNotFoundError    → 缺少文件                               │
-│  - SyntaxError          → 代码语法错误                           │
-│  - KeyError             → 缺少配置                               │
-│  - NameError            → 变量未定义                             │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    LLM Diagnosis                                 │
-│                                                                  │
-│  Input:                                                          │
-│  - 错误类型 + traceback                                          │
-│  - 相关代码片段                                                  │
-│  - 已尝试的修复（避免重复）                                       │
-│                                                                  │
-│  Output:                                                         │
-│  - 错误原因分析                                                  │
-│  - 修复方案                                                      │
-│  - 修复代码                                                      │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    Apply Fix                                     │
-│                                                                  │
-│  修复类型：                                                      │
-│  - INSERT: 在某位置插入新 Cell                                   │
-│  - MODIFY: 修改现有 Cell 代码                                    │
-│  - DELETE: 删除有问题的 Cell                                     │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    A["Execution Error<br/>ModuleNotFoundError: No module named 'pandas'"] --> B["Error Classification<br/>- ModuleNotFoundError → 缺少依赖<br/>- FileNotFoundError → 缺少文件<br/>- SyntaxError → 代码语法错误<br/>- KeyError → 缺少配置<br/>- NameError → 变量未定义"]
+    B --> C["LLM Diagnosis<br/>Input: 错误类型 + traceback, 相关代码片段, 已尝试的修复<br/>Output: 错误原因分析, 修复方案, 修复代码"]
+    C --> D["Apply Fix<br/>- INSERT: 在某位置插入新 Cell<br/>- MODIFY: 修改现有 Cell 代码<br/>- DELETE: 删除有问题的 Cell"]
 ```
 
 **修复示例**：
@@ -571,12 +426,9 @@ else:
 
 ### 9.2 价值
 
-```
-输入：无法自动执行的 Notebook
-          │
-          │ (AI 迭代优化)
-          ▼
-输出：可一键执行的 Notebook + HTML 报告
+```mermaid
+graph TB
+    A["输入：无法自动执行的 Notebook"] -->|AI 迭代优化| B["输出：可一键执行的 Notebook + HTML 报告"]
 ```
 
 ### 9.3 适用场景

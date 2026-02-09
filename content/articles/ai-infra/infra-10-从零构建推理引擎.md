@@ -327,7 +327,7 @@ data: {"token": "", "finished": true}
 ### 7.1 阶段一：基础框架
 
 ```mermaid
-graph LR
+graph TB
     S1[HTTP Server]
     S2[请求解析]
     S3[简单响应]
@@ -340,7 +340,7 @@ graph LR
 ### 7.2 阶段二：模型集成
 
 ```mermaid
-graph LR
+graph TB
     S1[加载模型]
     S2[单请求推理]
     S3[返回结果]
@@ -353,7 +353,7 @@ graph LR
 ### 7.3 阶段三：调度器
 
 ```mermaid
-graph LR
+graph TB
     S1[请求队列]
     S2[调度逻辑]
     S3[批量执行]
@@ -366,7 +366,7 @@ graph LR
 ### 7.4 阶段四：流式输出
 
 ```mermaid
-graph LR
+graph TB
     S1[SSE 实现]
     S2[逐 token 返回]
     S3[完成通知]
@@ -457,7 +457,7 @@ graph LR
 ### 10.2 下一步
 
 ```mermaid
-graph LR
+graph TB
     IMPL[完成实现] --> READ[阅读开源代码]
     READ --> CONTRIB[贡献开源项目]
 ```

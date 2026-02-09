@@ -66,7 +66,7 @@ graph TB
 ### 2.1 视觉编码器
 
 ```mermaid
-graph LR
+graph TB
     subgraph "视觉编码器选择"
         A["ViT-L/14"]
         B["CLIP ViT-L"]
@@ -220,11 +220,11 @@ graph TB
 
 **语音 Token 数量**：
 
-```
-1 秒语音 → 50 tokens
-30 秒语音 → 1500 tokens
-5 分钟语音 → 15000 tokens
-```
+| 语音时长 | Token 数量 |
+|----------|------------|
+| 1 秒 | 50 tokens |
+| 30 秒 | 1,500 tokens |
+| 5 分钟 | 15,000 tokens |
 
 ### 3.3 流式语音处理
 
@@ -285,7 +285,7 @@ class StreamingSpeechLLM:
 ### 3.4 语音 LLM 延迟分析
 
 ```mermaid
-graph LR
+graph TB
     subgraph "端到端延迟组成"
         A["音频采集<br/>~10ms"]
         B["缓冲<br/>chunk_size"]

@@ -333,16 +333,14 @@ printf("%d\n", data);  // 一定输出 42
 ```
 
 **配对使用**：
-```
-Thread A (release)         Thread B (acquire)
-─────────────────         ─────────────────
-data = 42                      │
-    │                          │
-    ▼                          │
-ready = true ─── sync ───► while(!ready);
-                               │
-                               ▼
-                           use(data)
+```mermaid
+sequenceDiagram
+    participant A as Thread A (release)
+    participant B as Thread B (acquire)
+    A->>A: data = 42
+    A->>B: ready = true (sync)
+    B->>B: while(!ready)
+    B->>B: use(data)
 ```
 
 </details>

@@ -136,7 +136,7 @@ graph TB
 **Python 级分析**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "PyTorch Profiler"
         OP[算子耗时]
         MEM[内存分配]
@@ -303,7 +303,7 @@ graph TB
 ### 9.2 容量规划
 
 ```mermaid
-graph LR
+graph TB
     QPS[预期 QPS] --> GPU[需要 GPU 数]
     LATENCY[延迟要求] --> GPU
     MODEL[模型大小] --> GPU

@@ -389,20 +389,23 @@ systemctl restart postgresql
 
 ### 什么是脑裂
 
-```
-脑裂（Split Brain）：集群中的节点因网络分区，各自认为自己是主节点
-
-       网络分区
-    ┌─────┴─────┐
-    │           │
-  节点A       节点B
- (认为自己是主) (认为自己是主)
-    │           │
-  客户端1     客户端2
- (写入A)     (写入B)
-    │           │
-    └───────────┘
-       数据不一致
+```mermaid
+graph TB
+    subgraph partition["脑裂（Split Brain）：网络分区"]
+        subgraph left["分区1"]
+            A["节点A<br/>(认为自己是主)"]
+            C1["客户端1<br/>(写入A)"]
+            C1 --> A
+        end
+        subgraph right["分区2"]
+            B["节点B<br/>(认为自己是主)"]
+            C2["客户端2<br/>(写入B)"]
+            C2 --> B
+        end
+    end
+    Result["数据不一致"]
+    left -.-> Result
+    right -.-> Result
 ```
 
 ### 脑裂检测

@@ -16,70 +16,44 @@ tags = ["linux", "networking", "tcp", "ebpf"]
 
 ### 1.1 Linux 网络栈架构
 
-```
-┌─────────────────────────────────────────────┐
-│              Application Layer              │
-│         (socket API: send/recv)             │
-├─────────────────────────────────────────────┤
-│              Transport Layer                │
-│           (TCP/UDP/SCTP/DCCP)              │
-├─────────────────────────────────────────────┤
-│               Network Layer                 │
-│         (IP routing, Netfilter)            │
-├─────────────────────────────────────────────┤
-│              Link Layer                     │
-│    (Device drivers, Traffic Control)       │
-├─────────────────────────────────────────────┤
-│              Physical Layer                 │
-│           (NIC hardware, DMA)              │
-└─────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Linux网络栈架构
+        App[Application Layer<br/>socket API: send/recv]
+        Transport[Transport Layer<br/>TCP/UDP/SCTP/DCCP]
+        Network[Network Layer<br/>IP routing, Netfilter]
+        Link[Link Layer<br/>Device drivers, Traffic Control]
+        Physical[Physical Layer<br/>NIC hardware, DMA]
+        
+        App --> Transport --> Network --> Link --> Physical
+    end
 ```
 
 ### 1.2 TCP 连接状态机
 
-```
-                              ┌───────────┐
-                              │  CLOSED   │
-                              └─────┬─────┘
-                                    │
-           ┌────────────────────────┴────────────────────────┐
-           │ passive open                       active open  │
-           ▼                                                 ▼
-    ┌──────────┐                                     ┌──────────┐
-    │  LISTEN  │                                     │ SYN_SENT │
-    └────┬─────┘                                     └────┬─────┘
-         │ rcv SYN                                        │ rcv SYN+ACK
-         │ send SYN+ACK                                   │ send ACK
-         ▼                                                ▼
-    ┌──────────┐                                     ┌──────────┐
-    │ SYN_RCVD │                                     │ESTABLISHED│
-    └────┬─────┘                                     └─────┬────┘
-         │ rcv ACK                                         │
-         └──────────────────► ESTABLISHED ◄────────────────┘
-                                   │
-                    ┌──────────────┴──────────────┐
-                    │ close                 rcv FIN│
-                    ▼                             ▼
-             ┌──────────┐                  ┌──────────┐
-             │ FIN_WAIT1│                  │CLOSE_WAIT│
-             └────┬─────┘                  └────┬─────┘
-                  │                              │ close
-                  │ rcv ACK                      │ send FIN
-                  ▼                              ▼
-             ┌──────────┐                  ┌──────────┐
-             │ FIN_WAIT2│                  │ LAST_ACK │
-             └────┬─────┘                  └────┬─────┘
-                  │ rcv FIN                     │ rcv ACK
-                  │ send ACK                    ▼
-                  ▼                         ┌───────┐
-             ┌──────────┐                   │ CLOSED│
-             │ TIME_WAIT│                   └───────┘
-             └────┬─────┘
-                  │ 2MSL timeout
-                  ▼
-             ┌───────┐
-             │ CLOSED│
-             └───────┘
+```mermaid
+stateDiagram-v2
+    [*] --> CLOSED
+    
+    CLOSED --> LISTEN : passive open
+    CLOSED --> SYN_SENT : active open
+    
+    LISTEN --> SYN_RCVD : rcv SYN / send SYN+ACK
+    SYN_SENT --> ESTABLISHED : rcv SYN+ACK / send ACK
+    SYN_RCVD --> ESTABLISHED : rcv ACK
+    
+    ESTABLISHED --> FIN_WAIT1 : close
+    ESTABLISHED --> CLOSE_WAIT : rcv FIN
+    
+    FIN_WAIT1 --> FIN_WAIT2 : rcv ACK
+    CLOSE_WAIT --> LAST_ACK : close / send FIN
+    
+    FIN_WAIT2 --> TIME_WAIT : rcv FIN / send ACK
+    LAST_ACK --> CLOSED : rcv ACK
+    
+    TIME_WAIT --> CLOSED : 2MSL timeout
+    
+    CLOSED --> [*]
 ```
 
 ### 1.3 TCP 连接建立详解
@@ -124,12 +98,7 @@ net.ipv4.tcp_synack_retries = 2
 
 **窗口机制**：
 ```
-发送方                            接收方
-  │                                  │
-  │  ┌───────────────────────────┐   │
-  │  │ 已发送  │ 可发送 │ 不可发送│   │
-  │  │ 已确认  │ 窗口内 │ 窗口外  │   │
-  │  └───────────────────────────┘   │
+滑动窗口结构：[已发送已确认] [可发送窗口内] [不可发送窗口外]
   │       ◀──── 发送窗口 ────▶        │
   │                                  │
   │              ◀── 接收窗口 ──▶     │
@@ -773,33 +742,33 @@ eBPF (extended Berkeley Packet Filter):
 
 ### 5.2 eBPF 架构
 
-```
-┌─────────────────────────────────────────────┐
-│              User Space                      │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐      │
-│  │  bpftool │  │ bcc     │  │bpftrace │      │
-│  └─────────┘  └─────────┘  └─────────┘      │
-│         │          │           │             │
-│         └──────────┴───────────┘             │
-│                    │ bpf() syscall           │
-├────────────────────┼────────────────────────┤
-│              Kernel Space                    │
-│         ┌──────────┴──────────┐             │
-│         │    eBPF Verifier    │             │
-│         └──────────┬──────────┘             │
-│                    │                         │
-│    ┌───────────────┼───────────────┐        │
-│    │               │               │        │
-│    ▼               ▼               ▼        │
-│ ┌─────┐       ┌─────┐        ┌─────┐       │
-│ │ XDP │       │ TC  │        │kprobe│       │
-│ └─────┘       └─────┘        └─────┘       │
-│    │               │               │        │
-│    ▼               ▼               ▼        │
-│ ┌─────────────────────────────────────┐    │
-│ │           Network Stack              │    │
-│ └─────────────────────────────────────┘    │
-└─────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph UserSpace["User Space"]
+        BPFTOOL[bpftool]
+        BCC[bcc]
+        BPFTRACE[bpftrace]
+    end
+    
+    subgraph KernelSpace["Kernel Space"]
+        VERIFY[eBPF Verifier]
+        XDP[XDP]
+        TC[TC]
+        KPROBE[kprobe]
+        NET[Network Stack]
+    end
+    
+    BPFTOOL -->|"bpf() syscall"| VERIFY
+    BCC -->|"bpf() syscall"| VERIFY
+    BPFTRACE -->|"bpf() syscall"| VERIFY
+    
+    VERIFY --> XDP
+    VERIFY --> TC
+    VERIFY --> KPROBE
+    
+    XDP --> NET
+    TC --> NET
+    KPROBE --> NET
 ```
 
 ### 5.3 XDP (eXpress Data Path)

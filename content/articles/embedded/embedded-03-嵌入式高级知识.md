@@ -100,20 +100,16 @@ while (!data_ready) {
 
 ### 2.1 Bootloader作用
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  Flash Memory Layout                                    │
-├─────────────────────────────────────────────────────────┤
-│  0x08000000  ┌──────────────────┐                       │
-│              │   Bootloader     │  16KB                 │
-│              │   (固件升级)      │                       │
-│  0x08004000  ├──────────────────┤                       │
-│              │   Application    │  48KB                 │
-│              │   (主程序)        │                       │
-│  0x08010000  ├──────────────────┤                       │
-│              │   Backup/Config  │  可选                 │
-│              └──────────────────┘                       │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Flash Memory Layout
+        direction TB
+        Boot["0x08000000<br/>Bootloader 16KB<br/>固件升级"]
+        App["0x08004000<br/>Application 48KB<br/>主程序"]
+        Backup["0x08010000<br/>Backup/Config<br/>可选"]
+    end
+    
+    Boot --> App --> Backup
 ```
 
 ### 2.2 Bootloader基本流程

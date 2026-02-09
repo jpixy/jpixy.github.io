@@ -86,7 +86,7 @@ graph TB
 ### 2.4 知识蒸馏
 
 ```mermaid
-graph LR
+graph TB
     TEACHER[教师模型<br>大模型] --> |知识| STUDENT[学生模型<br>小模型]
 ```
 
@@ -99,7 +99,7 @@ graph LR
 **步骤**：
 
 ```mermaid
-graph LR
+graph TB
     MODEL[原始模型] --> CAL[校准数据]
     CAL --> QUANT[量化]
     QUANT --> INT8[INT8 模型]
@@ -110,7 +110,7 @@ graph LR
 **步骤**：
 
 ```mermaid
-graph LR
+graph TB
     MODEL[原始模型] --> FAKE[伪量化训练]
     FAKE --> FINETUNE[微调]
     FINETUNE --> QUANT[导出量化模型]
@@ -131,7 +131,7 @@ graph LR
 ### 4.1 转换流程
 
 ```mermaid
-graph LR
+graph TB
     PYTORCH[PyTorch] --> ONNX[ONNX]
     TENSORFLOW[TensorFlow] --> ONNX
     ONNX --> TARGET[目标格式]
@@ -156,7 +156,7 @@ graph LR
 ### 5.1 算子融合
 
 ```mermaid
-graph LR
+graph TB
     subgraph "融合前"
         CONV[Conv] --> BN[BatchNorm] --> RELU[ReLU]
     end
@@ -302,7 +302,7 @@ graph TB
 ### 10.1 优化流程
 
 ```mermaid
-graph LR
+graph TB
     A[选择小模型] --> B[量化]
     B --> C[模型转换]
     C --> D[推理优化]

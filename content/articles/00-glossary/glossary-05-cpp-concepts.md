@@ -383,14 +383,24 @@ static_assert(x == 120);
 **定义**：C++运行时多态的实现机制。每个有虚函数的类有一个虚表(vtable)，每个对象有一个虚表指针(vptr)。
 
 **内存布局**：
+
+```mermaid
+graph TB
+    subgraph Object["对象"]
+        vptr["vptr"]
+        member["member"]
+    end
+    subgraph vtable["vtable"]
+        dtor["&Base::~Base"]
+        func["&Derived::func"]
+    end
+    vptr --> dtor
 ```
-对象:                    vtable:
-┌────────┐              ┌─────────────────┐
-│ vptr   │─────────────→│ &Base::~Base    │
-├────────┤              ├─────────────────┤
-│ member │              │ &Derived::func  │
-└────────┘              └─────────────────┘
-```
+
+| 部分 | 内容 |
+|------|------|
+| **对象** | vptr (指向vtable), member (成员变量) |
+| **vtable** | &Base::~Base (析构函数), &Derived::func (虚函数) |
 
 **虚函数调用开销**：
 1. 读取vptr（1次内存访问）

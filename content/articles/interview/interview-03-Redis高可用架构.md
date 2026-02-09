@@ -91,22 +91,25 @@ tags = ["interview", "database", "redis", "high-availability", "cluster"]
 
 ### 3.2 部署架构
 
-```
-┌─────────┐  ┌─────────┐  ┌─────────┐
-│Sentinel1│  │Sentinel2│  │Sentinel3│
-└────┬────┘  └────┬────┘  └────┬────┘
-     │           │           │
-     └───────────┼───────────┘
-                 ↓ 监控
-┌─────────────────────────────────────┐
-│                                     │
-│    ┌────────┐                       │
-│    │ Master │←──复制───┬─────┬─────│
-│    └────────┘          │     │     │
-│                   ┌────┴──┐ ┌┴────┐│
-│                   │Slave 1│ │Slave2││
-│                   └───────┘ └─────┘│
-└─────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Sentinel集群
+        S1["Sentinel1"]
+        S2["Sentinel2"]
+        S3["Sentinel3"]
+    end
+    
+    subgraph Redis节点
+        M["Master"]
+        SL1["Slave 1"]
+        SL2["Slave 2"]
+        M -->|复制| SL1
+        M -->|复制| SL2
+    end
+    
+    S1 -.->|监控| M
+    S2 -.->|监控| M
+    S3 -.->|监控| M
 ```
 
 **建议**：至少3个Sentinel实例，奇数个

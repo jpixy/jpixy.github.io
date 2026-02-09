@@ -441,16 +441,18 @@ echo 0 > /proc/irq/XX/smp_affinity
 
 **调度域层次结构**：
 
-```
-NUMA 节点域（最高层）
-    │
-    ├── Die 域
-    │     │
-    │     ├── LLC 域（共享 L3 缓存）
-    │     │     │
-    │     │     ├── MC 域（多核）
-    │     │     │     │
-    │     │     │     └── SMT 域（超线程）
+```mermaid
+graph TB
+    NUMA["NUMA 节点域（最高层）"]
+    DIE["Die 域"]
+    LLC["LLC 域（共享 L3 缓存）"]
+    MC["MC 域（多核）"]
+    SMT["SMT 域（超线程）"]
+    
+    NUMA --> DIE
+    DIE --> LLC
+    LLC --> MC
+    MC --> SMT
 ```
 
 **负载均衡触发时机**：

@@ -101,21 +101,24 @@ Feed流最核心的设计决策是**推模式**还是**拉模式**。
 
 ### 3.1 整体架构
 
-```
-客户端 → API Gateway → 负载均衡
-                          │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-    发布服务          Feed服务          用户服务
-        │                 │                 │
-        ↓                 ↓                 ↓
-    消息队列 ←──────→ 推送服务          关系服务
-        │                 │
-        ↓                 ↓
-    内容存储          收件箱（Redis）
-        │
-        ↓
-    MySQL/MongoDB
+```mermaid
+graph TB
+    Client[客户端] --> Gateway[API Gateway]
+    Gateway --> LB[负载均衡]
+    
+    LB --> PublishSvc[发布服务]
+    LB --> FeedSvc[Feed服务]
+    LB --> UserSvc[用户服务]
+    
+    PublishSvc --> MQ[消息队列]
+    MQ <--> PushSvc[推送服务]
+    FeedSvc --> PushSvc
+    UserSvc --> RelationSvc[关系服务]
+    
+    PublishSvc --> ContentStore[内容存储]
+    PushSvc --> Inbox["收件箱(Redis)"]
+    
+    ContentStore --> DB[MySQL/MongoDB]
 ```
 
 ### 3.2 核心组件

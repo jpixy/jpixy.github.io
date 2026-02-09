@@ -18,7 +18,7 @@ comments = true
 RPC（Remote Procedure Call，远程过程调用）是一种进程间通信方式，使得程序可以像调用本地函数一样调用远程服务器上的函数。
 
 ```mermaid
-graph LR
+graph TB
     subgraph "客户端"
         A["业务代码"]
         B["Client Stub"]
@@ -224,7 +224,7 @@ auto value = message->value();
 ```
 
 ```mermaid
-graph LR
+graph TB
     subgraph "传统反序列化"
         A1["网络 Buffer"]
         A2["解析"]

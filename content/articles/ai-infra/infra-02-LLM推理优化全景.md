@@ -61,7 +61,7 @@ graph TB
 **核心思想**：用更少的比特表示权重和激活值
 
 ```mermaid
-graph LR
+graph TB
     subgraph "量化精度"
         FP32[FP32<br>32 bit] --> FP16[FP16<br>16 bit]
         FP16 --> BF16[BF16<br>16 bit]
@@ -137,7 +137,7 @@ graph TB
 **结构化剪枝**：移除整个神经元或注意力头
 
 ```mermaid
-graph LR
+graph TB
     subgraph "剪枝类型"
         P1[非结构化<br>移除单个权重]
         P2[结构化<br>移除整个通道/头]
@@ -157,7 +157,7 @@ graph LR
 **小模型学习大模型**：
 
 ```mermaid
-graph LR
+graph TB
     T[Teacher<br>大模型] -->|知识| S[Student<br>小模型]
     S --> D[部署使用]
 ```
@@ -226,7 +226,7 @@ graph TB
 **减少 Kernel 启动和内存访问**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "融合前"
         K1[LayerNorm] --> K2[Linear] --> K3[GELU] --> K4[Linear]
     end
@@ -371,7 +371,7 @@ Decode 请求：      等待...等待...等待...
 **Chunked Prefill**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Chunked Prefill"
         C1[将长 Prefill 分块]
         C2[与 Decode 交替执行]
@@ -437,7 +437,7 @@ graph TB
 **Tensor Parallel**：切分模型到多 GPU
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Tensor Parallel"
         Input --> |split| G1[GPU 0<br>前半部分]
         Input --> |split| G2[GPU 1<br>后半部分]
@@ -449,7 +449,7 @@ graph LR
 **Pipeline Parallel**：按层切分
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Pipeline Parallel"
         G1[GPU 0<br>Layer 0-9]
         G2[GPU 1<br>Layer 10-19]
@@ -496,7 +496,7 @@ graph TB
 ### 6.2 按实施难度分类
 
 ```mermaid
-graph LR
+graph TB
     subgraph "实施难度"
         E1[简单<br>开箱即用]
         E2[中等<br>需要配置]
@@ -647,7 +647,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[理解各种优化技术] --> L2[学会瓶颈分析]
     L2 --> L3[掌握主流工具]
     L3 --> L4[实践中积累经验]

@@ -15,22 +15,17 @@ tags = ["HFT", "面试", "系统设计", "架构", "低延迟"]
 
 **答案框架**：
 
+**1. 高层架构**
+
+```mermaid
+graph TB
+    MDF[Market Data Feed] -->|Kernel Bypass / FPGA| MDH[Market Data Handler]
+    MDH -->|Shared Memory| SE[Strategy Engine]
+    MDH -->|Shared Memory| OB[Order Book]
+    OB --> SE
+    SE -->|Shared Memory| OG[Order Gateway]
+    OG -->|Kernel Bypass| EX[Exchange]
 ```
-1. 高层架构
-┌─────────────────────────────────────────────────────────────┐
-│  Market Data Feed                                            │
-│         ↓ (Kernel Bypass / FPGA)                            │
-│  ┌─────────────────┐                                         │
-│  │ Market Data     │ → Shared Memory → Strategy Engine      │
-│  │ Handler         │              ↘                          │
-│  └─────────────────┘               Order Book                │
-│                                          ↓                   │
-│  ┌─────────────────┐    ← Shared Memory ←                   │
-│  │ Order Gateway   │                                         │
-│  └─────────────────┘                                         │
-│         ↓ (Kernel Bypass)                                    │
-│  Exchange                                                    │
-└─────────────────────────────────────────────────────────────┘
 
 2. 关键设计决策：
 - 网络：使用DPDK/Solarflare绕过内核
@@ -105,16 +100,14 @@ private:
 
 **答案**：
 
+**1. 主从架构**
+
+```mermaid
+graph TB
+    P["Primary<br/>(Active)"] <--> S["Standby<br/>(Passive)"]
+    P --> SR[State Replication]
+    S --> SR
 ```
-1. 主从架构
-┌─────────────┐     ┌─────────────┐
-│   Primary   │ ←→ │   Standby   │
-│   (Active)  │     │  (Passive)  │
-└─────────────┘     └─────────────┘
-       ↑                   ↑
-       └───────┬───────────┘
-               ↓
-        State Replication
 
 2. 状态同步策略：
 - 同步复制：每个订单都等待从机确认（增加延迟）
@@ -389,19 +382,19 @@ private:
 
 **答案**：
 
+**1. 抽象层设计**
+
+```mermaid
+graph TB
+    subgraph UI["Unified Interface"]
+        OBI["order_book_interface"]
+        OGI["order_gateway_interface"]
+        MDI["market_data_interface"]
+    end
+    UI --> CME["CME Adapter"]
+    UI --> NASDAQ["NASDAQ Adapter"]
+    UI --> NYSE["NYSE Adapter"]
 ```
-1. 抽象层设计
-┌─────────────────────────────────────────────────────────────┐
-│  Unified Interface                                           │
-│  - order_book_interface                                     │
-│  - order_gateway_interface                                  │
-│  - market_data_interface                                    │
-└─────────────────────────────────────────────────────────────┘
-        ↓              ↓              ↓
-┌───────────┐  ┌───────────┐  ┌───────────┐
-│ CME       │  │ NASDAQ    │  │ NYSE      │
-│ Adapter   │  │ Adapter   │  │ Adapter   │
-└───────────┘  └───────────┘  └───────────┘
 
 2. 关键设计点
 - 统一的订单类型映射

@@ -17,26 +17,23 @@ tags = ["HFT", "延迟分析", "性能优化", "时间戳", "低延迟"]
 
 ### 1.1 端到端延迟组成
 
-```
-完整延迟 = 网络延迟 + 内核延迟 + 应用延迟 + 交易所延迟
+**完整延迟** = 网络延迟 + 内核延迟 + 应用延迟 + 交易所延迟
 
-详细分解：
-┌─────────────────────────────────────────────────────────────┐
-│  Market Data Feed                                            │
-│    ↓ Wire latency (物理传输)                                 │
-│    ↓ NIC receive (网卡接收)                                  │
-│    ↓ Kernel network stack (内核协议栈)                       │
-│    ↓ Application receive (应用接收)                          │
-│    ↓ Protocol parsing (协议解析)                             │
-│    ↓ Strategy decision (策略决策)                            │
-│    ↓ Order generation (订单生成)                             │
-│    ↓ Protocol encoding (协议编码)                            │
-│    ↓ Application send (应用发送)                             │
-│    ↓ Kernel network stack (内核协议栈)                       │
-│    ↓ NIC transmit (网卡发送)                                 │
-│    ↓ Wire latency (物理传输)                                 │
-│  Order reaches Exchange                                       │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    A[Market Data Feed] --> B["Wire latency (物理传输)"]
+    B --> C["NIC receive (网卡接收)"]
+    C --> D["Kernel network stack (内核协议栈)"]
+    D --> E["Application receive (应用接收)"]
+    E --> F["Protocol parsing (协议解析)"]
+    F --> G["Strategy decision (策略决策)"]
+    G --> H["Order generation (订单生成)"]
+    H --> I["Protocol encoding (协议编码)"]
+    I --> J["Application send (应用发送)"]
+    J --> K["Kernel network stack (内核协议栈)"]
+    K --> L["NIC transmit (网卡发送)"]
+    L --> M["Wire latency (物理传输)"]
+    M --> N[Order reaches Exchange]
 ```
 
 ### 1.2 各环节典型延迟

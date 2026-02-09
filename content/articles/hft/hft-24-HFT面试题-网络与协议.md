@@ -12,12 +12,18 @@ tags = ["HFT", "面试", "网络", "FIX协议", "TCP"]
 
 **答案**：
 
-```
-FIX消息结构：
-┌──────────────────────────────────────────────────────────┐
-│  8=FIX.4.4│9=xxx│35=D│49=SENDER│56=TARGET│...│10=xxx│   │
-│  ↑BeginStr│↑Len │↑Type│↑Sender │↑Target │   │↑Chksum│   │
-└──────────────────────────────────────────────────────────┘
+**FIX消息结构**：
+
+`8=FIX.4.4│9=xxx│35=D│49=SENDER│56=TARGET│...│10=xxx│`
+
+| 字段 | 标签 | 说明 |
+|------|------|------|
+| BeginString | 8 | 协议版本 |
+| BodyLength | 9 | 消息长度 |
+| MsgType | 35 | 消息类型 |
+| SenderCompID | 49 | 发送方 |
+| TargetCompID | 56 | 目标方 |
+| CheckSum | 10 | 校验和 |
 
 关键字段：
 - 8 (BeginString): 协议版本，如FIX.4.4
@@ -96,20 +102,14 @@ public:
 
 **答案**：
 
+**会话状态机**：
+
+```mermaid
+graph TB
+    A[INITIAL] -->|Logon| B[ACTIVE]
+    B -->|Heartbeat/Messages| B
+    B -->|Logout| C[LOGOUT]
 ```
-会话状态机：
-                    ┌─────────┐
-                    │ INITIAL │
-                    └────┬────┘
-                         │ Logon
-                    ┌────▼────┐
-           Logout   │  ACTIVE │ ◄──┐
-             ┌──────┴────┬────┘    │ Heartbeat/
-             │           │         │ Messages
-             ▼           └─────────┘
-        ┌─────────┐
-        │ LOGOUT  │
-        └─────────┘
 
 序列号管理：
 1. 双向独立序列号（Inbound/Outbound）

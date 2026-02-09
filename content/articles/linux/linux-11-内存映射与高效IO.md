@@ -257,7 +257,7 @@ GRUB_CMDLINE_LINUX="transparent_hugepage=never"
 ### 3.1 直接IO原理
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph 普通IO
         A1[应用] --> B1[用户缓冲区] --> C1[页缓存] --> D1[磁盘]
     end
@@ -319,18 +319,16 @@ ssize_t direct_write(const char *path, const void *buf, size_t count, off_t offs
 
 ### 3.3 何时使用直接IO
 
-```
-适合使用O_DIRECT:
-├── 应用自己管理缓存（如数据库）
-├── 大块顺序IO
-├── 避免双重缓冲
-└── 需要精确控制数据落盘
+**适合使用 O_DIRECT：**
+- 应用自己管理缓存（如数据库）
+- 大块顺序 IO
+- 避免双重缓冲
+- 需要精确控制数据落盘
 
-不适合使用O_DIRECT:
-├── 小块随机IO
-├── 需要OS缓存优化
-└── 共享文件访问
-```
+**不适合使用 O_DIRECT：**
+- 小块随机 IO
+- 需要 OS 缓存优化
+- 共享文件访问
 
 ## 四、异步IO（AIO）
 
@@ -739,23 +737,23 @@ sendfile(sockfd, file_fd, NULL, file_size);
 
 ### 5.11 如何选择零拷贝方法？
 
-```
-决策树:
-
-是否需要修改数据？
-├── 是 → 传统read/write（或考虑mmap修改后发送）
-└── 否 → 继续判断
-
-源和目的是什么？
-├── 文件 → Socket  → sendfile
-├── Socket → Socket → splice
-├── 用户缓冲区 → Socket → vmsplice + splice
-├── 任意fd → 任意fd → splice
-└── 需要批量/异步 → io_uring
-
-是否需要最低延迟？
-├── 是 → 考虑Kernel Bypass（DPDK、io_uring registered buffers）
-└── 否 → 上述方案已足够
+```mermaid
+graph TB
+    Q1{是否需要修改数据？}
+    Q1 -->|是| A1["传统 read/write<br>（或 mmap 修改后发送）"]
+    Q1 -->|否| Q2{源和目的是什么？}
+    
+    Q2 -->|文件→Socket| A2[sendfile]
+    Q2 -->|Socket→Socket| A3[splice]
+    Q2 -->|用户缓冲区→Socket| A4[vmsplice + splice]
+    Q2 -->|任意fd→任意fd| A5[splice]
+    Q2 -->|需要批量/异步| A6[io_uring]
+    
+    Q3{是否需要最低延迟？}
+    A2 --> Q3
+    A3 --> Q3
+    Q3 -->|是| A7["Kernel Bypass<br>DPDK、io_uring registered buffers"]
+    Q3 -->|否| A8[上述方案已足够]
 ```
 
 ### 5.12 零拷贝是否仍是最佳实践？

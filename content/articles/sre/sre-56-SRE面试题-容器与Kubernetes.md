@@ -40,7 +40,10 @@ Docker基于Linux内核的三大技术：
    - 写时复制（Copy-on-Write）
    - 层共享节省空间
 
-容器 vs 虚拟机：
+```
+
+**容器 vs 虚拟机**：
+
 | 特性 | 容器 | 虚拟机 |
 |------|------|--------|
 | 隔离级别 | 进程级 | 硬件级 |
@@ -48,7 +51,6 @@ Docker基于Linux内核的三大技术：
 | 资源占用 | MB级 | GB级 |
 | 性能损耗 | 几乎无 | 有一定损耗 |
 | 密度 | 高 | 低 |
-```
 
 ---
 
@@ -71,16 +73,21 @@ Docker基于Linux内核的三大技术：
 - 镜像 = 类（Class）
 - 容器 = 对象（Instance）
 
-镜像分层示例：
-┌─────────────────────────┐
-│  可写层（容器运行时）    │ ← 容器
-├─────────────────────────┤
-│  应用层                 │
-├─────────────────────────┤
-│  依赖层                 │ ← 镜像（只读）
-├─────────────────────────┤
-│  基础镜像层             │
-└─────────────────────────┘
+**镜像分层示例**：
+
+```mermaid
+graph TB
+    subgraph Container["容器"]
+        Writable["可写层（容器运行时）"]
+    end
+    subgraph Image["镜像（只读）"]
+        App["应用层"]
+        Deps["依赖层"]
+        Base["基础镜像层"]
+    end
+    Writable --> App
+    App --> Deps
+    Deps --> Base
 ```
 
 ---
@@ -261,32 +268,37 @@ Node节点组件：
    - Docker, containerd, CRI-O
    - 实际运行容器
 
-架构图：
-┌─────────────────────────────────────────────────┐
-│                    Master                        │
-│  ┌──────────┐ ┌──────────┐ ┌──────────────────┐ │
-│  │ apiserver│ │ scheduler│ │controller-manager│ │
-│  └────┬─────┘ └────┬─────┘ └────────┬─────────┘ │
-│       │            │                 │           │
-│       └────────────┼─────────────────┘           │
-│                    │                             │
-│              ┌─────▼─────┐                       │
-│              │   etcd    │                       │
-│              └───────────┘                       │
-└─────────────────────────────────────────────────┘
-                     │
-        ┌────────────┼────────────┐
-        ▼            ▼            ▼
-┌──────────────┐┌──────────────┐┌──────────────┐
-│    Node 1    ││    Node 2    ││    Node 3    │
-│ ┌──────────┐ ││ ┌──────────┐ ││ ┌──────────┐ │
-│ │  kubelet │ ││ │  kubelet │ ││ │  kubelet │ │
-│ ├──────────┤ ││ ├──────────┤ ││ ├──────────┤ │
-│ │kube-proxy│ ││ │kube-proxy│ ││ │kube-proxy│ │
-│ ├──────────┤ ││ ├──────────┤ ││ ├──────────┤ │
-│ │ 容器运行时│ ││ │ 容器运行时│ ││ │ 容器运行时│ │
-│ └──────────┘ ││ └──────────┘ ││ └──────────┘ │
-└──────────────┘└──────────────┘└──────────────┘
+**架构图**：
+
+```mermaid
+graph TB
+    subgraph Master["Master节点"]
+        apiserver["kube-apiserver"]
+        scheduler["kube-scheduler"]
+        controller["controller-manager"]
+        etcd["etcd"]
+        apiserver --> etcd
+        scheduler --> etcd
+        controller --> etcd
+    end
+    subgraph Node1["Node 1"]
+        kubelet1["kubelet"]
+        proxy1["kube-proxy"]
+        runtime1["容器运行时"]
+    end
+    subgraph Node2["Node 2"]
+        kubelet2["kubelet"]
+        proxy2["kube-proxy"]
+        runtime2["容器运行时"]
+    end
+    subgraph Node3["Node 3"]
+        kubelet3["kubelet"]
+        proxy3["kube-proxy"]
+        runtime3["容器运行时"]
+    end
+    apiserver --> kubelet1
+    apiserver --> kubelet2
+    apiserver --> kubelet3
 ```
 
 ---
@@ -317,20 +329,21 @@ Pod：
    - 在主容器前运行
    - 准备环境、等待依赖
 
-Pod中容器的关系：
-┌─────────────────────────────┐
-│            Pod              │
-│  ┌───────┐    ┌───────┐    │
-│  │ 容器A │    │ 容器B │    │
-│  └───┬───┘    └───┬───┘    │
-│      │    共享    │         │
-│      ▼            ▼         │
-│  ┌─────────────────────┐   │
-│  │   共享网络栈         │   │
-│  │   共享存储卷         │   │
-│  │   共享IPC           │   │
-│  └─────────────────────┘   │
-└─────────────────────────────┘
+**Pod中容器的关系**：
+
+```mermaid
+graph TB
+    subgraph Pod["Pod"]
+        ContainerA["容器A"]
+        ContainerB["容器B"]
+        subgraph Shared["共享资源"]
+            Network["共享网络栈"]
+            Storage["共享存储卷"]
+            IPC["共享IPC"]
+        end
+        ContainerA --> Shared
+        ContainerB --> Shared
+    end
 ```
 
 ---
@@ -894,7 +907,6 @@ spec:
 
 **标准答案**：
 
-```
 | 特性 | Deployment | StatefulSet |
 |------|------------|-------------|
 | Pod名称 | 随机后缀 | 有序固定（pod-0, pod-1） |
@@ -904,7 +916,9 @@ spec:
 | 扩缩容 | 并行 | 顺序 |
 | 适用场景 | 无状态应用 | 有状态应用 |
 
-StatefulSet特性：
+**StatefulSet特性**：
+
+```
 
 1. 稳定的网络标识
    pod-0.mysql.default.svc.cluster.local

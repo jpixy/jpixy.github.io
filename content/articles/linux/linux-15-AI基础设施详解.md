@@ -17,21 +17,28 @@ tags = ["Linux", "GPU", "CUDA", "RDMA", "InfiniBand", "AI", "HPC"]
 
 **一句话：GPU 是"大规模并行计算器"，擅长同时处理成千上万个简单任务**
 
-```
-CPU vs GPU 架构:
+**CPU vs GPU 架构：**
 
-CPU (适合复杂逻辑):              GPU (适合并行计算):
-┌─────────────────┐              ┌─────────────────────────────┐
-│  Core 1  Core 2 │              │ SM0  SM1  SM2  ... SM80     │
-│  ┌───┐  ┌───┐   │              │ ┌─┐  ┌─┐  ┌─┐      ┌─┐     │
-│  │ALU│  │ALU│   │              │ │◦│  │◦│  │◦│      │◦│     │
-│  │   │  │   │   │              │ │◦│  │◦│  │◦│  ... │◦│     │ 每个SM有
-│  └───┘  └───┘   │              │ │◦│  │◦│  │◦│      │◦│     │ 多个CUDA核心
-│  大缓存 大缓存  │              │ │◦│  │◦│  │◦│      │◦│     │
-│  复杂控制逻辑   │              │ └─┘  └─┘  └─┘      └─┘     │
-└─────────────────┘              └─────────────────────────────┘
-  4-64核                          数千核
-  强：分支、复杂逻辑              强：矩阵运算、并行
+| 特性 | CPU (适合复杂逻辑) | GPU (适合并行计算) |
+|------|-------------------|-------------------|
+| 核心数 | 4-64核 | 数千核 |
+| 结构 | 少量大核心 + 大缓存 + 复杂控制逻辑 | 多个SM，每个SM有多个CUDA核心 |
+| 优势 | 分支、复杂逻辑 | 矩阵运算、并行 |
+
+```mermaid
+graph TB
+    subgraph CPU["CPU"]
+        C1["Core 1<br/>ALU + 大缓存"]
+        C2["Core 2<br/>ALU + 大缓存"]
+        CTRL["复杂控制逻辑"]
+    end
+    
+    subgraph GPU["GPU"]
+        SM0["SM0<br/>多个CUDA核心"]
+        SM1["SM1<br/>多个CUDA核心"]
+        SM2["SM2<br/>多个CUDA核心"]
+        SMn["SM80<br/>多个CUDA核心"]
+    end
 ```
 
 ### 1.1 GPU 软件栈
@@ -278,30 +285,29 @@ graph TB
 
 ### 2.2 RDMA 核心概念
 
+```mermaid
+graph TB
+    subgraph Node1["节点1"]
+        MEM1["应用内存<br/>(注册到NIC)"]
+        QP1["Queue Pair<br/>SQ + RQ"]
+    end
+    
+    subgraph Node2["节点2"]
+        MEM2["应用内存<br/>(注册到NIC)"]
+        QP2["Queue Pair<br/>SQ + RQ"]
+    end
+    
+    MEM1 <-->|Memory Region| MEM2
+    MEM1 --- QP1
+    MEM2 --- QP2
+    QP1 <-->|网络| QP2
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    RDMA 编程模型                             │
-│                                                              │
-│  ┌────────────┐                          ┌────────────┐     │
-│  │ 应用内存    │←── Memory Region (MR) ──→│ 应用内存    │     │
-│  │ (注册到NIC) │                          │ (注册到NIC) │     │
-│  └────────────┘                          └────────────┘     │
-│         ↑                                      ↑            │
-│         │                                      │            │
-│  ┌──────┴──────┐                      ┌───────┴──────┐     │
-│  │ Queue Pair  │                      │  Queue Pair  │     │
-│  │  SQ    RQ   │                      │   SQ    RQ   │     │
-│  └──────┬──────┘                      └───────┬──────┘     │
-│         │                                      │            │
-│         └──────────── 网络 ───────────────────┘            │
-└─────────────────────────────────────────────────────────────┘
 
-关键操作：
-- RDMA SEND/RECV：类似Socket，双方都参与
-- RDMA WRITE：直接写远程内存（对端CPU无感知）
-- RDMA READ：直接读远程内存（对端CPU无感知）
-- Atomic：远程原子操作
-```
+**关键操作：**
+- **RDMA SEND/RECV**：类似Socket，双方都参与
+- **RDMA WRITE**：直接写远程内存（对端CPU无感知）
+- **RDMA READ**：直接读远程内存（对端CPU无感知）
+- **Atomic**：远程原子操作
 
 **核心术语**：
 
@@ -536,13 +542,15 @@ echo 1024 > /proc/sys/vm/nr_hugepages
 
 **GPUDirect RDMA**：GPU 内存与 RDMA 网卡直接通信，绕过 CPU 和主存。
 
-```
-传统方式:
-GPU Memory → CPU Memory → RDMA NIC → Network
-
-GPUDirect RDMA:
-GPU Memory → RDMA NIC → Network
-        (跳过CPU和主存)
+```mermaid
+graph TB
+    subgraph 传统方式
+        GPU1["GPU Memory"] --> CPU1["CPU Memory"] --> NIC1["RDMA NIC"] --> NET1["Network"]
+    end
+    
+    subgraph GPUDirect_RDMA["GPUDirect RDMA"]
+        GPU2["GPU Memory"] -->|跳过CPU和主存| NIC2["RDMA NIC"] --> NET2["Network"]
+    end
 ```
 
 ### 3.1 GPUDirect 技术栈

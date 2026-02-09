@@ -44,7 +44,7 @@ graph TB
 ### 1.3 CXL 版本演进
 
 ```mermaid
-graph LR
+graph TB
     subgraph "CXL 版本"
         A["CXL 1.0/1.1<br/>2019"]
         B["CXL 2.0<br/>2020"]
@@ -505,7 +505,7 @@ CXL 3.0 x16 = 64 GB/s (双向)
 ### 10.1 技术趋势
 
 ```mermaid
-graph LR
+graph TB
     subgraph "CXL 发展"
         A["内存扩展"]
         B["内存池化"]

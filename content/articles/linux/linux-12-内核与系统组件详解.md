@@ -140,16 +140,16 @@ sysctl -w net.core.somaxconn=65535
 
 **一句话：Glibc 是用户程序与内核之间的"标准接口"，封装系统调用为C函数**
 
-```
-应用程序
-    │
-    ├── printf("hello")     ← C标准库函数
-    │       ↓
-    ├── glibc: write()      ← glibc封装
-    │       ↓
-    └── syscall(SYS_write)  ← 系统调用
-            ↓
-       ══内核══
+```mermaid
+graph TB
+    APP["应用程序<br/>printf(\"hello\")"]
+    GLIBC["glibc: write()<br/>(glibc封装)"]
+    SYSCALL["syscall(SYS_write)<br/>(系统调用)"]
+    KERNEL["内核"]
+    
+    APP -->|C标准库函数| GLIBC
+    GLIBC --> SYSCALL
+    SYSCALL --> KERNEL
 ```
 
 ### 2.1 Glibc 核心组件
@@ -166,21 +166,21 @@ sysctl -w net.core.somaxconn=65535
 
 ### 2.2 Glibc 内存分配器 (ptmalloc2)
 
+```mermaid
+graph TB
+    subgraph Arena["Arena"]
+        FAST["fastbin<br/>(&lt;64B)"]
+        SMALL["smallbin<br/>(&lt;512B)"]
+        LARGE["largebin<br/>(>=512B)"]
+        TOP["top<br/>(堆顶空闲块)"]
+        
+        FAST --> TOP
+        SMALL --> TOP
+        LARGE --> TOP
+    end
 ```
-┌─────────────────────────────────────────────┐
-│                   Arena                      │
-│  ┌─────────┐ ┌─────────┐ ┌─────────────┐    │
-│  │ fastbin │ │ smallbin│ │  largebin   │    │
-│  │ <64B    │ │ <512B   │ │ >=512B      │    │
-│  └─────────┘ └─────────┘ └─────────────┘    │
-│                    ↓                         │
-│              ┌─────────┐                     │
-│              │   top   │  ← 堆顶空闲块       │
-│              └─────────┘                     │
-└─────────────────────────────────────────────┘
 
-多线程：每个线程可能有独立的 Arena，减少锁竞争
-```
+> **多线程**：每个线程可能有独立的 Arena，减少锁竞争
 
 ```c
 // 查看glibc版本
@@ -232,17 +232,16 @@ LD_PRELOAD=/usr/lib/libjemalloc.so ./program   # jemalloc
 
 **一句话：Systemd 是现代 Linux 的"大管家"，管理系统启动和服务生命周期**
 
-```
-系统启动流程：
-BIOS/UEFI → Bootloader(GRUB) → Kernel → Systemd(PID 1)
-                                              ↓
-                                    ┌─────────┴─────────┐
-                                    ↓         ↓         ↓
-                               udev.service  sshd    network
-                                    ↓
-                              ┌─────┴─────┐
-                              ↓           ↓
-                          graphical   multi-user
+```mermaid
+graph TB
+    BIOS["BIOS/UEFI"] --> GRUB["Bootloader (GRUB)"]
+    GRUB --> KERNEL["Kernel"]
+    KERNEL --> SYSTEMD["Systemd (PID 1)"]
+    SYSTEMD --> UDEV["udev.service"]
+    SYSTEMD --> SSHD["sshd"]
+    SYSTEMD --> NET["network"]
+    UDEV --> GRAPHICAL["graphical.target"]
+    UDEV --> MULTIUSER["multi-user.target"]
 ```
 
 ### 3.1 Systemd 核心概念
@@ -353,13 +352,13 @@ systemctl show nginx.service -p CPUQuota
 
 **一句话：工具链是把源代码变成可执行程序的"流水线"**
 
-```
-源代码 → 预处理器 → 编译器 → 汇编器 → 链接器 → 可执行文件
-
-main.c  →  cpp   →   cc1   →   as   →   ld   →  a.out
-  │         │         │         │         │
-  ↓         ↓         ↓         ↓         ↓
-源码    展开宏/头文件  生成汇编   生成.o    链接库
+```mermaid
+graph TB
+    SRC["main.c<br/>(源码)"] --> CPP["cpp<br/>(展开宏/头文件)"]
+    CPP --> CC1["cc1<br/>(生成汇编)"]
+    CC1 --> AS["as<br/>(生成.o)"]
+    AS --> LD["ld<br/>(链接库)"]
+    LD --> OUT["a.out<br/>(可执行文件)"]
 ```
 
 ### 4.1 GNU工具链组件
@@ -419,21 +418,15 @@ objdump -d -M intel ./main   # Intel语法
 
 ### 4.4 静态链接 vs 动态链接
 
-```
-静态链接：                    动态链接：
-┌──────────┐                 ┌──────────┐
-│  main.o  │                 │  main.o  │
-│          │                 │    │     │
-│ printf() │ ← 代码复制进来   │    ↓     │
-└──────────┘                 └──────────┘
-                                  │
-单独可执行                         │ 运行时加载
-文件大，启动快                     ↓
-                             libc.so.6
-                             
-                             文件小，共享库
-                             多进程共享内存
-```
+**静态链接 vs 动态链接：**
+
+| 特性 | 静态链接 | 动态链接 |
+|------|----------|----------|
+| 结构 | main.o + printf() 代码复制进来 | main.o → 运行时加载 libc.so.6 |
+| 文件大小 | 大 | 小 |
+| 启动速度 | 快 | 稍慢 |
+| 内存使用 | 每进程独立 | 多进程共享库 |
+| 可执行性 | 单独可执行 | 依赖共享库 |
 
 ```bash
 # 静态链接

@@ -52,28 +52,50 @@ tags = ["interview", "system-design", "e-commerce", "distributed"]
 
 ### 2.1 整体架构
 
-```
-┌─────────────────────────────────────────┐
-│              接入层                      │
-│   CDN │ 网关 │ 负载均衡 │ 限流          │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              业务层                      │
-│   用户服务 │ 商品服务 │ 购物车服务       │
-│   订单服务 │ 库存服务 │ 支付服务        │
-│   搜索服务 │ 促销服务 │ 物流服务        │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              中间件层                    │
-│   缓存 │ 消息队列 │ 搜索引擎 │ 配置中心  │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              数据层                      │
-│   MySQL集群 │ Redis集群 │ ES集群        │
-└─────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Access["接入层"]
+        CDN["CDN"]
+        Gateway["网关"]
+        LB["负载均衡"]
+        RateLimit["限流"]
+    end
+
+    subgraph Biz["业务层"]
+        UserSvc["用户服务"]
+        ProductSvc["商品服务"]
+        CartSvc["购物车服务"]
+        OrderSvc["订单服务"]
+        InventorySvc["库存服务"]
+        PaySvc["支付服务"]
+        SearchSvc["搜索服务"]
+        PromoSvc["促销服务"]
+        LogisticsSvc["物流服务"]
+    end
+
+    subgraph Middleware["中间件层"]
+        Cache["缓存"]
+        MQ["消息队列"]
+        ES["搜索引擎"]
+        Config["配置中心"]
+    end
+
+    subgraph Data["数据层"]
+        MySQL["MySQL集群"]
+        Redis["Redis集群"]
+        ESCluster["ES集群"]
+    end
+
+    CDN --> Gateway
+    Gateway --> LB
+    LB --> RateLimit
+    RateLimit --> UserSvc
+    RateLimit --> ProductSvc
+    UserSvc --> Cache
+    OrderSvc --> MQ
+    SearchSvc --> ES
+    OrderSvc --> MySQL
+    InventorySvc --> Redis
 ```
 
 ### 2.2 服务拆分
@@ -192,10 +214,14 @@ tags = ["interview", "system-design", "e-commerce", "distributed"]
 
 ### 5.1 订单状态
 
-```
-待支付 → 已支付 → 已发货 → 已收货 → 已完成
-   ↓        ↓
- 已取消   已退款
+```mermaid
+graph TB
+    Pending[待支付] --> Paid[已支付]
+    Paid --> Shipped[已发货]
+    Shipped --> Received[已收货]
+    Received --> Completed[已完成]
+    Pending --> Cancelled[已取消]
+    Paid --> Refunded[已退款]
 ```
 
 **状态机设计**：

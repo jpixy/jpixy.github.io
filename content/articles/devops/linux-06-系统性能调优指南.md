@@ -176,36 +176,29 @@ void *thread_func(void *arg) {
 
 **UMA vs NUMA**：
 
-```
-UMA (Uniform Memory Access):
-┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐
-│CPU 0│   │CPU 1│   │CPU 2│   │CPU 3│
-└──┬──┘   └──┬──┘   └──┬──┘   └──┬──┘
-   │         │         │         │
-   └─────────┴────┬────┴─────────┘
-                  │
-            ┌─────┴─────┐
-            │  Memory   │
-            └───────────┘
+**UMA (Uniform Memory Access)**：所有 CPU 共享统一内存总线，访问延迟一致。
 
-NUMA (Non-Uniform Memory Access):
-┌─────────────────┐   ┌─────────────────┐
-│   NUMA Node 0   │   │   NUMA Node 1   │
-│ ┌─────┐ ┌─────┐ │   │ ┌─────┐ ┌─────┐ │
-│ │CPU 0│ │CPU 1│ │   │ │CPU 2│ │CPU 3│ │
-│ └──┬──┘ └──┬──┘ │   │ └──┬──┘ └──┬──┘ │
-│    └───┬───┘    │   │    └───┬───┘    │
-│   ┌────┴────┐   │   │   ┌────┴────┐   │
-│   │ Memory  │   │   │   │ Memory  │   │
-│   │ (Local) │   │   │   │ (Local) │   │
-│   └─────────┘   │   │   └─────────┘   │
-└────────┬────────┘   └────────┬────────┘
-         │      QPI/UPI        │
-         └──────────┬──────────┘
-              ┌─────┴─────┐
-              │  Remote   │
-              │  Access   │
-              └───────────┘
+**NUMA (Non-Uniform Memory Access)**：
+
+```mermaid
+graph TB
+    subgraph Node0["NUMA Node 0"]
+        CPU0[CPU 0]
+        CPU1[CPU 1]
+        MEM0[Memory - Local]
+        CPU0 --> MEM0
+        CPU1 --> MEM0
+    end
+    
+    subgraph Node1["NUMA Node 1"]
+        CPU2[CPU 2]
+        CPU3[CPU 3]
+        MEM1[Memory - Local]
+        CPU2 --> MEM1
+        CPU3 --> MEM1
+    end
+    
+    Node0 <-->|"QPI/UPI<br>Remote Access"| Node1
 ```
 
 **访问延迟对比**：

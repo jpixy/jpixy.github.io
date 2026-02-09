@@ -8,26 +8,20 @@ tags = ["C", "HFT", "Cache", "Performance", "Low-Latency"]
 
 ## Cache Hierarchy Overview
 
-```
-CPU Cache Hierarchy:
-┌──────────────────────────────────────────────────────┐
-│  CPU Core                                            │
-│  ┌─────────────────────────────────────────────────┐ │
-│  │  Registers (< 1 cycle)                          │ │
-│  ├─────────────────────────────────────────────────┤ │
-│  │  L1 Cache (32-64KB, ~4 cycles)                  │ │
-│  ├─────────────────────────────────────────────────┤ │
-│  │  L2 Cache (256KB-1MB, ~12 cycles)               │ │
-│  └─────────────────────────────────────────────────┘ │
-│                                                      │
-│  ┌─────────────────────────────────────────────────┐ │
-│  │  L3 Cache (shared, 8-64MB, ~40 cycles)          │ │
-│  └─────────────────────────────────────────────────┘ │
-│                                                      │
-│  ┌─────────────────────────────────────────────────┐ │
-│  │  Main Memory (DDR4/DDR5, ~100-300 cycles)       │ │
-│  └─────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "CPU Cache Hierarchy"
+        Reg["Registers (< 1 cycle)"]
+        L1["L1 Cache (32-64KB, ~4 cycles)"]
+        L2["L2 Cache (256KB-1MB, ~12 cycles)"]
+        L3["L3 Cache (shared, 8-64MB, ~40 cycles)"]
+        Mem["Main Memory (DDR4/DDR5, ~100-300 cycles)"]
+    end
+    
+    Reg --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> Mem
 ```
 
 **Key insight**: A cache miss can cost 100x more than a cache hit.

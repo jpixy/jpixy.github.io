@@ -177,24 +177,33 @@ Classic Platform（CP）适用于传统ECU，是目前的主流。
 
 **分层架构**：
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Application Layer                      │
-│         SWC（Software Component）                   │
-├─────────────────────────────────────────────────────┤
-│                    RTE                              │
-│        Runtime Environment（运行时环境）             │
-├─────────────────────────────────────────────────────┤
-│              Basic Software (BSW)                   │
-│  ┌─────────────┬─────────────┬─────────────┐       │
-│  │   Services  │    ECU      │  Complex    │       │
-│  │   Layer     │ Abstraction │  Drivers    │       │
-│  ├─────────────┼─────────────┼─────────────┤       │
-│  │   Microcontroller Abstraction Layer (MCAL)│     │
-│  └─────────────┴─────────────┴─────────────┘       │
-├─────────────────────────────────────────────────────┤
-│                 Microcontroller                     │
-└─────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Application Layer
+        SWC["SWC<br/>(Software Component)"]
+    end
+    
+    RTE["RTE<br/>Runtime Environment<br/>(运行时环境)"]
+    
+    subgraph Basic Software - BSW
+        subgraph 服务层
+            Services["Services Layer"]
+            ECU_Abs["ECU Abstraction"]
+            Complex["Complex Drivers"]
+        end
+        MCAL["Microcontroller Abstraction Layer<br/>(MCAL)"]
+    end
+    
+    MCU["Microcontroller"]
+    
+    SWC --> RTE
+    RTE --> Services
+    RTE --> ECU_Abs
+    RTE --> Complex
+    Services --> MCAL
+    ECU_Abs --> MCAL
+    Complex --> MCU
+    MCAL --> MCU
 ```
 
 **各层职责**：

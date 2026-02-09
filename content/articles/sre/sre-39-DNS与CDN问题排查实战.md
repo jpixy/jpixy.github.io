@@ -437,16 +437,19 @@ echo "1.2.3.4 test.example.com" >> /etc/hosts
 ```
 CDN请求流程：
 
-用户 → DNS查询 → CDN DNS → 返回最近节点IP
-  ↓
-用户 → 请求 → CDN边缘节点
-                  ↓ 缓存命中?
-              ┌───┴───┐
-            命中     未命中
-              ↓       ↓
-           直接返回   回源请求 → 源站
-              ↓       ↓
-           响应用户 ← 缓存并返回
+```mermaid
+graph TB
+    U1[用户] -->|DNS查询| CDNS[CDN DNS]
+    CDNS -->|返回最近节点IP| U2[用户]
+    U2 -->|请求| Edge[CDN边缘节点]
+    Edge -->|缓存命中?| Check{命中?}
+    Check -->|命中| Direct[直接返回]
+    Check -->|未命中| Origin[回源请求]
+    Origin --> Source[源站]
+    Source --> Cache[缓存并返回]
+    Direct --> Response[响应用户]
+    Cache --> Response
+```
 ```
 
 ## 3.2 CDN节点检测

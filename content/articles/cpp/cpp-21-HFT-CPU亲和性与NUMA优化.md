@@ -95,26 +95,29 @@ cat /sys/devices/system/cpu/cpu0/topology/thread_siblings_list
 
 ### 2.1 NUMA概述
 
-```
-┌────────────────────────┐    ┌────────────────────────┐
-│       NUMA Node 0      │    │       NUMA Node 1      │
-│  ┌──────┐  ┌──────┐   │    │  ┌──────┐  ┌──────┐   │
-│  │CPU 0 │  │CPU 2 │   │    │  │CPU 1 │  │CPU 3 │   │
-│  └──────┘  └──────┘   │    │  └──────┘  └──────┘   │
-│         ↓             │    │         ↓             │
-│  ┌────────────────┐   │    │  ┌────────────────┐   │
-│  │   L3 Cache     │   │    │  │   L3 Cache     │   │
-│  └────────────────┘   │    │  └────────────────┘   │
-│         ↓             │    │         ↓             │
-│  ┌────────────────┐   │    │  ┌────────────────┐   │
-│  │  Local Memory  │←──┼────┼──│  Local Memory  │   │
-│  │  (Fast: ~60ns) │   │    │  │  (Fast: ~60ns) │   │
-│  └────────────────┘   │    │  └────────────────┘   │
-└────────────────────────┘    └────────────────────────┘
-          ↑                              ↑
-          │   ←── QPI/UPI Link ──→       │
-          │   (Slow: ~100-150ns)         │
-          └──────────────────────────────┘
+```mermaid
+graph TB
+    subgraph NUMA_Node_0[NUMA Node 0]
+        CPU0[CPU 0]
+        CPU2[CPU 2]
+        L3_0[L3 Cache]
+        MEM0[Local Memory<br/>Fast: ~60ns]
+        CPU0 --> L3_0
+        CPU2 --> L3_0
+        L3_0 --> MEM0
+    end
+    
+    subgraph NUMA_Node_1[NUMA Node 1]
+        CPU1[CPU 1]
+        CPU3[CPU 3]
+        L3_1[L3 Cache]
+        MEM1[Local Memory<br/>Fast: ~60ns]
+        CPU1 --> L3_1
+        CPU3 --> L3_1
+        L3_1 --> MEM1
+    end
+    
+    MEM0 <-->|QPI/UPI Link<br/>Slow: ~100-150ns| MEM1
 ```
 
 ### 2.2 NUMA内存分配

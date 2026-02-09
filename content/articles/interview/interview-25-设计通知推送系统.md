@@ -43,34 +43,48 @@ tags = ["interview", "system-design", "notification", "push", "messaging"]
 
 ### 2.1 整体架构
 
-```
-┌─────────────────────────────────────────┐
-│              业务系统                    │
-│   订单服务 │ 营销服务 │ 用户服务        │
-└─────────────────┬───────────────────────┘
-                  ↓ 通知请求
-┌─────────────────────────────────────────┐
-│              通知平台                    │
-│   ┌──────────────────────────────────┐  │
-│   │          接入层                   │  │
-│   │   API网关 │ 参数校验 │ 限流      │  │
-│   └──────────────┬───────────────────┘  │
-│                  ↓                       │
-│   ┌──────────────────────────────────┐  │
-│   │          核心层                   │  │
-│   │   模板渲染 │ 路由决策 │ 去重     │  │
-│   └──────────────┬───────────────────┘  │
-│                  ↓                       │
-│   ┌──────────────────────────────────┐  │
-│   │          渠道层                   │  │
-│   │   Push │ 短信 │ 邮件 │ 站内信   │  │
-│   └──────────────────────────────────┘  │
-└─────────────────────────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              第三方服务                  │
-│   APNs │ FCM │ 短信网关 │ 邮件服务     │
-└─────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph BizSys["业务系统"]
+        OrderSvc["订单服务"]
+        MarketSvc["营销服务"]
+        UserSvc["用户服务"]
+    end
+
+    subgraph NotifyPlatform["通知平台"]
+        subgraph Access["接入层"]
+            Gateway["API网关 | 参数校验 | 限流"]
+        end
+        subgraph Core["核心层"]
+            CoreSvc["模板渲染 | 路由决策 | 去重"]
+        end
+        subgraph Channel["渠道层"]
+            Push["Push"]
+            SMS["短信"]
+            Email["邮件"]
+            InApp["站内信"]
+        end
+    end
+
+    subgraph ThirdParty["第三方服务"]
+        APNs["APNs"]
+        FCM["FCM"]
+        SMSGateway["短信网关"]
+        EmailSvc["邮件服务"]
+    end
+
+    OrderSvc --> Gateway
+    MarketSvc --> Gateway
+    UserSvc --> Gateway
+    Gateway --> CoreSvc
+    CoreSvc --> Push
+    CoreSvc --> SMS
+    CoreSvc --> Email
+    CoreSvc --> InApp
+    Push --> APNs
+    Push --> FCM
+    SMS --> SMSGateway
+    Email --> EmailSvc
 ```
 
 ### 2.2 核心组件

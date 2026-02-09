@@ -41,7 +41,7 @@ pie title AI 领域主要编程语言分布
 ### 1.3 选择 AI + C++ 的优势
 
 ```mermaid
-graph LR
+graph TB
     subgraph "竞争格局"
         A[Python AI 开发者] -->|数量众多| B[竞争激烈]
         C[C++ 系统开发者] -->|不懂 AI| D[无法入行]
@@ -96,7 +96,7 @@ graph TB
 **技术栈**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "推理系统技术栈"
         L1[C++17/20] --> L2[CUDA/HIP]
         L2 --> L3[多线程/异步]
@@ -332,7 +332,7 @@ graph TB
 ### 3.3 技能优先级
 
 ```mermaid
-graph LR
+graph TB
     subgraph "学习优先级"
         P1[1. C++ 系统编程] --> P2[2. 深度学习原理]
         P2 --> P3[3. CUDA 基础]

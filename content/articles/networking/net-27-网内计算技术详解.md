@@ -324,7 +324,7 @@ graph TB
 ### 6.1 INT（In-band Network Telemetry）
 
 ```mermaid
-graph LR
+graph TB
     subgraph "INT 数据收集"
         A["发送端"]
         B["交换机 1<br/>添加遥测"]
@@ -497,7 +497,7 @@ graph TB
 ### 10.1 技术趋势
 
 ```mermaid
-graph LR
+graph TB
     subgraph "发展方向"
         A["更强计算能力<br/>复杂操作支持"]
         B["更大内存<br/>更大缓存"]

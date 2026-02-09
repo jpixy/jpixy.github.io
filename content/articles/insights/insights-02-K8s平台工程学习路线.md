@@ -46,27 +46,14 @@ slug = "insights-Kubernetes平台工程与云原生应用管理学习路线"
 
 **关键词**: `Watch`, `Informer`, `SharedInformer`, `Lister`, `ResourceVersion`, `Reflector`, `DeltaFIFO`, `Indexer`, `Resync`
 
-```
-┌─────────────┐    Watch     ┌─────────────┐
-│  API Server │ ───────────► │  Reflector  │
-└─────────────┘              └──────┬──────┘
-                                    │
-                                    ▼
-                            ┌─────────────┐
-                            │  DeltaFIFO  │
-                            └──────┬──────┘
-                                   │
-                    ┌──────────────┼──────────────┐
-                    ▼              ▼              ▼
-              ┌─────────┐   ┌───────────┐   ┌──────────┐
-              │ Indexer │   │ Event     │   │ Resync   │
-              │ (Cache) │   │ Handler   │   │ (定期)   │
-              └─────────┘   └───────────┘   └──────────┘
-                    │
-                    ▼
-              ┌─────────┐
-              │ Lister  │  ← 从本地缓存读取，不访问 API Server
-              └─────────┘
+```mermaid
+graph TB
+    API[API Server] -->|Watch| REF[Reflector]
+    REF --> FIFO[DeltaFIFO]
+    FIFO --> IDX[Indexer/Cache]
+    FIFO --> EH[Event Handler]
+    FIFO --> RS[Resync 定期]
+    IDX --> LISTER[Lister<br/>从本地缓存读取]
 ```
 
 | 组件 | 职责 |
@@ -179,18 +166,16 @@ slug = "insights-Kubernetes平台工程与云原生应用管理学习路线"
 
 **关键词**: `controller-runtime`, `Manager`, `Controller`, `Reconciler`, `Builder`, `Predicate`, `Source`, `EventHandler`
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                       Manager                            │
-├─────────────┬─────────────┬─────────────┬───────────────┤
-│ Controller  │ Controller  │  Webhook    │  Health/Ready │
-│     A       │     B       │  Server     │    Probes     │
-└──────┬──────┴──────┬──────┴─────────────┴───────────────┘
-       │             │
-       ▼             ▼
-  ┌─────────┐   ┌─────────┐
-  │Reconciler│   │Reconciler│  ← 用户实现的业务逻辑
-  └─────────┘   └─────────┘
+```mermaid
+graph TB
+    subgraph Manager
+        CA[Controller A]
+        CB[Controller B]
+        WH[Webhook Server]
+        HP[Health/Ready Probes]
+    end
+    CA --> RA[Reconciler A<br/>用户实现的业务逻辑]
+    CB --> RB[Reconciler B<br/>用户实现的业务逻辑]
 ```
 
 **核心抽象**：
@@ -399,28 +384,12 @@ versions:
 
 **关键词**: `Lifecycle Hooks`, `PostStart`, `PreStop`, `SIGTERM`, `Graceful Shutdown`
 
-```
-Pod 创建                                         Pod 终止
-    │                                                │
-    ▼                                                ▼
-┌─────────┐                                    ┌───────────┐
-│PostStart│                                    │ PreStop   │
-│  Hook   │                                    │   Hook    │
-└────┬────┘                                    └─────┬─────┘
-     │                                               │
-     ▼                                               ▼
-┌─────────┐                                    ┌───────────┐
-│Container│         ◄─── 运行中 ───►           │  SIGTERM  │
-│  Run    │                                    │   发送    │
-└─────────┘                                    └─────┬─────┘
-                                                     │
-                                               terminationGracePeriodSeconds
-                                                     │
-                                                     ▼
-                                               ┌───────────┐
-                                               │  SIGKILL  │
-                                               └───────────┘
-```
+| 阶段 | Pod 创建 | Pod 终止 |
+|------|----------|----------|
+| **Hook** | PostStart Hook | PreStop Hook |
+| **运行** | Container Run | SIGTERM 发送 |
+| **等待** | - | terminationGracePeriodSeconds |
+| **强制** | - | SIGKILL |
 
 ### 4.4 终止行为
 

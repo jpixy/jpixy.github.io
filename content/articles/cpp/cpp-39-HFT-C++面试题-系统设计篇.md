@@ -384,47 +384,19 @@ public:
 
 ### Q9: HFT系统的典型架构？
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Market Data Feed                        │
-│  (Exchange A)     (Exchange B)     (Exchange C)              │
-└──────┬───────────────┬───────────────┬──────────────────────┘
-       │               │               │
-       ▼               ▼               ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Network Layer (DPDK / io_uring)                 │
-│              Hardware Timestamping                           │
-└─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Message Parser (Zero-copy)                      │
-│              Protocol Handlers (FIX/FAST/ITCH)              │
-└─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Order Book Manager                              │
-│              Market Data Aggregator                          │
-└─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Strategy Engine                                 │
-│              Signal Generation                               │
-│              Risk Checks                                     │
-└─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Order Management System                         │
-│              Position Tracking                               │
-└─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Network Layer (Order Sending)                   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph HFT系统典型架构
+        MDF[Market Data Feed<br/>Exchange A | Exchange B | Exchange C]
+        NET1[Network Layer<br/>DPDK / io_uring<br/>Hardware Timestamping]
+        PARSER[Message Parser<br/>Zero-copy<br/>Protocol Handlers FIX/FAST/ITCH]
+        OB[Order Book Manager<br/>Market Data Aggregator]
+        STRAT[Strategy Engine<br/>Signal Generation<br/>Risk Checks]
+        OMS[Order Management System<br/>Position Tracking]
+        NET2[Network Layer<br/>Order Sending]
+        
+        MDF --> NET1 --> PARSER --> OB --> STRAT --> OMS --> NET2
+    end
 ```
 
 ### Q10: 如何保证系统的可靠性？

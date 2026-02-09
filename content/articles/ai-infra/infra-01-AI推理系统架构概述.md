@@ -18,7 +18,7 @@ comments = true
 AI 模型的生命周期分为两个阶段：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "训练阶段"
         D[海量数据] --> T[模型训练]
         T --> M[训练好的模型]
@@ -171,7 +171,7 @@ sequenceDiagram
 **职责**：接收请求、协议处理、响应返回
 
 ```mermaid
-graph LR
+graph TB
     subgraph "API 层功能"
         P1[协议解析<br>HTTP/gRPC/WebSocket]
         P2[参数验证<br>格式检查]
@@ -250,7 +250,7 @@ graph TB
 **调度器需要考虑的因素**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "调度考虑因素"
         F1[显存容量] --> D[调度决策]
         F2[请求优先级] --> D
@@ -382,7 +382,7 @@ graph TB
 **职责**：加载、管理、切换模型
 
 ```mermaid
-graph LR
+graph TB
     subgraph "模型管理功能"
         L[模型加载<br>权重读取+初始化]
         Q[量化管理<br>INT8/INT4/FP8]
@@ -434,7 +434,7 @@ sequenceDiagram
 LLM 推理分为两个阶段：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "LLM 推理阶段"
         P[Prefill<br>处理输入 prompt]
         D[Decode<br>逐个生成 token]
@@ -517,7 +517,7 @@ graph TB
 ### 5.2 指标间的权衡
 
 ```mermaid
-graph LR
+graph TB
     subgraph "延迟 vs 吞吐"
         L[低延迟] ---|冲突| T[高吞吐]
         
@@ -618,7 +618,7 @@ graph TB
 ### 7.2 可扩展原则
 
 ```mermaid
-graph LR
+graph TB
     subgraph "可扩展设计"
         S1[模块化] --> E[可扩展]
         S2[插件化] --> E
@@ -697,7 +697,7 @@ graph TB
 ### 9.2 学习路径
 
 ```mermaid
-graph LR
+graph TB
     S1[理解架构全貌] --> S2[深入单个组件]
     S2 --> S3[阅读开源代码]
     S3 --> S4[动手实践]

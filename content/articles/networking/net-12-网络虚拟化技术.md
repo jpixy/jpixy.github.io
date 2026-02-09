@@ -57,13 +57,12 @@ ip link set veth1 up
 
 **虚拟交换机**：二层转发设备
 
-```
-   vm1     vm2     vm3
-    |       |       |
-    +---+---+---+---+
-        |bridge|
-           |
-         eth0（物理网卡）
+```mermaid
+graph TB
+    VM1[vm1] --> Bridge
+    VM2[vm2] --> Bridge
+    VM3[vm3] --> Bridge
+    Bridge[bridge] --> ETH0["eth0（物理网卡）"]
 ```
 
 **创建bridge**：
@@ -108,13 +107,11 @@ ip tuntap add tap0 mode tap
 
 **基于MAC地址的虚拟网卡**：一个物理网卡虚拟出多个MAC地址
 
-```
-        eth0（物理）
-          |
-    +-----+-----+
-    |     |     |
- macvlan0 macvlan1 macvlan2
- (MAC-A)  (MAC-B)  (MAC-C)
+```mermaid
+graph TB
+    ETH0["eth0（物理）"] --> MV0["macvlan0<br/>(MAC-A)"]
+    ETH0 --> MV1["macvlan1<br/>(MAC-B)"]
+    ETH0 --> MV2["macvlan2<br/>(MAC-C)"]
 ```
 
 **模式**：
@@ -209,14 +206,11 @@ ip netns exec ns1 ping 10.0.0.2
 **Virtual LAN**：逻辑隔离的二层网络
 
 **802.1Q标签**：
-```
-┌──────────┬──────────┬─────┬──────┬─────────┐
-│目的MAC(6)│源MAC(6)  │TPID │TCI   │类型/长度│
-│          │          │8100 │含VID │         │
-└──────────┴──────────┴─────┴──────┴─────────┘
-                            ↑
-                         VLAN ID (12位, 0-4095)
-```
+
+| 目的MAC(6) | 源MAC(6) | TPID(8100) | TCI(含VID) | 类型/长度 |
+|------------|----------|------------|------------|-----------|
+
+TCI 包含 VLAN ID (12位, 0-4095)
 
 ### Linux VLAN配置
 
@@ -262,15 +256,12 @@ cat /proc/net/vlan/config
 
 ### VXLAN原理
 
-```
-原始帧: [MAC头][IP头][数据]
-          ↓
-VXLAN封装:
-┌────────┬────────┬─────┬──────┬────────┐
-│外层MAC │外层IP  │UDP  │VXLAN │原始帧   │
-│        │        │4789 │头    │        │
-└────────┴────────┴─────┴──────┴────────┘
-```
+**原始帧**: `[MAC头][IP头][数据]`
+
+**VXLAN封装**:
+
+| 外层MAC | 外层IP | UDP(4789) | VXLAN头 | 原始帧 |
+|---------|--------|-----------|---------|--------|
 
 **关键概念**：
 - **VNI（VXLAN Network Identifier）**：24位网络标识
@@ -318,18 +309,14 @@ ip link add vxlan100 type vxlan id 100 \
 
 ### Bridge模式详解
 
-```
-容器1              容器2
-  |                  |
-veth1              veth2
-  |                  |
-  +--------+---------+
-           |
-        docker0 (bridge)
-           |
-         eth0
-           |
-        外部网络
+```mermaid
+graph TB
+    C1[容器1] --> V1[veth1]
+    C2[容器2] --> V2[veth2]
+    V1 --> Docker0["docker0 (bridge)"]
+    V2 --> Docker0
+    Docker0 --> ETH0[eth0]
+    ETH0 --> External[外部网络]
 ```
 
 **NAT访问外部**：
@@ -358,14 +345,21 @@ docker run -p 8080:80 nginx
 ### Flannel工作原理
 
 **VXLAN模式**：
-```
-Pod1 (10.244.0.2)        Pod2 (10.244.1.2)
-       |                        |
-    flannel.1                flannel.1
-       |                        |
-    Node1 (192.168.1.1)      Node2 (192.168.1.2)
-       |                        |
-       +--- VXLAN隧道 ----------+
+```mermaid
+graph TB
+    subgraph Node1["Node1 (192.168.1.1)"]
+        Pod1["Pod1 (10.244.0.2)"]
+        F1[flannel.1]
+        Pod1 --> F1
+    end
+    
+    subgraph Node2["Node2 (192.168.1.2)"]
+        Pod2["Pod2 (10.244.1.2)"]
+        F2[flannel.1]
+        Pod2 --> F2
+    end
+    
+    F1 <-->|VXLAN隧道| F2
 ```
 
 ---

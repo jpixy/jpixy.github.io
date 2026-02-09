@@ -81,32 +81,48 @@ tags = ["interview", "system-design", "video", "streaming", "cdn"]
 
 ### 3.1 整体架构
 
-```
-┌─────────────────────────────────────────┐
-│              上传端                      │
-│   Web上传 │ App上传 │ 客户端工具        │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              处理层                      │
-│   转码服务 │ 切片服务 │ 审核服务        │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              存储层                      │
-│   对象存储（视频文件）                   │
-│   数据库（元数据）                       │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              分发层                      │
-│   CDN边缘节点 │ 源站                    │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              播放端                      │
-│   Web播放器 │ App播放器 │ 智能电视      │
-└─────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Upload["上传端"]
+        WebUpload["Web上传"]
+        AppUpload["App上传"]
+        ClientTool["客户端工具"]
+    end
+
+    subgraph Process["处理层"]
+        Transcode["转码服务"]
+        Slice["切片服务"]
+        Audit["审核服务"]
+    end
+
+    subgraph Storage["存储层"]
+        ObjectStore["对象存储 (视频文件)"]
+        MetaDB["数据库 (元数据)"]
+    end
+
+    subgraph Distribute["分发层"]
+        CDN["CDN边缘节点"]
+        Origin["源站"]
+    end
+
+    subgraph Play["播放端"]
+        WebPlayer["Web播放器"]
+        AppPlayer["App播放器"]
+        SmartTV["智能电视"]
+    end
+
+    WebUpload --> Transcode
+    AppUpload --> Transcode
+    ClientTool --> Transcode
+    Transcode --> Slice
+    Slice --> Audit
+    Audit --> ObjectStore
+    Audit --> MetaDB
+    ObjectStore --> Origin
+    Origin --> CDN
+    CDN --> WebPlayer
+    CDN --> AppPlayer
+    CDN --> SmartTV
 ```
 
 ### 3.2 上传流程
@@ -184,21 +200,11 @@ tags = ["interview", "system-design", "video", "streaming", "cdn"]
 
 ### 5.1 CDN架构
 
-```
-               用户
-                ↓
-┌──────────────────────────────┐
-│          边缘节点             │ ← 最近的节点
-│    （全球分布，缓存内容）      │
-└──────────────┬───────────────┘
-               ↓ 回源
-┌──────────────────────────────┐
-│          区域节点             │ ← 区域缓存
-└──────────────┬───────────────┘
-               ↓ 回源
-┌──────────────────────────────┐
-│           源站               │ ← 对象存储
-└──────────────────────────────┘
+```mermaid
+graph TB
+    User[用户] --> Edge["边缘节点<br/>(全球分布，缓存内容)<br/>← 最近的节点"]
+    Edge -->|回源| Region["区域节点<br/>← 区域缓存"]
+    Region -->|回源| Origin["源站<br/>← 对象存储"]
 ```
 
 ### 5.2 CDN策略
@@ -263,10 +269,13 @@ tags = ["interview", "system-design", "video", "streaming", "cdn"]
 
 ### 7.1 直播架构
 
-```
-主播端 → 推流服务 → 转码/转封装 → CDN分发 → 观众端
-                        ↓
-                    录制存储
+```mermaid
+graph TB
+    Anchor[主播端] --> PushSvc[推流服务]
+    PushSvc --> Transcode[转码/转封装]
+    Transcode --> CDN[CDN分发]
+    CDN --> Viewer[观众端]
+    Transcode --> Record[录制存储]
 ```
 
 ### 7.2 推流

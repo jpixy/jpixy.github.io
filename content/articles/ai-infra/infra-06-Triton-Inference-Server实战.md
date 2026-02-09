@@ -140,7 +140,7 @@ graph TB
 ### 3.3 效果
 
 ```mermaid
-graph LR
+graph TB
     subgraph "无 Batching"
         N1[请求] --> N2[推理]
         N3[请求] --> N4[推理]
@@ -162,7 +162,7 @@ graph LR
 **多模型 Pipeline**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Ensemble"
         INPUT[输入] --> PREPROCESS[预处理]
         PREPROCESS --> MODEL[主模型]
@@ -225,7 +225,7 @@ graph TB
 ### 5.3 并发策略
 
 ```mermaid
-graph LR
+graph TB
     subgraph "并发执行"
         R[请求] --> LB[负载均衡]
         LB --> I1[实例 1]

@@ -80,7 +80,7 @@ graph TB
 ### 3.1 流水线并行
 
 ```mermaid
-graph LR
+graph TB
     subgraph "流水线并行"
         GPU0[GPU 0<br>Layer 0-9]
         GPU1[GPU 1<br>Layer 10-19]
@@ -170,7 +170,7 @@ graph TB
 ### 4.3 ZeRO-Offload
 
 ```mermaid
-graph LR
+graph TB
     subgraph "ZeRO-Offload"
         GPU[GPU<br>计算] <--> CPU[CPU<br>优化器状态]
         CPU <--> NVME[NVMe<br>参数]
@@ -235,7 +235,7 @@ graph TB
 ### 6.2 计算通信重叠
 
 ```mermaid
-graph LR
+graph TB
     subgraph "重叠"
         COMPUTE[Layer N 计算]
         COMM[Layer N-1 通信]
@@ -346,7 +346,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[DDP 入门] --> L2[FSDP/ZeRO]
     L2 --> L3[3D 并行]
     L3 --> L4[通信优化]

@@ -10,16 +10,13 @@ tags = ["C", "Memory", "Alignment", "Performance"]
 
 Memory alignment is one of the most important low-level concepts in C programming. Proper alignment can significantly impact performance and even correctness on some architectures.
 
-```
-Memory Access Pattern:
-┌────────────────────────────────────────────────────┐
-│ Aligned Access (1 cycle)    Unaligned (2+ cycles) │
-│                                                    │
-│  [  32-bit word  ]          [  32  ][bit ]        │
-│  ↑                          ↑      ↑               │
-│  Single read                Two reads required     │
-└────────────────────────────────────────────────────┘
-```
+**Memory Access Pattern**:
+
+| 类型 | Aligned Access | Unaligned Access |
+|------|----------------|------------------|
+| 访问模式 | `[  32-bit word  ]` | `[  32  ][bit ]` |
+| 周期数 | 1 cycle | 2+ cycles |
+| 读取次数 | Single read | Two reads required |
 
 ---
 

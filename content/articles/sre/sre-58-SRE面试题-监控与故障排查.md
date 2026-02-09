@@ -99,20 +99,20 @@ D - Duration（延迟）
 4. 触发告警发送到Alertmanager
 5. Alertmanager处理后发送通知
 
-架构图：
-┌──────────────────────────────────────────────┐
-│                  Prometheus Server           │
-│  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
-│  │  拉取    │  │  存储    │  │  告警规则 │  │
-│  └────┬─────┘  └──────────┘  └─────┬─────┘  │
-│       │                            │         │
-└───────┼────────────────────────────┼─────────┘
-        │                            │
-        ▼                            ▼
-┌──────────────┐              ┌──────────────┐
-│   Exporter   │              │ Alertmanager │
-│  Node/App    │              │              │
-└──────────────┘              └──────────────┘
+**架构图**：
+
+```mermaid
+graph TB
+    subgraph Prometheus["Prometheus Server"]
+        Pull["拉取"]
+        Storage["存储"]
+        Rules["告警规则"]
+    end
+    Exporter["Exporter<br/>Node/App"]
+    Alertmanager["Alertmanager"]
+    
+    Pull --> Exporter
+    Rules --> Alertmanager
 ```
 
 ---
@@ -246,17 +246,24 @@ SpanContext：跨服务传递的上下文
    - 统一Trace/Metrics/Logs
    - 厂商中立
 
-链路数据示例：
-┌─────────────────────────────────────────────────────┐
-│ Trace ID: abc123                                    │
-├─────────────────────────────────────────────────────┤
-│ ├─ Span: API Gateway (50ms)                        │
-│ │   └─ Span: User Service (30ms)                   │
-│ │       └─ Span: MySQL Query (10ms)                │
-│ └─ Span: Order Service (100ms)                     │
-│     ├─ Span: Redis Get (5ms)                       │
-│     └─ Span: MySQL Query (80ms)  ← 瓶颈            │
-└─────────────────────────────────────────────────────┘
+**链路数据示例**：
+
+```mermaid
+graph TB
+    subgraph Trace["Trace ID: abc123"]
+        Gateway["API Gateway<br/>(50ms)"]
+        UserService["User Service<br/>(30ms)"]
+        UserMySQL["MySQL Query<br/>(10ms)"]
+        OrderService["Order Service<br/>(100ms)"]
+        Redis["Redis Get<br/>(5ms)"]
+        OrderMySQL["MySQL Query<br/>(80ms) ← 瓶颈"]
+    end
+    
+    Gateway --> UserService
+    UserService --> UserMySQL
+    Gateway --> OrderService
+    OrderService --> Redis
+    OrderService --> OrderMySQL
 ```
 
 ---

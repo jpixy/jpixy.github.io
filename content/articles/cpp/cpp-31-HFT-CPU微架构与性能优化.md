@@ -16,23 +16,23 @@ tags = ["C++", "CPU", "微架构", "性能优化", "HFT", "低延迟"]
 
 ### 1.1 经典五级流水线
 
+```mermaid
+graph TB
+    IF[Fetch<br/>IF] --> ID[Decode<br/>ID] --> EX[Execute<br/>EX] --> MEM[Memory<br/>MEM] --> WB[WriteBack<br/>WB]
 ```
-┌───────┐  ┌───────┐  ┌───────┐  ┌───────┐  ┌───────┐
-│ Fetch │→│Decode │→│Execute│→│Memory │→│WriteBack│
-└───────┘  └───────┘  └───────┘  └───────┘  └───────┘
-   IF        ID        EX        MEM        WB
 
-Clock 1: IF1
-Clock 2: ID1, IF2
-Clock 3: EX1, ID2, IF3
-Clock 4: MEM1, EX2, ID3, IF4
-Clock 5: WB1, MEM2, EX3, ID4, IF5
-...
+| Clock | IF | ID | EX | MEM | WB |
+|-------|----|----|----|----|-----|
+| 1 | I1 | | | | |
+| 2 | I2 | I1 | | | |
+| 3 | I3 | I2 | I1 | | |
+| 4 | I4 | I3 | I2 | I1 | |
+| 5 | I5 | I4 | I3 | I2 | I1 |
 
-理想情况：每个时钟周期完成一条指令
-现代超标量CPU可以达到IPC > 1（多发射）
-但由于依赖、缓存miss等，实际IPC往往低于理论峰值
-```
+**特性**：
+- 理想情况：每个时钟周期完成一条指令
+- 现代超标量CPU可以达到IPC > 1（多发射）
+- 但由于依赖、缓存miss等，实际IPC往往低于理论峰值
 
 ### 1.2 现代超标量处理器
 

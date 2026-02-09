@@ -151,34 +151,39 @@ graph TB
 
 **Q1: 为什么需要分离 inode 和 dentry？**
 
-```
 设计原因：
 
-1. 硬链接支持
-   /home/user/file1 ─┐
-                     ├──▶ inode 12345
-   /home/user/file2 ─┘
-   
-   两个不同的 dentry 指向同一个 inode
+**1. 硬链接支持**
 
-2. 路径缓存效率
-   访问 /home/user/documents/file.txt 需要：
-   - 查找 "home" dentry
-   - 查找 "user" dentry
-   - 查找 "documents" dentry
-   - 查找 "file.txt" dentry
-   
-   dentry 缓存避免每次都从磁盘读取目录
-
-3. 负面 dentry
-   缓存"文件不存在"的结果
-   d_inode = NULL 表示该路径不存在
-   避免重复查找不存在的文件
-
-4. 内存效率
-   dentry 只在内存中，可以按需回收
-   inode 反映磁盘状态，必须保持同步
+```mermaid
+graph TB
+    D1["/home/user/file1<br>dentry"]
+    D2["/home/user/file2<br>dentry"]
+    I["inode 12345"]
+    
+    D1 --> I
+    D2 --> I
 ```
+
+两个不同的 dentry 指向同一个 inode
+
+**2. 路径缓存效率**
+
+访问 `/home/user/documents/file.txt` 需要依次查找 dentry：
+- 查找 "home" dentry
+- 查找 "user" dentry
+- 查找 "documents" dentry
+- 查找 "file.txt" dentry
+
+dentry 缓存避免每次都从磁盘读取目录
+
+**3. 负面 dentry**
+
+缓存"文件不存在"的结果，`d_inode = NULL` 表示该路径不存在，避免重复查找不存在的文件
+
+**4. 内存效率**
+
+dentry 只在内存中，可以按需回收；inode 反映磁盘状态，必须保持同步
 
 **Q2: 什么是负面 dentry？有什么用？**
 

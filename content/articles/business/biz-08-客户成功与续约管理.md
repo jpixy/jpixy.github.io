@@ -114,19 +114,16 @@ tags = ["sales", "business", "customer-success", "renewal", "retention"]
 
 **客户分层模型**：
 
-```
-         高接触                    低接触
-         High Touch               Tech Touch
-              │                       │
-     ┌────────┴────────┐    ┌────────┴────────┐
-     │                 │    │                 │
-   战略客户           重要客户          一般客户
-   (ARR>100万)       (ARR 10-100万)    (ARR<10万)
-     │                 │                  │
-  1:5                1:20              1:100+
- CSM配比           CSM配比           数字化运营
-     │                 │                  │
-  每周沟通          每月沟通          自动化触达
+```mermaid
+graph TB
+    subgraph 高接触 High Touch
+        A[战略客户<br>ARR>100万<br>1:5 CSM配比<br>每周沟通]
+        B[重要客户<br>ARR 10-100万<br>1:20 CSM配比<br>每月沟通]
+    end
+    
+    subgraph 低接触 Tech Touch
+        C[一般客户<br>ARR<10万<br>1:100+ 数字化运营<br>自动化触达]
+    end
 ```
 
 **不同层级的服务内容**：

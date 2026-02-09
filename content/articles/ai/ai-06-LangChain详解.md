@@ -18,56 +18,43 @@ tags = ["ai", "langchain", "llm", "rag", "agent", "prompt"]
 
 ### 1.2 解决的问题
 
-```
-直接调用 LLM API 的痛点：
-
-┌─────────────────────────────────────────────────────────────────┐
-│  1. 每次都要写 API 调用代码                                      │
-│  2. Prompt 管理混乱                                             │
-│  3. 无法方便地切换模型                                           │
-│  4. 难以实现 RAG、Agent 等复杂功能                                │
-│  5. 缺乏调试和监控工具                                           │
-└─────────────────────────────────────────────────────────────────┘
-
-LangChain 提供：
-┌─────────────────────────────────────────────────────────────────┐
-│  ✓ 统一的 LLM 接口                                              │
-│  ✓ Prompt 模板管理                                              │
-│  ✓ 链式调用 (Chain)                                             │
-│  ✓ 文档加载与处理                                               │
-│  ✓ 向量存储集成                                                 │
-│  ✓ 工具调用 (Tools)                                             │
-│  ✓ Agent 框架                                                   │
-│  ✓ 记忆系统 (Memory)                                            │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Pain["直接调用 LLM API 的痛点"]
+        P1["1. 每次都要写 API 调用代码"]
+        P2["2. Prompt 管理混乱"]
+        P3["3. 无法方便地切换模型"]
+        P4["4. 难以实现 RAG、Agent 等复杂功能"]
+        P5["5. 缺乏调试和监控工具"]
+    end
+    
+    subgraph Solution["LangChain 提供"]
+        S1["✓ 统一的 LLM 接口"]
+        S2["✓ Prompt 模板管理"]
+        S3["✓ 链式调用 Chain"]
+        S4["✓ 文档加载与处理"]
+        S5["✓ 向量存储集成"]
+        S6["✓ 工具调用 Tools"]
+        S7["✓ Agent 框架"]
+        S8["✓ 记忆系统 Memory"]
+    end
+    
+    Pain --> Solution
 ```
 
 ### 1.3 LangChain 生态
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      LangChain 生态全景                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                    langchain-core                         │  │
-│  │              核心抽象：LLM、Prompt、Chain 等                │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                              │                                   │
-│       ┌──────────────────────┼──────────────────────┐           │
-│       ▼                      ▼                      ▼           │
-│  ┌─────────────┐      ┌─────────────┐      ┌─────────────┐     │
-│  │ langchain   │      │ langgraph   │      │ langsmith   │     │
-│  │ 应用层组件   │      │ Agent工作流  │      │ 监控调试    │     │
-│  └─────────────┘      └─────────────┘      └─────────────┘     │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │              langchain-community                         │   │
-│  │         第三方集成：OpenAI、Anthropic、各种向量库          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Eco["LangChain 生态全景"]
+        Core["langchain-core<br/>核心抽象：LLM、Prompt、Chain 等"]
+        
+        Core --> LC[langchain<br/>应用层组件]
+        Core --> LG[langgraph<br/>Agent工作流]
+        Core --> LS[langsmith<br/>监控调试]
+        
+        LC --> Community["langchain-community<br/>第三方集成：OpenAI、Anthropic、各种向量库"]
+    end
 ```
 
 ---
@@ -76,37 +63,36 @@ LangChain 提供：
 
 ### 2.1 概念地图
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    LangChain 核心概念                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  输入处理                     模型调用                           │
-│  ┌─────────────┐             ┌─────────────┐                    │
-│  │   Prompt    │ ──────────▶ │    LLM      │                    │
-│  │   Template  │             │   /Chat     │                    │
-│  └─────────────┘             └──────┬──────┘                    │
-│                                     │                           │
-│                                     ▼                           │
-│  外部数据                     输出处理                           │
-│  ┌─────────────┐             ┌─────────────┐                    │
-│  │  Document   │             │   Output    │                    │
-│  │  Loaders    │             │   Parsers   │                    │
-│  └──────┬──────┘             └─────────────┘                    │
-│         │                                                       │
-│         ▼                                                       │
-│  ┌─────────────┐             ┌─────────────┐                    │
-│  │   Vector    │             │   Memory    │                    │
-│  │   Stores    │             │   系统      │                    │
-│  └─────────────┘             └─────────────┘                    │
-│                                                                  │
-│  组合能力                                                        │
-│  ┌─────────────┐             ┌─────────────┐                    │
-│  │   Chain     │             │   Agent     │                    │
-│  │   链式调用   │             │   智能体    │                    │
-│  └─────────────┘             └─────────────┘                    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Concepts["LangChain 核心概念"]
+        subgraph Input["输入处理"]
+            PT[Prompt Template]
+        end
+        
+        subgraph Model["模型调用"]
+            LLM[LLM/Chat]
+        end
+        
+        subgraph Output["输出处理"]
+            OP[Output Parsers]
+        end
+        
+        subgraph Data["外部数据"]
+            DL[Document Loaders] --> VS[Vector Stores]
+        end
+        
+        subgraph Memory["记忆"]
+            MEM[Memory 系统]
+        end
+        
+        subgraph Compose["组合能力"]
+            CH[Chain 链式调用]
+            AG[Agent 智能体]
+        end
+        
+        PT --> LLM --> OP
+    end
 ```
 
 ### 2.2 核心组件速览
@@ -141,54 +127,40 @@ LangChain 提供：
 
 **统一接口**：
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     LLM 统一接口                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  from langchain_openai import ChatOpenAI                        │
-│  from langchain_anthropic import ChatAnthropic                  │
-│  from langchain_ollama import ChatOllama                        │
-│                                                                  │
-│  # 统一调用方式                                                  │
-│  llm = ChatOpenAI(model="gpt-4")                                │
-│  llm = ChatAnthropic(model="claude-3")                          │
-│  llm = ChatOllama(model="llama3")                               │
-│                                                                  │
-│  # 调用方法相同                                                  │
-│  result = llm.invoke("你好")                                    │
-│  result = llm.invoke([HumanMessage("你好")])                    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```python
+# LLM 统一接口
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_ollama import ChatOllama
+
+# 统一调用方式
+llm = ChatOpenAI(model="gpt-4")
+llm = ChatAnthropic(model="claude-3")
+llm = ChatOllama(model="llama3")
+
+# 调用方法相同
+result = llm.invoke("你好")
+result = llm.invoke([HumanMessage("你好")])
 ```
 
 ### 3.2 Prompt Template
 
 **Prompt 管理**：
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Prompt Template                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  基础模板：                                                      │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  template = "将以下内容翻译成{language}：{text}"          │    │
-│  │                                                          │    │
-│  │  prompt = PromptTemplate.from_template(template)         │    │
-│  │  result = prompt.format(language="英文", text="你好")    │    │
-│  │  # → "将以下内容翻译成英文：你好"                          │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  Chat 模板：                                                     │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  prompt = ChatPromptTemplate.from_messages([             │    │
-│  │      ("system", "你是一个翻译助手"),                      │    │
-│  │      ("human", "翻译：{text}")                            │    │
-│  │  ])                                                       │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```python
+# Prompt Template
+
+# 基础模板：
+template = "将以下内容翻译成{language}：{text}"
+prompt = PromptTemplate.from_template(template)
+result = prompt.format(language="英文", text="你好")
+# → "将以下内容翻译成英文：你好"
+
+# Chat 模板：
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个翻译助手"),
+    ("human", "翻译：{text}")
+])
 ```
 
 ### 3.3 Output Parser
@@ -206,95 +178,63 @@ LangChain 提供：
 
 **加载各种格式的文档**：
 
+```mermaid
+graph TB
+    subgraph Loaders["Document Loaders"]
+        PDF[PDF] --> Doc["List[Document]<br/>统一的文档格式"]
+        Word[Word] --> Doc
+        HTML[HTML] --> Doc
+        CSV[CSV] --> Doc
+    end
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Document Loaders                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐    │
-│  │    PDF    │  │   Word    │  │   HTML    │  │    CSV    │    │
-│  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘    │
-│        │              │              │              │           │
-│        └──────────────┼──────────────┼──────────────┘           │
-│                       ▼                                          │
-│              ┌───────────────────┐                              │
-│              │  List[Document]   │                              │
-│              │  统一的文档格式    │                              │
-│              └───────────────────┘                              │
-│                                                                  │
-│  常用 Loaders：                                                  │
-│  - PyPDFLoader        # PDF 文件                                │
-│  - Docx2txtLoader     # Word 文档                               │
-│  - UnstructuredHTMLLoader  # HTML                               │
-│  - CSVLoader          # CSV 文件                                │
-│  - WebBaseLoader      # 网页                                    │
-│  - GitLoader          # Git 仓库                                │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**常用 Loaders**：
+- `PyPDFLoader` - PDF 文件
+- `Docx2txtLoader` - Word 文档
+- `UnstructuredHTMLLoader` - HTML
+- `CSVLoader` - CSV 文件
+- `WebBaseLoader` - 网页
+- `GitLoader` - Git 仓库
 
 ### 3.5 Text Splitter
 
 **分割长文本**：
 
+```mermaid
+graph TB
+    A["长文档<br/>第一章 xxx...<br/>第二章 xxx..."] --> B[分割]
+    B --> C1["Chunk 1<br/>(重叠)"]
+    B --> C2["Chunk 2<br/>(重叠)"]
+    B --> C3["Chunk 3"]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Text Splitter                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  长文档                                                          │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  第一章 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        │    │
-│  │  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        │    │
-│  │  第二章 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        │    │
-│  │  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                          │                                       │
-│                          ▼ 分割                                  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
-│  │   Chunk 1   │  │   Chunk 2   │  │   Chunk 3   │             │
-│  │   (重叠)     │  │   (重叠)     │  │             │             │
-│  └─────────────┘  └─────────────┘  └─────────────┘             │
-│                                                                  │
-│  分割策略：                                                      │
-│  - RecursiveCharacterTextSplitter  # 递归分割（推荐）           │
-│  - CharacterTextSplitter           # 按字符                     │
-│  - TokenTextSplitter               # 按 Token                   │
-│  - MarkdownTextSplitter            # 按 Markdown 结构           │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**分割策略**：
+- `RecursiveCharacterTextSplitter` - 递归分割（推荐）
+- `CharacterTextSplitter` - 按字符
+- `TokenTextSplitter` - 按 Token
+- `MarkdownTextSplitter` - 按 Markdown 结构
 
 ### 3.6 Embeddings 与 Vector Store
 
 **RAG 的核心组件**：
 
+```mermaid
+graph TB
+    A["文本<br/>你好"] -->|Embeddings| B["向量<br/>[0.1, 0.3, ...]"]
+    B -->|Store| C[Vector Store]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                  Embeddings + Vector Store                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  文本                 向量                   存储                 │
-│  ┌────────┐         ┌────────┐         ┌────────────┐          │
-│  │ "你好" │ ──────▶ │[0.1,   │ ──────▶ │   Vector   │          │
-│  └────────┘ Embed   │ 0.3,   │  Store  │   Store    │          │
-│             dings   │ ...]   │         │            │          │
-│                     └────────┘         └────────────┘          │
-│                                                                  │
-│  常用 Embeddings：                                               │
-│  - OpenAIEmbeddings                                             │
-│  - HuggingFaceEmbeddings                                        │
-│  - OllamaEmbeddings                                             │
-│                                                                  │
-│  常用 Vector Stores：                                            │
-│  - FAISS (本地)                                                 │
-│  - Chroma (本地)                                                │
-│  - Pinecone (云端)                                              │
-│  - Milvus (分布式)                                              │
-│  - Weaviate (云端/本地)                                         │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**常用 Embeddings**：
+- `OpenAIEmbeddings`
+- `HuggingFaceEmbeddings`
+- `OllamaEmbeddings`
+
+**常用 Vector Stores**：
+- FAISS (本地)
+- Chroma (本地)
+- Pinecone (云端)
+- Milvus (分布式)
+- Weaviate (云端/本地)
 
 ### 3.7 Memory
 
@@ -315,55 +255,31 @@ LangChain 提供：
 
 **现代的 Chain 写法**：
 
+```mermaid
+graph TB
+    A[Prompt] -->|"chain = prompt &#124; llm &#124; parser"| B[LLM]
+    B --> C[Parser]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         LCEL                                     │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  使用 | 操作符连接组件：                                          │
-│                                                                  │
-│  chain = prompt | llm | parser                                  │
-│                                                                  │
-│  等价于：                                                        │
-│  ┌────────┐      ┌────────┐      ┌────────┐                    │
-│  │ Prompt │ ───▶ │  LLM   │ ───▶ │ Parser │                    │
-│  └────────┘      └────────┘      └────────┘                    │
-│                                                                  │
-│  执行：                                                          │
-│  result = chain.invoke({"input": "你好"})                       │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+```python
+# LCEL - 使用 | 操作符连接组件
+chain = prompt | llm | parser
+
+# 执行
+result = chain.invoke({"input": "你好"})
 ```
 
 ### 4.2 常用 Chain 模式
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    常用 Chain 模式                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  1. 简单问答                                                     │
-│     prompt | llm | parser                                       │
-│                                                                  │
-│  2. RAG 检索问答                                                 │
-│     {"context": retriever, "question": RunnablePassthrough()}   │
-│     | prompt | llm | parser                                     │
-│                                                                  │
-│  3. 多步骤处理                                                   │
-│     step1 | step2 | step3                                       │
-│                                                                  │
-│  4. 并行处理                                                     │
-│     RunnableParallel(a=chain_a, b=chain_b)                      │
-│                                                                  │
-│  5. 条件分支                                                     │
-│     RunnableBranch(                                             │
-│         (condition1, chain1),                                   │
-│         (condition2, chain2),                                   │
-│         default_chain                                           │
-│     )                                                           │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+**常用 Chain 模式**：
+
+| 模式 | 代码 |
+|------|------|
+| 简单问答 | `prompt \| llm \| parser` |
+| RAG 检索问答 | `{"context": retriever, "question": RunnablePassthrough()} \| prompt \| llm \| parser` |
+| 多步骤处理 | `step1 \| step2 \| step3` |
+| 并行处理 | `RunnableParallel(a=chain_a, b=chain_b)` |
+| 条件分支 | `RunnableBranch((condition1, chain1), (condition2, chain2), default_chain)` |
 
 ---
 
@@ -373,73 +289,40 @@ LangChain 提供：
 
 **让 LLM 调用外部工具**：
 
+```python
+# Tools - 定义工具
+@tool
+def search(query: str) -> str:
+    """搜索互联网"""
+    return search_engine.query(query)
+
+@tool
+def calculator(expression: str) -> float:
+    """计算数学表达式"""
+    return eval(expression)
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Tools                                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  定义工具：                                                      │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  @tool                                                   │    │
-│  │  def search(query: str) -> str:                          │    │
-│  │      """搜索互联网"""                                     │    │
-│  │      return search_engine.query(query)                   │    │
-│  │                                                          │    │
-│  │  @tool                                                   │    │
-│  │  def calculator(expression: str) -> float:               │    │
-│  │      """计算数学表达式"""                                 │    │
-│  │      return eval(expression)                             │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  内置工具：                                                      │
-│  - TavilySearchResults    # 网络搜索                            │
-│  - WikipediaQueryRun      # Wikipedia                           │
-│  - PythonREPLTool         # Python 执行                         │
-│  - ShellTool              # Shell 命令                          │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**内置工具**：
+- `TavilySearchResults` - 网络搜索
+- `WikipediaQueryRun` - Wikipedia
+- `PythonREPLTool` - Python 执行
+- `ShellTool` - Shell 命令
 
 ### 5.2 Agent
 
 **自主决策的智能体**：
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Agent                                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Agent = LLM + Tools + 决策循环                                  │
-│                                                                  │
-│          ┌─────────────────────────────────────────┐            │
-│          │              Agent Loop                  │            │
-│          │                                          │            │
-│          │    ┌──────────────────────────────┐     │            │
-│          │    │         1. 思考              │     │            │
-│          │    │    根据任务决定下一步         │     │            │
-│          │    └─────────────┬────────────────┘     │            │
-│          │                  │                      │            │
-│          │         ┌────────┴────────┐            │            │
-│          │         ▼                 ▼            │            │
-│          │    [调用工具]        [直接回答]         │            │
-│          │         │                 │            │            │
-│          │         ▼                 ▼            │            │
-│          │    ┌──────────┐     ┌──────────┐      │            │
-│          │    │ 2. 执行  │     │  结束    │      │            │
-│          │    │   工具   │     └──────────┘      │            │
-│          │    └────┬─────┘                        │            │
-│          │         │                              │            │
-│          │         ▼                              │            │
-│          │    ┌──────────┐                        │            │
-│          │    │ 3. 观察  │                        │            │
-│          │    │ 工具结果 │                        │            │
-│          │    └────┬─────┘                        │            │
-│          │         │                              │            │
-│          │         └───────────▶ (回到思考)       │            │
-│          │                                          │            │
-│          └─────────────────────────────────────────┘            │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+**Agent = LLM + Tools + 决策循环**
+
+```mermaid
+graph TB
+    subgraph AgentLoop["Agent Loop"]
+        A["1. 思考<br/>根据任务决定下一步"] --> B{决策}
+        B -->|调用工具| C["2. 执行工具"]
+        B -->|直接回答| D[结束]
+        C --> E["3. 观察工具结果"]
+        E --> A
+    end
 ```
 
 ---
@@ -448,25 +331,15 @@ LangChain 提供：
 
 ### 6.1 RAG 流程
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                       RAG Pipeline                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  离线阶段：索引构建                                               │
-│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐      │
-│  │ 文档    │ ─▶ │ 分割    │ ─▶ │ 向量化  │ ─▶ │ 存储    │      │
-│  │ 加载    │    │ 文本    │    │ Embed   │    │ Vector  │      │
-│  └─────────┘    └─────────┘    └─────────┘    └─────────┘      │
-│                                                                  │
-│  在线阶段：检索问答                                               │
-│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐      │
-│  │ 用户    │ ─▶ │ 检索    │ ─▶ │ 构建    │ ─▶ │ LLM     │      │
-│  │ 问题    │    │ 相关    │    │ Prompt  │    │ 回答    │      │
-│  └─────────┘    │ 文档    │    └─────────┘    └─────────┘      │
-│                 └─────────┘                                      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Offline["离线阶段：索引构建"]
+        A1[文档加载] --> A2[分割文本] --> A3[向量化 Embed] --> A4[存储 Vector]
+    end
+    
+    subgraph Online["在线阶段：检索问答"]
+        B1[用户问题] --> B2[检索相关文档] --> B3[构建 Prompt] --> B4[LLM 回答]
+    end
 ```
 
 ### 6.2 RAG 代码结构
@@ -526,25 +399,13 @@ answer = chain.invoke("文档的主要内容是什么？")
 
 ### 7.3 调试与监控
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     调试工具                                     │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  1. Verbose 模式                                                │
-│     chain.invoke(input, config={"verbose": True})               │
-│                                                                  │
-│  2. LangSmith 集成                                              │
-│     - 追踪每次调用                                               │
-│     - 查看 Token 消耗                                            │
-│     - 分析延迟                                                   │
-│     - 调试 Prompt                                               │
-│                                                                  │
-│  3. Callbacks                                                   │
-│     chain.invoke(input, config={"callbacks": [MyCallback()]})   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+**调试工具**：
+
+| 工具 | 用法 |
+|------|------|
+| Verbose 模式 | `chain.invoke(input, config={"verbose": True})` |
+| LangSmith 集成 | 追踪调用、查看 Token 消耗、分析延迟、调试 Prompt |
+| Callbacks | `chain.invoke(input, config={"callbacks": [MyCallback()]})` |
 
 ---
 
@@ -563,20 +424,11 @@ answer = chain.invoke("文档的主要内容是什么？")
 
 ### 9.1 核心组件回顾
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    LangChain 核心组件                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  基础层：LLM、Prompt、Parser                                     │
-│     ↓                                                           │
-│  数据层：Loader、Splitter、Embeddings、VectorStore               │
-│     ↓                                                           │
-│  组合层：Chain (LCEL)、Memory                                    │
-│     ↓                                                           │
-│  智能层：Tools、Agent                                            │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    A["基础层：LLM、Prompt、Parser"] --> B["数据层：Loader、Splitter、Embeddings、VectorStore"]
+    B --> C["组合层：Chain LCEL、Memory"]
+    C --> D["智能层：Tools、Agent"]
 ```
 
 ### 9.2 适用场景

@@ -18,26 +18,29 @@ io_uring是Linux 5.1引入的革命性异步IO接口，通过共享内存的环�
 
 ### 1.1 核心概念
 
+```mermaid
+graph TB
+    subgraph UserSpace["用户空间"]
+        App[应用程序]
+    end
+    
+    subgraph KernelSpace["内核空间"]
+        Kernel["io_uring 内核处理"]
+    end
+    
+    subgraph SharedMem["共享内存 (mmap)"]
+        SQ["Submission Queue (SQ)<br/>[SQE][SQE][SQE]"]
+        CQ["Completion Queue (CQ)<br/>[CQE][CQE][CQE]"]
+    end
+    
+    App --> SQ
+    SQ --> Kernel
+    Kernel --> CQ
+    CQ --> App
 ```
-用户空间                              内核空间
-┌──────────────────┐            ┌──────────────────┐
-│   应用程序       │            │    io_uring      │
-│                  │            │    内核处理       │
-└────────┬─────────┘            └────────▲─────────┘
-         │                               │
-         ▼                               │
-┌──────────────────────────────────────────────────┐
-│           共享内存 (mmap)                         │
-│  ┌─────────────────┐    ┌─────────────────┐     │
-│  │ Submission Queue │    │ Completion Queue│     │
-│  │      (SQ)        │    │      (CQ)       │     │
-│  │ [SQE][SQE][SQE] │    │ [CQE][CQE][CQE]│     │
-│  └─────────────────┘    └─────────────────┘     │
-└──────────────────────────────────────────────────┘
 
-SQE: Submission Queue Entry (提交条目)
-CQE: Completion Queue Entry (完成条目)
-```
+- **SQE**: Submission Queue Entry (提交条目)
+- **CQE**: Completion Queue Entry (完成条目)
 
 ### 1.2 优势
 

@@ -138,7 +138,7 @@ graph TB
 **构建和执行**：
 
 ```mermaid
-graph LR
+graph TB
     Build[构建计算图<br>ggml_build_forward] --> Schedule[调度执行<br>ggml_backend_sched] --> Execute[实际计算<br>后端执行]
 ```
 
@@ -198,15 +198,17 @@ graph TB
 
 **块量化**：
 
-```
-原始数据 (32 个 FP32):
-[x0, x1, ..., x31]
-
-量化为 Q4_0:
-- 找到最大绝对值: d = max(|xi|)
-- 量化因子: scale = d / 7
-- 量化值: qi = round(xi / scale)
-- 存储: [scale (FP16)] + [q0q1, q2q3, ...] (每两个4位打包)
+```mermaid
+graph TB
+    subgraph "Q4_0 量化流程"
+        A["原始数据 (32 个 FP32)<br/>[x0, x1, ..., x31]"]
+        B["找到最大绝对值<br/>d = max(|xi|)"]
+        C["计算量化因子<br/>scale = d / 7"]
+        D["量化每个值<br/>qi = round(xi / scale)"]
+        E["打包存储<br/>[scale (FP16)] + [q0q1, q2q3, ...]<br/>每两个 4 位打包"]
+        
+        A --> B --> C --> D --> E
+    end
 ```
 
 ### 4.4 K-quants
@@ -261,7 +263,7 @@ graph TB
 **Prefill 阶段**：
 
 ```mermaid
-graph LR
+graph TB
     P1[输入全部 tokens]
     P2[构建计算图]
     P3[一次前向计算]
@@ -273,7 +275,7 @@ graph LR
 **Decode 阶段**：
 
 ```mermaid
-graph LR
+graph TB
     D1[输入上一个 token]
     D2[使用 KV Cache]
     D3[计算下一个 logits]
@@ -423,7 +425,7 @@ graph TB
 ### 8.2 Slot 机制
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Slot 管理"
         S1[Slot 0] --> |请求1| R1[Request 1]
         S2[Slot 1] --> |请求2| R2[Request 2]
@@ -526,7 +528,7 @@ graph TB
 ### 11.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[编译运行] --> L2[阅读 ggml.c]
     L2 --> L3[阅读 llama.cpp]
     L3 --> L4[尝试修改]

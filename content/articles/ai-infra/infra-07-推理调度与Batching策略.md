@@ -72,7 +72,7 @@ graph TB
 **改进**：等待一定时间凑批
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Dynamic Batching"
         Q[队列] --> |等待时间/数量| B[形成 Batch]
         B --> INF[推理]
@@ -123,7 +123,7 @@ graph TB
 ### 3.1 FCFS（先来先服务）
 
 ```mermaid
-graph LR
+graph TB
     subgraph "FCFS"
         Q[队列] --> R1[请求1]
         R1 --> R2[请求2]
@@ -188,7 +188,7 @@ graph TB
 | Decode | 逐 token 生成 | 内存带宽 |
 
 ```mermaid
-graph LR
+graph TB
     subgraph "特性对比"
         P[Prefill] --> PC[大 batch 效率高]
         D[Decode] --> DC[小 batch 也高效]
@@ -339,7 +339,7 @@ graph TB
 ### 7.2 预取
 
 ```mermaid
-graph LR
+graph TB
     subgraph "KV Cache 预取"
         PRED[预测下一请求]
         PREFETCH[预取 KV Cache]
@@ -446,7 +446,7 @@ graph TB
 ### 10.2 设计建议
 
 ```mermaid
-graph LR
+graph TB
     S1[理解工作负载] --> S2[选择基础策略]
     S2 --> S3[实现核心调度]
     S3 --> S4[添加高级特性]

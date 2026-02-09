@@ -232,21 +232,21 @@ tags = ["HFT", "交易所", "CME", "NASDAQ", "NYSE"]
 
 ### 5.1 多交易所连接
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Trading System                                              │
-├─────────────────────────────────────────────────────────────┤
-│  Unified Gateway Interface                                   │
-│  ┌─────────────────────────────────────────────────────────┐│
-│  │ Order Normalization  │  Market Data Normalization      ││
-│  └─────────────────────────────────────────────────────────┘│
-├─────────────────────────────────────────────────────────────┤
-│  Exchange Adapters                                           │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐           │
-│  │ CME     │ │ NASDAQ  │ │ NYSE    │ │ Eurex   │           │
-│  │ Adapter │ │ Adapter │ │ Adapter │ │ Adapter │           │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘           │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph TS["Trading System"]
+        subgraph UGI["Unified Gateway Interface"]
+            ON["Order Normalization"]
+            MDN["Market Data Normalization"]
+        end
+        subgraph EA["Exchange Adapters"]
+            A1["CME Adapter"]
+            A2["NASDAQ Adapter"]
+            A3["NYSE Adapter"]
+            A4["Eurex Adapter"]
+        end
+    end
+    UGI --> EA
 ```
 
 ### 5.2 统一订单接口

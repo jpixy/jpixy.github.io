@@ -67,7 +67,7 @@ graph TB
 ### 2.1 IP/TCP/UDP 校验和
 
 ```mermaid
-graph LR
+graph TB
     subgraph "发送方向"
         A["应用数据"]
         B["协议头"]

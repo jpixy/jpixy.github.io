@@ -111,7 +111,7 @@ graph TB
 ### 3.3 Block Table
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Block Table 映射"
         SEQ[序列]
         
@@ -262,7 +262,7 @@ graph TB
 **将 KV Cache 换出到 CPU**
 
 ```mermaid
-graph LR
+graph TB
     subgraph "CPU Offload"
         GPU[GPU Cache<br>热数据]
         CPU[CPU Cache<br>冷数据]
@@ -276,7 +276,7 @@ graph LR
 **换出到 SSD**
 
 ```mermaid
-graph LR
+graph TB
     GPU[GPU] <--> CPU[CPU]
     CPU <--> NVME[NVMe SSD]
 ```
@@ -310,7 +310,7 @@ graph TB
 ### 7.2 跨 GPU 通信
 
 ```mermaid
-graph LR
+graph TB
     subgraph "AllReduce"
         G0[GPU 0] <--> G1[GPU 1]
         G1 <--> G2[GPU 2]
@@ -390,7 +390,7 @@ graph LR
 ### 10.2 设计原则
 
 ```mermaid
-graph LR
+graph TB
     P1[按需分配] --> P2[消除碎片]
     P2 --> P3[支持共享]
     P3 --> P4[弹性扩展]

@@ -82,36 +82,25 @@ slug = "interview-如何设计一个高性能定时器系统"
 
 ### 2.4 timerfd 核心优势
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    timerfd + epoll 架构                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌──────────────────┐    ┌──────────────────┐                   │
-│  │   Application    │    │   timerfd_create │                   │
-│  │   Event Loop     │    │   CLOCK_MONOTONIC│                   │
-│  └────────┬─────────┘    └────────┬─────────┘                   │
-│           │                       │                              │
-│           │ epoll_wait()          │ fd (file descriptor)        │
-│           │                       │                              │
-│           ▼                       ▼                              │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                     epoll instance                       │    │
-│  │                                                          │    │
-│  │   ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐   │    │
-│  │   │ timer_fd│  │ socket  │  │ signal  │  │  pipe   │   │    │
-│  │   └─────────┘  └─────────┘  └─────────┘  └─────────┘   │    │
-│  │                                                          │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                              │                                   │
-│                              │ unified event handling            │
-│                              ▼                                   │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │            Single Thread / Event Loop                    │    │
-│  │         高效处理 定时器 + 网络 I/O + 信号                  │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph timerfd_epoll["timerfd + epoll 架构"]
+        App["Application<br/>Event Loop"] 
+        Timer["timerfd_create<br/>CLOCK_MONOTONIC"]
+        
+        subgraph Epoll["epoll instance"]
+            TFD["timer_fd"]
+            Socket["socket"]
+            Signal["signal"]
+            Pipe["pipe"]
+        end
+        
+        EventLoop["Single Thread / Event Loop<br/>高效处理 定时器 + 网络 I/O + 信号"]
+    end
+    
+    App -->|epoll_wait| Epoll
+    Timer -->|fd| Epoll
+    Epoll -->|unified event handling| EventLoop
 ```
 
 **timerfd 的核心优势**：
@@ -138,113 +127,88 @@ slug = "interview-如何设计一个高性能定时器系统"
 
 ### 3.2 最小堆 (Min-Heap)
 
+```mermaid
+graph TB
+    A["100ms ← 堆顶：最近过期"] --> B["200ms"]
+    A --> C["150ms"]
+    B --> D["500ms"]
+    B --> E["300ms"]
+    C --> F["180ms"]
+    C --> G["400ms"]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      最小堆定时器                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│                         ┌───────┐                               │
-│                         │ 100ms │  ← 堆顶：最近过期              │
-│                         └───┬───┘                               │
-│                    ┌────────┴────────┐                          │
-│                ┌───┴───┐         ┌───┴───┐                      │
-│                │ 200ms │         │ 150ms │                      │
-│                └───┬───┘         └───┬───┘                      │
-│             ┌──────┴──────┐    ┌─────┴─────┐                    │
-│         ┌───┴───┐    ┌───┴───┐│         ┌───┴───┐              │
-│         │ 500ms │    │ 300ms ││ 180ms │ │ 400ms │              │
-│         └───────┘    └───────┘└───────┘ └───────┘              │
-│                                                                  │
-│  优点：                                                          │
-│  - 插入/删除 O(log n)                                            │
-│  - 堆顶即最近过期任务 O(1)                                        │
-│  - 实现简单，标准库支持                                           │
-│                                                                  │
-│  缺点：                                                          │
-│  - 大量任务同时过期时，批量出堆开销大                               │
-│  - 删除任意任务需要额外索引                                        │
-│                                                                  │
-│  应用：Go runtime timer、Java DelayQueue                          │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**优点：**
+- 插入/删除 O(log n)
+- 堆顶即最近过期任务 O(1)
+- 实现简单，标准库支持
+
+**缺点：**
+- 大量任务同时过期时，批量出堆开销大
+- 删除任意任务需要额外索引
+
+**应用：** Go runtime timer、Java DelayQueue
 
 ### 3.3 简单时间轮 (Simple Timing Wheel)
 
+**参数:** tick = 1秒, 轮大小 = 60 格 (覆盖 60 秒)
+
+```mermaid
+graph TB
+    subgraph 时间轮["时间轮 (current 指向当前位置)"]
+        S0["Slot 0"]
+        S1["Slot 1"]
+        S2["Slot 2"]
+        S3["..."]
+        S59["Slot 59"]
+    end
+    
+    S0 --> T1["T1"] --> T2["T2"]
+    S2 --> T3["T3"] --> T4["T4"]
+    S1 --> T5["T5"]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    简单时间轮 (1秒精度示例)                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  tick = 1秒, 轮大小 = 60 格 (覆盖 60 秒)                         │
-│                                                                  │
-│          current                                                 │
-│             ↓                                                    │
-│  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐                      │
-│  │ 0 │ 1 │ 2 │ 3 │ 4 │...│55 │56 │57 │58 │59 │                  │
-│  └─┬─┴───┴─┬─┴───┴─┬─┴───┴───┴───┴───┴───┴───┘                  │
-│    │       │       │                                             │
-│    ▼       ▼       ▼                                             │
-│  ┌───┐   ┌───┐   ┌───┐                                          │
-│  │T1 │   │T3 │   │T5 │   ← 链表存储同一时刻的任务                 │
-│  └─┬─┘   └─┬─┘   └───┘                                          │
-│    │       │                                                     │
-│    ▼       ▼                                                     │
-│  ┌───┐   ┌───┐                                                  │
-│  │T2 │   │T4 │                                                  │
-│  └───┘   └───┘                                                  │
-│                                                                  │
-│  算法：                                                          │
-│  1. 添加任务：slot = (current + delay) % wheel_size             │
-│  2. tick 推进：current = (current + 1) % wheel_size             │
-│  3. 触发任务：遍历当前 slot 的任务链表                            │
-│                                                                  │
-│  复杂度：插入 O(1)，删除 O(1)，tick O(任务数)                      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+> 链表存储同一时刻的任务
+
+**算法：**
+1. **添加任务：** `slot = (current + delay) % wheel_size`
+2. **tick 推进：** `current = (current + 1) % wheel_size`
+3. **触发任务：** 遍历当前 slot 的任务链表
+
+**复杂度：** 插入 O(1)，删除 O(1)，tick O(任务数)
 
 **局限性**: 简单时间轮的时间跨度 = tick × 轮大小。如果 tick=1ms，轮大小=1000，只能覆盖 1 秒的定时任务。
 
 ### 3.4 分层时间轮 (Hierarchical Timing Wheel)
 
+```mermaid
+graph TB
+    subgraph L3["Level 3 (小时轮): tick=17.5min, 64格 → 覆盖 18.6小时"]
+        L3S["Slot 0-63"]
+    end
+    
+    subgraph L2["Level 2 (分钟轮): tick=16.4s, 64格 → 覆盖 17.5分钟"]
+        L2S["Slot 0-63"]
+    end
+    
+    subgraph L1["Level 1 (秒轮): tick=256ms, 64格 → 覆盖 16.4秒"]
+        L1S["Slot 0-63"]
+    end
+    
+    subgraph L0["Level 0 (毫秒轮): tick=1ms, 256格 → 覆盖 256ms ← 即将触发的任务"]
+        L0S["Slot 0-255"]
+    end
+    
+    L3S -->|降级| L2S
+    L2S -->|降级| L1S
+    L1S -->|降级| L0S
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│               分层时间轮 (Hierarchical Timing Wheel)              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Level 0 (毫秒轮): tick=1ms, 256格 → 覆盖 256ms                  │
-│  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐                      │
-│  │ 0 │ 1 │ 2 │...│                   │255│  ← 即将触发的任务     │
-│  └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘                      │
-│                    ↑ 降级                                        │
-│                    │                                             │
-│  Level 1 (秒轮): tick=256ms, 64格 → 覆盖 16.4秒                  │
-│  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐                      │
-│  │ 0 │ 1 │ 2 │...│                   │63 │                      │
-│  └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘                      │
-│                    ↑ 降级                                        │
-│                    │                                             │
-│  Level 2 (分钟轮): tick=16.4s, 64格 → 覆盖 17.5分钟              │
-│  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐                      │
-│  │ 0 │ 1 │ 2 │...│                   │63 │                      │
-│  └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘                      │
-│                    ↑ 降级                                        │
-│                    │                                             │
-│  Level 3 (小时轮): tick=17.5min, 64格 → 覆盖 18.6小时            │
-│  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐                      │
-│  │ 0 │ 1 │ 2 │...│                   │63 │                      │
-│  └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘                      │
-│                                                                  │
-│  工作原理：                                                       │
-│  1. 新任务根据延迟时间放入合适层级                                  │
-│  2. 高层级轮指针推进时，任务"降级"到低层级                          │
-│  3. Level 0 指针推进时，触发当前格的所有任务                        │
-│                                                                  │
-│  应用：Kafka、Netty HashedWheelTimer                              │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**工作原理：**
+1. 新任务根据延迟时间放入合适层级
+2. 高层级轮指针推进时，任务"降级"到低层级
+3. Level 0 指针推进时，触发当前格的所有任务
+
+**应用：** Kafka、Netty HashedWheelTimer
 
 ### 3.5 数据结构选型决策
 
@@ -262,58 +226,36 @@ slug = "interview-如何设计一个高性能定时器系统"
 
 ### 4.1 架构设计
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    单机高性能定时器架构                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                     API Layer                               │ │
-│  │  add_timer(delay, callback)  │  cancel_timer(id)           │ │
-│  │  modify_timer(id, delay)     │  get_timer(id)              │ │
-│  └────────────────────────────────┬───────────────────────────┘ │
-│                                   │                              │
-│                                   ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Timer Manager                              │ │
-│  │                                                             │ │
-│  │  ┌──────────────────┐    ┌──────────────────────────────┐  │ │
-│  │  │   Lock-Free      │    │     Timer Storage            │  │ │
-│  │  │   Task Queue     │───▶│  (Hierarchical Timing Wheel) │  │ │
-│  │  │                  │    │                              │  │ │
-│  │  │  MPSC Queue      │    │  Level 0-3 Wheels            │  │ │
-│  │  └──────────────────┘    │  + Timer ID → Slot Index Map │  │ │
-│  │                          └──────────────────────────────┘  │ │
-│  └────────────────────────────────┬───────────────────────────┘ │
-│                                   │                              │
-│                                   ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Tick Driver                                │ │
-│  │                                                             │ │
-│  │  ┌──────────────────┐    ┌──────────────────────────────┐  │ │
-│  │  │   timerfd        │    │   Tick Thread                │  │ │
-│  │  │   CLOCK_MONOTONIC│───▶│                              │  │ │
-│  │  │   1ms interval   │    │   1. 推进时间轮指针           │  │ │
-│  │  └──────────────────┘    │   2. 处理降级任务            │  │ │
-│  │                          │   3. 触发到期任务            │  │ │
-│  │                          └──────────────────────────────┘  │ │
-│  └────────────────────────────────┬───────────────────────────┘ │
-│                                   │                              │
-│                                   ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Callback Executor                          │ │
-│  │                                                             │ │
-│  │  ┌──────────────────┐    ┌──────────────────────────────┐  │ │
-│  │  │   Worker Pool    │    │   Callback Strategy          │  │ │
-│  │  │                  │    │                              │  │ │
-│  │  │   Thread 1 ──────│───▶│   - Sync (blocking)          │  │ │
-│  │  │   Thread 2 ──────│───▶│   - Async (non-blocking)     │  │ │
-│  │  │   Thread N ──────│───▶│   - Fire-and-Forget          │  │ │
-│  │  │                  │    │                              │  │ │
-│  │  └──────────────────┘    └──────────────────────────────┘  │ │
-│  └────────────────────────────────────────────────────────────┘ │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph API["API Layer"]
+        A1["add_timer(delay, callback)"]
+        A2["cancel_timer(id)"]
+        A3["modify_timer(id, delay)"]
+        A4["get_timer(id)"]
+    end
+    
+    subgraph TM["Timer Manager"]
+        Queue["Lock-Free Task Queue<br/>(MPSC Queue)"]
+        Storage["Timer Storage<br/>(Hierarchical Timing Wheel)<br/>Level 0-3 Wheels<br/>+ Timer ID → Slot Index Map"]
+        Queue --> Storage
+    end
+    
+    subgraph TD["Tick Driver"]
+        TimerFD["timerfd<br/>CLOCK_MONOTONIC<br/>1ms interval"]
+        TickThread["Tick Thread<br/>1. 推进时间轮指针<br/>2. 处理降级任务<br/>3. 触发到期任务"]
+        TimerFD --> TickThread
+    end
+    
+    subgraph CE["Callback Executor"]
+        WorkerPool["Worker Pool<br/>Thread 1-N"]
+        Strategy["Callback Strategy<br/>- Sync (blocking)<br/>- Async (non-blocking)<br/>- Fire-and-Forget"]
+        WorkerPool --> Strategy
+    end
+    
+    API --> TM
+    TM --> TD
+    TD --> CE
 ```
 
 ### 4.2 核心组件设计
@@ -346,37 +288,33 @@ struct Timer {
 
 ### 4.3 线程安全设计
 
+**方案 1: 全局锁 (简单但性能差)**
+
+```mermaid
+graph TB
+    A1["add_timer()"] --> Mutex["Global Mutex"]
+    A2["cancel_timer()"] --> Mutex
+    A3["tick()"] --> Mutex
+    Mutex --> Wheel["Timing Wheel"]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    线程安全策略                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  方案 1: 全局锁 (简单但性能差)                                    │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │   add_timer()  ──┐                                      │    │
-│  │   cancel_timer() ├──▶ Global Mutex ──▶ Timing Wheel    │    │
-│  │   tick()         ──┘                                    │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  方案 2: MPSC 队列 + 单线程处理 (推荐)                            │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                                                          │    │
-│  │   add_timer()  ──┬──▶ Lock-Free ──▶ Timer Thread        │    │
-│  │   cancel_timer() ┘    MPSC Queue     (唯一写者)          │    │
-│  │                                          │               │    │
-│  │                                          ▼               │    │
-│  │                                    Timing Wheel          │    │
-│  │                                    (无锁访问)            │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  方案 3: 分片时间轮 (大规模)                                      │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │   timer_id % N ──▶ Shard 0 ──▶ Wheel + Thread 0         │    │
-│  │                ──▶ Shard 1 ──▶ Wheel + Thread 1         │    │
-│  │                ──▶ Shard N ──▶ Wheel + Thread N         │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**方案 2: MPSC 队列 + 单线程处理 (推荐)**
+
+```mermaid
+graph TB
+    A1["add_timer()"] --> Queue["Lock-Free<br/>MPSC Queue"]
+    A2["cancel_timer()"] --> Queue
+    Queue --> Timer["Timer Thread<br/>(唯一写者)"]
+    Timer --> Wheel["Timing Wheel<br/>(无锁访问)"]
+```
+
+**方案 3: 分片时间轮 (大规模)**
+
+```mermaid
+graph TB
+    Input["timer_id % N"] --> S0["Shard 0 → Wheel + Thread 0"]
+    Input --> S1["Shard 1 → Wheel + Thread 1"]
+    Input --> SN["Shard N → Wheel + Thread N"]
 ```
 
 **最佳实践**: 采用 MPSC 队列 + 单 Timer 线程，配合 Work-Stealing 线程池执行回调。
@@ -405,79 +343,46 @@ struct Timer {
 
 ### 5.2 分布式定时器架构
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   分布式定时器系统架构                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                     Client SDK                              │ │
-│  │                                                             │ │
-│  │   schedule_timer(delay, callback_url, payload)             │ │
-│  │   cancel_timer(timer_id)                                   │ │
-│  │   query_timer(timer_id)                                    │ │
-│  └────────────────────────────────────────┬───────────────────┘ │
-│                                           │ gRPC / HTTP         │
-│                                           ▼                     │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                   API Gateway / LB                          │ │
-│  │                                                             │ │
-│  │   Rate Limiting │ Authentication │ Load Balancing          │ │
-│  └────────────────────────────────────┬───────────────────────┘ │
-│                                       │                         │
-│           ┌───────────────────────────┼───────────────────────┐ │
-│           │                           │                       │ │
-│           ▼                           ▼                       ▼ │
-│  ┌────────────────┐      ┌────────────────┐      ┌────────────┐│
-│  │  Timer Node 0  │      │  Timer Node 1  │      │ Timer Node N││
-│  │                │      │                │      │            ││
-│  │ ┌────────────┐ │      │ ┌────────────┐ │      │            ││
-│  │ │ Time Wheel │ │      │ │ Time Wheel │ │      │    ...     ││
-│  │ └────────────┘ │      │ └────────────┘ │      │            ││
-│  │ Shard: 0-99   │      │ Shard: 100-199│      │            ││
-│  └───────┬────────┘      └───────┬────────┘      └─────┬──────┘│
-│          │                       │                     │       │
-│          └───────────────────────┼─────────────────────┘       │
-│                                  │                              │
-│                                  ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Coordination Layer                         │ │
-│  │                                                             │ │
-│  │  ┌────────────────┐    ┌────────────────────────────────┐  │ │
-│  │  │ etcd/ZooKeeper │    │   Leader Election              │  │ │
-│  │  │                │    │   Shard Assignment             │  │ │
-│  │  │ - Node registry│    │   Distributed Lock             │  │ │
-│  │  │ - Config center│    │                                │  │ │
-│  │  └────────────────┘    └────────────────────────────────┘  │ │
-│  └────────────────────────────────────────────────────────────┘ │
-│                                  │                              │
-│                                  ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                   Storage Layer                             │ │
-│  │                                                             │ │
-│  │  ┌────────────────┐    ┌────────────────────────────────┐  │ │
-│  │  │   Redis Cluster│    │   MySQL / TiDB                 │  │ │
-│  │  │                │    │                                │  │ │
-│  │  │ - 热数据缓存    │    │ - 持久化存储                    │  │ │
-│  │  │ - 分布式锁     │    │ - 历史任务归档                  │  │ │
-│  │  │ - 原子操作     │    │ - 审计日志                      │  │ │
-│  │  └────────────────┘    └────────────────────────────────┘  │ │
-│  └────────────────────────────────────────────────────────────┘ │
-│                                  │                              │
-│                                  ▼                              │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Callback Delivery                          │ │
-│  │                                                             │ │
-│  │  ┌────────────────┐    ┌────────────────────────────────┐  │ │
-│  │  │ Message Queue  │    │   HTTP/gRPC Callback           │  │ │
-│  │  │                │    │                                │  │ │
-│  │  │ Kafka/RocketMQ │    │ - Retry with Backoff           │  │ │
-│  │  │ - At-least-once│    │ - Circuit Breaker              │  │ │
-│  │  │ - 解耦回调     │    │ - Timeout Control              │  │ │
-│  │  └────────────────┘    └────────────────────────────────┘  │ │
-│  └────────────────────────────────────────────────────────────┘ │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph ClientSDK["Client SDK"]
+        C1["schedule_timer(delay, callback_url, payload)"]
+        C2["cancel_timer(timer_id)"]
+        C3["query_timer(timer_id)"]
+    end
+    
+    subgraph Gateway["API Gateway / LB"]
+        G1["Rate Limiting"]
+        G2["Authentication"]
+        G3["Load Balancing"]
+    end
+    
+    subgraph TimerNodes["Timer Nodes"]
+        T0["Timer Node 0<br/>Time Wheel<br/>Shard: 0-99"]
+        T1["Timer Node 1<br/>Time Wheel<br/>Shard: 100-199"]
+        TN["Timer Node N<br/>..."]
+    end
+    
+    subgraph Coordination["Coordination Layer"]
+        Etcd["etcd/ZooKeeper<br/>- Node registry<br/>- Config center"]
+        Leader["Leader Election<br/>Shard Assignment<br/>Distributed Lock"]
+    end
+    
+    subgraph Storage["Storage Layer"]
+        Redis["Redis Cluster<br/>- 热数据缓存<br/>- 分布式锁<br/>- 原子操作"]
+        MySQL["MySQL / TiDB<br/>- 持久化存储<br/>- 历史任务归档<br/>- 审计日志"]
+    end
+    
+    subgraph Callback["Callback Delivery"]
+        MQ["Message Queue<br/>Kafka/RocketMQ<br/>- At-least-once<br/>- 解耦回调"]
+        HTTP["HTTP/gRPC Callback<br/>- Retry with Backoff<br/>- Circuit Breaker<br/>- Timeout Control"]
+    end
+    
+    ClientSDK -->|gRPC / HTTP| Gateway
+    Gateway --> TimerNodes
+    TimerNodes --> Coordination
+    TimerNodes --> Storage
+    TimerNodes --> Callback
 ```
 
 ### 5.3 分片策略
@@ -493,97 +398,72 @@ struct Timer {
 
 ### 5.4 任务存储设计
 
+**MySQL/TiDB - 持久化存储**
+
+```sql
+CREATE TABLE timer_task (
+    timer_id        BIGINT PRIMARY KEY,
+    tenant_id       VARCHAR(64),
+    expire_time     BIGINT,          -- 过期时间戳(ms)
+    interval_ms     BIGINT,          -- 周期间隔
+    callback_type   TINYINT,         -- HTTP/MQ/RPC
+    callback_url    VARCHAR(512),
+    payload         TEXT,
+    retry_count     INT DEFAULT 0,
+    max_retry       INT DEFAULT 3,
+    status          TINYINT,         -- PENDING/DONE/...
+    shard_id        INT,
+    created_at      TIMESTAMP,
+    updated_at      TIMESTAMP,
+    INDEX idx_expire (shard_id, status, expire_time)
+);
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Timer 任务存储模型                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │   MySQL/TiDB - 持久化存储                                   │  │
-│  │                                                            │  │
-│  │   CREATE TABLE timer_task (                                │  │
-│  │       timer_id        BIGINT PRIMARY KEY,                  │  │
-│  │       tenant_id       VARCHAR(64),                         │  │
-│  │       expire_time     BIGINT,          -- 过期时间戳(ms)    │  │
-│  │       interval_ms     BIGINT,          -- 周期间隔          │  │
-│  │       callback_type   TINYINT,         -- HTTP/MQ/RPC      │  │
-│  │       callback_url    VARCHAR(512),                        │  │
-│  │       payload         TEXT,                                │  │
-│  │       retry_count     INT DEFAULT 0,                       │  │
-│  │       max_retry       INT DEFAULT 3,                       │  │
-│  │       status          TINYINT,         -- PENDING/DONE/... │  │
-│  │       shard_id        INT,                                 │  │
-│  │       created_at      TIMESTAMP,                           │  │
-│  │       updated_at      TIMESTAMP,                           │  │
-│  │       INDEX idx_expire (shard_id, status, expire_time)     │  │
-│  │   );                                                       │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │   Redis Cluster - 热数据 + 分布式锁                         │  │
-│  │                                                            │  │
-│  │   Key: timer:{shard_id}:bucket:{bucket_time}              │  │
-│  │   Type: Sorted Set                                        │  │
-│  │   Score: expire_time                                      │  │
-│  │   Member: timer_id                                        │  │
-│  │                                                            │  │
-│  │   # 按时间窗口分桶，减少大 Key                              │  │
-│  │   # bucket_time = expire_time / bucket_interval           │  │
-│  │                                                            │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**Redis Cluster - 热数据 + 分布式锁**
+
+| 属性 | 值 |
+| :--- | :--- |
+| Key | `timer:{shard_id}:bucket:{bucket_time}` |
+| Type | Sorted Set |
+| Score | expire_time |
+| Member | timer_id |
+
+> 按时间窗口分桶，减少大 Key: `bucket_time = expire_time / bucket_interval`
 
 ### 5.5 Exactly-Once 语义保证
 
 分布式环境下保证定时任务**不丢失、不重复**执行：
 
+**1. 任务获取阶段 - 乐观锁 + 分布式锁**
+
+```sql
+-- 原子性获取并锁定任务
+UPDATE timer_task
+SET status = 'PROCESSING',
+    worker_id = :worker_id,
+    version = version + 1
+WHERE shard_id = :shard_id
+  AND status = 'PENDING'
+  AND expire_time <= :now
+  AND version = :expected_version
+LIMIT :batch_size;
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Exactly-Once 实现策略                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  1. 任务获取阶段 - 乐观锁 + 分布式锁                              │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                                                            │  │
-│  │   -- 原子性获取并锁定任务                                   │  │
-│  │   UPDATE timer_task                                        │  │
-│  │   SET status = 'PROCESSING',                               │  │
-│  │       worker_id = :worker_id,                              │  │
-│  │       version = version + 1                                │  │
-│  │   WHERE shard_id = :shard_id                               │  │
-│  │     AND status = 'PENDING'                                 │  │
-│  │     AND expire_time <= :now                                │  │
-│  │     AND version = :expected_version                        │  │
-│  │   LIMIT :batch_size;                                       │  │
-│  │                                                            │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-│  2. 回调执行阶段 - 幂等性设计                                     │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                                                            │  │
-│  │   Callback 端需要实现幂等：                                 │  │
-│  │   - 请求携带 timer_id 作为幂等键                            │  │
-│  │   - Callback 服务基于 timer_id 去重                         │  │
-│  │   - 返回成功后才标记任务完成                                │  │
-│  │                                                            │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-│  3. 故障恢复阶段 - 超时重试                                       │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │                                                            │  │
-│  │   -- 后台任务扫描超时任务                                   │  │
-│  │   SELECT * FROM timer_task                                 │  │
-│  │   WHERE status = 'PROCESSING'                              │  │
-│  │     AND updated_at < :timeout_threshold;                   │  │
-│  │                                                            │  │
-│  │   -- 重置为 PENDING 状态                                    │  │
-│  │   -- 由其他 Worker 重新获取执行                             │  │
-│  │                                                            │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**2. 回调执行阶段 - 幂等性设计**
+
+- 请求携带 timer_id 作为幂等键
+- Callback 服务基于 timer_id 去重
+- 返回成功后才标记任务完成
+
+**3. 故障恢复阶段 - 超时重试**
+
+```sql
+-- 后台任务扫描超时任务
+SELECT * FROM timer_task
+WHERE status = 'PROCESSING'
+  AND updated_at < :timeout_threshold;
+
+-- 重置为 PENDING 状态，由其他 Worker 重新获取执行
 ```
 
 ---
@@ -603,73 +483,71 @@ struct Timer {
 
 ### 6.2 批量处理优化
 
+**逐条处理 (低效):**
+
+```python
+for timer in expired_timers:
+    fetch_from_db(timer.id)      # N 次 DB 查询
+    execute_callback(timer)      # N 次网络调用
+    update_status(timer.id)      # N 次 DB 更新
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    批量处理优化                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  逐条处理 (低效):                                                │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │   for timer in expired_timers:                            │  │
-│  │       fetch_from_db(timer.id)      # N 次 DB 查询          │  │
-│  │       execute_callback(timer)      # N 次网络调用          │  │
-│  │       update_status(timer.id)      # N 次 DB 更新          │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-│  批量处理 (高效):                                                │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │   # 批量获取                                               │  │
-│  │   timers = batch_fetch(shard_id, limit=100)               │  │
-│  │                                                            │  │
-│  │   # 并发执行回调                                           │  │
-│  │   results = parallel_execute(timers)                      │  │
-│  │                                                            │  │
-│  │   # 批量更新状态                                           │  │
-│  │   batch_update_status(results)                            │  │
-│  │                                                            │  │
-│  │   # Pipeline Redis 操作                                    │  │
-│  │   with redis.pipeline() as pipe:                          │  │
-│  │       for timer in completed:                             │  │
-│  │           pipe.zrem(key, timer.id)                        │  │
-│  │       pipe.execute()                                      │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**批量处理 (高效):**
+
+```python
+# 批量获取
+timers = batch_fetch(shard_id, limit=100)
+
+# 并发执行回调
+results = parallel_execute(timers)
+
+# 批量更新状态
+batch_update_status(results)
+
+# Pipeline Redis 操作
+with redis.pipeline() as pipe:
+    for timer in completed:
+        pipe.zrem(key, timer.id)
+    pipe.execute()
 ```
 
 ### 6.3 预取机制
 
+**Timeline:**
+
+```mermaid
+graph TB
+    DB["DB"] -->|批量加载| MQ["Memory Queue"]
+    MQ -->|tick| Exec["Execute"]
+    
+    subgraph 预取窗口["预取窗口 (10s)"]
+        DB
+    end
+    
+    subgraph 当前窗口
+        MQ
+        Exec
+    end
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    预取机制设计                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Timeline:                                                       │
-│  ──────────────────────────────────────────────────────────────▶│
-│  │←── 预取窗口 (10s) ──→│←── 当前窗口 ──→│                       │
-│  │                      │               │                       │
-│  DB ──(批量加载)──▶ Memory Queue ──(tick)──▶ Execute            │
-│                                                                  │
-│  优点：                                                          │
-│  1. 减少实时 DB 查询延迟                                         │
-│  2. 平滑 DB 负载                                                 │
-│  3. 容忍短暂 DB 不可用                                           │
-│                                                                  │
-│  实现：                                                          │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │   # 后台预取线程                                           │  │
-│  │   def prefetch_loop():                                    │  │
-│  │       while True:                                         │  │
-│  │           window_end = now() + prefetch_window            │  │
-│  │           timers = db.query(                              │  │
-│  │               expire_time BETWEEN now() AND window_end    │  │
-│  │           )                                               │  │
-│  │           for timer in timers:                            │  │
-│  │               memory_wheel.add(timer)                     │  │
-│  │           sleep(prefetch_interval)                        │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**优点：**
+1. 减少实时 DB 查询延迟
+2. 平滑 DB 负载
+3. 容忍短暂 DB 不可用
+
+**实现：**
+
+```python
+# 后台预取线程
+def prefetch_loop():
+    while True:
+        window_end = now() + prefetch_window
+        timers = db.query(
+            expire_time BETWEEN now() AND window_end
+        )
+        for timer in timers:
+            memory_wheel.add(timer)
+        sleep(prefetch_interval)
 ```
 
 ### 6.4 性能指标参考
@@ -697,80 +575,64 @@ struct Timer {
 
 ### 7.2 故障转移设计
 
+```mermaid
+graph TB
+    subgraph Etcd["etcd / ZooKeeper"]
+        S0["/timers/shards/0 → worker-1 (lease: 10s)"]
+        S1["/timers/shards/1 → worker-2 (lease: 10s)"]
+        S2["/timers/shards/2 → worker-3 (lease: 10s)"]
+    end
+    
+    subgraph FC["Failover Controller"]
+        F1["1. 检测 Worker 心跳超时 (Lease 过期)"]
+        F2["2. 选举新 Owner (抢占 Lease)"]
+        F3["3. 从 DB 恢复该分片任务到内存"]
+        F4["4. 继续处理定时任务"]
+    end
+    
+    Etcd -->|Watch| FC
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    故障转移机制                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                    etcd / ZooKeeper                         │ │
-│  │                                                             │ │
-│  │   /timers/shards/0 → worker-1 (lease: 10s)                 │ │
-│  │   /timers/shards/1 → worker-2 (lease: 10s)                 │ │
-│  │   /timers/shards/2 → worker-3 (lease: 10s)                 │ │
-│  │                                                             │ │
-│  └────────────────────────────┬───────────────────────────────┘ │
-│                               │                                  │
-│                               │ Watch                            │
-│                               ▼                                  │
-│  ┌────────────────────────────────────────────────────────────┐ │
-│  │                  Failover Controller                        │ │
-│  │                                                             │ │
-│  │  1. 检测 Worker 心跳超时 (Lease 过期)                        │ │
-│  │  2. 选举新 Owner (抢占 Lease)                                │ │
-│  │  3. 从 DB 恢复该分片任务到内存                               │ │
-│  │  4. 继续处理定时任务                                         │ │
-│  │                                                             │ │
-│  └────────────────────────────────────────────────────────────┘ │
-│                                                                  │
-│  故障转移流程:                                                   │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                                                          │    │
-│  │   T0: Worker-1 宕机                                      │    │
-│  │   T0+10s: etcd 检测到 Lease 过期                         │    │
-│  │   T0+11s: Worker-2 抢占 Shard-0 的 Lease                 │    │
-│  │   T0+12s: Worker-2 从 DB 加载 Shard-0 的任务             │    │
-│  │   T0+13s: Worker-2 开始处理 Shard-0 的定时任务           │    │
-│  │                                                          │    │
-│  │   故障转移时间: ~13s (可配置)                             │    │
-│  │                                                          │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**故障转移流程:**
+
+| 时间 | 事件 |
+| :--- | :--- |
+| T0 | Worker-1 宕机 |
+| T0+10s | etcd 检测到 Lease 过期 |
+| T0+11s | Worker-2 抢占 Shard-0 的 Lease |
+| T0+12s | Worker-2 从 DB 加载 Shard-0 的任务 |
+| T0+13s | Worker-2 开始处理 Shard-0 的定时任务 |
+
+> **故障转移时间:** ~13s (可配置)
 
 ### 7.3 多活架构
 
+```mermaid
+graph TB
+    subgraph RegionA["Region A"]
+        TA["Timer Node (Active)"]
+        MA["MySQL (Master)"]
+        RA["Redis (Active)"]
+        TA --> MA
+        TA --> RA
+    end
+    
+    subgraph RegionB["Region B"]
+        TB["Timer Node (Standby)"]
+        MB["MySQL (Slave)"]
+        RB["Redis (Active)"]
+        TB --> MB
+        TB --> RB
+    end
+    
+    TA <-->|同步| TB
+    MA -->|binlog| MB
+    RA <-->|CRDT/Sync| RB
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    多活部署架构                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌──────────────────┐              ┌──────────────────┐         │
-│  │    Region A      │              │    Region B      │         │
-│  │                  │              │                  │         │
-│  │  ┌────────────┐  │              │  ┌────────────┐  │         │
-│  │  │ Timer Node │  │              │  │ Timer Node │  │         │
-│  │  │ (Active)   │  │     同步     │  │ (Standby)  │  │         │
-│  │  └─────┬──────┘  │◀────────────▶│  └─────┬──────┘  │         │
-│  │        │         │              │        │         │         │
-│  │  ┌─────▼──────┐  │              │  ┌─────▼──────┐  │         │
-│  │  │   MySQL    │  │    binlog    │  │   MySQL    │  │         │
-│  │  │  (Master)  │──┼─────────────▶│  │  (Slave)   │  │         │
-│  │  └────────────┘  │              │  └────────────┘  │         │
-│  │                  │              │                  │         │
-│  │  ┌────────────┐  │              │  ┌────────────┐  │         │
-│  │  │   Redis    │  │   CRDT/Sync  │  │   Redis    │  │         │
-│  │  │  (Active)  │◀─┼─────────────▶│  │ (Active)   │  │         │
-│  │  └────────────┘  │              │  └────────────┘  │         │
-│  └──────────────────┘              └──────────────────┘         │
-│                                                                  │
-│  模式选择:                                                       │
-│  - Active-Standby: 简单，RTO 分钟级                              │
-│  - Active-Active: 复杂，RTO 秒级，需解决冲突                      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**模式选择:**
+- **Active-Standby:** 简单，RTO 分钟级
+- **Active-Active:** 复杂，RTO 秒级，需解决冲突
 
 ### 7.4 降级策略
 
@@ -796,45 +658,46 @@ struct Timer {
 
 ### 8.2 分片再均衡
 
+**扩容场景 (3 节点 → 4 节点):**
+
+**Before:**
+
+```mermaid
+graph TB
+    N0["Node 0<br/>Shard: 0-3"]
+    N1["Node 1<br/>Shard: 4-7"]
+    N2["Node 2<br/>Shard: 8-11"]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    分片再均衡流程                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  扩容场景 (3 节点 → 4 节点):                                     │
-│                                                                  │
-│  Before:                                                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-│  │   Node 0     │  │   Node 1     │  │   Node 2     │           │
-│  │ Shard: 0-3   │  │ Shard: 4-7   │  │ Shard: 8-11  │           │
-│  └──────────────┘  └──────────────┘  └──────────────┘           │
-│                                                                  │
-│  Step 1: 新节点加入                                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────┐ │
-│  │   Node 0     │  │   Node 1     │  │   Node 2     │  │Node 3│ │
-│  │ Shard: 0-3   │  │ Shard: 4-7   │  │ Shard: 8-11  │  │ ---- │ │
-│  └──────────────┘  └──────────────┘  └──────────────┘  └──────┘ │
-│                                                                  │
-│  Step 2: 计算新分配                                              │
-│  - 每节点目标: 12/4 = 3 个分片                                   │
-│  - 迁移策略: 每个老节点迁出 1 个分片给新节点                       │
-│                                                                  │
-│  Step 3: 双写迁移 (不停服)                                       │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  a. 新任务同时写入源和目标分片                             │   │
-│  │  b. 后台迁移存量任务                                      │   │
-│  │  c. 验证数据一致性                                        │   │
-│  │  d. 切换读流量到新分片                                    │   │
-│  │  e. 停止双写，删除源分片数据                               │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  After:                                                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────┐ │
-│  │   Node 0     │  │   Node 1     │  │   Node 2     │  │Node 3│ │
-│  │ Shard: 0-2   │  │ Shard: 4-6   │  │ Shard: 8-10  │  │3,7,11│ │
-│  └──────────────┘  └──────────────┘  └──────────────┘  └──────┘ │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+**Step 1: 新节点加入**
+
+```mermaid
+graph TB
+    N0["Node 0<br/>Shard: 0-3"]
+    N1["Node 1<br/>Shard: 4-7"]
+    N2["Node 2<br/>Shard: 8-11"]
+    N3["Node 3<br/>----"]
+```
+
+**Step 2: 计算新分配**
+- 每节点目标: 12/4 = 3 个分片
+- 迁移策略: 每个老节点迁出 1 个分片给新节点
+
+**Step 3: 双写迁移 (不停服)**
+1. 新任务同时写入源和目标分片
+2. 后台迁移存量任务
+3. 验证数据一致性
+4. 切换读流量到新分片
+5. 停止双写，删除源分片数据
+
+**After:**
+
+```mermaid
+graph TB
+    N0["Node 0<br/>Shard: 0-2"]
+    N1["Node 1<br/>Shard: 4-6"]
+    N2["Node 2<br/>Shard: 8-10"]
+    N3["Node 3<br/>Shard: 3,7,11"]
 ```
 
 ### 8.3 Kubernetes HPA 配置示例
@@ -906,41 +769,34 @@ spec:
 
 ### 9.3 时钟同步
 
+```mermaid
+graph TB
+    subgraph L1["层级 1: GPS/原子钟 (Stratum 0)"]
+        GPS["GPS 卫星 / 铯原子钟"]
+    end
+    
+    subgraph L2["层级 2: 时间服务器 (Stratum 1)"]
+        NTPA["NTP Server A (Primary)"]
+        NTPB["NTP Server B (Secondary)"]
+    end
+    
+    subgraph L3["层级 3: 数据中心"]
+        T1["Timer Node 1<br/>chrony/PTPd"]
+        T2["Timer Node 2<br/>chrony/PTPd"]
+        T3["Timer Node 3<br/>chrony/PTPd"]
+    end
+    
+    GPS --> NTPA
+    GPS --> NTPB
+    NTPA -->|PTP / NTP| T1
+    NTPA -->|PTP / NTP| T2
+    NTPB -->|PTP / NTP| T3
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    时钟同步架构                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  层级 1: GPS/原子钟 (Stratum 0)                                  │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              GPS 卫星 / 铯原子钟                          │    │
-│  └────────────────────────────┬────────────────────────────┘    │
-│                               │                                  │
-│                               ▼                                  │
-│  层级 2: 时间服务器 (Stratum 1)                                  │
-│  ┌────────────────┐    ┌────────────────┐                       │
-│  │  NTP Server A  │    │  NTP Server B  │                       │
-│  │  (Primary)     │    │  (Secondary)   │                       │
-│  └───────┬────────┘    └───────┬────────┘                       │
-│          │                     │                                 │
-│          └──────────┬──────────┘                                │
-│                     │ PTP / NTP                                  │
-│                     ▼                                            │
-│  层级 3: 数据中心                                                │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐ │    │
-│  │   │ Timer Node 1│    │ Timer Node 2│    │ Timer Node 3│ │    │
-│  │   │ chrony/PTPd │    │ chrony/PTPd │    │ chrony/PTPd │ │    │
-│  │   └─────────────┘    └─────────────┘    └─────────────┘ │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-│  精度对比:                                                       │
-│  - NTP: 毫秒级 (1-10ms)                                         │
-│  - PTP (IEEE 1588): 微秒级 (< 1μs)                              │
-│  - 同机房 NTP: 亚毫秒级 (< 1ms)                                  │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**精度对比:**
+- **NTP:** 毫秒级 (1-10ms)
+- **PTP (IEEE 1588):** 微秒级 (< 1μs)
+- **同机房 NTP:** 亚毫秒级 (< 1ms)
 
 ---
 
@@ -963,44 +819,27 @@ spec:
 
 ### 10.2 分布式追踪
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    定时任务追踪链路                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Trace ID: abc-123-def-456                                      │
-│                                                                  │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │ Span 1: create_timer                                     │   │
-│  │ Service: timer-api                                       │   │
-│  │ Duration: 5ms                                            │   │
-│  │ Tags: timer_id=xxx, delay=1000ms                        │   │
-│  └─────────────────────────────────┬────────────────────────┘   │
-│                                    │                             │
-│  ┌─────────────────────────────────▼────────────────────────┐   │
-│  │ Span 2: persist_timer                                    │   │
-│  │ Service: timer-storage                                   │   │
-│  │ Duration: 3ms                                            │   │
-│  │ Tags: db=mysql, shard=5                                 │   │
-│  └─────────────────────────────────┬────────────────────────┘   │
-│                                    │                             │
-│  ... (等待 1000ms) ...                                          │
-│                                    │                             │
-│  ┌─────────────────────────────────▼────────────────────────┐   │
-│  │ Span 3: trigger_timer                                    │   │
-│  │ Service: timer-worker                                    │   │
-│  │ Duration: 2ms                                            │   │
-│  │ Tags: timer_id=xxx, delay_jitter=3ms                    │   │
-│  └─────────────────────────────────┬────────────────────────┘   │
-│                                    │                             │
-│  ┌─────────────────────────────────▼────────────────────────┐   │
-│  │ Span 4: execute_callback                                 │   │
-│  │ Service: timer-callback                                  │   │
-│  │ Duration: 50ms                                           │   │
-│  │ Tags: callback_url=http://..., status=200               │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+**Trace ID:** `abc-123-def-456`
+
+```mermaid
+sequenceDiagram
+    participant API as timer-api
+    participant Storage as timer-storage
+    participant Worker as timer-worker
+    participant Callback as timer-callback
+
+    Note over API: Span 1: create_timer<br/>Duration: 5ms<br/>Tags: timer_id=xxx, delay=1000ms
+    API->>Storage: persist_timer
+    
+    Note over Storage: Span 2: persist_timer<br/>Duration: 3ms<br/>Tags: db=mysql, shard=5
+    
+    Note over Worker: ... 等待 1000ms ...
+    
+    Storage->>Worker: trigger_timer
+    Note over Worker: Span 3: trigger_timer<br/>Duration: 2ms<br/>Tags: timer_id=xxx, delay_jitter=3ms
+    
+    Worker->>Callback: execute_callback
+    Note over Callback: Span 4: execute_callback<br/>Duration: 50ms<br/>Tags: callback_url=http://..., status=200
 ```
 
 ---
@@ -1073,43 +912,27 @@ spec:
 
 ### 12.4 架构演进路径
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    架构演进路径                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  阶段 1: 单机内存定时器                                          │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  适用: 任务量 < 10万，可接受宕机丢失                       │    │
-│  │  实现: timerfd + 时间轮 + 本地线程池                      │    │
-│  │  复杂度: 低                                               │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                         │                                        │
-│                         ▼                                        │
-│  阶段 2: 单机持久化定时器                                        │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  适用: 任务不可丢失，但规模有限                           │    │
-│  │  实现: 阶段 1 + MySQL/Redis 持久化                        │    │
-│  │  复杂度: 中                                               │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                         │                                        │
-│                         ▼                                        │
-│  阶段 3: 分布式定时器                                            │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  适用: 高可用要求，任务量 > 100万                         │    │
-│  │  实现: 多节点 + 分片 + 故障转移                           │    │
-│  │  复杂度: 高                                               │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                         │                                        │
-│                         ▼                                        │
-│  阶段 4: 云原生定时器平台                                        │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  适用: 多租户，弹性伸缩                                   │    │
-│  │  实现: K8s + 自动扩缩 + 多活                              │    │
-│  │  复杂度: 极高                                             │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Phase1["阶段 1: 单机内存定时器"]
+        P1["适用: 任务量 < 10万，可接受宕机丢失<br/>实现: timerfd + 时间轮 + 本地线程池<br/>复杂度: 低"]
+    end
+    
+    subgraph Phase2["阶段 2: 单机持久化定时器"]
+        P2["适用: 任务不可丢失，但规模有限<br/>实现: 阶段 1 + MySQL/Redis 持久化<br/>复杂度: 中"]
+    end
+    
+    subgraph Phase3["阶段 3: 分布式定时器"]
+        P3["适用: 高可用要求，任务量 > 100万<br/>实现: 多节点 + 分片 + 故障转移<br/>复杂度: 高"]
+    end
+    
+    subgraph Phase4["阶段 4: 云原生定时器平台"]
+        P4["适用: 多租户，弹性伸缩<br/>实现: K8s + 自动扩缩 + 多活<br/>复杂度: 极高"]
+    end
+    
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    Phase3 --> Phase4
 ```
 
 ---

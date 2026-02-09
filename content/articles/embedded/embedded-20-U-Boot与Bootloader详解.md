@@ -16,152 +16,77 @@ Bootloader 是嵌入式系统启动的第一道关卡，负责初始化硬件并
 
 ### 1.1 什么是 Bootloader
 
-```
-Bootloader 在系统中的位置：
+**Bootloader 在系统中的位置：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  系统启动流程：                                                      │
-│                                                                      │
-│  ┌─────────────┐                                                    │
-│  │   上电复位   │                                                    │
-│  └──────┬──────┘                                                    │
-│         │                                                            │
-│         ▼                                                            │
-│  ┌─────────────┐                                                    │
-│  │  芯片 ROM    │  ← 芯片内置代码，不可修改                         │
-│  │  (BootROM)  │    负责最基本的初始化和加载                        │
-│  └──────┬──────┘                                                    │
-│         │                                                            │
-│         ▼                                                            │
-│  ┌─────────────┐                                                    │
-│  │ Bootloader  │  ← U-Boot、Barebox 等                              │
-│  │  (SPL/TPL)  │    初始化 DDR、外设，加载内核                      │
-│  └──────┬──────┘                                                    │
-│         │                                                            │
-│         ▼                                                            │
-│  ┌─────────────┐                                                    │
-│  │ Linux 内核  │  ← kernel + device tree                            │
-│  └──────┬──────┘                                                    │
-│         │                                                            │
-│         ▼                                                            │
-│  ┌─────────────┐                                                    │
-│  │ 根文件系统  │  ← rootfs (initramfs 或 SD/eMMC/NFS)               │
-│  └──────┬──────┘                                                    │
-│         │                                                            │
-│         ▼                                                            │
-│  ┌─────────────┐                                                    │
-│  │   应用程序   │                                                    │
-│  └─────────────┘                                                    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-
-Bootloader 的主要职责：
-━━━━━━━━━━━━━━━━━━━━━━━
-• 初始化 CPU（时钟、缓存、MMU）
-• 初始化内存控制器（DDR/SDRAM）
-• 初始化存储设备（eMMC/SD/NAND/NOR）
-• 初始化基本外设（串口用于调试）
-• 提供命令行界面
-• 加载内核和设备树到内存
-• 设置启动参数
-• 跳转到内核执行
+```mermaid
+graph TB
+    A["上电复位"] --> B["芯片 ROM<br/>(BootROM)<br/>芯片内置代码，不可修改<br/>负责最基本的初始化和加载"]
+    B --> C["Bootloader<br/>(SPL/TPL)<br/>U-Boot、Barebox 等<br/>初始化 DDR、外设，加载内核"]
+    C --> D["Linux 内核<br/>kernel + device tree"]
+    D --> E["根文件系统<br/>rootfs (initramfs 或 SD/eMMC/NFS)"]
+    E --> F["应用程序"]
 ```
+
+**Bootloader 的主要职责：**
+- 初始化 CPU（时钟、缓存、MMU）
+- 初始化内存控制器（DDR/SDRAM）
+- 初始化存储设备（eMMC/SD/NAND/NOR）
+- 初始化基本外设（串口用于调试）
+- 提供命令行界面
+- 加载内核和设备树到内存
+- 设置启动参数
+- 跳转到内核执行
 
 ### 1.2 常见 Bootloader 对比
 
-```
-常见 Bootloader 对比：
+**常见 Bootloader 对比：**
 
-┌───────────────┬───────────────────────────────────────────────────────┐
-│ Bootloader    │ 特点                                                  │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ U-Boot        │ • 最流行的开源 Bootloader                             │
-│               │ • 支持 ARM、MIPS、x86、RISC-V 等                      │
-│               │ • 功能丰富，社区活跃                                  │
-│               │ • 大多数 SoC 厂商官方支持                             │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ Barebox       │ • U-Boot 的替代品                                     │
-│               │ • 更现代的架构设计                                    │
-│               │ • 类似 Linux 的设备模型                               │
-│               │ • 代码更简洁                                          │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ GRUB          │ • PC/服务器常用                                       │
-│               │ • 支持多操作系统启动                                  │
-│               │ • x86/x86_64 为主                                     │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ UEFI          │ • 现代 PC 标准                                        │
-│               │ • 替代传统 BIOS                                       │
-│               │ • 安全启动（Secure Boot）                             │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ Coreboot      │ • 开源固件                                            │
-│               │ • 替代专有 BIOS                                       │
-│               │ • ChromeOS 使用                                       │
-├───────────────┼───────────────────────────────────────────────────────┤
-│ 厂商私有      │ • 某些 SoC 厂商专有 Bootloader                        │
-│               │ • 如高通、联发科部分方案                              │
-└───────────────┴───────────────────────────────────────────────────────┘
-```
+| Bootloader | 特点 |
+|------------|------|
+| U-Boot | 最流行的开源 Bootloader，支持 ARM、MIPS、x86、RISC-V 等，功能丰富，社区活跃，大多数 SoC 厂商官方支持 |
+| Barebox | U-Boot 的替代品，更现代的架构设计，类似 Linux 的设备模型，代码更简洁 |
+| GRUB | PC/服务器常用，支持多操作系统启动，x86/x86_64 为主 |
+| UEFI | 现代 PC 标准，替代传统 BIOS，安全启动（Secure Boot） |
+| Coreboot | 开源固件，替代专有 BIOS，ChromeOS 使用 |
+| 厂商私有 | 某些 SoC 厂商专有 Bootloader，如高通、联发科部分方案 |
 
 ### 1.3 多阶段启动
 
-```
-典型的多阶段启动流程：
+**典型的多阶段启动流程：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  为什么需要多阶段？                                                  │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 芯片内部 SRAM 很小（几十 KB 到几百 KB）                          │
-│  • 完整 U-Boot 太大（几百 KB 到 1MB+）                              │
-│  • 需要先用小程序初始化 DDR，再加载大程序                           │
-│                                                                      │
-│  典型流程（以 ARM 为例）：                                           │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━                                           │
-│                                                                      │
-│  阶段 0: BootROM                                                     │
-│  ┌───────────────────────────────────────────────────────────┐      │
-│  │ • 芯片厂商固化在 ROM 中                                    │      │
-│  │ • 检测启动模式（SD/eMMC/NAND/USB/UART）                   │      │
-│  │ • 从存储介质加载 SPL 到 SRAM                              │      │
-│  │ • 跳转到 SPL                                              │      │
-│  └───────────────────────────────────────────────────────────┘      │
-│         │                                                            │
-│         ▼                                                            │
-│  阶段 1: SPL (Secondary Program Loader) / TPL                       │
-│  ┌───────────────────────────────────────────────────────────┐      │
-│  │ • 运行在 SRAM 中（几十 KB）                                │      │
-│  │ • 初始化时钟树                                             │      │
-│  │ • 初始化 DDR 控制器                                        │      │
-│  │ • 从存储介质加载完整 U-Boot 到 DDR                        │      │
-│  │ • 跳转到 U-Boot                                           │      │
-│  └───────────────────────────────────────────────────────────┘      │
-│         │                                                            │
-│         ▼                                                            │
-│  阶段 2: U-Boot (Main Bootloader)                                   │
-│  ┌───────────────────────────────────────────────────────────┐      │
-│  │ • 运行在 DDR 中                                            │      │
-│  │ • 完整初始化所有外设                                       │      │
-│  │ • 提供命令行界面                                           │      │
-│  │ • 支持网络/USB/文件系统等                                  │      │
-│  │ • 加载内核和设备树                                         │      │
-│  │ • 跳转到内核                                               │      │
-│  └───────────────────────────────────────────────────────────┘      │
-│         │                                                            │
-│         ▼                                                            │
-│  阶段 3: Linux Kernel                                                │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+**为什么需要多阶段？**
+- 芯片内部 SRAM 很小（几十 KB 到几百 KB）
+- 完整 U-Boot 太大（几百 KB 到 1MB+）
+- 需要先用小程序初始化 DDR，再加载大程序
 
-存储布局示例（eMMC）：
-━━━━━━━━━━━━━━━━━━━━━━
-┌────────────┬────────────┬────────────┬────────────┬────────────────┐
-│   Boot0    │   Boot1    │    GPT     │  Partitions                  │
-├────────────┼────────────┼────────────┼────────────┬────────────────┤
-│ SPL/TPL    │ SPL/TPL    │ 分区表     │ U-Boot     │ Kernel/rootfs  │
-│ (备份)     │            │            │            │                │
-└────────────┴────────────┴────────────┴────────────┴────────────────┘
+**典型流程（以 ARM 为例）：**
+
+```mermaid
+graph TB
+    subgraph 阶段0 - BootROM
+        ROM["芯片厂商固化在 ROM 中<br/>检测启动模式(SD/eMMC/NAND/USB/UART)<br/>从存储介质加载 SPL 到 SRAM<br/>跳转到 SPL"]
+    end
+    
+    subgraph 阶段1 - SPL/TPL
+        SPL["运行在 SRAM 中(几十 KB)<br/>初始化时钟树<br/>初始化 DDR 控制器<br/>从存储介质加载完整 U-Boot 到 DDR<br/>跳转到 U-Boot"]
+    end
+    
+    subgraph 阶段2 - U-Boot
+        UBOOT["运行在 DDR 中<br/>完整初始化所有外设<br/>提供命令行界面<br/>支持网络/USB/文件系统等<br/>加载内核和设备树<br/>跳转到内核"]
+    end
+    
+    subgraph 阶段3
+        KERNEL["Linux Kernel"]
+    end
+    
+    ROM --> SPL --> UBOOT --> KERNEL
 ```
+
+**存储布局示例（eMMC）：**
+
+| Boot0 | Boot1 | GPT | Partitions |
+|-------|-------|-----|------------|
+| SPL/TPL (备份) | SPL/TPL | 分区表 | U-Boot / Kernel/rootfs |
 
 ---
 
@@ -172,155 +97,121 @@ Bootloader 的主要职责：
 ```
 U-Boot 代码结构：
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  u-boot/                                                            │
-│  ├── arch/          ← CPU 架构相关代码                              │
-│  │   ├── arm/                                                       │
-│  │   │   ├── cpu/           ← CPU 类型（armv7, armv8）             │
-│  │   │   ├── mach-xxx/      ← SoC 平台代码                         │
-│  │   │   ├── dts/           ← 设备树源文件                         │
-│  │   │   └── lib/           ← 架构相关库                           │
-│  │   ├── x86/                                                       │
-│  │   └── riscv/                                                     │
-│  │                                                                   │
-│  ├── board/         ← 开发板相关代码                                │
-│  │   ├── vendor/                                                    │
-│  │   │   └── board_name/                                            │
-│  │   │       ├── board.c    ← 板级初始化                           │
-│  │   │       ├── Kconfig                                            │
-│  │   │       └── Makefile                                           │
-│  │                                                                   │
-│  ├── cmd/           ← 命令实现                                      │
-│  │   ├── boot.c             ← boot 命令                            │
-│  │   ├── mmc.c              ← mmc 命令                             │
-│  │   └── net.c              ← 网络命令                             │
-│  │                                                                   │
-│  ├── common/        ← 通用代码                                      │
-│  │   ├── main.c             ← 主循环                               │
-│  │   ├── board_f.c          ← 早期初始化                           │
-│  │   └── board_r.c          ← 后期初始化                           │
-│  │                                                                   │
-│  ├── configs/       ← 板级默认配置                                  │
-│  │   ├── xxx_defconfig                                              │
-│  │                                                                   │
-│  ├── drivers/       ← 驱动程序                                      │
-│  │   ├── mmc/                                                       │
-│  │   ├── net/                                                       │
-│  │   ├── serial/                                                    │
-│  │   └── usb/                                                       │
-│  │                                                                   │
-│  ├── include/       ← 头文件                                        │
-│  │   ├── configs/           ← 板级配置头文件                       │
-│  │   └── asm/               ← 架构相关头文件                       │
-│  │                                                                   │
-│  ├── lib/           ← 通用库                                        │
-│  ├── net/           ← 网络协议栈                                    │
-│  ├── fs/            ← 文件系统                                      │
-│  └── tools/         ← 主机工具（mkimage 等）                        │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+u-boot/
+├── arch/          ← CPU 架构相关代码
+│   ├── arm/
+│   │   ├── cpu/           ← CPU 类型（armv7, armv8）
+│   │   ├── mach-xxx/      ← SoC 平台代码
+│   │   ├── dts/           ← 设备树源文件
+│   │   └── lib/           ← 架构相关库
+│   ├── x86/
+│   └── riscv/
+│
+├── board/         ← 开发板相关代码
+│   └── vendor/
+│       └── board_name/
+│           ├── board.c    ← 板级初始化
+│           ├── Kconfig
+│           └── Makefile
+│
+├── cmd/           ← 命令实现
+│   ├── boot.c             ← boot 命令
+│   ├── mmc.c              ← mmc 命令
+│   └── net.c              ← 网络命令
+│
+├── common/        ← 通用代码
+│   ├── main.c             ← 主循环
+│   ├── board_f.c          ← 早期初始化
+│   └── board_r.c          ← 后期初始化
+│
+├── configs/       ← 板级默认配置
+│   └── xxx_defconfig
+│
+├── drivers/       ← 驱动程序
+│   ├── mmc/
+│   ├── net/
+│   ├── serial/
+│   └── usb/
+│
+├── include/       ← 头文件
+│   ├── configs/           ← 板级配置头文件
+│   └── asm/               ← 架构相关头文件
+│
+├── lib/           ← 通用库
+├── net/           ← 网络协议栈
+├── fs/            ← 文件系统
+└── tools/         ← 主机工具（mkimage 等）
 ```
 
 ### 2.2 启动流程详解
 
-```
-U-Boot 启动流程（ARM 为例）：
+**U-Boot 启动流程（ARM 为例）：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  1. 入口点 (_start)                                                 │
-│  ━━━━━━━━━━━━━━━━━━                                                 │
-│  arch/arm/cpu/armv7/start.S                                         │
-│  • 设置 CPU 模式（SVC）                                             │
-│  • 禁用中断                                                         │
-│  • 禁用 MMU、Cache                                                  │
-│  • 设置栈指针                                                       │
-│  • 跳转到 C 代码                                                    │
-│                                                                      │
-│  2. 早期初始化 (board_init_f)                                       │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━                                        │
-│  common/board_f.c                                                   │
-│  • 初始化 GD（全局数据结构）                                        │
-│  • 串口初始化                                                       │
-│  • 定时器初始化                                                     │
-│  • 环境变量初始化                                                   │
-│  • DDR 初始化（如果是 SPL）                                         │
-│  • 计算重定位地址                                                   │
-│                                                                      │
-│  3. 代码重定位 (relocate_code)                                      │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                      │
-│  • 将 U-Boot 从加载地址复制到 DDR 高端                              │
-│  • 重定位后继续执行                                                 │
-│                                                                      │
-│  4. 后期初始化 (board_init_r)                                       │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                       │
-│  common/board_r.c                                                   │
-│  • 初始化 malloc 堆                                                 │
-│  • 初始化设备模型 (DM)                                              │
-│  • 初始化更多外设（网络、USB、MMC）                                 │
-│  • 运行环境变量中的启动脚本                                         │
-│                                                                      │
-│  5. 主循环 (main_loop)                                              │
-│  ━━━━━━━━━━━━━━━━━━━━━                                              │
-│  common/main.c                                                      │
-│  • 等待用户输入                                                     │
-│  • 如果超时，执行 bootcmd                                           │
-│  • 解析和执行命令                                                   │
-│                                                                      │
-│  初始化序列（board_f）示例：                                        │
-│  static const init_fnc_t init_sequence_f[] = {                      │
-│      setup_mon_len,                                                 │
-│      initf_malloc,                                                  │
-│      log_init,                                                      │
-│      initf_bootstage,                                               │
-│      arch_cpu_init,                                                 │
-│      initf_dm,                                                      │
-│      board_early_init_f,                                            │
-│      timer_init,                                                    │
-│      env_init,                                                      │
-│      init_baud_rate,                                                │
-│      serial_init,                                                   │
-│      console_init_f,                                                │
-│      print_cpuinfo,                                                 │
-│      ...                                                            │
-│      dram_init,                                                     │
-│      ...                                                            │
-│      NULL,                                                          │
-│  };                                                                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 1. 入口点 _start
+        S1["arch/arm/cpu/armv7/start.S<br/>设置 CPU 模式(SVC)<br/>禁用中断<br/>禁用 MMU、Cache<br/>设置栈指针<br/>跳转到 C 代码"]
+    end
+    
+    subgraph 2. 早期初始化 board_init_f
+        S2["common/board_f.c<br/>初始化 GD(全局数据结构)<br/>串口初始化<br/>定时器初始化<br/>环境变量初始化<br/>DDR 初始化(如果是 SPL)<br/>计算重定位地址"]
+    end
+    
+    subgraph 3. 代码重定位 relocate_code
+        S3["将 U-Boot 从加载地址复制到 DDR 高端<br/>重定位后继续执行"]
+    end
+    
+    subgraph 4. 后期初始化 board_init_r
+        S4["common/board_r.c<br/>初始化 malloc 堆<br/>初始化设备模型(DM)<br/>初始化更多外设(网络、USB、MMC)<br/>运行环境变量中的启动脚本"]
+    end
+    
+    subgraph 5. 主循环 main_loop
+        S5["common/main.c<br/>等待用户输入<br/>如果超时，执行 bootcmd<br/>解析和执行命令"]
+    end
+    
+    S1 --> S2 --> S3 --> S4 --> S5
+```
+
+**初始化序列（board_f）示例：**
+
+```c
+static const init_fnc_t init_sequence_f[] = {
+    setup_mon_len,
+    initf_malloc,
+    log_init,
+    initf_bootstage,
+    arch_cpu_init,
+    initf_dm,
+    board_early_init_f,
+    timer_init,
+    env_init,
+    init_baud_rate,
+    serial_init,
+    console_init_f,
+    print_cpuinfo,
+    ...
+    dram_init,
+    ...
+    NULL,
+};
 ```
 
 ### 2.3 设备模型 (DM)
 
-```
-U-Boot 设备模型：
+**U-Boot 设备模型：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  设备模型结构：                                                      │
-│                                                                      │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                         uclass                               │   │
-│  │            (设备类型：如 MMC、ETH、USB)                      │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│                               │                                     │
-│                               │ 包含多个设备                        │
-│                               ▼                                     │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │   udevice   │  │   udevice   │  │   udevice   │                 │
-│  │  (设备实例) │  │  (设备实例) │  │  (设备实例) │                 │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘                 │
-│         │                │                │                         │
-│         │                │                │                         │
-│         ▼                ▼                ▼                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │   driver    │  │   driver    │  │   driver    │                 │
-│  │  (驱动程序) │  │  (驱动程序) │  │  (驱动程序) │                 │
-│  └─────────────┘  └─────────────┘  └─────────────┘                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    UC["uclass<br/>(设备类型：如 MMC、ETH、USB)"]
+    
+    UC -->|包含多个设备| D1["udevice<br/>(设备实例)"]
+    UC -->|包含多个设备| D2["udevice<br/>(设备实例)"]
+    UC -->|包含多个设备| D3["udevice<br/>(设备实例)"]
+    
+    D1 --> DR1["driver<br/>(驱动程序)"]
+    D2 --> DR2["driver<br/>(驱动程序)"]
+    D3 --> DR3["driver<br/>(驱动程序)"]
+```
 
 关键数据结构：
 
@@ -588,50 +479,39 @@ $ mkimage -C none -A arm64 -T script -d boot.cmd boot.scr
 
 ### 5.1 新板子移植步骤
 
-```
-U-Boot 移植流程：
+**U-Boot 移植流程：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  1. 准备工作                                                         │
-│  ━━━━━━━━━━                                                         │
-│  • 获取硬件规格书（原理图、芯片手册）                               │
-│  • 确定 SoC 类型                                                    │
-│  • 确定外设配置（DDR 型号和容量、Flash 类型）                       │
-│  • 选择参考板                                                       │
-│                                                                      │
-│  2. 创建板级目录                                                     │
-│  ━━━━━━━━━━━━━━                                                     │
-│  board/myvendor/myboard/                                            │
-│  ├── Kconfig          ← 板级配置选项                                │
-│  ├── MAINTAINERS      ← 维护者信息                                  │
-│  ├── Makefile                                                       │
-│  └── myboard.c        ← 板级初始化代码                              │
-│                                                                      │
-│  3. 创建默认配置                                                     │
-│  ━━━━━━━━━━━━━━━━                                                   │
-│  configs/myboard_defconfig                                          │
-│                                                                      │
-│  4. 创建/修改设备树                                                  │
-│  ━━━━━━━━━━━━━━━━━━                                                 │
-│  arch/arm/dts/myboard.dts                                           │
-│                                                                      │
-│  5. 配置 DDR 初始化                                                  │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 时序参数                                                         │
-│  • 容量配置                                                         │
-│                                                                      │
-│  6. 编译测试                                                         │
-│  ━━━━━━━━━━                                                         │
-│  make myboard_defconfig                                             │
-│  make CROSS_COMPILE=...                                             │
-│                                                                      │
-│  7. 调试                                                             │
-│  ━━━━━━                                                             │
-│  • 使用 JTAG/SWD                                                    │
-│  • 串口日志分析                                                     │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph 1. 准备工作
+        P1["获取硬件规格书（原理图、芯片手册）<br/>确定 SoC 类型<br/>确定外设配置（DDR 型号和容量、Flash 类型）<br/>选择参考板"]
+    end
+    
+    subgraph 2. 创建板级目录
+        P2["board/myvendor/myboard/<br/>├── Kconfig (板级配置选项)<br/>├── MAINTAINERS (维护者信息)<br/>├── Makefile<br/>└── myboard.c (板级初始化代码)"]
+    end
+    
+    subgraph 3. 创建默认配置
+        P3["configs/myboard_defconfig"]
+    end
+    
+    subgraph 4. 创建/修改设备树
+        P4["arch/arm/dts/myboard.dts"]
+    end
+    
+    subgraph 5. 配置DDR初始化
+        P5["时序参数<br/>容量配置"]
+    end
+    
+    subgraph 6. 编译测试
+        P6["make myboard_defconfig<br/>make CROSS_COMPILE=..."]
+    end
+    
+    subgraph 7. 调试
+        P7["使用 JTAG/SWD<br/>串口日志分析"]
+    end
+    
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7
 ```
 
 ### 5.2 板级代码示例
@@ -793,148 +673,124 @@ CONFIG_CMD_FAT=y
 
 ### 6.1 调试方法
 
-```
-U-Boot 调试方法：
+**U-Boot 调试方法：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  1. 串口调试（最基本）                                              │
-│  ━━━━━━━━━━━━━━━━━━━━                                               │
-│  • 连接 UART 调试串口                                               │
-│  • 波特率通常 115200                                                │
-│  • 查看启动日志                                                     │
-│  • 在 autoboot 前按键进入命令行                                     │
-│                                                                      │
-│  2. JTAG/SWD 调试                                                   │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 使用 OpenOCD + GDB                                               │
-│  • 可设置断点、单步执行                                             │
-│  • 适用于 SPL/早期启动调试                                          │
-│                                                                      │
-│  # OpenOCD 配置示例                                                 │
-│  $ openocd -f interface/ftdi/olimex-arm-usb-ocd.cfg \               │
-│            -f target/allwinner_h5.cfg                               │
-│                                                                      │
-│  # GDB 连接                                                         │
-│  $ arm-none-eabi-gdb u-boot                                         │
-│  (gdb) target remote :3333                                          │
-│  (gdb) load                                                         │
-│  (gdb) b board_init                                                 │
-│  (gdb) c                                                            │
-│                                                                      │
-│  3. 日志级别调整                                                     │
-│  ━━━━━━━━━━━━━━━━                                                   │
-│  # menuconfig 中开启                                                │
-│  CONFIG_LOG=y                                                       │
-│  CONFIG_LOG_DEFAULT_LEVEL=7    # 7=debug                            │
-│  CONFIG_LOG_MAX_LEVEL=7                                             │
-│                                                                      │
-│  # 代码中使用                                                       │
-│  log_debug("Debug message\n");                                      │
-│  log_info("Info message\n");                                        │
-│  log_err("Error message\n");                                        │
-│                                                                      │
-│  4. 早期打印                                                         │
-│  ━━━━━━━━━━━━                                                       │
-│  # SPL 串口还未初始化时                                             │
-│  CONFIG_DEBUG_UART=y                                                │
-│  CONFIG_DEBUG_UART_BASE=0x01c28000                                  │
-│  CONFIG_DEBUG_UART_CLOCK=24000000                                   │
-│                                                                      │
-│  # 代码中                                                           │
-│  debug_uart_init();                                                 │
-│  printascii("Hello from early SPL\n");                              │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+**1. 串口调试（最基本）**
+- 连接 UART 调试串口
+- 波特率通常 115200
+- 查看启动日志
+- 在 autoboot 前按键进入命令行
+
+**2. JTAG/SWD 调试**
+- 使用 OpenOCD + GDB
+- 可设置断点、单步执行
+- 适用于 SPL/早期启动调试
+
+```bash
+# OpenOCD 配置示例
+$ openocd -f interface/ftdi/olimex-arm-usb-ocd.cfg \
+          -f target/allwinner_h5.cfg
+
+# GDB 连接
+$ arm-none-eabi-gdb u-boot
+(gdb) target remote :3333
+(gdb) load
+(gdb) b board_init
+(gdb) c
+```
+
+**3. 日志级别调整**
+
+```bash
+# menuconfig 中开启
+CONFIG_LOG=y
+CONFIG_LOG_DEFAULT_LEVEL=7    # 7=debug
+CONFIG_LOG_MAX_LEVEL=7
+```
+
+```c
+// 代码中使用
+log_debug("Debug message\n");
+log_info("Info message\n");
+log_err("Error message\n");
+```
+
+**4. 早期打印**
+
+```bash
+# SPL 串口还未初始化时
+CONFIG_DEBUG_UART=y
+CONFIG_DEBUG_UART_BASE=0x01c28000
+CONFIG_DEBUG_UART_CLOCK=24000000
+```
+
+```c
+// 代码中
+debug_uart_init();
+printascii("Hello from early SPL\n");
 ```
 
 ### 6.2 常见问题排查
 
-```
-常见启动问题：
+**常见启动问题：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  问题1：无任何输出                                                   │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 检查串口连接（TX/RX 是否交叉）                                   │
-│  • 检查波特率设置                                                   │
-│  • 检查 SPL 是否正确加载                                            │
-│  • 使用 JTAG 确认代码是否运行                                       │
-│                                                                      │
-│  问题2：SPL 卡住                                                     │
-│  ━━━━━━━━━━━━━━━                                                    │
-│  • DDR 初始化失败（检查时序参数）                                   │
-│  • 时钟配置错误                                                     │
-│  • 检查 SPL 大小是否超限                                            │
-│                                                                      │
-│  问题3：无法加载 U-Boot                                              │
-│  ━━━━━━━━━━━━━━━━━━━                                                │
-│  • 检查存储介质分区                                                 │
-│  • 检查 U-Boot 在存储中的偏移量                                     │
-│  • 验证 U-Boot 镜像完整性                                           │
-│                                                                      │
-│  问题4：无法加载内核                                                 │
-│  ━━━━━━━━━━━━━━━━━                                                  │
-│  • 检查文件路径                                                     │
-│  • 检查内存地址是否冲突                                             │
-│  • 验证内核镜像格式                                                 │
-│                                                                      │
-│  问题5：内核启动后挂起                                               │
-│  ━━━━━━━━━━━━━━━━━━━                                                │
-│  • 检查 bootargs 参数                                               │
-│  • 检查设备树是否匹配                                               │
-│  • 检查根文件系统是否可访问                                         │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**问题1：无任何输出**
+- 检查串口连接（TX/RX 是否交叉）
+- 检查波特率设置
+- 检查 SPL 是否正确加载
+- 使用 JTAG 确认代码是否运行
+
+**问题2：SPL 卡住**
+- DDR 初始化失败（检查时序参数）
+- 时钟配置错误
+- 检查 SPL 大小是否超限
+
+**问题3：无法加载 U-Boot**
+- 检查存储介质分区
+- 检查 U-Boot 在存储中的偏移量
+- 验证 U-Boot 镜像完整性
+
+**问题4：无法加载内核**
+- 检查文件路径
+- 检查内存地址是否冲突
+- 验证内核镜像格式
+
+**问题5：内核启动后挂起**
+- 检查 bootargs 参数
+- 检查设备树是否匹配
+- 检查根文件系统是否可访问
 
 ---
 
 ## 七、安全启动
 
-```
-安全启动（Secure Boot）概述：
+**安全启动（Secure Boot）概述：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  安全启动链：                                                        │
-│  ━━━━━━━━━━━                                                        │
-│                                                                      │
-│  ┌─────────────┐     验证签名     ┌─────────────┐                  │
-│  │  BootROM    │ ─────────────────►│    SPL      │                  │
-│  │ (Root Key) │                   │ (已签名)    │                  │
-│  └─────────────┘                   └──────┬──────┘                  │
-│                                           │                          │
-│                                    验证签名 │                        │
-│                                           ▼                          │
-│                                    ┌─────────────┐                  │
-│                                    │   U-Boot    │                  │
-│                                    │  (已签名)   │                  │
-│                                    └──────┬──────┘                  │
-│                                           │                          │
-│                                    验证签名 │                        │
-│                                           ▼                          │
-│                                    ┌─────────────┐                  │
-│                                    │   Kernel    │                  │
-│                                    │  (已签名)   │                  │
-│                                    └─────────────┘                  │
-│                                                                      │
-│  U-Boot FIT 签名验证：                                              │
-│  ━━━━━━━━━━━━━━━━━━━━                                               │
-│  # 生成密钥                                                         │
-│  $ openssl genrsa -out keys/dev.key 2048                            │
-│  $ openssl req -new -x509 -key keys/dev.key -out keys/dev.crt       │
-│                                                                      │
-│  # 创建签名的 FIT 镜像                                              │
-│  $ mkimage -f fit.its -K u-boot.dtb -k keys -r fit.itb              │
-│                                                                      │
-│  # 配置 U-Boot 启用验证                                             │
-│  CONFIG_FIT=y                                                       │
-│  CONFIG_FIT_SIGNATURE=y                                             │
-│  CONFIG_RSA=y                                                       │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+**安全启动链：**
+
+```mermaid
+graph TB
+    A["BootROM<br/>(Root Key)"] -->|验证签名| B["SPL<br/>(已签名)"]
+    B -->|验证签名| C["U-Boot<br/>(已签名)"]
+    C -->|验证签名| D["Kernel<br/>(已签名)"]
+```
+
+**U-Boot FIT 签名验证：**
+
+```bash
+# 生成密钥
+$ openssl genrsa -out keys/dev.key 2048
+$ openssl req -new -x509 -key keys/dev.key -out keys/dev.crt
+
+# 创建签名的 FIT 镜像
+$ mkimage -f fit.its -K u-boot.dtb -k keys -r fit.itb
+```
+
+```bash
+# 配置 U-Boot 启用验证
+CONFIG_FIT=y
+CONFIG_FIT_SIGNATURE=y
+CONFIG_RSA=y
 ```
 
 ---
@@ -943,40 +799,23 @@ U-Boot 调试方法：
 
 ### 8.1 TFTP 启动
 
-```
-网络启动流程：
+**网络启动流程：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  ┌──────────┐                    ┌──────────┐                       │
-│  │  Target  │◄──── 网络 ────────►│  Server  │                       │
-│  │  Board   │                    │  (TFTP)  │                       │
-│  └────┬─────┘                    └────┬─────┘                       │
-│       │                               │                              │
-│       │  1. DHCP Request              │                              │
-│       │──────────────────────────────►│                              │
-│       │◄──────────────────────────────│  2. DHCP Response           │
-│       │   (IP + TFTP server + file)   │     (可选 PXE 配置)         │
-│       │                               │                              │
-│       │  3. TFTP Request (kernel)     │                              │
-│       │──────────────────────────────►│                              │
-│       │◄──────────────────────────────│  4. Kernel Image            │
-│       │                               │                              │
-│       │  5. TFTP Request (dtb)        │                              │
-│       │──────────────────────────────►│                              │
-│       │◄──────────────────────────────│  6. Device Tree             │
-│       │                               │                              │
-│       │  7. TFTP Request (rootfs)     │  (可选)                      │
-│       │──────────────────────────────►│                              │
-│       │◄──────────────────────────────│  8. Initramfs               │
-│       │                               │                              │
-│       ▼                               │                              │
-│  ┌──────────┐                         │                              │
-│  │  Boot    │                         │                              │
-│  │  Kernel  │                         │                              │
-│  └──────────┘                         │                              │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    participant Board as Target Board
+    participant Server as Server (TFTP)
+
+    Board->>Server: 1. DHCP Request
+    Server-->>Board: 2. DHCP Response<br/>(IP + TFTP server + file, 可选 PXE 配置)
+    Board->>Server: 3. TFTP Request (kernel)
+    Server-->>Board: 4. Kernel Image
+    Board->>Server: 5. TFTP Request (dtb)
+    Server-->>Board: 6. Device Tree
+    Board->>Server: 7. TFTP Request (rootfs) [可选]
+    Server-->>Board: 8. Initramfs
+
+    Note over Board: Boot Kernel
 ```
 
 ```bash
@@ -1072,40 +911,42 @@ U-Boot 自动重试配置：
 
 ### 9.1 A/B 分区设计
 
-```
-A/B 分区布局：
+**A/B 分区布局：**
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│  闪存布局：                                                          │
-│  ━━━━━━━━                                                           │
-│  ┌────────┬────────┬────────┬────────┬────────┬────────┐           │
-│  │ U-Boot │ U-Boot │ Kernel │ Kernel │ RootFS │ RootFS │           │
-│  │  (A)   │  (B)   │  (A)   │  (B)   │  (A)   │  (B)   │           │
-│  └────────┴────────┴────────┴────────┴────────┴────────┘           │
-│                                                                      │
-│  优点：                                                              │
-│  • 升级失败可回滚                                                   │
-│  • 升级过程系统可运行                                               │
-│  • 断电安全                                                         │
-│                                                                      │
-│  升级流程：                                                          │
-│  ━━━━━━━━                                                           │
-│  1. 当前运行 Slot A                                                 │
-│  2. 下载新固件到 Slot B                                             │
-│  3. 验证 Slot B 完整性                                              │
-│  4. 标记 Slot B 为待启动                                            │
-│  5. 重启                                                            │
-│  6. 从 Slot B 启动                                                  │
-│  7. 验证系统正常运行                                                │
-│  8. 确认 Slot B 为当前活动分区                                      │
-│                                                                      │
-│  失败处理：                                                          │
-│  • 启动失败计数器                                                   │
-│  • 超过阈值自动回滚到上一个 Slot                                    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+**闪存布局：**
+
+```mermaid
+graph TB
+    subgraph Flash
+        A1["U-Boot (A)"]
+        A2["U-Boot (B)"]
+        A3["Kernel (A)"]
+        A4["Kernel (B)"]
+        A5["RootFS (A)"]
+        A6["RootFS (B)"]
+    end
+
+    A1 --- A2 --- A3 --- A4 --- A5 --- A6
 ```
+
+**优点：**
+- 升级失败可回滚
+- 升级过程系统可运行
+- 断电安全
+
+**升级流程：**
+1. 当前运行 Slot A
+2. 下载新固件到 Slot B
+3. 验证 Slot B 完整性
+4. 标记 Slot B 为待启动
+5. 重启
+6. 从 Slot B 启动
+7. 验证系统正常运行
+8. 确认 Slot B 为当前活动分区
+
+**失败处理：**
+- 启动失败计数器
+- 超过阈值自动回滚到上一个 Slot
 
 ### 9.2 升级实现
 

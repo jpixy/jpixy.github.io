@@ -22,10 +22,13 @@ tags = ["interview", "system-design", "payment", "fintech"]
 
 ### 1.2 核心流程
 
-```
-用户下单 → 收银台 → 支付渠道 → 支付结果 → 通知商户
-              ↓
-          内部记账
+```mermaid
+graph TB
+    Order[用户下单] --> Cashier[收银台]
+    Cashier --> Channel[支付渠道]
+    Channel --> Result[支付结果]
+    Result --> Notify[通知商户]
+    Cashier --> Ledger[内部记账]
 ```
 
 ### 1.3 关键概念
@@ -44,26 +47,48 @@ tags = ["interview", "system-design", "payment", "fintech"]
 
 ### 2.1 整体架构
 
-```
-┌─────────────────────────────────────────┐
-│              接入层                      │
-│   收银台 │ 商户API │ 管理后台            │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              交易核心                    │
-│   订单服务 │ 支付服务 │ 退款服务         │
-└─────────────────┬───────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              渠道层                      │
-│   微信 │ 支付宝 │ 银联 │ 银行           │
-└─────────────────────────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│              清算层                      │
-│   对账服务 │ 清算服务 │ 结算服务         │
-└─────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Access["接入层"]
+        Cashier["收银台"]
+        MerchantAPI["商户API"]
+        Admin["管理后台"]
+    end
+
+    subgraph Core["交易核心"]
+        OrderSvc["订单服务"]
+        PaySvc["支付服务"]
+        RefundSvc["退款服务"]
+    end
+
+    subgraph Channel["渠道层"]
+        WeChat["微信"]
+        Alipay["支付宝"]
+        UnionPay["银联"]
+        Bank["银行"]
+    end
+
+    subgraph Settlement["清算层"]
+        ReconcileSvc["对账服务"]
+        ClearingSvc["清算服务"]
+        SettleSvc["结算服务"]
+    end
+
+    Cashier --> OrderSvc
+    MerchantAPI --> OrderSvc
+    Admin --> OrderSvc
+    OrderSvc --> PaySvc
+    PaySvc --> RefundSvc
+    PaySvc --> WeChat
+    PaySvc --> Alipay
+    PaySvc --> UnionPay
+    PaySvc --> Bank
+    WeChat --> ReconcileSvc
+    Alipay --> ReconcileSvc
+    UnionPay --> ReconcileSvc
+    Bank --> ReconcileSvc
+    ReconcileSvc --> ClearingSvc
+    ClearingSvc --> SettleSvc
 ```
 
 ### 2.2 核心服务
@@ -109,12 +134,14 @@ tags = ["interview", "system-design", "payment", "fintech"]
 
 ### 3.2 订单状态
 
-```
-待支付 → 支付中 → 支付成功
-   ↓         ↓
-  取消      失败
-           
-支付成功 → 部分退款 → 全额退款
+```mermaid
+graph TB
+    Pending[待支付] --> Paying[支付中]
+    Paying --> Success[支付成功]
+    Pending --> Cancel[取消]
+    Paying --> Failed[失败]
+    Success --> PartialRefund[部分退款]
+    PartialRefund --> FullRefund[全额退款]
 ```
 
 **关键状态**：

@@ -79,16 +79,14 @@ void producer(void) {
 
 ### Why We Need Memory Barriers
 
-```
-CPU Reordering Problem:
-┌──────────────────────────────────────────────────┐
-│ Code:              Executed as:                  │
-│   data = 42;         ready = 1;   // Reordered!  │
-│   ready = 1;         data = 42;                  │
-│                                                  │
-│ Consumer sees ready=1 but data is still 0!      │
-└──────────────────────────────────────────────────┘
-```
+**CPU Reordering Problem**:
+
+| 代码顺序 | 实际执行顺序 |
+|----------|--------------|
+| `data = 42;` | `ready = 1;` (Reordered!) |
+| `ready = 1;` | `data = 42;` |
+
+Consumer sees `ready=1` but `data` is still 0!
 
 ### Compiler Barriers
 

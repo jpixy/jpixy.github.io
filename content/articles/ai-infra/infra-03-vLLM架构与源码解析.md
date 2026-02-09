@@ -83,7 +83,7 @@ graph TB
 ### 2.2 核心组件关系
 
 ```mermaid
-graph LR
+graph TB
     subgraph "核心组件"
         LLM[LLMEngine] --> SCH[Scheduler]
         SCH --> BM[BlockManager]
@@ -198,7 +198,7 @@ graph TB
 当显存不足时，可能需要抢占正在运行的请求：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "抢占策略"
         P1[Recompute<br>丢弃 KV Cache，重算]
         P2[Swap<br>换出到 CPU]
@@ -253,7 +253,7 @@ sequenceDiagram
 **Copy-on-Write**：
 
 ```mermaid
-graph LR
+graph TB
     subgraph "Copy-on-Write"
         S1[Seq1] --> B[共享 Block]
         S2[Seq2] --> B
@@ -334,15 +334,10 @@ graph TB
 
 **与标准 Attention 的区别**：
 
-```
-标准 Attention：
-- KV Cache 连续存储
-- 直接索引访问
-
-PagedAttention：
-- KV Cache 分散在多个 Block
-- 通过 Block Table 间接访问
-```
+| 特性 | 标准 Attention | PagedAttention |
+|------|---------------|----------------|
+| KV Cache 存储 | 连续存储 | 分散在多个 Block |
+| 访问方式 | 直接索引访问 | 通过 Block Table 间接访问 |
 
 **Kernel 设计**：
 
@@ -447,8 +442,15 @@ graph TB
 
 **传统 Batching**：
 
-```
-Batch 1: [req1, req2, req3] → 全部完成 → Batch 2
+```mermaid
+graph TB
+    subgraph "传统 Batching"
+        B1["Batch 1: req1, req2, req3"]
+        W["等待全部完成"]
+        B2["Batch 2: req4, req5, req6"]
+        
+        B1 --> W --> B2
+    end
 ```
 
 **Continuous Batching**：
@@ -721,7 +723,7 @@ params = SamplingParams(
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     S1[阅读论文] --> S2[运行示例]
     S2 --> S3[阅读源码]
     S3 --> S4[尝试修改]

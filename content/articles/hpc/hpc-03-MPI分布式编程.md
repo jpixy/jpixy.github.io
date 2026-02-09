@@ -20,7 +20,7 @@ comments = true
 分布式内存并行编程的标准接口。
 
 ```mermaid
-graph LR
+graph TB
     subgraph "MPI 特点"
         M1[消息传递模型]
         M2[标准化接口]
@@ -210,7 +210,7 @@ graph TB
 ### 5.3 单边通信（RMA）
 
 ```mermaid
-graph LR
+graph TB
     subgraph "RMA"
         P0[进程 0] -->|Put/Get| MEM[进程 1 内存]
     end
@@ -364,7 +364,7 @@ graph TB
 ### 10.2 学习建议
 
 ```mermaid
-graph LR
+graph TB
     L1[基础函数] --> L2[集合通信]
     L2 --> L3[非阻塞通信]
     L3 --> L4[性能优化]

@@ -16,7 +16,7 @@ comments = true
 ### 1.1 什么是端侧推理
 
 ```mermaid
-graph LR
+graph TB
     subgraph "端侧 vs 云端"
         EDGE[端侧推理<br>设备本地]
         CLOUD[云端推理<br>远程服务]

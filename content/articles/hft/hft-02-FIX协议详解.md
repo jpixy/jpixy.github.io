@@ -116,15 +116,14 @@ FIX 消息由三部分组成：
 
 ### 3.1 会话生命周期
 
-```
-断开 ──Logon──▶ 已连接 ──Heartbeat──▶ 活跃
-                  │                      │
-                  │◀────TestRequest──────│
-                  │                      │
-                  └──────Logout──────────┘
-                           │
-                           ▼
-                         断开
+```mermaid
+stateDiagram-v2
+    [*] --> 断开
+    断开 --> 已连接: Logon
+    已连接 --> 活跃: Heartbeat
+    活跃 --> 活跃: TestRequest
+    已连接 --> 断开: Logout
+    活跃 --> 断开: Logout
 ```
 
 ### 3.2 登录流程
@@ -175,18 +174,14 @@ FIX 消息由三部分组成：
 
 ### 4.1 订单生命周期
 
-```
-新订单 (D) ──▶ 交易所
-                │
-                ├──▶ Pending New (8, OrdStatus=A)
-                │
-                ├──▶ New (8, OrdStatus=0)
-                │
-                ├──▶ Partially Filled (8, OrdStatus=1)
-                │
-                ├──▶ Filled (8, OrdStatus=2)
-                │
-                └──▶ Rejected (8, OrdStatus=8)
+```mermaid
+graph TB
+    A["新订单 (D)"] --> EX[交易所]
+    EX --> B["Pending New (8, OrdStatus=A)"]
+    EX --> C["New (8, OrdStatus=0)"]
+    EX --> D["Partially Filled (8, OrdStatus=1)"]
+    EX --> E["Filled (8, OrdStatus=2)"]
+    EX --> F["Rejected (8, OrdStatus=8)"]
 ```
 
 ### 4.2 新订单关键字段
