@@ -417,26 +417,23 @@ graph TB
 
 ### 6.3 长期趋势
 
+**岗位演进：**
+
 ```mermaid
 graph TB
-    subgraph "技术演进"
-        Now[现在：手工优化为主]
-        Mid[中期：编译器 + 手工混合]
-        Far[远期：大部分自动优化]
-    end
-    
-    Now --> Mid --> Far
-    
-    subgraph "岗位演进"
-        J1[CUDA 算子工程师]
-        J2[推理系统工程师]
-        J3[AI 编译器工程师]
-        J4[AI 系统架构师]
-    end
-    
-    J1 --> |技能迁移| J2
-    J1 --> |技能迁移| J3
-    J2 --> |发展| J4
+    J1[CUDA 算子工程师]
+    J1 -->|技能迁移| J2[推理系统工程师]
+    J1 -->|技能迁移| J3[AI 编译器工程师]
+    J2 -->|发展| J4[AI 系统架构师]
+```
+
+**技术演进：**
+
+```mermaid
+graph TB
+    Now[现在：手工优化为主]
+    Now --> Mid[中期：编译器 + 手工混合]
+    Mid --> Far[远期：大部分自动优化]
 ```
 
 ---
@@ -475,17 +472,22 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph Target["你的目标区域"]
-        L3["第三层：模型层 了解即可"]
-        L4["★ 第四层：推理系统层 ← 核心<br>• vLLM / TensorRT-LLM / llama.cpp<br>• 调度、内存管理、Batching"]
-        L5a["★ 第五层上半部分：算子层 ← 辅助<br>• 理解 CUDA Kernel 原理<br>• 不以手写 Kernel 为主业"]
-        L5b["第五层下半部分：编译器 不深入"]
-    end
+    L3["第三层：模型层<br/>了解即可"]
+    L4["★ 第四层：推理系统层<br/>← 核心"]
+    L5a["★ 第五层上半：算子层<br/>← 辅助"]
+    L5b["第五层下半：编译器<br/>不深入"]
     
     L3 --> L4
     L4 --> L5a
     L5a --> L5b
 ```
+
+**详细说明：**
+
+| 层次 | 重点内容 |
+|------|----------|
+| 第四层（核心） | vLLM / TensorRT-LLM / llama.cpp、调度、内存管理、Batching |
+| 第五层上半（辅助） | 理解 CUDA Kernel 原理，不以手写 Kernel 为主业 |
 
 ---
 
