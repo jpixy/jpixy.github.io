@@ -1,5 +1,5 @@
 +++
-title = "AI 基础设施与推理系统"
+title = "AI Infrastructure & Inference"
 sort_by = "title"
 template = "section.html"
 +++
