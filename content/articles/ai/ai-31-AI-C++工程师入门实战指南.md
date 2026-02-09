@@ -19,15 +19,16 @@ comments = true
 
 ```mermaid
 graph TB
-    subgraph "AI 技术栈分层"
-        A["应用层<br/>LangChain / RAG / Prompt Engineering"]
-        B["框架层<br/>PyTorch / TensorFlow / JAX"]
-        C["推理系统层<br/>vLLM / TensorRT-LLM / llama.cpp"]
-        D["算子层<br/>CUDA Kernel / CUTLASS / Triton"]
-        E["硬件层<br/>芯片设计 / GPU 编译器"]
-    end
+    A["应用层<br/>LangChain / RAG"]
+    B["框架层<br/>PyTorch / TensorFlow"]
+    C["推理系统层<br/>vLLM / TensorRT-LLM"]
+    D["算子层<br/>CUDA Kernel / CUTLASS"]
+    E["硬件层<br/>芯片设计 / 编译器"]
     
-    A --> B --> C --> D --> E
+    A --> B
+    B --> C
+    C --> D
+    D --> E
     
     style A fill:#ffcccc
     style B fill:#ffffcc
@@ -243,15 +244,16 @@ public:
 
 ```mermaid
 graph TB
-    subgraph "CUDA 学习路径"
-        A["基本概念<br/>Grid/Block/Thread"]
-        B["内存模型<br/>Global/Shared/Register"]
-        C["同步机制<br/>__syncthreads/atomic"]
-        D["性能优化<br/>合并访存/Bank Conflict"]
-        E["高级特性<br/>Stream/Event/Tensor Core"]
-    end
+    A["基本概念<br/>Grid/Block/Thread"]
+    B["内存模型<br/>Global/Shared/Register"]
+    C["同步机制<br/>__syncthreads/atomic"]
+    D["性能优化<br/>合并访存/Bank Conflict"]
+    E["高级特性<br/>Stream/Event/Tensor Core"]
     
-    A --> B --> C --> D --> E
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 ```
 
 **必须掌握的 CUDA 技能**：
