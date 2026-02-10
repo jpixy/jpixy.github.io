@@ -11,6 +11,8 @@ const path = require('path');
 
 // 需要加密的目录（相对于 public/articles/）
 const PROTECTED_DIRS = [
+  'ai',
+  'ai-infra',
   'english',
   'fpga',
   'hft',
