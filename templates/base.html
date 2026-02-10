@@ -114,20 +114,10 @@
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             }
             
-            const UNLOCK_TTL_MS = 10 * 60 * 1000; // 10 minutes
-            
+            // 使用 sessionStorage 存储解锁状态（关闭标签页即清除，更安全）
             function getUnlockedSections() {
                 try {
-                    const data = JSON.parse(localStorage.getItem(UNLOCKED_KEY)) || {};
-                    const now = Date.now();
-                    // Filter out expired entries
-                    const valid = {};
-                    for (const [key, value] of Object.entries(data)) {
-                        if (value.expiry && value.expiry > now) {
-                            valid[key] = value.pages;
-                        }
-                    }
-                    return valid;
+                    return JSON.parse(sessionStorage.getItem(UNLOCKED_KEY)) || {};
                 } catch (e) {
                     return {};
                 }
@@ -135,12 +125,9 @@
             
             function saveUnlockedSection(sectionTitle, decryptedPages) {
                 try {
-                    const data = JSON.parse(localStorage.getItem(UNLOCKED_KEY)) || {};
-                    data[sectionTitle] = {
-                        pages: decryptedPages,
-                        expiry: Date.now() + UNLOCK_TTL_MS
-                    };
-                    localStorage.setItem(UNLOCKED_KEY, JSON.stringify(data));
+                    const data = JSON.parse(sessionStorage.getItem(UNLOCKED_KEY)) || {};
+                    data[sectionTitle] = decryptedPages;
+                    sessionStorage.setItem(UNLOCKED_KEY, JSON.stringify(data));
                 } catch (e) {}
             }
             
