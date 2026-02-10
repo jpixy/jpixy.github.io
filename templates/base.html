@@ -262,10 +262,11 @@
                 // 绑定点击事件
                 document.querySelectorAll('.section-item').forEach(item => {
                     const title = item.querySelector('.section-title');
-                    const sectionName = title.textContent.replace(/\s*[🔒🔓]\s*$/, '').trim();
                     const index = parseInt(item.dataset.index);
                     const isProtected = item.dataset.protected === 'true';
                     const section = sections[index];
+                    // 使用 section.title 作为 key，确保一致性
+                    const sectionName = section.title;
                     
                     title.addEventListener('click', () => {
                         const unlocked = getUnlockedSections();

@@ -6,6 +6,7 @@
     "encrypt": "node scripts/encrypt-pages.js"
   },
   "devDependencies": {
+    "crypto-js": "^4.2.0",
     "staticrypt": "^3.4.0"
   }
 }
