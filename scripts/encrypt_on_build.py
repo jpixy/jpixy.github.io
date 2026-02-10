@@ -82,7 +82,10 @@ def get_pages_from_section(section_path: Path) -> list:
         title_match = re.search(r'^title\s*=\s*["\'](.+?)["\']', content, re.MULTILINE)
         title = title_match.group(1) if title_match else md_file.stem
         
-        slug = md_file.stem
+        # Check for custom slug in front matter, fallback to filename
+        slug_match = re.search(r'^slug\s*=\s*["\'](.+?)["\']', content, re.MULTILINE)
+        slug = slug_match.group(1) if slug_match else md_file.stem
+        
         section_name = section_path.name
         url = f"/articles/{section_name}/{slug}/"
         
