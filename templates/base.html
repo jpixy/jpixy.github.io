@@ -325,6 +325,23 @@
             }
             
             renderSidebar();
+            
+            // 保存/恢复 sidebar 滚动位置
+            const SCROLL_KEY = 'sidebar_scroll_pos';
+            const sidebarNav = document.getElementById('sidebar-nav');
+            
+            // 恢复滚动位置
+            const savedScroll = sessionStorage.getItem(SCROLL_KEY);
+            if (savedScroll && sidebarNav) {
+                sidebarNav.scrollTop = parseInt(savedScroll);
+            }
+            
+            // 页面卸载前保存滚动位置
+            window.addEventListener('beforeunload', () => {
+                if (sidebarNav) {
+                    sessionStorage.setItem(SCROLL_KEY, sidebarNav.scrollTop);
+                }
+            });
         })();
 
         function siteTime() {
