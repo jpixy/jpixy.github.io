@@ -254,14 +254,14 @@
                     
                     if (isProtected && !isUnlocked) {
                         // 显示锁定状态
-                        lockIcon = ' 🔒';
+                        lockIcon = ' 🔐';
                         pagesHtml = '<li class="locked-hint">Click to unlock</li>';
                     } else if (isProtected && isUnlocked) {
                         // 已解锁，使用解密后的数据
                         pagesHtml = isUnlocked.map(page => 
                             `<li><a href="${page.url}">${page.title}</a></li>`
                         ).join('');
-                        lockIcon = ' 🔓';
+                        lockIcon = ' ✅';
                     } else {
                         // 普通目录
                         pagesHtml = section.pages.map(page => 
