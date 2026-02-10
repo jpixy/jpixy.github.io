@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
     <link rel="shortcut icon" href="{{ get_url(path='images/engineer_johnny.jpeg') }}">
     
+    <!-- CryptoJS for content decryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    
     {% if config.build_search_index %}
     <script src="{{ get_url(path='elasticlunr.min.js') }}"></script>
     <script src="{{ get_url(path='search_index.en.js') }}"></script>
@@ -93,10 +96,11 @@
     </div>
     
     <script>
-        // 侧边栏渲染和状态持久化
+        // 侧边栏渲染和状态持久化（支持密码保护目录）
         (function() {
             const STORAGE_KEY = 'sidebar_state';
             const CACHE_KEY = 'sidebar_data_cache';
+            const UNLOCKED_KEY = 'unlocked_sections';
             
             function loadState() {
                 try {
@@ -108,6 +112,20 @@
             
             function saveState(state) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            }
+            
+            function getUnlockedSections() {
+                try {
+                    return JSON.parse(sessionStorage.getItem(UNLOCKED_KEY)) || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+            
+            function saveUnlockedSection(sectionTitle, decryptedPages) {
+                const unlocked = getUnlockedSections();
+                unlocked[sectionTitle] = decryptedPages;
+                sessionStorage.setItem(UNLOCKED_KEY, JSON.stringify(unlocked));
             }
             
             function getSidebarData() {
@@ -123,9 +141,85 @@
                 return null;
             }
             
+            // SHA256 哈希（用于密码验证）
+            function sha256(message) {
+                if (typeof CryptoJS !== 'undefined') {
+                    return CryptoJS.SHA256(message).toString();
+                }
+                return message; // fallback
+            }
+            
+            // AES 解密
+            function decryptContent(encryptedData, password) {
+                try {
+                    if (typeof CryptoJS !== 'undefined') {
+                        const bytes = CryptoJS.AES.decrypt(encryptedData, password);
+                        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+                        return JSON.parse(decrypted);
+                    }
+                } catch (e) {
+                    console.error('Decryption failed:', e);
+                }
+                return null;
+            }
+            
+            // 显示密码弹窗
+            function showPasswordDialog(sectionTitle, callback) {
+                // 创建模态框
+                const modal = document.createElement('div');
+                modal.className = 'password-modal';
+                modal.innerHTML = `
+                    <div class="password-dialog">
+                        <h3>🔒 Protected Content</h3>
+                        <p>Enter password to access <strong>${sectionTitle}</strong></p>
+                        <input type="password" id="section-password" placeholder="Password" autofocus>
+                        <div class="password-error" style="display:none;color:#e74c3c;margin:8px 0;">Incorrect password</div>
+                        <div class="password-buttons">
+                            <button id="password-cancel" class="btn-cancel">Cancel</button>
+                            <button id="password-submit" class="btn-submit">Unlock</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                const input = modal.querySelector('#section-password');
+                const errorDiv = modal.querySelector('.password-error');
+                const submitBtn = modal.querySelector('#password-submit');
+                const cancelBtn = modal.querySelector('#password-cancel');
+                
+                const submit = () => {
+                    const password = input.value;
+                    if (password) {
+                        callback(password, (success) => {
+                            if (success) {
+                                document.body.removeChild(modal);
+                            } else {
+                                errorDiv.style.display = 'block';
+                                input.value = '';
+                                input.focus();
+                            }
+                        });
+                    }
+                };
+                
+                submitBtn.addEventListener('click', submit);
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') submit();
+                });
+                cancelBtn.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) document.body.removeChild(modal);
+                });
+                
+                input.focus();
+            }
+            
             function renderSidebar() {
                 const sections = getSidebarData();
                 const state = loadState();
+                const unlocked = getUnlockedSections();
                 const list = document.getElementById('sidebar-list');
                 
                 if (!sections || !sections.length) {
@@ -133,15 +227,34 @@
                     return;
                 }
                 
-                list.innerHTML = sections.map(section => {
+                list.innerHTML = sections.map((section, index) => {
                     const isOpen = state[section.title] || false;
                     const collapsedClass = isOpen ? '' : 'collapsed';
-                    const pagesHtml = section.pages.map(page => 
-                        `<li><a href="${page.url}">${page.title}</a></li>`
-                    ).join('');
+                    const isProtected = section.protected;
+                    const isUnlocked = unlocked[section.title];
                     
-                    return `<li class="section-item ${collapsedClass}">
-                        <span class="section-title">${section.title}</span>
+                    let pagesHtml = '';
+                    let lockIcon = '';
+                    
+                    if (isProtected && !isUnlocked) {
+                        // 显示锁定状态
+                        lockIcon = ' 🔒';
+                        pagesHtml = '<li class="locked-hint">Click to unlock</li>';
+                    } else if (isProtected && isUnlocked) {
+                        // 已解锁，使用解密后的数据
+                        pagesHtml = isUnlocked.map(page => 
+                            `<li><a href="${page.url}">${page.title}</a></li>`
+                        ).join('');
+                        lockIcon = ' 🔓';
+                    } else {
+                        // 普通目录
+                        pagesHtml = section.pages.map(page => 
+                            `<li><a href="${page.url}">${page.title}</a></li>`
+                        ).join('');
+                    }
+                    
+                    return `<li class="section-item ${collapsedClass}" data-index="${index}" data-protected="${isProtected}">
+                        <span class="section-title">${section.title}${lockIcon}</span>
                         <ul class="section-pages">${pagesHtml}</ul>
                     </li>`;
                 }).join('');
@@ -149,14 +262,46 @@
                 // 绑定点击事件
                 document.querySelectorAll('.section-item').forEach(item => {
                     const title = item.querySelector('.section-title');
-                    const sectionName = title.textContent.trim();
+                    const sectionName = title.textContent.replace(/\s*[🔒🔓]\s*$/, '').trim();
+                    const index = parseInt(item.dataset.index);
+                    const isProtected = item.dataset.protected === 'true';
+                    const section = sections[index];
                     
                     title.addEventListener('click', () => {
-                        item.classList.toggle('collapsed');
-                        const isOpen = !item.classList.contains('collapsed');
-                        const state = loadState();
-                        state[sectionName] = isOpen;
-                        saveState(state);
+                        const unlocked = getUnlockedSections();
+                        
+                        if (isProtected && !unlocked[sectionName]) {
+                            // 需要解锁
+                            showPasswordDialog(sectionName, (password, done) => {
+                                // 验证密码
+                                const inputHash = sha256(password);
+                                
+                                if (inputHash === section.passwordHash) {
+                                    // 解密内容
+                                    const decryptedPages = decryptContent(section.encryptedPages, password);
+                                    if (decryptedPages) {
+                                        saveUnlockedSection(sectionName, decryptedPages);
+                                        done(true);
+                                        renderSidebar(); // 重新渲染
+                                        // 自动展开
+                                        const state = loadState();
+                                        state[sectionName] = true;
+                                        saveState(state);
+                                    } else {
+                                        done(false);
+                                    }
+                                } else {
+                                    done(false);
+                                }
+                            });
+                        } else {
+                            // 正常展开/折叠
+                            item.classList.toggle('collapsed');
+                            const isOpen = !item.classList.contains('collapsed');
+                            const state = loadState();
+                            state[sectionName] = isOpen;
+                            saveState(state);
+                        }
                     });
                 });
             }

@@ -11,11 +11,14 @@ const path = require('path');
 
 // 需要加密的目录（相对于 public/articles/）
 const PROTECTED_DIRS = [
+  'english',
+  'fpga',
   'hft',
   'insights', 
   'interview',
   'leadership',
-  'quant'
+  'quant',
+  'system-design'
 ];
 
 // 从环境变量获取密码

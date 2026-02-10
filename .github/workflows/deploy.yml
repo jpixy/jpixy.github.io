@@ -35,13 +35,26 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install pycryptodome
+
+      - name: Encrypt directory listings (before build)
+        env:
+          PROTECTED_PASSWORD: ${{ secrets.ENCRYPT_PASSWORD }}
+        run: python scripts/encrypt_on_build.py
+
+      - name: Install Node dependencies
         run: npm ci
 
       - name: Build site
         run: zola build
 
-      - name: Encrypt protected pages
+      - name: Encrypt article pages (after build)
         env:
           ENCRYPT_PASSWORD: ${{ secrets.ENCRYPT_PASSWORD }}
         run: npm run encrypt

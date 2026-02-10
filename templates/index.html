@@ -12,11 +12,23 @@
 <script>
 window.SIDEBAR_DATA = [
 {% for section in sections_list | sort(attribute="title") %}
-  {"title": {{ section.title | json_encode | safe }}, "url": {{ section.permalink | json_encode | safe }}, "pages": [
+  {
+    "title": {{ section.title | json_encode | safe }}, 
+    "url": {{ section.permalink | json_encode | safe }},
+    {% if section.extra.protected %}
+    "protected": true,
+    "passwordHash": {{ section.extra.password_hash | default(value="") | json_encode | safe }},
+    "encryptedPages": {{ section.extra.encrypted_pages | default(value="") | json_encode | safe }},
+    "pages": []
+    {% else %}
+    "protected": false,
+    "pages": [
 {% for page in section.pages | sort(attribute="title") %}
-    {"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}}{% if not loop.last %},{% endif %}
+      {"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}}{% if not loop.last %},{% endif %}
 {% endfor %}
-  ]}{% if not loop.last %},{% endif %}
+    ]
+    {% endif %}
+  }{% if not loop.last %},{% endif %}
 {% endfor %}
 ];
 localStorage.setItem('sidebar_data_cache', JSON.stringify(window.SIDEBAR_DATA));
