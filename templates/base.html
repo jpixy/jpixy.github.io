@@ -231,10 +231,11 @@
                 }
                 
                 list.innerHTML = sections.map((section, index) => {
-                    const isOpen = state[section.title] || false;
-                    const collapsedClass = isOpen ? '' : 'collapsed';
                     const isProtected = section.protected;
                     const isUnlocked = unlocked[section.title];
+                    // 加密目录未解锁时强制折叠
+                    const isOpen = (isProtected && !isUnlocked) ? false : (state[section.title] || false);
+                    const collapsedClass = isOpen ? '' : 'collapsed';
                     
                     let pagesHtml = '';
                     let lockIcon = '';
