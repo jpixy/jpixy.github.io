@@ -57,7 +57,7 @@ slug = "insights-资深工程师下一站职业方向评估"
 
 ### 你的判断
 
-1. 直接做 AI 应用：RAG + WCP + LangChain 等，同质化严重，护城河一般，易崩塌。
+1. 直接做 AI 应用：RAG + MCP（Model Context Protocol）+ LangChain 等，同质化严重，护城河一般，易崩塌。
 2. 芯片层面：不想介入。
 3. 剩下推理系统优化 vs CUDA 算子；CUDA 算子容易被 AI 编译器取代，只剩推理系统优化。
 4. 自身是云 + Web 后台 + SRE/DevOps，转推理系统除了 C++ 可继承，其他都要重新学。
