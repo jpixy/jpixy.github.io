@@ -1,6 +1,7 @@
 +++
-title = "21.内核笔试题-同步机制"
+title = "内核笔试题-同步机制"
 date = 2026-01-31
+weight = 21000
 description = "Linux内核同步机制笔试题：Spinlock实现、RCU原理、内存屏障、死锁分析"
 [taxonomies]
 tags = ["Linux", "内核", "笔试", "同步", "Spinlock", "RCU"]
@@ -1272,8 +1273,8 @@ void user_func_v2(void) {
 
 ## 相关文章
 
-- [上一篇：内核笔试题-进程调度](/articles/linux/linux-20-内核笔试题-进程调度/)
-- [下一篇：内核笔试题-中断与系统调用](/articles/linux/linux-22-内核笔试题-中断与系统调用/)
+- [上一篇：内核笔试题-进程调度](@/articles/linux/linux-20-内核笔试题-进程调度.md)
+- [下一篇：内核笔试题-中断与系统调用](@/articles/linux/linux-22-内核笔试题-中断与系统调用.md)
 
 **知识基础**：
-- [内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+- [内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)

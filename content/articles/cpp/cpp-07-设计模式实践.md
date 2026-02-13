@@ -1,6 +1,7 @@
 +++
-title = "07. Design Patterns in C++"
+title = "Design Patterns in C++"
 date = 2026-01-19
+weight = 7000
 description = "C++设计模式：创建型、结构型、行为型模式的现代C++实现"
 [taxonomies]
 tags = ["C++", "设计模式", "架构"]
@@ -479,5 +480,5 @@ a();
 
 ## 相关文章
 
-- [上一篇：STL Containers and Algorithms](/articles/cpp/cpp-06-STL容器与算法/)
-- [下一篇：Project Practices and Toolchain](/articles/cpp/cpp-08-项目实践与工具链/)
+- [上一篇：STL Containers and Algorithms](@/articles/cpp/cpp-06-STL容器与算法.md)
+- [下一篇：Project Practices and Toolchain](@/articles/cpp/cpp-08-项目实践与工具链.md)

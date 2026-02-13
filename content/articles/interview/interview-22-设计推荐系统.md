@@ -1,6 +1,7 @@
 +++
-title = "22.如何设计一个推荐系统"
+title = "如何设计一个推荐系统"
 slug = "interview-如何设计一个推荐系统"
+weight = 22000
 +++
 
 # 如何设计一个推荐系统
@@ -962,5 +963,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：如何设计一个搜索引擎](/articles/interview/interview-21-设计搜索引擎/)
-- [下一篇：如何设计一个Feed流系统](/articles/interview/interview-23-设计Feed流系统/)
+- [上一篇：如何设计一个搜索引擎](@/articles/interview/interview-21-设计搜索引擎.md)
+- [下一篇：如何设计一个Feed流系统](@/articles/interview/interview-23-设计Feed流系统.md)

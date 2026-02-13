@@ -1,6 +1,7 @@
 +++
-title = "43.HFT笔试题-市场数据处理"
+title = "HFT笔试题-市场数据处理"
 date = 2026-02-02
+weight = 43000
 description = "HFT笔试：市场数据解析、增量更新、FAST解码、多源聚合"
 [taxonomies]
 tags = ["HFT", "笔试", "市场数据", "解析", "FAST"]
@@ -666,6 +667,6 @@ private:
 
 ## 相关文章
 
-- [FAST协议详解](/articles/hft/hft-03-FAST协议详解/)
-- [ITCH与OUCH协议详解](/articles/hft/hft-04-ITCH与OUCH协议详解/)
-- [数据采集层设计](/articles/hft/hft-05-数据采集层设计/)
+- [FAST协议详解](@/articles/hft/hft-03-FAST协议详解.md)
+- [ITCH与OUCH协议详解](@/articles/hft/hft-04-ITCH与OUCH协议详解.md)
+- [数据采集层设计](@/articles/hft/hft-05-数据采集层设计.md)

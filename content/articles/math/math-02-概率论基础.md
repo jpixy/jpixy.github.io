@@ -1,6 +1,7 @@
 +++
-title = "02.概率论基础"
+title = "概率论基础"
 date = 2026-01-20
+weight = 2000
 description = "概率论：概率分布、条件概率、贝叶斯定理、期望与方差"
 [taxonomies]
 tags = ["数学", "概率论", "贝叶斯"]
@@ -250,5 +251,5 @@ X和Y独立当且仅当f(x,y) = f(x)f(y)。
 
 ## 相关文章
 
-- [上一篇：线性代数基础](/articles/math/math-01-线性代数基础/)
-- [下一篇：统计学基础](/articles/math/math-03-统计学基础/)
+- [上一篇：线性代数基础](@/articles/math/math-01-线性代数基础.md)
+- [下一篇：统计学基础](@/articles/math/math-03-统计学基础.md)

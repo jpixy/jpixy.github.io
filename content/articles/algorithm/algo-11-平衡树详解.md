@@ -1,8 +1,9 @@
 +++
-title = "11.平衡树详解：AVL、红黑树、B树与B+树"
+title = "平衡树详解：AVL、红黑树、B树与B+树"
 slug = "algo-11-平衡树详解"
 description = "深入剖析平衡二叉树的原理、旋转操作、各类平衡树的设计思想与应用场景"
 date = 2026-01-31
+weight = 11000
 draft = false
 [taxonomies]
 tags = ["数据结构", "平衡树", "AVL", "红黑树", "B树"]
@@ -606,5 +607,5 @@ A:
 
 ## 相关文章
 
-- [上一篇：在线算法与流式计算](/articles/algorithm/algo-10-在线算法与流式计算/)
-- [下一篇：暂无](/articles/algorithm/)
+- [上一篇：在线算法与流式计算](@/articles/algorithm/algo-10-在线算法与流式计算.md)
+- [下一篇：暂无](@/articles/algorithm/_index.md)

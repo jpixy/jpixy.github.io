@@ -1,6 +1,7 @@
 +++
-title = "17.SRE笔试题-数据结构与算法"
+title = "SRE笔试题-数据结构与算法"
 date = 2026-01-21
+weight = 17000
 description = "SRE面试笔试题精选：LRU缓存、布隆过滤器、优先队列、滑动窗口、图算法等，Python3完整解答"
 [taxonomies]
 tags = ["SRE", "面试", "Python", "笔试", "算法", "数据结构"]
@@ -1321,5 +1322,5 @@ print(distribution)  # 应该接近均匀分布
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-系统与网络编程](/articles/sre/sre-16-SRE笔试题-系统与网络编程/)
-- [下一篇：SRE笔试题-监控与运维自动化](/articles/sre/sre-18-SRE笔试题-监控与运维自动化/)
+- [上一篇：SRE笔试题-系统与网络编程](@/articles/sre/sre-16-SRE笔试题-系统与网络编程.md)
+- [下一篇：SRE笔试题-监控与运维自动化](@/articles/sre/sre-18-SRE笔试题-监控与运维自动化.md)

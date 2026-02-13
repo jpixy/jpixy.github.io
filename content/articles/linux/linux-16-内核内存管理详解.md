@@ -1,6 +1,7 @@
 +++
-title = "16.内核内存管理详解"
+title = "内核内存管理详解"
 date = 2026-01-31
+weight = 16000
 description = "Linux内核内存管理：地址空间布局、虚拟地址映射、MMU与页表、缺页中断、内核分配器"
 [taxonomies]
 tags = ["Linux", "内核", "内存管理", "MMU", "缺页中断"]
@@ -568,5 +569,5 @@ A: 当工作集超过 TLB 容量时，频繁发生 TLB miss，导致大量 Page 
 
 ## 相关文章
 
-- [上一篇：AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/)
-- [下一篇：中断与系统调用详解](/articles/linux/linux-17-中断与系统调用详解/)
+- [上一篇：AI基础设施详解](@/articles/linux/linux-15-AI基础设施详解.md)
+- [下一篇：中断与系统调用详解](@/articles/linux/linux-17-中断与系统调用详解.md)

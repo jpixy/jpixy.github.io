@@ -1,6 +1,7 @@
 +++
-title = "55.量化因子模型与特征工程"
+title = "量化因子模型与特征工程"
 date = 2026-02-02
+weight = 55000
 description = "因子模型：Alpha因子、风险因子、因子构建、组合优化"
 [taxonomies]
 tags = ["HFT", "因子", "Alpha", "风险模型", "特征工程"]
@@ -1026,6 +1027,6 @@ private:
 
 ## 相关文章
 
-- [量化机器学习基础](/articles/hft/hft-54-量化机器学习基础/)
-- [HFT笔试题-策略回测](/articles/hft/hft-45-HFT笔试题-策略回测/)
-- [市场微结构深度解析](/articles/hft/hft-38-市场微结构深度解析/)
+- [量化机器学习基础](@/articles/hft/hft-54-量化机器学习基础.md)
+- [HFT笔试题-策略回测](@/articles/hft/hft-45-HFT笔试题-策略回测.md)
+- [市场微结构深度解析](@/articles/hft/hft-38-市场微结构深度解析.md)

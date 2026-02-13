@@ -1,7 +1,8 @@
 +++
-title = "16.DPDK深度实践"
+title = "DPDK深度实践"
 slug = "hft-20-DPDK深度实践"
 date = 2026-01-21
+weight = 16000
 description = "深入剖析DPDK的使用，包括内存池、Ring缓冲区、PMD、多队列和性能调优"
 [taxonomies]
 tags = ["HFT", "DPDK", "KernelBypass", "网络", "低延迟"]
@@ -507,5 +508,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)
-- [下一篇：Solarflare/Onload与FPGA网卡](/articles/hft/hft-17-Solarflare与FPGA网卡/)
+- [上一篇：HFT风控系统设计](@/articles/hft/hft-15-HFT风控系统设计.md)
+- [下一篇：Solarflare/Onload与FPGA网卡](@/articles/hft/hft-17-Solarflare与FPGA网卡.md)

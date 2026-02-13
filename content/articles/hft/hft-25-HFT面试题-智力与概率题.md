@@ -1,6 +1,7 @@
 +++
-title = "19.HFT面试题-智力与概率题"
+title = "HFT面试题-智力与概率题"
 date = 2026-01-21
+weight = 25000
 description = "HFT智力与概率面试题，包括赌博问题、期望计算、概率推导和脑筋急转弯"
 [taxonomies]
 tags = ["HFT", "面试", "概率", "智力题", "量化"]
@@ -386,5 +387,5 @@ f* = (bp - q) / b
 
 ## 相关文章
 
-- [上一篇：HFT面试题-网络与协议](/articles/hft/hft-24-HFT面试题-网络与协议/)
-- [下一篇：HFT行为面试指南](/articles/hft/hft-26-HFT行为面试指南/)
+- [上一篇：HFT面试题-网络与协议](@/articles/hft/hft-24-HFT面试题-网络与协议.md)
+- [下一篇：HFT行为面试指南](@/articles/hft/hft-26-HFT行为面试指南.md)

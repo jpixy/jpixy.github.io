@@ -1,6 +1,7 @@
 +++
-title = "40.GDB调试器深度解析"
+title = "GDB调试器深度解析"
 date = 2026-01-31
+weight = 40000
 description = "GDB深度解析：调试原理、断点机制、多线程调试、核心转储分析、远程调试"
 [taxonomies]
 tags = ["Linux", "GDB", "调试", "断点", "核心转储"]
@@ -756,6 +757,6 @@ Run gdb (like this): gdb -i=mi ./program
 
 ## 相关文章
 
-- [上一篇：strace系统调用追踪深度解析](/articles/linux/linux-39-strace系统调用追踪深度解析/)
-- [Valgrind内存分析工具深度解析](/articles/linux/linux-38-Valgrind内存分析工具深度解析/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
+- [上一篇：strace系统调用追踪深度解析](@/articles/linux/linux-39-strace系统调用追踪深度解析.md)
+- [Valgrind内存分析工具深度解析](@/articles/linux/linux-38-Valgrind内存分析工具深度解析.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md)

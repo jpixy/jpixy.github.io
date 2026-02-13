@@ -1,7 +1,8 @@
 +++
-title = "23 - 端侧模型优化实战"
+title = "端侧模型优化实战"
 description = "从模型压缩到部署优化的完整实战指南"
 date = 2025-02-06
+weight = 23000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -332,6 +333,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：22 - 端侧推理引擎对比](/articles/embedded/embedded-22-端侧推理引擎对比/)
-- [18 - 边缘 AI 与端侧部署详解](/articles/ai/ai-18-边缘AI与端侧部署详解/)
-- [16 - 推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
+- [上一篇：22 - 端侧推理引擎对比](@/articles/embedded/embedded-22-端侧推理引擎对比.md)
+- [18 - 边缘 AI 与端侧部署详解](@/articles/ai/ai-18-边缘AI与端侧部署详解.md)
+- [16 - 推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)

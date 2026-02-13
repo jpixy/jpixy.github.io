@@ -1,6 +1,7 @@
 +++
-title = "08.算法面试指南"
+title = "算法面试指南"
 date = 2026-01-19
+weight = 8000
 description = "算法面试：解题流程、高频题型、复杂度分析、面试技巧"
 [taxonomies]
 tags = ["算法", "面试", "指南"]
@@ -353,5 +354,5 @@ def backtrack(path, choices):
 
 ## 相关文章
 
-- [上一篇：高级数据结构](/articles/algorithm/algo-07-高级数据结构/)
-- [下一篇：概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
+- [上一篇：高级数据结构](@/articles/algorithm/algo-07-高级数据结构.md)
+- [下一篇：概率数据结构详解(HFT)](@/articles/algorithm/algo-09-概率数据结构详解.md)

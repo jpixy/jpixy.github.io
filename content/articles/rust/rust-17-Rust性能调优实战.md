@@ -1,6 +1,7 @@
 +++
-title = "17.Rust性能调优实战"
+title = "Rust性能调优实战"
 date = 2026-01-21
+weight = 17000
 description = "深入剖析Rust性能调优工具和技术，包括flamegraph、perf、criterion、内存分析和编译时间优化"
 [taxonomies]
 tags = ["Rust", "性能调优", "Profiling", "Benchmark", "优化"]
@@ -514,5 +515,5 @@ fn process_order() {
 
 ## 相关文章
 
-- [上一篇：HFT-Rust高性能网络编程](/articles/rust/rust-16-HFT-Rust高性能网络编程/)
-- [下一篇：Rust宏系统详解](/articles/rust/rust-18-Rust宏系统详解/)
+- [上一篇：HFT-Rust高性能网络编程](@/articles/rust/rust-16-HFT-Rust高性能网络编程.md)
+- [下一篇：Rust宏系统详解](@/articles/rust/rust-18-Rust宏系统详解.md)

@@ -1,7 +1,8 @@
 +++
-title = "17.Solarflare/Onload与FPGA网卡"
+title = "Solarflare/Onload与FPGA网卡"
 slug = "hft-21-Solarflare与FPGA网卡"
 date = 2026-01-21
+weight = 17000
 description = "深入剖析Solarflare网卡技术，包括ef_vi、TCPDirect、硬件时间戳、FPGA加速和选型对比"
 [taxonomies]
 tags = ["HFT", "Solarflare", "FPGA", "KernelBypass", "低延迟"]
@@ -441,5 +442,5 @@ setenv("EF_NONAGLE", "1");        // 禁用Nagle
 
 ## 相关文章
 
-- [上一篇：DPDK深度实践](/articles/hft/hft-16-DPDK深度实践/)
-- [下一篇：交易所撮合引擎原理](/articles/hft/hft-18-交易所撮合引擎原理/)
+- [上一篇：DPDK深度实践](@/articles/hft/hft-16-DPDK深度实践.md)
+- [下一篇：交易所撮合引擎原理](@/articles/hft/hft-18-交易所撮合引擎原理.md)

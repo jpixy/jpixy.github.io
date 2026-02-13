@@ -1,8 +1,9 @@
 +++
-title = "20.io_uring详解(HFT)"
+title = "io_uring详解(HFT)"
 slug = "net-20-io_uring详解"
 description = "深入讲解Linux io_uring：原理架构、liburing使用、SQE/CQE详解、性能对比、与epoll对比及HFT应用场景"
 date = 2026-01-21
+weight = 20000
 draft = false
 [taxonomies]
 tags = ["io_uring", "异步IO", "Linux", "高性能", "HFT"]
@@ -607,5 +608,5 @@ io_uring是现代Linux高性能IO的首选方案，特别适合HFT等低延迟�
 
 ## 相关文章
 
-- [上一篇：UDP组播最佳实践(HFT)](/articles/networking/net-19-UDP组播最佳实践/)
-- [下一篇：RDMA与InfiniBand详解(HFT)](/articles/networking/net-21-RDMA与InfiniBand详解/)
+- [上一篇：UDP组播最佳实践(HFT)](@/articles/networking/net-19-UDP组播最佳实践.md)
+- [下一篇：RDMA与InfiniBand详解(HFT)](@/articles/networking/net-21-RDMA与InfiniBand详解.md)

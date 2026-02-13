@@ -1,7 +1,8 @@
 +++
-title = "02.可观测性实践"
+title = "可观测性实践"
 description = "系统可观测性三支柱：指标、日志、链路追踪的设计与实践"
 date = 2025-01-16
+weight = 2000
 [taxonomies]
 tags = ["devops", "observability", "monitoring", "logging", "tracing"]
 +++
@@ -464,5 +465,5 @@ Traces：这个请求经过了哪些服务？哪里慢了？
 
 ## 相关文章
 
-- [上一篇：CI/CD最佳实践](/articles/devops/devops-01-CI-CD最佳实践/)
-- [下一篇：SRE实践指南](/articles/devops/devops-03-SRE实践指南/)
+- [上一篇：CI/CD最佳实践](@/articles/devops/devops-01-CI-CD最佳实践.md)
+- [下一篇：SRE实践指南](@/articles/devops/devops-03-SRE实践指南.md)

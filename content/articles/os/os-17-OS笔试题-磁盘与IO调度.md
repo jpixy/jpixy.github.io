@@ -1,6 +1,7 @@
 +++
-title = "17.OS笔试题-磁盘与IO调度"
+title = "OS笔试题-磁盘与IO调度"
 date = 2026-01-31
+weight = 17000
 description = "操作系统磁盘与IO调度笔试题：磁盘结构、调度算法、缓冲区管理、DMA深度解析"
 [taxonomies]
 tags = ["操作系统", "笔试", "磁盘", "IO调度", "DMA"]
@@ -1739,5 +1740,5 @@ mindmap
 
 ## 导航
 
-- [上一篇：OS笔试题-文件系统](/articles/os/os-16-OS笔试题-文件系统/)
-- [下一篇：OS面试题-IO系统](/articles/os/os-18-OS面试题-IO系统/)
+- [上一篇：OS笔试题-文件系统](@/articles/os/os-16-OS笔试题-文件系统.md)
+- [下一篇：OS面试题-IO系统](@/articles/os/os-18-OS面试题-IO系统.md)

@@ -1,6 +1,7 @@
 +++
-title = "01.Helm Chart面试题汇总"
+title = "Helm Chart面试题汇总"
 slug = "helm-HelmChart面试题汇总"
+weight = 2000
 +++
 
 # Helm Chart 面试题简答（前20题）
@@ -1207,4 +1208,4 @@ env:
 
 ## 相关文章
 
-- [下一篇：为什么Docker容器删除后内部的日志或文件会随之消失](/articles/cloud-native/dkr-01-容器文件消失原因/)
+- [下一篇：为什么Docker容器删除后内部的日志或文件会随之消失](@/articles/cloud-native/dkr-01-容器文件消失原因.md)

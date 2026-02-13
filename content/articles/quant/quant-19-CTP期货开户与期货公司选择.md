@@ -1,6 +1,7 @@
 +++
-title = "19 - CTP 期货开户与期货公司选择：个人量化交易者完整指南"
+title = "CTP 期货开户与期货公司选择：个人量化交易者完整指南"
 date = 2025-01-16
+weight = 19000
 description = "详解中国大陆期货开户全流程、期货公司选择标准、手续费和保证金谈判技巧、CTP接口申请、入门品种推荐"
 [taxonomies]
 tags = ["quant", "CTP", "futures", "china-market", "broker", "account-opening"]
@@ -633,5 +634,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：18 - 个人自动化量化交易入门](/articles/quant/quant-18-个人自动化量化交易入门/)
-- [下一篇：20 - 极速交易系统详解](/articles/quant/quant-20-极速交易系统详解/)
+- [上一篇：18 - 个人自动化量化交易入门](@/articles/quant/quant-18-个人自动化量化交易入门.md)
+- [下一篇：20 - 极速交易系统详解](@/articles/quant/quant-20-极速交易系统详解.md)

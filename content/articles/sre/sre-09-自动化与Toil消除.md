@@ -1,6 +1,7 @@
 +++
-title = "09.自动化与Toil消除"
+title = "自动化与Toil消除"
 date = 2026-01-19
+weight = 9000
 description = "SRE自动化实践：Toil的识别与量化、自动化策略、工具链建设、自愈系统设计"
 [taxonomies]
 tags = ["SRE", "自动化", "Toil"]
@@ -429,5 +430,5 @@ def auto_remediate():
 
 ## 相关文章
 
-- [上一篇：混沌工程与韧性测试](/articles/sre/sre-08-混沌工程与韧性测试/)
-- [下一篇：SRE工具链详解](/articles/sre/sre-10-SRE工具链详解/)
+- [上一篇：混沌工程与韧性测试](@/articles/sre/sre-08-混沌工程与韧性测试.md)
+- [下一篇：SRE工具链详解](@/articles/sre/sre-10-SRE工具链详解.md)

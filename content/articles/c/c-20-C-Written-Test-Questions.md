@@ -1,6 +1,7 @@
 +++
-title = "20. C Written Test Questions"
+title = "C Written Test Questions"
 date = 2026-01-30
+weight = 20000
 description = "C语言笔试真题：选择题、填空题、编程题、调试题"
 [taxonomies]
 tags = ["C", "笔试", "真题"]
@@ -1112,5 +1113,5 @@ void vector_push(Vector *v, const void *elem) {
 
 ## 相关文章
 
-- [上一篇：Cache-Friendly C Programming (HFT)](/articles/c/c-19-Cache-Friendly-Programming/)
-- [下一篇：C Interview Questions](/articles/c/c-21-C-Interview-Questions/)
+- [上一篇：Cache-Friendly C Programming (HFT)](@/articles/c/c-19-Cache-Friendly-Programming.md)
+- [下一篇：C Interview Questions](@/articles/c/c-21-C-Interview-Questions.md)

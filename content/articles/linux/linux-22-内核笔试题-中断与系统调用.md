@@ -1,6 +1,7 @@
 +++
-title = "22.内核笔试题-中断与系统调用"
+title = "内核笔试题-中断与系统调用"
 date = 2026-01-31
+weight = 22000
 description = "Linux内核中断与系统调用笔试题：中断处理流程、下半部机制、syscall实现、vDSO"
 [taxonomies]
 tags = ["Linux", "内核", "笔试", "中断", "系统调用"]
@@ -1153,8 +1154,8 @@ void user_read_counter_v2(void) {
 
 ## 相关文章
 
-- [上一篇：内核笔试题-同步机制](/articles/linux/linux-21-内核笔试题-同步机制/)
-- [下一篇：内核面试题-内存管理](/articles/linux/linux-23-内核面试题-内存管理/)
+- [上一篇：内核笔试题-同步机制](@/articles/linux/linux-21-内核笔试题-同步机制.md)
+- [下一篇：内核面试题-内存管理](@/articles/linux/linux-23-内核面试题-内存管理.md)
 
 **知识基础**：
-- [中断与系统调用详解](/articles/linux/linux-17-中断与系统调用详解/)
+- [中断与系统调用详解](@/articles/linux/linux-17-中断与系统调用详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "05.Python的with最佳实践"
+title = "Python的with最佳实践"
 slug = "py-Python的with最佳实践"
+weight = 5000
 +++
 
 # py Python的with最佳实践
@@ -102,5 +103,5 @@ Resource closed
 
 ## 相关文章
 
-- [上一篇：Python装饰器和类装饰器详解](/articles/python/py-04-装饰器详解/)
-- [下一篇：Python的上下文管理器ContextManager](/articles/python/py-06-上下文管理器/)
+- [上一篇：Python装饰器和类装饰器详解](@/articles/python/py-04-装饰器详解.md)
+- [下一篇：Python的上下文管理器ContextManager](@/articles/python/py-06-上下文管理器.md)

@@ -1,7 +1,8 @@
 +++
-title = "05.MySQL分库分表实践"
+title = "MySQL分库分表实践"
 description = "分库分表方案设计：垂直拆分、水平拆分、分片策略与数据迁移"
 date = 2025-01-16
+weight = 5000
 [taxonomies]
 tags = ["interview", "database", "mysql", "sharding", "distributed"]
 +++
@@ -325,5 +326,5 @@ A：双写 + 增量同步 + 数据校验 + 灰度切流。使用一致性哈希�
 
 ## 相关文章
 
-- [上一篇：MySQL索引原理与查询优化](/articles/interview/interview-04-MySQL索引与优化/)
-- [下一篇：Kafka为什么这么快](/articles/interview/interview-06-Kafka为什么这么快/)
+- [上一篇：MySQL索引原理与查询优化](@/articles/interview/interview-04-MySQL索引与优化.md)
+- [下一篇：Kafka为什么这么快](@/articles/interview/interview-06-Kafka为什么这么快.md)

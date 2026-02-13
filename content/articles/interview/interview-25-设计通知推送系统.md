@@ -1,7 +1,8 @@
 +++
-title = "25.如何设计一个通知推送系统"
+title = "如何设计一个通知推送系统"
 description = "通知推送系统设计：多渠道推送、消息路由、送达保障与用户偏好管理"
 date = 2025-01-16
+weight = 25000
 [taxonomies]
 tags = ["interview", "system-design", "notification", "push", "messaging"]
 +++
@@ -424,5 +425,5 @@ A：频率限制、去重过滤、免打扰时段、用户偏好、退订机制�
 
 ## 相关文章
 
-- [上一篇：如何设计一个即时通讯系统](/articles/interview/interview-24-设计即时通讯系统/)
-- [下一篇：如何设计一个视频流系统](/articles/interview/interview-26-设计视频流系统/)
+- [上一篇：如何设计一个即时通讯系统](@/articles/interview/interview-24-设计即时通讯系统.md)
+- [下一篇：如何设计一个视频流系统](@/articles/interview/interview-26-设计视频流系统.md)

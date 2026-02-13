@@ -1,6 +1,7 @@
 +++
-title = "11.分布式系统可靠性设计"
+title = "分布式系统可靠性设计"
 date = 2026-01-19
+weight = 11000
 description = "分布式可靠性：CAP理论、一致性模型、容错模式、降级熔断、重试策略"
 [taxonomies]
 tags = ["SRE", "分布式系统", "可靠性"]
@@ -427,5 +428,5 @@ Producer(快) → Buffer满 → 减速 → 恢复 → 加速
 
 ## 相关文章
 
-- [上一篇：SRE工具链详解](/articles/sre/sre-10-SRE工具链详解/)
-- [下一篇：Kubernetes SRE实践](/articles/sre/sre-12-Kubernetes-SRE实践/)
+- [上一篇：SRE工具链详解](@/articles/sre/sre-10-SRE工具链详解.md)
+- [下一篇：Kubernetes SRE实践](@/articles/sre/sre-12-Kubernetes-SRE实践.md)

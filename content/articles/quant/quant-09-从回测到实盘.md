@@ -1,6 +1,7 @@
 +++
-title = "09 - 从回测到实盘"
+title = "从回测到实盘"
 date = 2025-01-15
+weight = 9000
 description = "量化交易从回测到实盘的完整路径：实盘系统架构、订单管理、监控告警、故障处理"
 [taxonomies]
 tags = ["quant", "live-trading", "system-architecture", "monitoring", "production"]
@@ -746,5 +747,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：08 - 回测系统设计与实现](/articles/quant/quant-08-回测系统设计与实现/)
-- [下一篇：10 - 因子研究方法论](/articles/quant/quant-10-因子研究方法论/)
+- [上一篇：08 - 回测系统设计与实现](@/articles/quant/quant-08-回测系统设计与实现.md)
+- [下一篇：10 - 因子研究方法论](@/articles/quant/quant-10-因子研究方法论.md)

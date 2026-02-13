@@ -1,6 +1,7 @@
 +++
-title = "14. IO多路复用详解：原理、实现与对比"
+title = "IO多路复用详解：原理、实现与对比"
 date = 2026-01-31
+weight = 14000
 description = "深入剖析select、poll、epoll、io_uring的底层原理与内核实现，揭示高性能IO的设计思想"
 [taxonomies]
 tags = ["C", "Linux", "IO多路复用", "epoll", "io_uring", "系统编程"]
@@ -718,5 +719,5 @@ A:
 
 ## 相关文章
 
-- [上一篇：String Storage Data Structures](/articles/c/c-13-保存英文句子的数据结构/)
-- [下一篇：Memory Alignment and Struct Packing](/articles/c/c-15-Memory-Alignment/)
+- [上一篇：String Storage Data Structures](@/articles/c/c-13-保存英文句子的数据结构.md)
+- [下一篇：Memory Alignment and Struct Packing](@/articles/c/c-15-Memory-Alignment.md)

@@ -1,6 +1,7 @@
 +++
-title = "42.fio磁盘IO性能测试深度解析"
+title = "fio磁盘IO性能测试深度解析"
 date = 2026-01-31
+weight = 42000
 description = "fio深度解析：磁盘IO测试原理、IO模式、异步引擎、性能分析"
 [taxonomies]
 tags = ["Linux", "fio", "IO", "磁盘", "性能测试"]
@@ -686,5 +687,5 @@ fio --name=test --ioengine=libaio --direct=1 \
 
 ## 相关文章
 
-- [上一篇：iperf3网络带宽测试深度解析](/articles/linux/linux-41-iperf3网络带宽测试深度解析/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [上一篇：iperf3网络带宽测试深度解析](@/articles/linux/linux-41-iperf3网络带宽测试深度解析.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

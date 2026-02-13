@@ -1,7 +1,8 @@
 +++
-title = "48.Python性能优化-Numba详解"
+title = "Python性能优化-Numba详解"
 slug = "py-49-Python性能优化-Numba详解"
 date = 2026-01-21
+weight = 48000
 description = "深入剖析Numba的使用方法，包括JIT编译、nopython模式、CUDA支持、向量化和性能对比"
 [taxonomies]
 tags = ["Python", "Numba", "JIT", "性能优化", "CUDA"]
@@ -565,5 +566,5 @@ def benchmark():
 
 ## 相关文章
 
-- [上一篇：Python性能优化-Cython详解](/articles/python/py-47-Python性能优化-Cython详解/)
-- [下一篇：Python性能优化-多进程与GIL](/articles/python/py-49-Python性能优化-多进程与GIL/)
+- [上一篇：Python性能优化-Cython详解](@/articles/python/py-47-Python性能优化-Cython详解.md)
+- [下一篇：Python性能优化-多进程与GIL](@/articles/python/py-49-Python性能优化-多进程与GIL.md)

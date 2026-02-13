@@ -1,7 +1,8 @@
 +++
-title = "26 - CXL 与新型内存互联技术"
+title = "CXL 与新型内存互联技术"
 description = "Compute Express Link 技术深度解析：内存扩展、池化与异构计算"
 date = 2025-02-07
+weight = 26000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -529,7 +530,7 @@ graph TB
 
 ## 相关文章
 
-- [24 - DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
-- [21 - RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [hpc-04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
-- [linux-24 - 内存管理与优化](/articles/linux/linux-24-内存管理与优化/)
+- [24 - DPU 与智能网卡技术详解](@/articles/networking/net-24-DPU与智能网卡技术详解.md)
+- [21 - RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [hpc-04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)
+- [linux-24 - 内存管理与优化](@/articles/linux/linux-24-内核面试题-进程调度.md)

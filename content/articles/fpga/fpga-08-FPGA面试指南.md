@@ -1,6 +1,7 @@
 +++
-title = "08.FPGA面试指南"
+title = "FPGA面试指南"
 date = 2026-01-20
+weight = 8000
 description = "FPGA面试：常见问题、设计题、时序分析、调试方法"
 [taxonomies]
 tags = ["FPGA", "面试", "指南"]
@@ -263,4 +264,4 @@ FPGA面试考察硬件思维和实践经验。理解代码与电路的对应关�
 
 ## 相关文章
 
-- [上一篇：FPGA与嵌入式集成](/articles/fpga/fpga-07-FPGA与嵌入式集成/)
+- [上一篇：FPGA与嵌入式集成](@/articles/fpga/fpga-07-FPGA与嵌入式集成.md)

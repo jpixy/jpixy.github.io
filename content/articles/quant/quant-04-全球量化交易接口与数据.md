@@ -1,6 +1,7 @@
 +++
-title = "04 - 全球量化交易接口与数据"
+title = "全球量化交易接口与数据"
 date = 2025-01-15
+weight = 4000
 description = "放眼全球：海外市场量化交易接口、可交易产品、数据来源及回测平台详解"
 [taxonomies]
 tags = ["quant", "trading", "global", "api", "data", "us-market"]
@@ -524,5 +525,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：03 - 中国大陆量化交易接口与数据](/articles/quant/quant-03-中国大陆量化交易接口与数据/)
-- [下一篇：05 - 个人量化常用策略详解](/articles/quant/quant-05-个人量化常用策略详解/)
+- [上一篇：03 - 中国大陆量化交易接口与数据](@/articles/quant/quant-03-中国大陆量化交易接口与数据.md)
+- [下一篇：05 - 个人量化常用策略详解](@/articles/quant/quant-05-个人量化常用策略详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "05.信息论基础"
+title = "信息论基础"
 date = 2026-01-20
+weight = 5000
 description = "信息论：熵、互信息、KL散度、交叉熵"
 [taxonomies]
 tags = ["数学", "信息论", "熵"]
@@ -249,5 +250,5 @@ KL散度约束潜空间接近先验分布。
 
 ## 相关文章
 
-- [上一篇：微积分要点](/articles/math/math-04-微积分要点/)
-- [下一篇：数值计算](/articles/math/math-06-数值计算/)
+- [上一篇：微积分要点](@/articles/math/math-04-微积分要点.md)
+- [下一篇：数值计算](@/articles/math/math-06-数值计算.md)

@@ -1,7 +1,8 @@
 +++
-title = "06.Kubernetes安全与RBAC"
+title = "Kubernetes安全与RBAC"
 description = "RBAC权限管理、Pod安全策略、网络安全、Secret加密、审计日志与安全最佳实践"
 date = 2025-01-16
+weight = 8000
 [taxonomies]
 tags = ["kubernetes", "container", "security", "rbac", "devops"]
 [extra]
@@ -1395,5 +1396,5 @@ A：取决于 Webhook 配置中的 `failurePolicy` 字段，这是生产环境�
 
 ## 相关文章
 
-- [上一篇：Kubernetes配置与密钥管理](/articles/cloud-native/k8s-05-配置与密钥管理/)
-- [下一篇：Kubernetes运维与故障排查](/articles/cloud-native/k8s-07-运维与故障排查/)
+- [上一篇：Kubernetes配置与密钥管理](@/articles/cloud-native/k8s-05-配置与密钥管理.md)
+- [下一篇：Kubernetes运维与故障排查](@/articles/cloud-native/k8s-07-运维与故障排查.md)

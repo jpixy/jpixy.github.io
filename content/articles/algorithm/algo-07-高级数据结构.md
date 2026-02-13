@@ -1,6 +1,7 @@
 +++
-title = "07.高级数据结构"
+title = "高级数据结构"
 date = 2026-01-19
+weight = 7000
 description = "高级数据结构：线段树、树状数组、字典树、跳表、布隆过滤器"
 [taxonomies]
 tags = ["算法", "数据结构", "高级"]
@@ -407,5 +408,5 @@ class LRUCache:
 
 ## 相关文章
 
-- [上一篇：常见算法技巧](/articles/algorithm/algo-06-常见算法技巧/)
-- [下一篇：算法面试指南](/articles/algorithm/algo-08-算法面试指南/)
+- [上一篇：常见算法技巧](@/articles/algorithm/algo-06-常见算法技巧.md)
+- [下一篇：算法面试指南](@/articles/algorithm/algo-08-算法面试指南.md)

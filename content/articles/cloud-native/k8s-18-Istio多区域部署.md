@@ -1,7 +1,8 @@
 +++
-title = "18.Istio多区域部署与存储复制"
+title = "Istio多区域部署与存储复制"
 description = "Istio 多区域部署架构、Locality-Based Routing、跨区域故障转移、存储复制策略与面试级深度解析"
 date = 2025-01-16
+weight = 20000
 [taxonomies]
 tags = ["kubernetes", "istio", "service-mesh", "multi-zone", "storage", "devops"]
 [extra]
@@ -808,5 +809,5 @@ A：证书签发流程分四步：(1) Envoy 启动时通过 SDS API 向同 Pod �
 
 ## 相关文章
 
-- [上一篇：Kubernetes污点Taints详解与最佳实践](/articles/cloud-native/k8s-17-污点Taints详解/)
-- [下一篇：K8S域名访问问题排查](/articles/cloud-native/k8s-19-域名访问问题排查/)
+- [上一篇：Kubernetes污点Taints详解与最佳实践](@/articles/cloud-native/k8s-17-污点Taints详解.md)
+- [下一篇：K8S域名访问问题排查](@/articles/cloud-native/k8s-19-域名访问问题排查.md)

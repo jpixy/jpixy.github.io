@@ -1,6 +1,7 @@
 +++
-title = "03.FAST协议详解"
+title = "FAST协议详解"
 date = 2026-01-13
+weight = 3000
 description = "FIX Adapted for Streaming协议深度解析：编码机制、压缩原理与行情分发优化"
 [taxonomies]
 tags = ["hft", "fast", "protocol", "market-data"]
@@ -370,5 +371,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：FIX协议详解](/articles/hft/hft-02-FIX协议详解/)
-- [下一篇：ITCH与OUCH协议详解](/articles/hft/hft-04-ITCH与OUCH协议详解/)
+- [上一篇：FIX协议详解](@/articles/hft/hft-02-FIX协议详解.md)
+- [下一篇：ITCH与OUCH协议详解](@/articles/hft/hft-04-ITCH与OUCH协议详解.md)

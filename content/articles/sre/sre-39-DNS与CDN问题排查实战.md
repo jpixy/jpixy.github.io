@@ -1,6 +1,7 @@
 +++
-title = "39.DNS与CDN问题排查实战"
+title = "DNS与CDN问题排查实战"
 date = 2026-01-21
+weight = 39000
 description = "SRE DNS与CDN问题排查完整指南：域名解析故障、CDN缓存问题、DNS劫持检测与处理"
 [taxonomies]
 tags = ["SRE", "DNS", "CDN", "排查", "实战", "域名"]
@@ -789,5 +790,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：监控告警排查实战](/articles/sre/sre-38-监控告警排查实战/)
-- [下一篇：证书与HTTPS问题排查实战](/articles/sre/sre-40-证书与HTTPS问题排查实战/)
+- [上一篇：监控告警排查实战](@/articles/sre/sre-38-监控告警排查实战.md)
+- [下一篇：证书与HTTPS问题排查实战](@/articles/sre/sre-40-证书与HTTPS问题排查实战.md)

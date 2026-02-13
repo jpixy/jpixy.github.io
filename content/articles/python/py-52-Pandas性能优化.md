@@ -1,6 +1,7 @@
 +++
-title = "52.Pandas性能优化"
+title = "Pandas性能优化"
 date = 2026-01-21
+weight = 52000
 description = "深入剖析Pandas的性能优化技术，包括内存优化、向量化操作、apply陷阱、大数据处理和dtype优化"
 [taxonomies]
 tags = ["Python", "Pandas", "性能优化", "数据处理", "量化"]
@@ -453,5 +454,5 @@ df = df.drop('col', axis=1)
 
 ## 相关文章
 
-- [上一篇：NumPy高性能编程](/articles/python/py-51-NumPy高性能编程/)
-- [下一篇：时序数据处理专题](/articles/python/py-53-时序数据处理专题/)
+- [上一篇：NumPy高性能编程](@/articles/python/py-51-NumPy高性能编程.md)
+- [下一篇：时序数据处理专题](@/articles/python/py-53-时序数据处理专题.md)

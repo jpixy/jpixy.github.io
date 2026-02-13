@@ -1,6 +1,7 @@
 +++
-title = "34.HFT面试题-网络优化"
+title = "HFT面试题-网络优化"
 date = 2026-01-31
+weight = 34000
 description = "HFT网络优化面试题：内核旁路、DPDK、零拷贝、网卡调优、多播深度解析"
 [taxonomies]
 tags = ["HFT", "面试", "网络", "DPDK", "低延迟"]
@@ -1588,5 +1589,5 @@ void order_sender() {
 
 ## 相关文章
 
-- [上一篇：HFT面试题-锁与无锁编程](/articles/hft/hft-33-HFT面试题-锁与无锁编程/)
-- [下一篇：HFT笔试题-网络编程](/articles/hft/hft-35-HFT笔试题-网络编程/)
+- [上一篇：HFT面试题-锁与无锁编程](@/articles/hft/hft-33-HFT面试题-锁与无锁编程.md)
+- [下一篇：HFT笔试题-网络编程](@/articles/hft/hft-35-HFT笔试题-网络编程.md)

@@ -1,7 +1,8 @@
 +++
-title = "17. Lock-Free Data Structures (HFT)"
+title = "Lock-Free Data Structures (HFT)"
 slug = "cpp-22-HFT-Lock-Free数据结构详解"
 date = 2026-01-21
+weight = 17000
 description = "深入剖析无锁数据结构的原理与实现，包括CAS、ABA问题、SPSC/MPMC队列、Hazard Pointer等，HFT低延迟系统核心技术"
 [taxonomies]
 tags = ["C++", "Lock-Free", "并发", "HFT", "低延迟", "无锁队列"]
@@ -445,13 +446,13 @@ void benchmarkQueues() {
 
 ## 概念速查
 
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 无锁队列、CAS、ABA问题等概念速查
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - 内存序、原子操作等C++概念速查
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 低延迟系统设计概念速查
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - 无锁队列、CAS、ABA问题等概念速查
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md) - 内存序、原子操作等C++概念速查
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md) - 低延迟系统设计概念速查
 
 ---
 
 ## 相关文章
 
-- [上一篇：Smart Pointers Internals and Pitfalls](/articles/cpp/cpp-16-智能指针底层与陷阱/)
-- [下一篇：SIMD Programming (HFT)](/articles/cpp/cpp-18-HFT-SIMD编程详解/)
+- [上一篇：Smart Pointers Internals and Pitfalls](@/articles/cpp/cpp-16-智能指针底层与陷阱.md)
+- [下一篇：SIMD Programming (HFT)](@/articles/cpp/cpp-18-HFT-SIMD编程详解.md)

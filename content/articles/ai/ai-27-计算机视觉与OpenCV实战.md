@@ -1,6 +1,7 @@
 +++
-title = "27.计算机视觉与OpenCV实战"
+title = "计算机视觉与OpenCV实战"
 date = 2026-02-06
+weight = 27000
 description = "OpenCV图像处理全攻略：从基础操作到目标检测YOLO，GPU加速与实时视频流处理"
 [taxonomies]
 tags = ["opencv", "computer-vision", "yolo", "image-processing", "deep-learning"]
@@ -839,7 +840,7 @@ def draw_text_with_background(img, text, position, font_scale=0.7,
 
 ## 相关文章
 
-- [上一篇：26 - ROCm 与 AMD GPU 开发](/articles/ai/ai-26-ROCm与AMD-GPU开发/)
-- [下一篇：28 - AI 技术栈全景图](/articles/ai/ai-28-AI技术栈全景图/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [18 - 边缘 AI 与端侧部署详解](/articles/ai/ai-18-边缘AI与端侧部署详解/)
+- [上一篇：26 - ROCm 与 AMD GPU 开发](@/articles/ai/ai-26-ROCm与AMD-GPU开发.md)
+- [下一篇：28 - AI 技术栈全景图](@/articles/ai/ai-28-AI技术栈全景图.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [18 - 边缘 AI 与端侧部署详解](@/articles/ai/ai-18-边缘AI与端侧部署详解.md)

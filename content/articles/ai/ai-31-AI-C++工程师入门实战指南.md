@@ -1,7 +1,8 @@
 +++
-title = "31 - AI C++ 工程师入门实战指南"
+title = "AI C++ 工程师入门实战指南"
 description = "从零开始成为 AI 推理系统或边缘 AI 工程师的完整路径、学习方法与实战项目"
 date = 2025-02-07
+weight = 31000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -1456,10 +1457,10 @@ gantt
 
 ## 相关文章
 
-- [上一篇：30 - 从 CUDA 算子到推理系统](/articles/ai/ai-30-从CUDA算子到推理系统/)
-- [下一篇：32 - Triton GPU 编程详解](/articles/ai/ai-32-Triton-GPU编程详解/)
-- [28 - AI 技术栈全景图](/articles/ai/ai-28-AI技术栈全景图/)
-- [29 - AI C++ 工程师职业路径](/articles/ai/ai-29-AI-C++工程师职业路径/)
-- [AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
-- [端侧推理引擎对比](/articles/embedded/embedded-22-端侧推理引擎对比/)
-- [端侧模型优化实战](/articles/embedded/embedded-23-端侧模型优化实战/)
+- [上一篇：30 - 从 CUDA 算子到推理系统](@/articles/ai/ai-30-从CUDA算子到推理系统.md)
+- [下一篇：32 - Triton GPU 编程详解](@/articles/ai/ai-32-Triton-GPU编程详解.md)
+- [28 - AI 技术栈全景图](@/articles/ai/ai-28-AI技术栈全景图.md)
+- [29 - AI C++ 工程师职业路径](@/articles/ai/ai-29-AI-C++工程师职业路径.md)
+- [AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)
+- [端侧推理引擎对比](@/articles/embedded/embedded-22-端侧推理引擎对比.md)
+- [端侧模型优化实战](@/articles/embedded/embedded-23-端侧模型优化实战.md)

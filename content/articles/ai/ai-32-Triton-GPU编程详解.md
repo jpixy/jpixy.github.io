@@ -1,7 +1,8 @@
 +++
-title = "32 - Triton GPU 编程详解"
+title = "Triton GPU 编程详解"
 description = "OpenAI Triton 语言深度解析：从入门到实战，简化 GPU Kernel 开发"
 date = 2025-02-07
+weight = 32000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -837,7 +838,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：31 - AI C++ 工程师入门实战指南](/articles/ai/ai-31-AI-C++工程师入门实战指南/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [24 - GPU Kernel 开发详解](/articles/ai/ai-24-GPU-Kernel开发详解/)
-- [25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
+- [上一篇：31 - AI C++ 工程师入门实战指南](@/articles/ai/ai-31-AI-C++工程师入门实战指南.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [24 - GPU Kernel 开发详解](@/articles/ai/ai-24-GPU-Kernel开发详解.md)
+- [25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)

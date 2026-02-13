@@ -1,6 +1,7 @@
 +++
-title = "24 - A股程序化交易接口：QMT 与 Ptrade 详解"
+title = "A股程序化交易接口：QMT 与 Ptrade 详解"
 date = 2025-01-21
+weight = 24000
 description = "A股程序化交易接口完整指南：QMT（迅投）和 Ptrade（恒生）的详细介绍、申请条件、使用方法、代码示例及选型建议"
 [taxonomies]
 tags = ["quant", "a-stock", "qmt", "ptrade", "trading-api", "china-market"]
@@ -839,7 +840,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：23 - C++ 量化系统性能优化](/articles/quant/quant-23-Cpp量化系统性能优化/)
-- [03 - 中国大陆量化交易接口与数据](/articles/quant/quant-03-中国大陆量化交易接口与数据/)
-- [19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)
-- [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
+- [上一篇：23 - C++ 量化系统性能优化](@/articles/quant/quant-23-Cpp量化系统性能优化.md)
+- [03 - 中国大陆量化交易接口与数据](@/articles/quant/quant-03-中国大陆量化交易接口与数据.md)
+- [19 - CTP 期货开户与期货公司选择](@/articles/quant/quant-19-CTP期货开户与期货公司选择.md)
+- [21 - 量化开发技术栈选择](@/articles/quant/quant-21-量化开发技术栈选择.md)

@@ -1,6 +1,7 @@
 +++
-title = "16.HFT-Rust高性能网络编程"
+title = "HFT-Rust高性能网络编程"
 date = 2026-01-21
+weight = 16000
 description = "深入剖析Rust的高性能网络编程技术，包括io_uring、tokio、mio、零拷贝以及网络优化模式"
 [taxonomies]
 tags = ["Rust", "网络编程", "io_uring", "tokio", "HFT"]
@@ -544,5 +545,5 @@ fn network_thread() {
 
 ## 相关文章
 
-- [上一篇：HFT-Rust SIMD编程](/articles/rust/rust-15-HFT-Rust-SIMD编程/)
-- [下一篇：Rust性能调优实战](/articles/rust/rust-17-Rust性能调优实战/)
+- [上一篇：HFT-Rust SIMD编程](@/articles/rust/rust-15-HFT-Rust-SIMD编程.md)
+- [下一篇：Rust性能调优实战](@/articles/rust/rust-17-Rust性能调优实战.md)

@@ -1,7 +1,8 @@
 +++
-title = "21. CPU Affinity and NUMA (HFT)"
+title = "CPU Affinity and NUMA (HFT)"
 slug = "cpp-26-HFT-CPU亲和性与NUMA优化"
 date = 2026-01-21
+weight = 21000
 description = "深入剖析CPU亲和性设置、NUMA架构优化、线程绑定策略，HFT低延迟系统核心技术"
 [taxonomies]
 tags = ["C++", "CPU亲和性", "NUMA", "HFT", "低延迟", "性能优化"]
@@ -418,5 +419,5 @@ mlockall(MCL_CURRENT | MCL_FUTURE);
 
 ## 相关文章
 
-- [上一篇：Cache-Friendly Data Structures (HFT)](/articles/cpp/cpp-20-HFT缓存友好数据结构设计/)
-- [下一篇：High-Precision Timing (HFT)](/articles/cpp/cpp-22-HFT高精度时间测量/)
+- [上一篇：Cache-Friendly Data Structures (HFT)](@/articles/cpp/cpp-20-HFT缓存友好数据结构设计.md)
+- [下一篇：High-Precision Timing (HFT)](@/articles/cpp/cpp-22-HFT高精度时间测量.md)

@@ -1,6 +1,7 @@
 +++
-title = "05.RAG检索增强生成详解"
+title = "RAG检索增强生成详解"
 date = 2026-01-13
+weight = 5000
 description = "Retrieval-Augmented Generation深度解析：架构设计、向量检索、分块策略、重排序与生产实践"
 [taxonomies]
 tags = ["ai", "rag", "llm", "vector-database", "embedding"]
@@ -495,5 +496,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：Prompt工程与思维链详解](/articles/ai/ai-04-Prompt工程与思维链详解/)
-- [下一篇：LangChain详解](/articles/ai/ai-06-LangChain详解/)
+- [上一篇：Prompt工程与思维链详解](@/articles/ai/ai-04-Prompt工程与思维链详解.md)
+- [下一篇：LangChain详解](@/articles/ai/ai-06-LangChain详解.md)

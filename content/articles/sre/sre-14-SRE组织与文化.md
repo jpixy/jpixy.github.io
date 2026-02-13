@@ -1,6 +1,7 @@
 +++
-title = "14.SRE组织与文化"
+title = "SRE组织与文化"
 date = 2026-01-19
+weight = 14000
 description = "SRE组织建设：团队模式、与开发协作、文化推广、成熟度评估、职业发展"
 [taxonomies]
 tags = ["SRE", "组织", "文化"]
@@ -353,5 +354,5 @@ SRE不仅是一个职位，更是一种**文化和实践方法**。成功的SRE�
 
 ## 相关文章
 
-- [上一篇：数据库可靠性工程](/articles/sre/sre-13-数据库可靠性工程/)
-- [下一篇：SRE笔试题-日志与文本处理](/articles/sre/sre-15-SRE笔试题-日志与文本处理/)
+- [上一篇：数据库可靠性工程](@/articles/sre/sre-13-数据库可靠性工程.md)
+- [下一篇：SRE笔试题-日志与文本处理](@/articles/sre/sre-15-SRE笔试题-日志与文本处理.md)

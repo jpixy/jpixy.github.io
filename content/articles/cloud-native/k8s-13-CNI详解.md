@@ -1,6 +1,7 @@
 +++
-title = "13.Kubernetes CNI详解"
+title = "Kubernetes CNI详解"
 slug = "k8s-KubernetesCNI详解"
+weight = 15000
 +++
 
 # Kubernetes CNI (Container Network Interface) 详解
@@ -251,5 +252,5 @@ CNI 作为 Kubernetes 网络的基础，对集群的性能、安全和可靠性�
 
 ## 相关文章
 
-- [上一篇：kube-proxy详解](/articles/cloud-native/k8s-12-kube-proxy详解/)
-- [下一篇：Kubernetes CSI详解](/articles/cloud-native/k8s-14-CSI详解/)
+- [上一篇：kube-proxy详解](@/articles/cloud-native/k8s-12-kube-proxy详解.md)
+- [下一篇：Kubernetes CSI详解](@/articles/cloud-native/k8s-14-CSI详解.md)

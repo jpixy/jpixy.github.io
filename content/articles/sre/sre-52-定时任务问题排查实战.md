@@ -1,6 +1,7 @@
 +++
-title = "52.定时任务问题排查实战"
+title = "定时任务问题排查实战"
 date = 2026-01-21
+weight = 52000
 description = "SRE定时任务问题排查完整指南：cron、systemd timer故障排查与调试"
 [taxonomies]
 tags = ["SRE", "定时任务", "cron", "systemd", "排查", "实战"]
@@ -794,5 +795,5 @@ main
 
 ## 相关文章
 
-- [上一篇：负载均衡深入排查实战](/articles/sre/sre-51-负载均衡深入排查实战/)
-- [下一篇：内核参数调优实战](/articles/sre/sre-53-内核参数调优实战/)
+- [上一篇：负载均衡深入排查实战](@/articles/sre/sre-51-负载均衡深入排查实战.md)
+- [下一篇：内核参数调优实战](@/articles/sre/sre-53-内核参数调优实战.md)

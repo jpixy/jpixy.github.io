@@ -1,6 +1,7 @@
 +++
-title = "07.嵌入式Rust"
+title = "嵌入式Rust"
 date = 2026-01-19
+weight = 7000
 description = "嵌入式Rust：no_std开发、裸机编程、HAL抽象、常用外设、RTOS集成"
 [taxonomies]
 tags = ["Rust", "嵌入式", "裸机"]
@@ -497,5 +498,5 @@ target = "thumbv7em-none-eabihf"
 
 ## 相关文章
 
-- [上一篇：异步编程](/articles/rust/rust-06-异步编程/)
-- [下一篇：unsafe Rust完全指南](/articles/rust/rust-08-unsafe-Rust完全指南/)
+- [上一篇：异步编程](@/articles/rust/rust-06-异步编程.md)
+- [下一篇：unsafe Rust完全指南](@/articles/rust/rust-08-unsafe-Rust完全指南.md)

@@ -1,6 +1,7 @@
 +++
-title = "12 - 期权量化入门"
+title = "期权量化入门"
 date = 2025-01-15
+weight = 12000
 description = "期权量化交易基础：期权定价、Greeks、波动率交易、常见期权策略"
 [taxonomies]
 tags = ["quant", "options", "greeks", "volatility", "derivatives"]
@@ -402,5 +403,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：11 - 加密货币量化交易](/articles/quant/quant-11-加密货币量化/)
-- [下一篇：13 - 组合构建与优化](/articles/quant/quant-13-组合构建与优化/)
+- [上一篇：11 - 加密货币量化交易](@/articles/quant/quant-11-加密货币量化.md)
+- [下一篇：13 - 组合构建与优化](@/articles/quant/quant-13-组合构建与优化.md)

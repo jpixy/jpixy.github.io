@@ -1,6 +1,7 @@
 +++
-title = "18.边缘AI与端侧部署详解"
+title = "边缘AI与端侧部署详解"
 date = 2025-01-15
+weight = 18000
 description = "边缘设备AI部署全解析：移动端、IoT、浏览器部署技术与实践"
 [taxonomies]
 tags = ["ai", "edge-ai", "mobile", "iot", "tflite", "coreml", "webml"]
@@ -516,5 +517,5 @@ tegrastats  # Jetson 专用监控工具
 
 ## 相关文章
 
-- [上一篇：模型部署与Serving详解](/articles/ai/ai-17-模型部署与Serving详解/)
-- [下一篇：DeepSeek推理优化技术详解](/articles/ai/ai-19-DeepSeek推理优化技术详解/)
+- [上一篇：模型部署与Serving详解](@/articles/ai/ai-17-模型部署与Serving详解.md)
+- [下一篇：DeepSeek推理优化技术详解](@/articles/ai/ai-19-DeepSeek推理优化技术详解.md)

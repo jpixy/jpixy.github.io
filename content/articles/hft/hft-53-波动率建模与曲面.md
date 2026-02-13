@@ -1,6 +1,7 @@
 +++
-title = "53.波动率建模与曲面"
+title = "波动率建模与曲面"
 date = 2026-02-02
+weight = 53000
 description = "波动率建模：波动率微笑、曲面、局部波动率、随机波动率模型"
 [taxonomies]
 tags = ["HFT", "波动率", "期权", "SABR", "Heston"]
@@ -661,6 +662,6 @@ public:
 
 ## 相关文章
 
-- [期权定价与Greeks详解](/articles/hft/hft-52-期权定价与Greeks详解/)
-- [量化数学-随机过程与时间序列](/articles/hft/hft-49-量化数学-随机过程与时间序列/)
-- [市场微结构深度解析](/articles/hft/hft-38-市场微结构深度解析/)
+- [期权定价与Greeks详解](@/articles/hft/hft-52-期权定价与Greeks详解.md)
+- [量化数学-随机过程与时间序列](@/articles/hft/hft-49-量化数学-随机过程与时间序列.md)
+- [市场微结构深度解析](@/articles/hft/hft-38-市场微结构深度解析.md)

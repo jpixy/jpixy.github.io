@@ -1,6 +1,7 @@
 +++
-title = "07.Linux存储技术深度指南"
+title = "Linux存储技术深度指南"
 date = 2026-01-12
+weight = 7000
 description = "SAN存储、LVM逻辑卷、文件系统调优的深度剖析与最佳实践"
 [taxonomies]
 tags = ["linux", "storage", "lvm", "san", "filesystem"]
@@ -858,5 +859,5 @@ cat /sys/block/sda/queue/scheduler
 
 ## 相关文章
 
-- [上一篇：Linux系统性能调优深度指南](/articles/devops/linux-06-系统性能调优指南/)
-- [下一篇：Linux网络技术深度指南](/articles/devops/linux-08-网络技术指南/)
+- [上一篇：Linux系统性能调优深度指南](@/articles/devops/linux-06-系统性能调优指南.md)
+- [下一篇：Linux网络技术深度指南](@/articles/devops/linux-08-网络技术指南.md)

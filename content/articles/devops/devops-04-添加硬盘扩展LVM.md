@@ -1,6 +1,7 @@
 +++
-title = "04.如何添加新硬盘扩展LVM"
+title = "如何添加新硬盘扩展LVM"
 slug = "devops-如何添加新硬盘扩展LVM"
+weight = 4000
 +++
 
 # 如何添加新硬盘扩展LVM
@@ -353,5 +354,5 @@ lsblk -f                           # 查看加密层和文件系统
 
 ## 相关文章
 
-- [上一篇：SRE实践指南](/articles/devops/devops-03-SRE实践指南/)
-- [下一篇：Linux系统诊断工具深度指南](/articles/devops/linux-05-系统诊断工具指南/)
+- [上一篇：SRE实践指南](@/articles/devops/devops-03-SRE实践指南.md)
+- [下一篇：Linux系统诊断工具深度指南](@/articles/devops/linux-05-系统诊断工具指南.md)

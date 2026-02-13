@@ -1,7 +1,8 @@
 +++
-title = "28.如何设计一个支付系统"
+title = "如何设计一个支付系统"
 description = "支付系统架构设计：交易流程、对账清算、幂等性与资金安全"
 date = 2025-01-16
+weight = 28000
 [taxonomies]
 tags = ["interview", "system-design", "payment", "fintech"]
 +++
@@ -415,5 +416,5 @@ A：日终对账核对所有交易；差异自动或人工处理；多层校验�
 
 ## 相关文章
 
-- [上一篇：如何设计一个对象存储系统](/articles/interview/interview-27-设计对象存储系统/)
-- [下一篇：如何设计一个订单系统](/articles/interview/interview-29-设计订单系统/)
+- [上一篇：如何设计一个对象存储系统](@/articles/interview/interview-27-设计对象存储系统.md)
+- [下一篇：如何设计一个订单系统](@/articles/interview/interview-29-设计订单系统.md)

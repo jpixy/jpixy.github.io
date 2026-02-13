@@ -1,6 +1,7 @@
 +++
-title = "13.AI高级知识与技能详解"
+title = "AI高级知识与技能详解"
 date = 2026-01-12
+weight = 13000
 description = "面向资深AI工程师的进阶知识体系：分布式训练、高级推理优化、前沿架构与研究方向"
 [taxonomies]
 tags = ["ai", "advanced", "distributed-training", "inference", "research"]
@@ -988,5 +989,5 @@ o1 模型思路：
 
 ## 相关文章
 
-- [上一篇：Notebook优化Agent增强版](/articles/ai/ai-12-Notebook优化Agent增强版/)
-- [下一篇：分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
+- [上一篇：Notebook优化Agent增强版](@/articles/ai/ai-12-Notebook优化Agent增强版.md)
+- [下一篇：分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)

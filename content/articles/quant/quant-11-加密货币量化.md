@@ -1,6 +1,7 @@
 +++
-title = "11 - 加密货币量化交易"
+title = "加密货币量化交易"
 date = 2025-01-15
+weight = 11000
 description = "加密货币量化交易入门：交易所选择、API 接口、套利策略、风险控制"
 [taxonomies]
 tags = ["quant", "crypto", "bitcoin", "arbitrage", "defi"]
@@ -472,5 +473,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：10 - 因子研究方法论](/articles/quant/quant-10-因子研究方法论/)
-- [下一篇：12 - 期权量化入门](/articles/quant/quant-12-期权量化入门/)
+- [上一篇：10 - 因子研究方法论](@/articles/quant/quant-10-因子研究方法论.md)
+- [下一篇：12 - 期权量化入门](@/articles/quant/quant-12-期权量化入门.md)

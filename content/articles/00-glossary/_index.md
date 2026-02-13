@@ -1,6 +1,6 @@
 +++
 title = "00.Glossary"
-sort_by = "title"
+sort_by = "weight"
 template = "section.html"
 +++
 

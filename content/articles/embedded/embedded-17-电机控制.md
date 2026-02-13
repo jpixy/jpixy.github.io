@@ -1,6 +1,7 @@
 +++
-title = "17.嵌入式电机控制"
+title = "嵌入式电机控制"
 date = 2026-01-19
+weight = 17000
 description = "电机控制全解：直流电机、步进电机、BLDC无刷电机、FOC矢量控制原理与实践"
 [taxonomies]
 tags = ["embedded", "motor", "bldc", "foc", "stepper", "pid"]
@@ -415,5 +416,5 @@ id给定(0) ────────────────────┘
 
 ## 相关文章
 
-- [上一篇：汽车电子与AUTOSAR](/articles/embedded/embedded-16-汽车电子与AUTOSAR/)
-- [下一篇：嵌入式测试与质量](/articles/embedded/embedded-18-嵌入式测试与质量/)
+- [上一篇：汽车电子与AUTOSAR](@/articles/embedded/embedded-16-汽车电子与AUTOSAR.md)
+- [下一篇：嵌入式测试与质量](@/articles/embedded/embedded-18-嵌入式测试与质量.md)

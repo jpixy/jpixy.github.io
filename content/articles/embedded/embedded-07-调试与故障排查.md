@@ -1,6 +1,7 @@
 +++
-title = "07.嵌入式调试与故障排查"
+title = "嵌入式调试与故障排查"
 date = 2026-01-19
+weight = 7000
 description = "嵌入式调试技巧：硬件调试、软件调试、常见问题排查、调试工具使用"
 [taxonomies]
 tags = ["embedded", "debugging", "oscilloscope", "logic-analyzer", "troubleshooting"]
@@ -296,5 +297,5 @@ const cli_cmd_t commands[] = {
 
 ## 相关文章
 
-- [上一篇：RTOS实时操作系统详解](/articles/embedded/embedded-06-RTOS实时操作系统/)
-- [下一篇：嵌入式项目实战案例](/articles/embedded/embedded-08-项目实战案例/)
+- [上一篇：RTOS实时操作系统详解](@/articles/embedded/embedded-06-RTOS实时操作系统.md)
+- [下一篇：嵌入式项目实战案例](@/articles/embedded/embedded-08-项目实战案例.md)

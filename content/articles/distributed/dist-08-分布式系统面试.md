@@ -1,6 +1,7 @@
 +++
-title = "08.分布式系统面试"
+title = "分布式系统面试"
 date = 2026-01-20
+weight = 8000
 description = "分布式系统面试：常见问题、系统设计、原理解释"
 [taxonomies]
 tags = ["分布式", "面试", "指南"]
@@ -335,4 +336,4 @@ CAP定理：分布式系统在网络分区时，只能在一致性（C）和可�
 
 ## 相关文章
 
-- [上一篇：分布式事务](/articles/distributed/dist-07-分布式事务/)
+- [上一篇：分布式事务](@/articles/distributed/dist-07-分布式事务.md)

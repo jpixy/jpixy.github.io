@@ -1,7 +1,8 @@
 +++
-title = "15.HFT风控系统设计"
+title = "HFT风控系统设计"
 slug = "hft-15-HFT风控系统设计"
 date = 2026-01-21
+weight = 15000
 description = "深入剖析HFT风控系统设计，包括实时风控、限额管理、熔断机制、异常检测和合规要求"
 [taxonomies]
 tags = ["HFT", "风控", "交易系统", "合规", "风险管理"]
@@ -699,5 +700,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
-- [下一篇：DPDK深度实践](/articles/hft/hft-16-DPDK深度实践/)
+- [上一篇：Market Making策略原理](@/articles/hft/hft-14-MarketMaking策略原理.md)
+- [下一篇：DPDK深度实践](@/articles/hft/hft-16-DPDK深度实践.md)

@@ -1,7 +1,8 @@
 +++
-title = "24 - DPU 与智能网卡技术详解"
+title = "DPU 与智能网卡技术详解"
 description = "数据处理单元（DPU）架构、应用场景与编程开发深度解析"
 date = 2025-02-07
+weight = 24000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -609,7 +610,7 @@ graph TB
 
 ## 相关文章
 
-- [21 - RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [04 - DPDK 详解](/articles/networking/net-04-DPDK详解/)
-- [13 - 高性能网络架构](/articles/networking/net-13-高性能网络架构/)
-- [hpc-04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
+- [21 - RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [04 - DPDK 详解](@/articles/networking/net-04-DPDK详解.md)
+- [13 - 高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)
+- [hpc-04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)

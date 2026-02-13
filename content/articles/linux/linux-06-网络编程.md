@@ -1,6 +1,7 @@
 +++
-title = "06.网络编程"
+title = "网络编程"
 date = 2026-01-19
+weight = 6000
 description = "Linux网络编程：socket接口、TCP/UDP编程、高性能I/O"
 [taxonomies]
 tags = ["Linux", "网络", "socket"]
@@ -281,5 +282,5 @@ tee复制数据到另一个管道。
 
 ## 相关文章
 
-- [上一篇：信号处理](/articles/linux/linux-05-信号处理/)
-- [下一篇：同步与锁](/articles/linux/linux-07-同步与锁/)
+- [上一篇：信号处理](@/articles/linux/linux-05-信号处理.md)
+- [下一篇：同步与锁](@/articles/linux/linux-07-同步与锁.md)

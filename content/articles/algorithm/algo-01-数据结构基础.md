@@ -1,6 +1,7 @@
 +++
-title = "01.数据结构基础"
+title = "数据结构基础"
 date = 2026-01-19
+weight = 1000
 description = "基础数据结构：数组、链表、栈、队列、哈希表、堆"
 [taxonomies]
 tags = ["算法", "数据结构", "基础"]
@@ -327,4 +328,4 @@ return prev
 
 ## 相关文章
 
-- [下一篇：排序与搜索](/articles/algorithm/algo-02-排序与搜索/)
+- [下一篇：排序与搜索](@/articles/algorithm/algo-02-排序与搜索.md)

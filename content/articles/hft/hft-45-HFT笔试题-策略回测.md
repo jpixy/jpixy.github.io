@@ -1,6 +1,7 @@
 +++
-title = "45.HFT笔试题-策略回测"
+title = "HFT笔试题-策略回测"
 date = 2026-02-02
+weight = 45000
 description = "HFT笔试：回测框架、事件驱动、滑点模型、性能指标"
 [taxonomies]
 tags = ["HFT", "笔试", "回测", "策略", "量化"]
@@ -839,6 +840,6 @@ void optimize_strategy() {
 
 ## 相关文章
 
-- [回测系统设计与实现](/articles/quant/quant-08-回测系统设计与实现/)
-- [HFT策略类型全景](/articles/hft/hft-39-HFT策略类型全景/)
-- [市场微结构深度解析](/articles/hft/hft-38-市场微结构深度解析/)
+- [回测系统设计与实现](@/articles/quant/quant-08-回测系统设计与实现.md)
+- [HFT策略类型全景](@/articles/hft/hft-39-HFT策略类型全景.md)
+- [市场微结构深度解析](@/articles/hft/hft-38-市场微结构深度解析.md)

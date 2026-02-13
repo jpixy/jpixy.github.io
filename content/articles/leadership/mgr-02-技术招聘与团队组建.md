@@ -1,6 +1,7 @@
 +++
-title = "02.技术招聘与团队组建"
+title = "技术招聘与团队组建"
 date = 2025-01-15
+weight = 2000
 description = "技术管理者招聘面试完全指南：如何设计面试流程、评估候选人、组建高效团队"
 [taxonomies]
 tags = ["leadership", "management", "hiring", "interview", "team-building"]
@@ -586,5 +587,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：IC到管理的角色转型](/articles/leadership/mgr-01-IC到管理的角色转型/)
-- [下一篇：员工发展与辅导指南](/articles/leadership/mgr-03-员工发展与辅导指南/)
+- [上一篇：IC到管理的角色转型](@/articles/leadership/mgr-01-IC到管理的角色转型.md)
+- [下一篇：员工发展与辅导指南](@/articles/leadership/mgr-03-员工发展与辅导指南.md)

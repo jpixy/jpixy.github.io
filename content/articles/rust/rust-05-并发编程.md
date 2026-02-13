@@ -1,6 +1,7 @@
 +++
-title = "05.并发编程"
+title = "并发编程"
 date = 2026-01-19
+weight = 5000
 description = "Rust并发：线程、消息传递、共享状态、Sync和Send、无畏并发"
 [taxonomies]
 tags = ["Rust", "并发", "多线程"]
@@ -487,5 +488,5 @@ Rust的"无畏并发"来自编译器对Send和Sync的检查，让并发错误在
 
 ## 相关文章
 
-- [上一篇：错误处理](/articles/rust/rust-04-错误处理/)
-- [下一篇：异步编程](/articles/rust/rust-06-异步编程/)
+- [上一篇：错误处理](@/articles/rust/rust-04-错误处理.md)
+- [下一篇：异步编程](@/articles/rust/rust-06-异步编程.md)

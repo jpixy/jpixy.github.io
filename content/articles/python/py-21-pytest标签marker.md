@@ -1,6 +1,7 @@
 +++
-title = "21.pytest标签marker详解与使用指南"
+title = "pytest标签marker详解与使用指南"
 slug = "py-pytest标签marker详解与使用指南"
+weight = 21000
 +++
 
 # Python pytest 标签(marker)详解与使用指南
@@ -195,5 +196,5 @@ pytest 的标记系统为测试组织提供了极大的灵活性，合理使用�
 
 ## 相关文章
 
-- [上一篇：Python的高级技巧](/articles/python/py-20-高级技巧/)
-- [下一篇：理解编程中的栈和堆](/articles/python/py-22-理解栈和堆/)
+- [上一篇：Python的高级技巧](@/articles/python/py-20-高级技巧.md)
+- [下一篇：理解编程中的栈和堆](@/articles/python/py-22-理解栈和堆.md)

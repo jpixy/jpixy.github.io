@@ -1,7 +1,8 @@
 +++
-title = "15. Custom Memory Allocators (HFT)"
+title = "Custom Memory Allocators (HFT)"
 slug = "cpp-20-HFT自定义内存分配器设计"
 date = 2026-01-21
+weight = 15000
 description = "深入剖析C++自定义内存分配器设计，包括Arena分配器、池分配器、无锁分配器等，HFT低延迟系统必备技术"
 [taxonomies]
 tags = ["C++", "内存分配", "HFT", "低延迟", "性能优化", "Arena"]
@@ -478,13 +479,13 @@ void benchmark() {
 
 ## 概念速查
 
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 对象池、内存分配等概念速查
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 内存管理、Huge Pages等概念速查
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 虚拟内存、mmap等概念速查
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - 对象池、内存分配等概念速查
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md) - 内存管理、Huge Pages等概念速查
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - 虚拟内存、mmap等概念速查
 
 ---
 
 ## 相关文章
 
-- [上一篇：Exception Handling and Performance](/articles/cpp/cpp-14-异常处理机制与性能开销/)
-- [下一篇：Smart Pointers Internals and Pitfalls](/articles/cpp/cpp-16-智能指针底层与陷阱/)
+- [上一篇：Exception Handling and Performance](@/articles/cpp/cpp-14-异常处理机制与性能开销.md)
+- [下一篇：Smart Pointers Internals and Pitfalls](@/articles/cpp/cpp-16-智能指针底层与陷阱.md)

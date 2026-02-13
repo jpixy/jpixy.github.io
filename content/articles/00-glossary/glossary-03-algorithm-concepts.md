@@ -1,7 +1,8 @@
 +++
-title = "03.Algorithm & Data Structure Concepts"
+title = "Algorithm & Data Structure Concepts"
 description = "算法与数据结构核心概念速查：复杂度分析、树结构对比、图论算法、贪心与动态规划、LeetCode常见题目Python3解法"
 date = 2026-01-26
+weight = 3000
 draft = false
 [taxonomies]
 tags = ["Glossary", "Algorithm", "Data Structure", "LeetCode", "Python3", "Reference"]
@@ -785,7 +786,7 @@ public:
 - 正确的内存序保证可见性
 - 2的幂大小用位与替代取模
 
-**详细文章**：[HFT-Lock-Free数据结构详解](/articles/ccpp/cpp-22-HFT-Lock-Free数据结构详解/)
+**详细文章**：[HFT-Lock-Free数据结构详解](@/articles/cpp/cpp-22-HFT高精度时间测量.md)
 
 ---
 
@@ -856,7 +857,7 @@ public:
 };
 ```
 
-**详细文章**：[概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
+**详细文章**：[概率数据结构详解(HFT)](@/articles/algorithm/algo-09-概率数据结构详解.md)
 
 ---
 
@@ -971,7 +972,7 @@ Order* order = pool.alloc();
 orderList.push_back(order);
 ```
 
-**详细文章**：[OrderBook实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+**详细文章**：[OrderBook实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)
 
 ---
 
@@ -1035,7 +1036,7 @@ Order* order = orderPool.alloc(orderId, price, qty);
 orderPool.free(order);
 ```
 
-**详细文章**：[HFT自定义内存分配器设计](/articles/ccpp/cpp-20-HFT自定义内存分配器设计/)
+**详细文章**：[HFT自定义内存分配器设计](@/articles/cpp/cpp-20-HFT缓存友好数据结构设计.md)
 
 ---
 
@@ -1209,7 +1210,7 @@ std::atomic<TaggedPtr> head;
 
 3. **RCU (Read-Copy-Update)**：延迟回收
 
-**详细文章**：[HFT-Lock-Free数据结构详解](/articles/ccpp/cpp-22-HFT-Lock-Free数据结构详解/)
+**详细文章**：[HFT-Lock-Free数据结构详解](@/articles/cpp/cpp-22-HFT高精度时间测量.md)
 
 ---
 
@@ -1300,7 +1301,7 @@ int lengthOfLongestSubstring(string s) {
 
 **HFT应用**：滑动窗口统计（VWAP、滚动均值等）
 
-**详细文章**：[在线算法与流式计算(HFT)](/articles/algorithm/algo-10-在线算法与流式计算/)
+**详细文章**：[在线算法与流式计算(HFT)](@/articles/algorithm/algo-10-在线算法与流式计算.md)
 
 ---
 
@@ -3559,16 +3560,16 @@ list(zip(*matrix))  # 矩阵转置
 
 ## 八、延伸阅读
 
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/)
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
-- [概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
-- [在线算法与流式计算(HFT)](/articles/algorithm/algo-10-在线算法与流式计算/)
-- [平衡树详解：AVL、红黑树、B树与B+树](/articles/algorithm/algo-11-平衡树详解/)
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md)
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md)
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md)
+- [概率数据结构详解(HFT)](@/articles/algorithm/algo-09-概率数据结构详解.md)
+- [在线算法与流式计算(HFT)](@/articles/algorithm/algo-10-在线算法与流式计算.md)
+- [平衡树详解：AVL、红黑树、B树与B+树](@/articles/algorithm/algo-11-平衡树详解.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：Networking Concepts](/articles/00-glossary/glossary-02-networking-concepts/)
-- [下一篇：HFT Concepts](/articles/00-glossary/glossary-04-hft-concepts/)
+- [上一篇：Networking Concepts](@/articles/00-glossary/glossary-02-networking-concepts.md)
+- [下一篇：HFT Concepts](@/articles/00-glossary/glossary-04-hft-concepts.md)

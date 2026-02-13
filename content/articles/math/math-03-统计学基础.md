@@ -1,6 +1,7 @@
 +++
-title = "03.统计学基础"
+title = "统计学基础"
 date = 2026-01-20
+weight = 3000
 description = "统计学：参数估计、假设检验、置信区间、回归分析"
 [taxonomies]
 tags = ["数学", "统计学", "估计"]
@@ -226,5 +227,5 @@ P(θ|数据) ∝ P(数据|θ) × P(θ)
 
 ## 相关文章
 
-- [上一篇：概率论基础](/articles/math/math-02-概率论基础/)
-- [下一篇：微积分要点](/articles/math/math-04-微积分要点/)
+- [上一篇：概率论基础](@/articles/math/math-02-概率论基础.md)
+- [下一篇：微积分要点](@/articles/math/math-04-微积分要点.md)

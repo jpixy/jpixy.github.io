@@ -1,7 +1,8 @@
 +++
-title = "27 - 网内计算技术详解"
+title = "网内计算技术详解"
 description = "In-Network Computing 原理、架构与应用：让网络设备参与计算"
 date = 2025-02-07
+weight = 27000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -519,7 +520,7 @@ graph TB
 
 ## 相关文章
 
-- [24 - DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
-- [21 - RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [hpc-04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
-- [hpc-05 - 分布式训练技术详解](/articles/hpc/hpc-05-分布式训练技术详解/)
+- [24 - DPU 与智能网卡技术详解](@/articles/networking/net-24-DPU与智能网卡技术详解.md)
+- [21 - RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [hpc-04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)
+- [hpc-05 - 分布式训练技术详解](@/articles/hpc/hpc-05-分布式训练技术详解.md)

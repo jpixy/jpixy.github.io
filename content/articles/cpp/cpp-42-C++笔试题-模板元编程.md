@@ -1,6 +1,7 @@
 +++
-title = "42.C++笔试题-模板元编程"
+title = "C++笔试题-模板元编程"
 date = 2026-01-31
+weight = 42000
 description = "C++模板元编程笔试题：模板特化、SFINAE、constexpr、类型萃取"
 [taxonomies]
 tags = ["C++", "笔试", "模板", "元编程", "SFINAE"]
@@ -978,5 +979,5 @@ struct Derived2 : Base<T> {
 
 ## 相关文章
 
-- [上一篇：C++笔试题-并发编程](/articles/cpp/cpp-41-C++笔试题-并发编程/)
-- [下一篇：C++面试题-内存与对象模型](/articles/cpp/cpp-43-C++面试题-内存与对象模型/)
+- [上一篇：C++笔试题-并发编程](@/articles/cpp/cpp-41-C++笔试题-并发编程.md)
+- [下一篇：C++面试题-内存与对象模型](@/articles/cpp/cpp-43-C++面试题-内存与对象模型.md)

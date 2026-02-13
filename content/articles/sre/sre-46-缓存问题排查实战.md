@@ -1,6 +1,7 @@
 +++
-title = "46.缓存问题排查实战"
+title = "缓存问题排查实战"
 date = 2026-01-21
+weight = 46000
 description = "SRE缓存问题排查完整指南：Redis、Memcached连接问题、内存淘汰、主从同步、性能问题排查"
 [taxonomies]
 tags = ["SRE", "缓存", "Redis", "Memcached", "排查", "实战"]
@@ -696,5 +697,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：消息队列问题排查实战](/articles/sre/sre-45-消息队列问题排查实战/)
-- [下一篇：备份恢复实战](/articles/sre/sre-47-备份恢复实战/)
+- [上一篇：消息队列问题排查实战](@/articles/sre/sre-45-消息队列问题排查实战.md)
+- [下一篇：备份恢复实战](@/articles/sre/sre-47-备份恢复实战.md)

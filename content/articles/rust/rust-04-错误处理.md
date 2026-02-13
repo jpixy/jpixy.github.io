@@ -1,6 +1,7 @@
 +++
-title = "04.错误处理"
+title = "错误处理"
 date = 2026-01-19
+weight = 4000
 description = "Rust错误处理：Result、Option、?操作符、自定义错误、错误传播"
 [taxonomies]
 tags = ["Rust", "错误处理", "Result"]
@@ -436,5 +437,5 @@ Rust的错误处理强调显式和类型安全，强制你思考和处理可能�
 
 ## 相关文章
 
-- [上一篇：生命周期详解](/articles/rust/rust-03-生命周期详解/)
-- [下一篇：并发编程](/articles/rust/rust-05-并发编程/)
+- [上一篇：生命周期详解](@/articles/rust/rust-03-生命周期详解.md)
+- [下一篇：并发编程](@/articles/rust/rust-05-并发编程.md)

@@ -1,7 +1,8 @@
 +++
-title = "03.SRE实践指南"
+title = "SRE实践指南"
 description = "站点可靠性工程：SRE核心理念、容量规划、变更管理与事故响应"
 date = 2025-01-16
+weight = 3000
 [taxonomies]
 tags = ["devops", "sre", "reliability", "incident-response", "on-call"]
 +++
@@ -490,5 +491,5 @@ SRE（Site Reliability Engineering）是Google提出的一种运维方法论，�
 
 ## 相关文章
 
-- [上一篇：可观测性实践](/articles/devops/devops-02-可观测性实践/)
-- [下一篇：如何添加新硬盘扩展LVM](/articles/devops/devops-04-添加硬盘扩展LVM/)
+- [上一篇：可观测性实践](@/articles/devops/devops-02-可观测性实践.md)
+- [下一篇：如何添加新硬盘扩展LVM](@/articles/devops/devops-04-添加硬盘扩展LVM.md)

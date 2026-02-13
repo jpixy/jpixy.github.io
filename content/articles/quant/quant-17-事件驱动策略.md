@@ -1,6 +1,7 @@
 +++
-title = "17 - 事件驱动策略"
+title = "事件驱动策略"
 date = 2025-01-15
+weight = 17000
 description = "事件驱动量化策略：财报交易、新闻情绪、公告事件、并购套利"
 [taxonomies]
 tags = ["quant", "event-driven", "earnings", "news", "merger-arbitrage"]
@@ -463,5 +464,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：16 - 市场微结构](/articles/quant/quant-16-市场微结构/)
-- [下一篇：18 - 个人自动化量化交易入门](/articles/quant/quant-18-个人自动化量化交易入门/)
+- [上一篇：16 - 市场微结构](@/articles/quant/quant-16-市场微结构.md)
+- [下一篇：18 - 个人自动化量化交易入门](@/articles/quant/quant-18-个人自动化量化交易入门.md)

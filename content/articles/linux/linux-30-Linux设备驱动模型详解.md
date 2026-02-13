@@ -1,6 +1,7 @@
 +++
-title = "30.Linux设备驱动模型详解"
+title = "Linux设备驱动模型详解"
 date = 2026-02-02
+weight = 30000
 description = "Linux设备驱动模型：kobject、kset、ktype、sysfs、udev、设备树、平台设备"
 [taxonomies]
 tags = ["Linux", "内核", "设备驱动", "kobject", "sysfs"]
@@ -1054,6 +1055,6 @@ base = devm_ioremap_resource(&pdev->dev, res);
 
 ## 相关文章
 
-- [上一篇：内核面试题-文件系统与VFS](/articles/linux/linux-29-内核面试题-文件系统与VFS/)
-- [下一篇：Linux容器基础详解](/articles/linux/linux-31-Linux容器基础详解/)
-- [内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+- [上一篇：内核面试题-文件系统与VFS](@/articles/linux/linux-29-内核面试题-文件系统与VFS.md)
+- [下一篇：Linux容器基础详解](@/articles/linux/linux-31-Linux容器基础详解.md)
+- [内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)

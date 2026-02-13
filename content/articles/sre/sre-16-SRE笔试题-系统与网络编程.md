@@ -1,6 +1,7 @@
 +++
-title = "16.SRE笔试题-系统与网络编程"
+title = "SRE笔试题-系统与网络编程"
 date = 2026-01-21
+weight = 16000
 description = "SRE面试笔试题精选：Linux系统编程、网络编程、进程管理、并发处理，Python3完整解答"
 [taxonomies]
 tags = ["SRE", "面试", "Python", "笔试", "系统编程", "网络"]
@@ -1414,5 +1415,5 @@ def api_call():
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-日志与文本处理](/articles/sre/sre-15-SRE笔试题-日志与文本处理/)
-- [下一篇：SRE笔试题-数据结构与算法](/articles/sre/sre-17-SRE笔试题-数据结构与算法/)
+- [上一篇：SRE笔试题-日志与文本处理](@/articles/sre/sre-15-SRE笔试题-日志与文本处理.md)
+- [下一篇：SRE笔试题-数据结构与算法](@/articles/sre/sre-17-SRE笔试题-数据结构与算法.md)

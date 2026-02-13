@@ -1,7 +1,8 @@
 +++
-title = "55.Python量化面试题"
+title = "Python量化面试题"
 slug = "py-55-Python量化面试题"
 date = 2026-01-21
+weight = 57000
 description = "Python量化面试常见问题，包括策略实现、数据处理、性能优化、统计计算和Pandas/NumPy陷阱"
 [taxonomies]
 tags = ["Python", "面试", "量化", "Pandas", "NumPy"]
@@ -529,4 +530,4 @@ print(price1 == price2)  # True
 
 ## 相关文章
 
-- [上一篇：Python常见高难度面试问题](/articles/python/py-56-高难度面试问题/)
+- [上一篇：Python常见高难度面试问题](@/articles/python/py-56-高难度面试问题.md)

@@ -1,6 +1,7 @@
 +++
-title = "08.技术领导力与架构治理"
+title = "技术领导力与架构治理"
 date = 2025-01-15
+weight = 8000
 description = "Tech Lead核心职责详解：技术决策、架构治理、代码质量、技术债务管理、技术选型等关键话题"
 [taxonomies]
 tags = ["leadership", "tech-lead", "architecture", "technical-decision", "interview"]
@@ -589,5 +590,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：远程与分布式团队管理](/articles/leadership/mgr-07-远程与分布式团队管理/)
-- [下一篇：高级管理话题-组织预算与向上管理](/articles/leadership/mgr-09-组织预算与向上管理/)
+- [上一篇：远程与分布式团队管理](@/articles/leadership/mgr-07-远程与分布式团队管理.md)
+- [下一篇：高级管理话题-组织预算与向上管理](@/articles/leadership/mgr-09-组织预算与向上管理.md)

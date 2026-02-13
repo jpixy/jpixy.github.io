@@ -1,6 +1,7 @@
 +++
-title = "04.嵌入式开发环境与工具链"
+title = "嵌入式开发环境与工具链"
 date = 2026-01-19
+weight = 4000
 description = "嵌入式开发工具链详解：编译器、调试器、IDE、版本控制、CI/CD最佳实践"
 [taxonomies]
 tags = ["embedded", "toolchain", "gcc", "openocd", "debugging"]
@@ -335,5 +336,5 @@ jobs:
 
 ## 相关文章
 
-- [上一篇：嵌入式高级知识](/articles/embedded/embedded-03-嵌入式高级知识/)
-- [下一篇：嵌入式通信协议详解](/articles/embedded/embedded-05-通信协议详解/)
+- [上一篇：嵌入式高级知识](@/articles/embedded/embedded-03-嵌入式高级知识.md)
+- [下一篇：嵌入式通信协议详解](@/articles/embedded/embedded-05-通信协议详解.md)

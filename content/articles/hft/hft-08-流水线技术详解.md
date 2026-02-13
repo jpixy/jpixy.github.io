@@ -1,6 +1,7 @@
 +++
-title = "08.流水线技术详解"
+title = "流水线技术详解"
 date = 2026-01-13
+weight = 8000
 description = "高频交易系统流水线优化深度解析：CPU流水线、软件流水线、并行处理与延迟隐藏"
 [taxonomies]
 tags = ["hft", "optimization", "pipeline", "low-latency"]
@@ -464,5 +465,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：执行层设计](/articles/hft/hft-07-执行层设计/)
-- [下一篇：定点运算详解](/articles/hft/hft-09-定点运算详解/)
+- [上一篇：执行层设计](@/articles/hft/hft-07-执行层设计.md)
+- [下一篇：定点运算详解](@/articles/hft/hft-09-定点运算详解.md)

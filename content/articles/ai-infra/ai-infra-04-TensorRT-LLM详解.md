@@ -1,7 +1,8 @@
 +++
-title = "04 - TensorRT-LLM 详解"
+title = "TensorRT-LLM 详解"
 description = "深入理解 NVIDIA 官方 LLM 推理引擎的架构与使用"
 date = 2025-02-06
+weight = 4000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -432,6 +433,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：03 - vLLM 架构与源码解析](/articles/ai-infra/infra-03-vLLM架构与源码解析/)
-- [下一篇：05 - llama.cpp 源码解析](/articles/ai-infra/infra-05-llama.cpp源码解析/)
-- [02 - LLM 推理优化全景](/articles/ai-infra/infra-02-LLM推理优化全景/)
+- [上一篇：03 - vLLM 架构与源码解析](@/articles/ai-infra/ai-infra-03-vLLM架构与源码解析.md)
+- [下一篇：05 - llama.cpp 源码解析](@/articles/ai-infra/ai-infra-05-llama.cpp源码解析.md)
+- [02 - LLM 推理优化全景](@/articles/ai-infra/ai-infra-02-LLM推理优化全景.md)

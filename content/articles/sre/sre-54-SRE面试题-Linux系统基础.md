@@ -1,6 +1,7 @@
 +++
-title = "54.SRE面试题-Linux系统基础"
+title = "SRE面试题-Linux系统基础"
 date = 2026-01-21
+weight = 54000
 description = "SRE面试必备：Linux进程线程、内存管理、文件系统、信号处理等核心问题详解"
 [taxonomies]
 tags = ["SRE", "面试", "Linux", "进程", "内存", "文件系统"]
@@ -1018,5 +1019,5 @@ crontab -l | grep @reboot
 
 ## 相关文章
 
-- [上一篇：内核参数调优实战](/articles/sre/sre-53-内核参数调优实战/)
-- [下一篇：SRE面试题-网络协议详解](/articles/sre/sre-55-SRE面试题-网络协议详解/)
+- [上一篇：内核参数调优实战](@/articles/sre/sre-53-内核参数调优实战.md)
+- [下一篇：SRE面试题-网络协议详解](@/articles/sre/sre-55-SRE面试题-网络协议详解.md)

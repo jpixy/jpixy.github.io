@@ -1,6 +1,7 @@
 +++
-title = "49.云服务问题排查实战"
+title = "云服务问题排查实战"
 date = 2026-01-21
+weight = 49000
 description = "SRE云服务问题排查完整指南：AWS、阿里云、GCP常见问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "云服务", "AWS", "阿里云", "GCP", "排查", "实战"]
@@ -730,5 +731,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：配置管理问题排查实战](/articles/sre/sre-48-配置管理问题排查实战/)
-- [下一篇：Elasticsearch问题排查实战](/articles/sre/sre-50-Elasticsearch问题排查实战/)
+- [上一篇：配置管理问题排查实战](@/articles/sre/sre-48-配置管理问题排查实战.md)
+- [下一篇：Elasticsearch问题排查实战](@/articles/sre/sre-50-Elasticsearch问题排查实战.md)

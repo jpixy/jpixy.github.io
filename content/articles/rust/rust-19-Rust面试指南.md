@@ -1,6 +1,7 @@
 +++
-title = "08.Rust面试指南"
+title = "Rust面试指南"
 date = 2026-01-19
+weight = 19000
 description = "Rust面试高频问题：所有权、生命周期、并发、智能指针、性能"
 [taxonomies]
 tags = ["Rust", "面试", "指南"]
@@ -425,5 +426,5 @@ Rust面试重点考察对所有权和生命周期的理解，以及如何利用�
 
 ## 相关文章
 
-- [上一篇：Rust宏系统详解](/articles/rust/rust-18-Rust宏系统详解/)
-- [下一篇：Rust面试题-所有权与生命周期](/articles/rust/rust-20-Rust面试题-所有权与生命周期/)
+- [上一篇：Rust宏系统详解](@/articles/rust/rust-18-Rust宏系统详解.md)
+- [下一篇：Rust面试题-所有权与生命周期](@/articles/rust/rust-20-Rust面试题-所有权与生命周期.md)

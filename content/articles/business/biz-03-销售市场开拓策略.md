@@ -1,7 +1,8 @@
 +++
-title = "03.销售市场开拓策略"
+title = "销售市场开拓策略"
 description = "如何开拓市场：是否需要见面、如何接触决策层、不同场景的拓展策略"
 date = 2025-01-16
+weight = 3000
 [taxonomies]
 tags = ["sales", "business", "market-expansion", "decision-maker", "b2b"]
 +++
@@ -636,5 +637,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：销售获客与客户开发](/articles/business/biz-02-销售获客与客户开发/)
-- [下一篇：销售团队管理与组织架构](/articles/business/biz-04-销售团队管理与组织架构/)
+- [上一篇：销售获客与客户开发](@/articles/business/biz-02-销售获客与客户开发.md)
+- [下一篇：销售团队管理与组织架构](@/articles/business/biz-04-销售团队管理与组织架构.md)

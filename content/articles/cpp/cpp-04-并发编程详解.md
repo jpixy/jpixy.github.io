@@ -1,6 +1,7 @@
 +++
-title = "04. Concurrency and Multithreading"
+title = "Concurrency and Multithreading"
 date = 2026-01-19
+weight = 4000
 description = "C++多线程编程：线程管理、同步原语、原子操作、内存模型、并发容器"
 [taxonomies]
 tags = ["C++", "并发", "多线程"]
@@ -473,5 +474,5 @@ std::for_each(std::execution::par, v.begin(), v.end(), [](int& x) {
 
 ## 相关文章
 
-- [上一篇：Templates and Generic Programming](/articles/cpp/cpp-03-模板与泛型编程/)
-- [下一篇：Performance Optimization](/articles/cpp/cpp-05-性能优化技术/)
+- [上一篇：Templates and Generic Programming](@/articles/cpp/cpp-03-模板与泛型编程.md)
+- [下一篇：Performance Optimization](@/articles/cpp/cpp-05-性能优化技术.md)

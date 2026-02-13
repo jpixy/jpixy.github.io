@@ -1,6 +1,7 @@
 +++
-title = "25 - IB 盈透证券 C++ 量化交易实战"
+title = "IB 盈透证券 C++ 量化交易实战"
 date = 2026-02-06
+weight = 25000
 description = "Interactive Brokers C++ API 完整指南：开户、权限开通、API 配置、最佳交易品类、从入门到实战的完整教程"
 [taxonomies]
 tags = ["quant", "cpp", "ib", "interactive-brokers", "api", "trading"]
@@ -1920,7 +1921,7 @@ graph TB
 
 ## 相关文章
 
-- 上一篇：[C++ 程序化交易接口 QMT 与 Ptrade](/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade/)
-- [C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)
-- [全球量化交易接口与数据](/articles/quant/quant-04-全球量化交易接口与数据/)
-- [个人量化交易入门指南](/articles/quant/quant-01-个人量化交易入门指南/)
+- 上一篇：[C++ 程序化交易接口 QMT 与 Ptrade](@/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade.md)
+- [C++ 个人量化交易实战](@/articles/quant/quant-22-Cpp个人量化交易实战.md)
+- [全球量化交易接口与数据](@/articles/quant/quant-04-全球量化交易接口与数据.md)
+- [个人量化交易入门指南](@/articles/quant/quant-01-个人量化交易入门指南.md)

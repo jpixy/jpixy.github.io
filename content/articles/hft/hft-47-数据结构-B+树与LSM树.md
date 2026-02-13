@@ -1,6 +1,7 @@
 +++
-title = "47.数据结构-B+树与LSM树"
+title = "数据结构-B+树与LSM树"
 date = 2026-02-02
+weight = 47000
 description = "存储数据结构：B+树、LSM树、时间序列存储、磁盘优化"
 [taxonomies]
 tags = ["HFT", "数据结构", "B+树", "LSM", "存储"]
@@ -847,6 +848,6 @@ A:
 
 ## 相关文章
 
-- [数据结构-红黑树与跳表](/articles/hft/hft-46-数据结构-红黑树与跳表/)
-- [高性能序列化技术](/articles/hft/hft-20-高性能序列化技术/)
-- [HFT笔试题-订单簿与撮合](/articles/hft/hft-41-HFT笔试题-订单簿与撮合/)
+- [数据结构-红黑树与跳表](@/articles/hft/hft-46-数据结构-红黑树与跳表.md)
+- [高性能序列化技术](@/articles/hft/hft-20-高性能序列化技术.md)
+- [HFT笔试题-订单簿与撮合](@/articles/hft/hft-41-HFT笔试题-订单簿与撮合.md)

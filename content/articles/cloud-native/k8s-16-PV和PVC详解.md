@@ -1,6 +1,7 @@
 +++
-title = "16.PV和PVC详解"
+title = "PV和PVC详解"
 slug = "k8s-PV和PVC的详解"
+weight = 18000
 +++
 
 # Kubernetes PV 和 PVC 详解
@@ -191,5 +192,5 @@ PV 和 PVC 机制将存储的物理细节与使用需求分离，使应用能够
 
 ## 相关文章
 
-- [上一篇：Kubernetes CNI和CSI详解](/articles/cloud-native/k8s-15-CNI和CSI详解/)
-- [下一篇：Kubernetes污点Taints详解与最佳实践](/articles/cloud-native/k8s-17-污点Taints详解/)
+- [上一篇：Kubernetes CNI和CSI详解](@/articles/cloud-native/k8s-15-CNI和CSI详解.md)
+- [下一篇：Kubernetes污点Taints详解与最佳实践](@/articles/cloud-native/k8s-17-污点Taints详解.md)

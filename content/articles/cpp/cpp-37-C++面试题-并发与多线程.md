@@ -1,6 +1,7 @@
 +++
-title = "37. Interview - Concurrency and Multithreading"
+title = "Interview - Concurrency and Multithreading"
 date = 2026-01-21
+weight = 37000
 description = "C++并发与多线程面试题汇总，包括线程、互斥锁、条件变量、原子操作、内存序等核心概念"
 [taxonomies]
 tags = ["C++", "面试题", "并发", "多线程"]
@@ -467,5 +468,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Interview - Memory and Object Model](/articles/cpp/cpp-36-C++面试题-内存与对象模型/)
-- [下一篇：Interview - STL Deep Dive](/articles/cpp/cpp-38-C++面试题-STL深度/)
+- [上一篇：Interview - Memory and Object Model](@/articles/cpp/cpp-36-C++面试题-内存与对象模型.md)
+- [下一篇：Interview - STL Deep Dive](@/articles/cpp/cpp-38-C++面试题-STL深度.md)

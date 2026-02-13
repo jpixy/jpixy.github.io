@@ -1,6 +1,7 @@
 +++
-title = "33.HFT面试题-锁与无锁编程"
+title = "HFT面试题-锁与无锁编程"
 date = 2026-01-31
+weight = 33000
 description = "HFT锁与无锁编程面试题：自旋锁、CAS、SPSC队列、内存序、ABA问题深度解析"
 [taxonomies]
 tags = ["HFT", "面试", "无锁", "CAS", "低延迟"]
@@ -1924,5 +1925,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：HFT面试题-内存优化](/articles/hft/hft-32-HFT面试题-内存优化/)
-- [下一篇：HFT面试题-网络优化](/articles/hft/hft-34-HFT面试题-网络优化/)
+- [上一篇：HFT面试题-内存优化](@/articles/hft/hft-32-HFT面试题-内存优化.md)
+- [下一篇：HFT面试题-网络优化](@/articles/hft/hft-34-HFT面试题-网络优化.md)

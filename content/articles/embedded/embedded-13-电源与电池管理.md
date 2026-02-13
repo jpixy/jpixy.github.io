@@ -1,6 +1,7 @@
 +++
-title = "13.嵌入式电源与电池管理"
+title = "嵌入式电源与电池管理"
 date = 2026-01-19
+weight = 13000
 description = "嵌入式电源设计：LDO与DC-DC选型、电池技术、BMS电池管理、低功耗设计与功耗估算"
 [taxonomies]
 tags = ["embedded", "power", "battery", "bms", "low-power", "ldo", "dcdc"]
@@ -392,5 +393,5 @@ MCU处理：10mA × 50ms = 0.5mAs/次
 
 ## 相关文章
 
-- [上一篇：嵌入式传感器应用](/articles/embedded/embedded-12-传感器应用/)
-- [下一篇：固件OTA升级设计](/articles/embedded/embedded-14-固件OTA升级/)
+- [上一篇：嵌入式传感器应用](@/articles/embedded/embedded-12-传感器应用.md)
+- [下一篇：固件OTA升级设计](@/articles/embedded/embedded-14-固件OTA升级.md)

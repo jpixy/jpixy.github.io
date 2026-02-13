@@ -1,7 +1,8 @@
 +++
-title = "28 - 协议卸载与硬件加速"
+title = "协议卸载与硬件加速"
 description = "网络协议卸载技术深度解析：从校验和到完整协议栈的硬件加速"
 date = 2025-02-07
+weight = 28000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -582,7 +583,7 @@ ethtool -K eth0 tso on
 
 ## 相关文章
 
-- [24 - DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
-- [21 - RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [04 - DPDK 详解](/articles/networking/net-04-DPDK详解/)
-- [25 - 用户态网络协议栈设计](/articles/networking/net-25-用户态网络协议栈设计/)
+- [24 - DPU 与智能网卡技术详解](@/articles/networking/net-24-DPU与智能网卡技术详解.md)
+- [21 - RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [04 - DPDK 详解](@/articles/networking/net-04-DPDK详解.md)
+- [25 - 用户态网络协议栈设计](@/articles/networking/net-25-用户态网络协议栈设计.md)

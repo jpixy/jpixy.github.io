@@ -1,6 +1,7 @@
 +++
-title = "08.LangGraph详解"
+title = "LangGraph详解"
 date = 2025-01-13
+weight = 8000
 description = "深入理解LangGraph的核心概念、与LangChain的区别联系，以及如何构建复杂的AI Agent工作流"
 [taxonomies]
 tags = ["ai", "langchain", "langgraph", "agent", "llm", "workflow"]
@@ -456,5 +457,5 @@ app = graph.compile()
 
 ## 相关文章
 
-- [上一篇：LangChain实践指南](/articles/ai/ai-07-LangChain实践指南/)
-- [下一篇：LangGraph实践指南](/articles/ai/ai-09-LangGraph实践指南/)
+- [上一篇：LangChain实践指南](@/articles/ai/ai-07-LangChain实践指南.md)
+- [下一篇：LangGraph实践指南](@/articles/ai/ai-09-LangGraph实践指南.md)

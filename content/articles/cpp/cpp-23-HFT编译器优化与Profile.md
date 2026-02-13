@@ -1,6 +1,7 @@
 +++
-title = "23. Compiler Optimization and Profiling (HFT)"
+title = "Compiler Optimization and Profiling (HFT)"
 date = 2026-01-21
+weight = 23000
 description = "深入剖析编译器优化技术、PGO、LTO、性能分析工具，HFT低延迟系统优化核心技术"
 [taxonomies]
 tags = ["C++", "编译器优化", "PGO", "LTO", "性能分析", "HFT"]
@@ -374,5 +375,5 @@ g++ -O3 -march=native -flto -fprofile-use source.cpp
 
 ## 相关文章
 
-- [上一篇：High-Precision Timing (HFT)](/articles/cpp/cpp-22-HFT高精度时间测量/)
-- [下一篇：Advanced Template Techniques](/articles/cpp/cpp-24-模板高级技巧详解/)
+- [上一篇：High-Precision Timing (HFT)](@/articles/cpp/cpp-22-HFT高精度时间测量.md)
+- [下一篇：Advanced Template Techniques](@/articles/cpp/cpp-24-模板高级技巧详解.md)

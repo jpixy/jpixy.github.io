@@ -1,7 +1,8 @@
 +++
-title = "15.数字营销与内容营销"
+title = "数字营销与内容营销"
 description = "B2B数字营销策略、内容营销、SEO/SEM、社交媒体与营销自动化"
 date = 2025-01-16
+weight = 15000
 [taxonomies]
 tags = ["marketing", "business", "digital", "content", "seo", "automation"]
 +++
@@ -547,5 +548,5 @@ CPL（单线索成本）：
 
 ## 相关文章
 
-- [上一篇：销售预测与漏斗管理](/articles/business/biz-14-销售预测与漏斗管理/)
-- [下一篇：品牌建设与公关传播](/articles/business/biz-16-品牌建设与公关传播/)
+- [上一篇：销售预测与漏斗管理](@/articles/business/biz-14-销售预测与漏斗管理.md)
+- [下一篇：品牌建设与公关传播](@/articles/business/biz-16-品牌建设与公关传播.md)

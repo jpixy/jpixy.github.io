@@ -1,6 +1,7 @@
 +++
-title = "01.嵌入式开发入门指南"
+title = "嵌入式开发入门指南"
 date = 2026-01-19
+weight = 1000
 description = "嵌入式开发零基础入门：硬件基础、开发板选择、第一个程序、学习路线规划"
 [taxonomies]
 tags = ["embedded", "mcu", "arduino", "stm32", "beginner"]
@@ -457,4 +458,4 @@ float voltage = (adc_value / 4095.0) * 3.3;
 
 ## 相关文章
 
-- [下一篇：嵌入式必知必会](/articles/embedded/embedded-02-嵌入式必知必会/)
+- [下一篇：嵌入式必知必会](@/articles/embedded/embedded-02-嵌入式必知必会.md)

@@ -1,6 +1,7 @@
 +++
-title = "20.如何设计一个下载功能"
+title = "如何设计一个下载功能"
 slug = "interview-如何设计一个下载功能"
+weight = 20000
 +++
 
 # 如何设计一个高性能、高可用的下载系统
@@ -1132,5 +1133,5 @@ sequenceDiagram
 
 ## 相关文章
 
-- [上一篇：如何设计一个短链接服务](/articles/interview/interview-19-设计短链接服务/)
-- [下一篇：如何设计一个搜索引擎](/articles/interview/interview-21-设计搜索引擎/)
+- [上一篇：如何设计一个短链接服务](@/articles/interview/interview-19-设计短链接服务.md)
+- [下一篇：如何设计一个搜索引擎](@/articles/interview/interview-21-设计搜索引擎.md)

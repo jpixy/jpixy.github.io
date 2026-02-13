@@ -1,6 +1,7 @@
 +++
-title = "23.内核面试题-内存管理"
+title = "内核面试题-内存管理"
 date = 2026-01-31
+weight = 23000
 description = "Linux内核内存管理面试题：虚拟地址空间、页表、分配器、缺页处理深度解析"
 [taxonomies]
 tags = ["Linux", "内核", "面试", "内存管理", "MMU"]
@@ -960,5 +961,5 @@ $ cat /proc/<pid>/numa_maps
 
 ## 相关文章
 
-- [上一篇：内核笔试题-中断与系统调用](/articles/linux/linux-22-内核笔试题-中断与系统调用/)
-- [下一篇：内核面试题-进程调度](/articles/linux/linux-24-内核面试题-进程调度/)
+- [上一篇：内核笔试题-中断与系统调用](@/articles/linux/linux-22-内核笔试题-中断与系统调用.md)
+- [下一篇：内核面试题-进程调度](@/articles/linux/linux-24-内核面试题-进程调度.md)

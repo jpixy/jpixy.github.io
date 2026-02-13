@@ -1,6 +1,7 @@
 +++
-title = "07.LangChain实践指南"
+title = "LangChain实践指南"
 date = 2026-01-13
+weight = 7000
 description = "LangChain框架深度实践：核心概念、链式调用、RAG实现、Agent开发与生产部署"
 [taxonomies]
 tags = ["ai", "langchain", "llm", "rag", "agent"]
@@ -715,5 +716,5 @@ def with_retry(chain, max_retries=3):
 
 ## 相关文章
 
-- [上一篇：LangChain详解](/articles/ai/ai-06-LangChain详解/)
-- [下一篇：LangGraph详解](/articles/ai/ai-08-LangGraph详解/)
+- [上一篇：LangChain详解](@/articles/ai/ai-06-LangChain详解.md)
+- [下一篇：LangGraph详解](@/articles/ai/ai-08-LangGraph详解.md)

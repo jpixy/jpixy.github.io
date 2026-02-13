@@ -1,7 +1,8 @@
 +++
-title = "33.服务注册发现与API网关"
+title = "服务注册发现与API网关"
 description = "微服务核心组件：服务注册发现原理、API网关设计与负载均衡策略"
 date = 2025-01-16
+weight = 33000
 [taxonomies]
 tags = ["interview", "microservices", "service-discovery", "api-gateway", "load-balancing"]
 +++
@@ -376,5 +377,5 @@ A：增加延迟（经过Sidecar）；资源开销（每个Pod一个Sidecar）�
 
 ## 相关文章
 
-- [上一篇：微服务架构设计原则](/articles/interview/interview-32-微服务架构设计原则/)
-- [下一篇：数据库选型指南](/articles/interview/interview-34-数据库选型指南/)
+- [上一篇：微服务架构设计原则](@/articles/interview/interview-32-微服务架构设计原则.md)
+- [下一篇：数据库选型指南](@/articles/interview/interview-34-数据库选型指南.md)

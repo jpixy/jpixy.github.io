@@ -1,6 +1,7 @@
 +++
-title = "39.HFT策略类型全景"
+title = "HFT策略类型全景"
 date = 2026-02-02
+weight = 39000
 description = "HFT策略类型：做市、统计套利、事件驱动、延迟套利、订单流预测"
 [taxonomies]
 tags = ["HFT", "策略", "做市", "套利", "量化"]
@@ -836,7 +837,7 @@ A:
 
 ## 相关文章
 
-- [上一篇：市场微结构深度解析](/articles/hft/hft-38-市场微结构深度解析/)
-- [下一篇：HFT合规与监管要求](/articles/hft/hft-40-HFT合规与监管要求/)
-- [Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
-- [Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+- [上一篇：市场微结构深度解析](@/articles/hft/hft-38-市场微结构深度解析.md)
+- [下一篇：HFT合规与监管要求](@/articles/hft/hft-40-HFT合规与监管要求.md)
+- [Market Making策略原理](@/articles/hft/hft-14-MarketMaking策略原理.md)
+- [Order Book实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)

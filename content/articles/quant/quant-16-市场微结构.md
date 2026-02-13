@@ -1,6 +1,7 @@
 +++
-title = "16 - 市场微结构"
+title = "市场微结构"
 date = 2025-01-15
+weight = 16000
 description = "市场微结构入门：订单簿、做市商、价格形成机制、订单类型与执行"
 [taxonomies]
 tags = ["quant", "market-microstructure", "orderbook", "market-maker", "execution"]
@@ -458,5 +459,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：15 - 外汇量化入门](/articles/quant/quant-15-外汇量化入门/)
-- [下一篇：17 - 事件驱动策略](/articles/quant/quant-17-事件驱动策略/)
+- [上一篇：15 - 外汇量化入门](@/articles/quant/quant-15-外汇量化入门.md)
+- [下一篇：17 - 事件驱动策略](@/articles/quant/quant-17-事件驱动策略.md)

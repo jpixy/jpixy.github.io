@@ -1,8 +1,9 @@
 +++
-title = "61.HFT基础设施最佳实践(HFT)"
+title = "HFT基础设施最佳实践(HFT)"
 slug = "sre-62-HFT基础设施最佳实践"
 description = "深入讲解高频交易基础设施设计：机房选址、网络架构、交换机配置、时间同步(PTP)、电源冗余与环境控制"
 date = 2026-01-21
+weight = 61000
 draft = false
 [taxonomies]
 tags = ["SRE", "HFT", "基础设施", "数据中心", "PTP"]
@@ -1134,5 +1135,5 @@ HFT基础设施的核心要点：
 
 ## 相关文章
 
-- [上一篇：低延迟系统运维指南(HFT)](/articles/sre/sre-60-低延迟系统运维指南/)
-- [下一篇：金融系统合规与审计(HFT)](/articles/sre/sre-62-金融系统合规与审计/)
+- [上一篇：低延迟系统运维指南(HFT)](@/articles/sre/sre-60-低延迟系统运维指南.md)
+- [下一篇：金融系统合规与审计(HFT)](@/articles/sre/sre-62-金融系统合规与审计.md)

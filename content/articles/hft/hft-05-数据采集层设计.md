@@ -1,6 +1,7 @@
 +++
-title = "05.数据采集层设计"
+title = "数据采集层设计"
 date = 2026-01-13
+weight = 5000
 description = "高频交易系统数据采集层深度解析：行情接入、数据标准化、低延迟分发架构"
 [taxonomies]
 tags = ["hft", "architecture", "market-data", "low-latency"]
@@ -431,5 +432,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：ITCH与OUCH协议详解](/articles/hft/hft-04-ITCH与OUCH协议详解/)
-- [下一篇：策略逻辑层设计](/articles/hft/hft-06-策略逻辑层设计/)
+- [上一篇：ITCH与OUCH协议详解](@/articles/hft/hft-04-ITCH与OUCH协议详解.md)
+- [下一篇：策略逻辑层设计](@/articles/hft/hft-06-策略逻辑层设计.md)

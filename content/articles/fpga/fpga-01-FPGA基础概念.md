@@ -1,6 +1,7 @@
 +++
-title = "01.FPGA基础概念"
+title = "FPGA基础概念"
 date = 2026-01-20
+weight = 1000
 description = "FPGA入门：可编程逻辑、架构组成、开发流程、应用场景"
 [taxonomies]
 tags = ["FPGA", "硬件", "可编程逻辑"]
@@ -262,4 +263,4 @@ FPGA是软件工程师进入硬件世界的桥梁。理解其并行本质和时�
 
 ## 相关文章
 
-- [下一篇：Verilog语法基础](/articles/fpga/fpga-02-Verilog语法基础/)
+- [下一篇：Verilog语法基础](@/articles/fpga/fpga-02-Verilog语法基础.md)

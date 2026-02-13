@@ -1,7 +1,8 @@
 +++
-title = "05 - 分布式训练技术详解"
+title = "分布式训练技术详解"
 description = "深入理解大模型分布式训练的各种并行策略与优化技术"
 date = 2025-02-06
+weight = 5000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -356,6 +357,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
-- [下一篇：06 - 集群作业调度系统](/articles/hpc/hpc-06-集群作业调度系统/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
+- [上一篇：04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)
+- [下一篇：06 - 集群作业调度系统](@/articles/hpc/hpc-06-集群作业调度系统.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)

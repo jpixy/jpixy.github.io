@@ -1,6 +1,7 @@
 +++
-title = "10.AI Agent智能体架构详解"
+title = "AI Agent智能体架构详解"
 date = 2026-01-13
+weight = 10000
 description = "AI Agent深度解析：架构设计、规划推理、工具调用、记忆系统与多智能体协作"
 [taxonomies]
 tags = ["ai", "agent", "llm", "reasoning", "tool-use"]
@@ -476,5 +477,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：LangGraph实践指南](/articles/ai/ai-09-LangGraph实践指南/)
-- [下一篇：Notebook执行Agent架构设计](/articles/ai/ai-11-Notebook执行Agent架构设计/)
+- [上一篇：LangGraph实践指南](@/articles/ai/ai-09-LangGraph实践指南.md)
+- [下一篇：Notebook执行Agent架构设计](@/articles/ai/ai-11-Notebook执行Agent架构设计.md)

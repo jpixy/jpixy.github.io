@@ -1,6 +1,7 @@
 +++
-title = "04.ITCH与OUCH协议详解"
+title = "ITCH与OUCH协议详解"
 date = 2026-01-13
+weight = 4000
 description = "NASDAQ原生协议ITCH/OUCH深度解析：二进制格式、消息类型与超低延迟设计"
 [taxonomies]
 tags = ["hft", "itch", "ouch", "protocol", "nasdaq"]
@@ -402,5 +403,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：FAST协议详解](/articles/hft/hft-03-FAST协议详解/)
-- [下一篇：数据采集层设计](/articles/hft/hft-05-数据采集层设计/)
+- [上一篇：FAST协议详解](@/articles/hft/hft-03-FAST协议详解.md)
+- [下一篇：数据采集层设计](@/articles/hft/hft-05-数据采集层设计.md)

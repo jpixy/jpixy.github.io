@@ -1,7 +1,8 @@
 +++
-title = "10 - 从零构建推理引擎"
+title = "从零构建推理引擎"
 description = "实战项目：用 C++ 实现简化版 LLM 推理引擎"
 date = 2025-02-06
+weight = 10000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -466,8 +467,8 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：09 - 推理引擎性能调优](/articles/ai-infra/infra-09-推理引擎性能调优/)
-- [下一篇：11 - 多模态 LLM 推理优化](/articles/ai-infra/infra-11-多模态LLM推理优化/)
-- [05 - llama.cpp 源码解析](/articles/ai-infra/infra-05-llama.cpp源码解析/)
-- [03 - vLLM 架构与源码解析](/articles/ai-infra/infra-03-vLLM架构与源码解析/)
-- [29 - AI C++ 工程师职业路径](/articles/ai/ai-29-AI-C++工程师职业路径/)
+- [上一篇：09 - 推理引擎性能调优](@/articles/ai-infra/ai-infra-09-推理引擎性能调优.md)
+- [下一篇：11 - 多模态 LLM 推理优化](@/articles/ai-infra/ai-infra-11-多模态LLM推理优化.md)
+- [05 - llama.cpp 源码解析](@/articles/ai-infra/ai-infra-05-llama.cpp源码解析.md)
+- [03 - vLLM 架构与源码解析](@/articles/ai-infra/ai-infra-03-vLLM架构与源码解析.md)
+- [29 - AI C++ 工程师职业路径](@/articles/ai/ai-29-AI-C++工程师职业路径.md)

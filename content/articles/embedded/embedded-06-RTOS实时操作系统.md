@@ -1,6 +1,7 @@
 +++
-title = "06.RTOS实时操作系统详解"
+title = "RTOS实时操作系统详解"
 date = 2026-01-19
+weight = 6000
 description = "RTOS核心概念与FreeRTOS实战：任务管理、调度、同步机制、内存管理"
 [taxonomies]
 tags = ["embedded", "rtos", "freertos", "realtime", "multitask"]
@@ -303,5 +304,5 @@ FreeRTOS是嵌入式开发的必备技能，掌握它能让你的代码更加模
 
 ## 相关文章
 
-- [上一篇：嵌入式通信协议详解](/articles/embedded/embedded-05-通信协议详解/)
-- [下一篇：嵌入式调试与故障排查](/articles/embedded/embedded-07-调试与故障排查/)
+- [上一篇：嵌入式通信协议详解](@/articles/embedded/embedded-05-通信协议详解.md)
+- [下一篇：嵌入式调试与故障排查](@/articles/embedded/embedded-07-调试与故障排查.md)

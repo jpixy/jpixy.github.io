@@ -1,6 +1,7 @@
 +++
-title = "18.内核同步机制详解"
+title = "内核同步机制详解"
 date = 2026-01-31
+weight = 18000
 description = "Linux内核同步：Spinlock多核实现、读写锁、信号量、RCU原理、内存屏障"
 [taxonomies]
 tags = ["Linux", "内核", "同步", "Spinlock", "RCU"]
@@ -1020,5 +1021,5 @@ A:
 
 ## 相关文章
 
-- [上一篇：中断与系统调用详解](/articles/linux/linux-17-中断与系统调用详解/)
-- [下一篇：暂无](/articles/linux/)
+- [上一篇：中断与系统调用详解](@/articles/linux/linux-17-中断与系统调用详解.md)
+- [下一篇：暂无](@/articles/linux/_index.md)

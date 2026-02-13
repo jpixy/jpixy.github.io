@@ -1,7 +1,8 @@
 +++
-title = "04.销售团队管理与组织架构"
+title = "销售团队管理与组织架构"
 description = "如何搭建和管理销售团队，销售与售前团队的典型组织架构"
 date = 2025-01-16
+weight = 4000
 [taxonomies]
 tags = ["sales", "business", "team-management", "organization", "pre-sales"]
 +++
@@ -555,5 +556,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：销售市场开拓策略](/articles/business/biz-03-销售市场开拓策略/)
-- [下一篇：售前工作方法论](/articles/business/biz-05-售前工作方法论/)
+- [上一篇：销售市场开拓策略](@/articles/business/biz-03-销售市场开拓策略.md)
+- [下一篇：售前工作方法论](@/articles/business/biz-05-售前工作方法论.md)

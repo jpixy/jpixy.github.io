@@ -1,6 +1,7 @@
 +++
-title = "38.市场微结构深度解析"
+title = "市场微结构深度解析"
 date = 2026-02-02
+weight = 38000
 description = "市场微结构：订单流分析、价格发现、流动性、市场冲击、订单簿动态"
 [taxonomies]
 tags = ["HFT", "市场微结构", "订单流", "流动性", "价格发现"]
@@ -733,7 +734,7 @@ A:
 
 ## 相关文章
 
-- [上一篇：HFT面试题-系统架构](/articles/hft/hft-37-HFT面试题-系统架构/)
-- [下一篇：HFT策略类型全景](/articles/hft/hft-39-HFT策略类型全景/)
-- [Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)
-- [Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
+- [上一篇：HFT面试题-系统架构](@/articles/hft/hft-37-HFT面试题-系统架构.md)
+- [下一篇：HFT策略类型全景](@/articles/hft/hft-39-HFT策略类型全景.md)
+- [Order Book实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)
+- [Market Making策略原理](@/articles/hft/hft-14-MarketMaking策略原理.md)

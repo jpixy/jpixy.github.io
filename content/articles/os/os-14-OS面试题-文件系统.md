@@ -1,6 +1,7 @@
 +++
-title = "14.OS面试题-文件系统"
+title = "OS面试题-文件系统"
 date = 2026-01-31
+weight = 14000
 description = "操作系统文件系统面试题：inode、文件描述符、VFS、磁盘调度深度解析"
 [taxonomies]
 tags = ["操作系统", "面试", "文件系统", "inode", "VFS"]
@@ -768,5 +769,5 @@ posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);
 
 ## 相关文章
 
-- [上一篇：OS面试题-内存管理](/articles/os/os-13-OS面试题-内存管理/)
-- [下一篇：OS面试题-并发同步](/articles/os/os-15-OS面试题-并发同步/)
+- [上一篇：OS面试题-内存管理](@/articles/os/os-13-OS面试题-内存管理.md)
+- [下一篇：OS面试题-并发同步](@/articles/os/os-15-OS面试题-并发同步.md)

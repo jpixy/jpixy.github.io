@@ -1,7 +1,8 @@
 +++
-title = "09.渠道销售与伙伴管理"
+title = "渠道销售与伙伴管理"
 description = "渠道体系搭建、合作伙伴管理、渠道冲突处理与渠道激励"
 date = 2025-01-16
+weight = 9000
 [taxonomies]
 tags = ["sales", "business", "channel", "partner", "reseller"]
 +++
@@ -344,5 +345,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：客户成功与续约管理](/articles/business/biz-08-客户成功与续约管理/)
-- [下一篇：商业分析与决策](/articles/business/biz-10-商业分析与决策/)
+- [上一篇：客户成功与续约管理](@/articles/business/biz-08-客户成功与续约管理.md)
+- [下一篇：商业分析与决策](@/articles/business/biz-10-商业分析与决策.md)

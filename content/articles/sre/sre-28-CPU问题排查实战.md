@@ -1,6 +1,7 @@
 +++
-title = "28.CPU问题排查实战"
+title = "CPU问题排查实战"
 date = 2026-01-21
+weight = 28000
 description = "SRE CPU问题排查完整指南：CPU使用率高、软中断/硬中断、上下文切换、NUMA问题、Steal时间的定位与解决"
 [taxonomies]
 tags = ["SRE", "CPU", "排查", "实战", "软中断", "NUMA", "上下文切换", "Linux"]
@@ -1110,5 +1111,5 @@ mpstat 1 60 | tee cpu_monitor.log
 
 ## 相关文章
 
-- [上一篇：网络问题排查实战](/articles/sre/sre-27-网络问题排查实战/)
-- [下一篇：内存问题排查实战](/articles/sre/sre-29-内存问题排查实战/)
+- [上一篇：网络问题排查实战](@/articles/sre/sre-27-网络问题排查实战.md)
+- [下一篇：内存问题排查实战](@/articles/sre/sre-29-内存问题排查实战.md)

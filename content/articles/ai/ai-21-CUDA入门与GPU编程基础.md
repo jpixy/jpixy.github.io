@@ -1,6 +1,7 @@
 +++
-title = "21.CUDA入门与GPU编程基础"
+title = "CUDA入门与GPU编程基础"
 date = 2026-02-06
+weight = 21000
 description = "从零开始学习CUDA：GPU架构、编程模型、内存层次、并行思维，附完整入门路线图"
 [taxonomies]
 tags = ["cuda", "gpu", "parallel-computing", "nvidia", "hpc"]
@@ -1781,8 +1782,8 @@ __global__ void kernel() {
 
 ## 相关文章
 
-- [上一篇：20 - 实战项目智能知识助手开发全流程](/articles/ai/ai-20-实战项目智能知识助手开发全流程/)
-- [下一篇：22 - CUDA 实战应用场景详解](/articles/ai/ai-22-CUDA实战应用场景详解/)
-- [02 - 大模型训练为什么 GPU 比 CPU 更合适](/articles/ai/ai-02-大模型训练为什么GPU比CPU更合适/)
-- [16 - 推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
+- [上一篇：20 - 实战项目智能知识助手开发全流程](@/articles/ai/ai-20-实战项目智能知识助手开发全流程.md)
+- [下一篇：22 - CUDA 实战应用场景详解](@/articles/ai/ai-22-CUDA实战应用场景详解.md)
+- [02 - 大模型训练为什么 GPU 比 CPU 更合适](@/articles/ai/ai-02-大模型训练为什么GPU比CPU更合适.md)
+- [16 - 推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)

@@ -1,7 +1,8 @@
 +++
-title = "04.MySQL索引原理与查询优化"
+title = "MySQL索引原理与查询优化"
 description = "MySQL索引深度解析：B+树原理、索引类型、查询优化与执行计划分析"
 date = 2025-01-16
+weight = 4000
 [taxonomies]
 tags = ["interview", "database", "mysql", "index", "optimization"]
 +++
@@ -278,5 +279,5 @@ A：开启慢查询日志；使用EXPLAIN分析执行计划；关注type、key�
 
 ## 相关文章
 
-- [上一篇：Redis高可用架构](/articles/interview/interview-03-Redis高可用架构/)
-- [下一篇：MySQL分库分表实践](/articles/interview/interview-05-MySQL分库分表/)
+- [上一篇：Redis高可用架构](@/articles/interview/interview-03-Redis高可用架构.md)
+- [下一篇：MySQL分库分表实践](@/articles/interview/interview-05-MySQL分库分表.md)

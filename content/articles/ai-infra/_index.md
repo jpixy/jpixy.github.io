@@ -1,6 +1,6 @@
 +++
 title = "AI Infrastructure & Inference"
-sort_by = "title"
+sort_by = "weight"
 template = "section.html"
 
 [extra]

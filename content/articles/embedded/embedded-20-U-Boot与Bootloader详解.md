@@ -1,6 +1,7 @@
 +++
-title = "20.U-Boot 与 Bootloader 详解"
+title = "U-Boot 与 Bootloader 详解"
 date = 2026-01-21
+weight = 20000
 description = "嵌入式 Bootloader 完整指南：U-Boot 原理、配置、移植、调试，从上电到内核启动的全流程"
 [taxonomies]
 tags = ["embedded", "uboot", "bootloader", "arm", "linux"]
@@ -1018,7 +1019,7 @@ reboot
 
 ## 相关文章
 
-- [上一篇：19 - 802.11 WiFi 协议详解](/articles/embedded/embedded-19-802.11-WiFi协议详解/)
-- [下一篇：21 - RTOS 与实时系统开发](/articles/embedded/embedded-21-RTOS与实时系统开发/)
-- [01 - 嵌入式开发概述](/articles/embedded/embedded-01-嵌入式开发概述/)
-- [09 - 嵌入式 Linux 驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
+- [上一篇：19 - 802.11 WiFi 协议详解](@/articles/embedded/embedded-19-802.11-WiFi协议详解.md)
+- [下一篇：21 - RTOS 与实时系统开发](@/articles/embedded/embedded-21-RTOS与实时系统开发.md)
+- [01 - 嵌入式开发概述](@/articles/embedded/embedded-01-嵌入式入门.md)
+- [09 - 嵌入式 Linux 驱动开发](@/articles/embedded/embedded-09-嵌入式Linux驱动开发.md)

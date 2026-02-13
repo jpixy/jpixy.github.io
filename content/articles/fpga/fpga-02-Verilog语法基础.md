@@ -1,6 +1,7 @@
 +++
-title = "02.Verilog语法基础"
+title = "Verilog语法基础"
 date = 2026-01-20
+weight = 2000
 description = "Verilog入门：模块结构、数据类型、运算符、赋值语句"
 [taxonomies]
 tags = ["FPGA", "Verilog", "HDL"]
@@ -261,5 +262,5 @@ Verilog语法简单但陷阱多。关键是理解硬件思维，知道代码会�
 
 ## 相关文章
 
-- [上一篇：FPGA基础概念](/articles/fpga/fpga-01-FPGA基础概念/)
-- [下一篇：组合逻辑与时序逻辑](/articles/fpga/fpga-03-组合逻辑与时序逻辑/)
+- [上一篇：FPGA基础概念](@/articles/fpga/fpga-01-FPGA基础概念.md)
+- [下一篇：组合逻辑与时序逻辑](@/articles/fpga/fpga-03-组合逻辑与时序逻辑.md)

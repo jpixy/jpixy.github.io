@@ -1,7 +1,8 @@
 +++
-title = "26. Lambda and Function Objects"
+title = "Lambda and Function Objects"
 slug = "cpp-36-Lambda与函数对象详解"
 date = 2026-01-21
+weight = 26000
 description = "深入剖析C++Lambda表达式和函数对象的底层实现、捕获机制、性能开销以及在HFT中的应用"
 [taxonomies]
 tags = ["C++", "Lambda", "函数对象", "性能优化", "闭包"]
@@ -482,5 +483,5 @@ lambda2();  // 返回20
 
 ## 相关文章
 
-- [上一篇：C++20/23 New Features](/articles/cpp/cpp-25-C++20-23新特性详解/)
-- [下一篇：String Processing Optimization (HFT)](/articles/cpp/cpp-27-HFT字符串处理优化/)
+- [上一篇：C++20/23 New Features](@/articles/cpp/cpp-25-C++20-23新特性详解.md)
+- [下一篇：String Processing Optimization (HFT)](@/articles/cpp/cpp-27-HFT字符串处理优化.md)

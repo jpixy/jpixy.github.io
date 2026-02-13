@@ -1,6 +1,7 @@
 +++
-title = "14.如何设计一个限流器"
+title = "如何设计一个限流器"
 slug = "interview-如何设计一个限流器"
+weight = 14000
 +++
 
 # 如何设计一个限流器
@@ -1072,5 +1073,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：如何设计多线程消费消息模型](/articles/interview/interview-13-多线程消费模型/)
-- [下一篇：如何设计一个限流系统](/articles/interview/interview-15-设计限流系统/)
+- [上一篇：如何设计多线程消费消息模型](@/articles/interview/interview-13-多线程消费模型.md)
+- [下一篇：如何设计一个限流系统](@/articles/interview/interview-15-设计限流系统.md)

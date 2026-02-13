@@ -1,6 +1,7 @@
 +++
-title = "58.SRE面试题-监控与故障排查"
+title = "SRE面试题-监控与故障排查"
 date = 2026-01-21
+weight = 58000
 description = "SRE面试必备：监控体系、告警设计、故障排查方法论、根因分析等核心问题详解"
 [taxonomies]
 tags = ["SRE", "面试", "监控", "告警", "故障排查", "Prometheus"]
@@ -827,5 +828,5 @@ mpstat 1 5
 
 ## 相关文章
 
-- [上一篇：SRE面试题-数据库与缓存](/articles/sre/sre-57-SRE面试题-数据库与缓存/)
-- [下一篇：SRE面试题-系统设计与架构](/articles/sre/sre-59-SRE面试题-系统设计与架构/)
+- [上一篇：SRE面试题-数据库与缓存](@/articles/sre/sre-57-SRE面试题-数据库与缓存.md)
+- [下一篇：SRE面试题-系统设计与架构](@/articles/sre/sre-59-SRE面试题-系统设计与架构.md)

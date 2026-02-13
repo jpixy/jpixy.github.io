@@ -1,6 +1,7 @@
 +++
-title = "06 - 量化交易风险管理与资金管理"
+title = "量化交易风险管理与资金管理"
 date = 2025-01-15
+weight = 6000
 description = "个人量化交易的风险管理核心：仓位控制、止损策略、资金管理、心理纪律"
 [taxonomies]
 tags = ["quant", "trading", "risk-management", "money-management", "psychology"]
@@ -395,5 +396,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：05 - 个人量化常用策略详解](/articles/quant/quant-05-个人量化常用策略详解/)
-- [下一篇：07 - 机器学习量化实战](/articles/quant/quant-07-机器学习量化实战/)
+- [上一篇：05 - 个人量化常用策略详解](@/articles/quant/quant-05-个人量化常用策略详解.md)
+- [下一篇：07 - 机器学习量化实战](@/articles/quant/quant-07-机器学习量化实战.md)

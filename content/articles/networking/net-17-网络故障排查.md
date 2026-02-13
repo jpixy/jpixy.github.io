@@ -1,6 +1,7 @@
 +++
-title = "17.网络故障排查"
+title = "网络故障排查"
 date = 2026-01-19
+weight = 17000
 description = "网络故障诊断：排查思路、常用工具、典型问题分析、实战案例"
 [taxonomies]
 tags = ["网络", "故障排查", "运维"]
@@ -487,5 +488,5 @@ sysctl -w net.ipv4.ip_local_port_range="1024 65535"
 
 ## 相关文章
 
-- [上一篇：网络安全基础](/articles/networking/net-16-网络安全基础/)
-- [下一篇：TCP调优深入详解(HFT)](/articles/networking/net-18-TCP调优深入详解/)
+- [上一篇：网络安全基础](@/articles/networking/net-16-网络安全基础.md)
+- [下一篇：TCP调优深入详解(HFT)](@/articles/networking/net-18-TCP调优深入详解.md)

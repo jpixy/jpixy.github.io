@@ -1,6 +1,7 @@
 +++
-title = "05.安全开发实践"
+title = "安全开发实践"
 date = 2026-01-19
+weight = 5000
 description = "安全开发：安全编码、依赖管理、安全测试、DevSecOps"
 [taxonomies]
 tags = ["安全", "开发", "DevSecOps"]
@@ -222,5 +223,5 @@ CD阶段：DAST、配置检查
 
 ## 相关文章
 
-- [上一篇：认证与授权](/articles/security/sec-04-认证与授权/)
-- [下一篇：安全面试指南](/articles/security/sec-06-安全面试指南/)
+- [上一篇：认证与授权](@/articles/security/sec-04-认证与授权.md)
+- [下一篇：安全面试指南](@/articles/security/sec-06-安全面试指南.md)

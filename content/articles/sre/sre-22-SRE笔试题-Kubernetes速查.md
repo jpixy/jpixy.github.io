@@ -1,6 +1,7 @@
 +++
-title = "22.SRE笔试题-Kubernetes速查"
+title = "SRE笔试题-Kubernetes速查"
 date = 2026-01-21
+weight = 22000
 description = "SRE面试Kubernetes常见题目速查：kubectl命令、故障排查、资源管理、YAML配置要点"
 [taxonomies]
 tags = ["SRE", "面试", "Kubernetes", "笔试", "K8s"]
@@ -591,5 +592,5 @@ spec:
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-Shell脚本速查](/articles/sre/sre-21-SRE笔试题-Shell脚本速查/)
-- [下一篇：SRE笔试题-DevOps工具速查](/articles/sre/sre-23-SRE笔试题-DevOps工具速查/)
+- [上一篇：SRE笔试题-Shell脚本速查](@/articles/sre/sre-21-SRE笔试题-Shell脚本速查.md)
+- [下一篇：SRE笔试题-DevOps工具速查](@/articles/sre/sre-23-SRE笔试题-DevOps工具速查.md)

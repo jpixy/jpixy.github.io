@@ -1,6 +1,7 @@
 +++
-title = "57.SRE面试题-数据库与缓存"
+title = "SRE面试题-数据库与缓存"
 date = 2026-01-21
+weight = 57000
 description = "SRE面试必备：MySQL索引优化、事务隔离级别、Redis数据结构、缓存问题等核心问题详解"
 [taxonomies]
 tags = ["SRE", "面试", "MySQL", "Redis", "数据库", "缓存"]
@@ -823,5 +824,5 @@ redis-cli --hotkeys
 
 ## 相关文章
 
-- [上一篇：SRE面试题-容器与Kubernetes](/articles/sre/sre-56-SRE面试题-容器与Kubernetes/)
-- [下一篇：SRE面试题-监控与故障排查](/articles/sre/sre-58-SRE面试题-监控与故障排查/)
+- [上一篇：SRE面试题-容器与Kubernetes](@/articles/sre/sre-56-SRE面试题-容器与Kubernetes.md)
+- [下一篇：SRE面试题-监控与故障排查](@/articles/sre/sre-58-SRE面试题-监控与故障排查.md)

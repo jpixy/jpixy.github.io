@@ -1,6 +1,7 @@
 +++
-title = "25.SRE笔试题-低延迟系统与C++"
+title = "SRE笔试题-低延迟系统与C++"
 date = 2026-01-21
+weight = 25000
 description = "HFT/SRE面试低延迟系统考点：CPU缓存、NUMA、无锁编程、内核旁路、尾延迟优化，C++核心知识"
 [taxonomies]
 tags = ["SRE", "面试", "C++", "低延迟", "HFT", "性能优化"]
@@ -1045,5 +1046,5 @@ def memory_hungry():
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-概率与智力题](/articles/sre/sre-24-SRE笔试题-概率与智力题/)
-- [下一篇：压力测试实战指南](/articles/sre/sre-26-压力测试实战指南/)
+- [上一篇：SRE笔试题-概率与智力题](@/articles/sre/sre-24-SRE笔试题-概率与智力题.md)
+- [下一篇：压力测试实战指南](@/articles/sre/sre-26-压力测试实战指南.md)

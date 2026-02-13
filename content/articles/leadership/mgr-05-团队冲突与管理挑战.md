@@ -1,6 +1,7 @@
 +++
-title = "05.团队冲突与管理挑战详解"
+title = "团队冲突与管理挑战详解"
 date = 2025-01-15
+weight = 5000
 description = "深入解析团队管理中的常见冲突场景及应对策略，涵盖跨文化冲突、技术分歧、人际矛盾、员工管理等核心话题"
 [taxonomies]
 tags = ["leadership", "management", "conflict-resolution", "team-building", "interview"]
@@ -662,5 +663,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：项目交付与敏捷实践](/articles/leadership/mgr-04-项目交付与敏捷实践/)
-- [下一篇：故障应急与On-Call管理](/articles/leadership/mgr-06-故障应急与OnCall管理/)
+- [上一篇：项目交付与敏捷实践](@/articles/leadership/mgr-04-项目交付与敏捷实践.md)
+- [下一篇：故障应急与On-Call管理](@/articles/leadership/mgr-06-故障应急与OnCall管理.md)

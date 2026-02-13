@@ -1,6 +1,7 @@
 +++
-title = "11.Pod生命周期及Pending问题排查指南"
+title = "Pod生命周期及Pending问题排查指南"
 slug = "k8s-Pod生命周期及Pending问题排查指南"
+weight = 13000
 +++
 
 # Kubernetes Pod 生命周期及 Pending 问题排查指南
@@ -262,5 +263,5 @@ topologySpreadConstraints:
 
 ## 相关文章
 
-- [上一篇：K8S探针详解](/articles/cloud-native/k8s-10-探针详解/)
-- [下一篇：kube-proxy详解](/articles/cloud-native/k8s-12-kube-proxy详解/)
+- [上一篇：K8S探针详解](@/articles/cloud-native/k8s-10-探针详解.md)
+- [下一篇：kube-proxy详解](@/articles/cloud-native/k8s-12-kube-proxy详解.md)

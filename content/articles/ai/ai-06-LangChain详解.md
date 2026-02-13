@@ -1,6 +1,7 @@
 +++
-title = "06.LangChain详解"
+title = "LangChain详解"
 date = 2025-01-13
+weight = 6000
 description = "深入理解LangChain的核心概念、组件架构和最佳实践，从入门到精通"
 [taxonomies]
 tags = ["ai", "langchain", "llm", "rag", "agent", "prompt"]
@@ -459,5 +460,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：RAG检索增强生成详解](/articles/ai/ai-05-RAG检索增强生成详解/)
-- [下一篇：LangChain实践指南](/articles/ai/ai-07-LangChain实践指南/)
+- [上一篇：RAG检索增强生成详解](@/articles/ai/ai-05-RAG检索增强生成详解.md)
+- [下一篇：LangChain实践指南](@/articles/ai/ai-07-LangChain实践指南.md)

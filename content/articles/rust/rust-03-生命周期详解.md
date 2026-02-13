@@ -1,7 +1,8 @@
 +++
-title = "03.生命周期详解"
+title = "生命周期详解"
 slug = "rust-03-生命周期详解"
 date = 2026-01-19
+weight = 3000
 description = "Rust生命周期：生命周期标注、省略规则、结构体生命周期、静态生命周期"
 [taxonomies]
 tags = ["Rust", "生命周期", "借用"]
@@ -380,5 +381,5 @@ fn main() {
 
 ## 相关文章
 
-- [上一篇：所有权与借用](/articles/rust/rust-02-所有权与借用/)
-- [下一篇：错误处理](/articles/rust/rust-04-错误处理/)
+- [上一篇：所有权与借用](@/articles/rust/rust-02-所有权与借用.md)
+- [下一篇：错误处理](@/articles/rust/rust-04-错误处理.md)

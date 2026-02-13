@@ -1,6 +1,7 @@
 +++
-title = "13.OS面试题-内存管理"
+title = "OS面试题-内存管理"
 date = 2026-01-31
+weight = 13000
 description = "操作系统内存管理面试题：虚拟内存、分页分段、页面置换、内存碎片深度解析"
 [taxonomies]
 tags = ["操作系统", "面试", "内存管理", "虚拟内存", "页表"]
@@ -795,5 +796,5 @@ page_fault_handler() {
 
 ## 相关文章
 
-- [上一篇：OS面试题-进程与线程](/articles/os/os-12-OS面试题-进程与线程/)
-- [下一篇：OS面试题-文件系统](/articles/os/os-14-OS面试题-文件系统/)
+- [上一篇：OS面试题-进程与线程](@/articles/os/os-12-OS面试题-进程与线程.md)
+- [下一篇：OS面试题-文件系统](@/articles/os/os-14-OS面试题-文件系统.md)

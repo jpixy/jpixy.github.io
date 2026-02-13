@@ -1,6 +1,7 @@
 +++
-title = "19.内核笔试题-内存管理"
+title = "内核笔试题-内存管理"
 date = 2026-01-31
+weight = 19000
 description = "Linux内核内存管理笔试题：页表计算、分配器实现、缺页处理、GFP标志"
 [taxonomies]
 tags = ["Linux", "内核", "笔试", "内存管理", "MMU"]
@@ -1241,8 +1242,8 @@ err_B:
 
 ## 相关文章
 
-- [上一篇：内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
-- [下一篇：内核笔试题-进程调度](/articles/linux/linux-20-内核笔试题-进程调度/)
+- [上一篇：内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)
+- [下一篇：内核笔试题-进程调度](@/articles/linux/linux-20-内核笔试题-进程调度.md)
 
 **知识基础**：
-- [内核内存管理详解](/articles/linux/linux-16-内核内存管理详解/)
+- [内核内存管理详解](@/articles/linux/linux-16-内核内存管理详解.md)

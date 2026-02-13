@@ -1,6 +1,7 @@
 +++
-title = "47.nmap网络扫描深度解析"
+title = "nmap网络扫描深度解析"
 date = 2026-01-31
+weight = 47000
 description = "nmap深度解析：端口扫描原理、服务探测、脚本引擎、安全审计"
 [taxonomies]
 tags = ["Linux", "nmap", "网络", "扫描", "安全"]
@@ -610,5 +611,5 @@ xsltproc audit_report.xml -o audit_report.html
 
 ## 相关文章
 
-- [上一篇：ss网络连接状态深度解析](/articles/linux/linux-46-ss网络连接状态深度解析/)
-- [网络安全基础](/articles/security/sec-01-网络安全基础/)
+- [上一篇：ss网络连接状态深度解析](@/articles/linux/linux-46-ss网络连接状态深度解析.md)
+- [网络安全基础](@/articles/security/sec-01-安全基础与威胁模型.md)

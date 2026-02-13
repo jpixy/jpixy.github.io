@@ -1,6 +1,7 @@
 +++
-title = "14.固件OTA升级设计"
+title = "固件OTA升级设计"
 date = 2026-01-19
+weight = 14000
 description = "嵌入式OTA升级方案：升级架构设计、安全机制、差分升级、回滚策略与可靠性保障"
 [taxonomies]
 tags = ["embedded", "ota", "firmware", "bootloader", "security", "update"]
@@ -427,5 +428,5 @@ OTA是设备生命周期管理的关键能力，投入设计一个健壮的OTA�
 
 ## 相关文章
 
-- [上一篇：嵌入式电源与电池管理](/articles/embedded/embedded-13-电源与电池管理/)
-- [下一篇：PCB设计基础](/articles/embedded/embedded-15-PCB设计基础/)
+- [上一篇：嵌入式电源与电池管理](@/articles/embedded/embedded-13-电源与电池管理.md)
+- [下一篇：PCB设计基础](@/articles/embedded/embedded-15-PCB设计基础.md)

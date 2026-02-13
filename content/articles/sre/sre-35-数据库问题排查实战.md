@@ -1,6 +1,7 @@
 +++
-title = "35.数据库问题排查实战"
+title = "数据库问题排查实战"
 date = 2026-01-21
+weight = 35000
 description = "SRE数据库问题排查完整指南：MySQL/PostgreSQL慢查询、锁问题、连接问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "数据库", "MySQL", "PostgreSQL", "排查", "实战"]
@@ -818,5 +819,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：安全事件排查实战](/articles/sre/sre-34-安全事件排查实战/)
-- [下一篇：高可用与故障切换实战](/articles/sre/sre-36-高可用与故障切换实战/)
+- [上一篇：安全事件排查实战](@/articles/sre/sre-34-安全事件排查实战.md)
+- [下一篇：高可用与故障切换实战](@/articles/sre/sre-36-高可用与故障切换实战.md)

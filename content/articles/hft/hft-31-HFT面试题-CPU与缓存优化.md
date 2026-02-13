@@ -1,6 +1,7 @@
 +++
-title = "31.HFT面试题-CPU与缓存优化"
+title = "HFT面试题-CPU与缓存优化"
 date = 2026-01-31
+weight = 31000
 description = "HFT CPU与缓存优化面试题：缓存层次、CPU亲和性、分支预测、SIMD深度解析"
 [taxonomies]
 tags = ["HFT", "面试", "CPU", "缓存", "低延迟"]
@@ -846,5 +847,5 @@ struct TimingStats {
 
 ## 相关文章
 
-- [上一篇：HFT笔试题-缓存友好编程](/articles/hft/hft-30-HFT笔试题-缓存友好编程/)
-- [下一篇：HFT面试题-内存优化](/articles/hft/hft-32-HFT面试题-内存优化/)
+- [上一篇：HFT笔试题-缓存友好编程](@/articles/hft/hft-30-HFT笔试题-缓存友好编程.md)
+- [下一篇：HFT面试题-内存优化](@/articles/hft/hft-32-HFT面试题-内存优化.md)

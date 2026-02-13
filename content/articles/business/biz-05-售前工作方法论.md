@@ -1,7 +1,8 @@
 +++
-title = "05.售前工作方法论"
+title = "售前工作方法论"
 description = "如何做好售前工作：需求调研、方案设计、演示汇报、POC实施全流程详解"
 date = 2025-01-16
+weight = 5000
 [taxonomies]
 tags = ["pre-sales", "business", "solution", "demo", "poc"]
 +++
@@ -656,5 +657,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：销售团队管理与组织架构](/articles/business/biz-04-销售团队管理与组织架构/)
-- [下一篇：To B销售全流程详解](/articles/business/biz-06-To-B销售全流程详解/)
+- [上一篇：销售团队管理与组织架构](@/articles/business/biz-04-销售团队管理与组织架构.md)
+- [下一篇：To B销售全流程详解](@/articles/business/biz-06-To-B销售全流程详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "06.常见算法技巧"
+title = "常见算法技巧"
 date = 2026-01-19
+weight = 6000
 description = "算法技巧：双指针、滑动窗口、前缀和、位运算、分治"
 [taxonomies]
 tags = ["算法", "技巧", "模板"]
@@ -442,5 +443,5 @@ def sieve(n):
 
 ## 相关文章
 
-- [上一篇：回溯与贪心](/articles/algorithm/algo-05-回溯与贪心/)
-- [下一篇：高级数据结构](/articles/algorithm/algo-07-高级数据结构/)
+- [上一篇：回溯与贪心](@/articles/algorithm/algo-05-回溯与贪心.md)
+- [下一篇：高级数据结构](@/articles/algorithm/algo-07-高级数据结构.md)

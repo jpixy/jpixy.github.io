@@ -1,6 +1,7 @@
 +++
-title = "37.HFT面试题-系统架构"
+title = "HFT面试题-系统架构"
 date = 2026-01-31
+weight = 37000
 description = "HFT系统架构面试题：整体架构设计、延迟预算、组件设计、容错与监控深度解析"
 [taxonomies]
 tags = ["HFT", "面试", "系统架构", "延迟预算", "低延迟"]
@@ -1231,4 +1232,4 @@ perf stat -e cache-misses,cache-references ./trading_app
 
 ## 相关文章
 
-- [上一篇：HFT笔试题-SIMD与向量化](/articles/hft/hft-36-HFT笔试题-SIMD与向量化/)
+- [上一篇：HFT笔试题-SIMD与向量化](@/articles/hft/hft-36-HFT笔试题-SIMD与向量化.md)

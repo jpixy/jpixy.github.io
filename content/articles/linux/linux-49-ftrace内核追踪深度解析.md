@@ -1,6 +1,7 @@
 +++
-title = "49.ftrace内核追踪深度解析"
+title = "ftrace内核追踪深度解析"
 date = 2026-01-31
+weight = 49000
 description = "ftrace深度解析：函数追踪、事件追踪、延迟分析、内核调试"
 [taxonomies]
 tags = ["Linux", "ftrace", "内核", "追踪", "调试"]
@@ -586,6 +587,6 @@ done
 
 ## 相关文章
 
-- [上一篇：crash内核崩溃分析深度解析](/articles/linux/linux-48-crash内核崩溃分析深度解析/)
-- [eBPF技术深度解析](/articles/linux/linux-35-eBPF技术深度解析/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
+- [上一篇：crash内核崩溃分析深度解析](@/articles/linux/linux-48-crash内核崩溃分析深度解析.md)
+- [eBPF技术深度解析](@/articles/linux/linux-35-eBPF技术深度解析.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md)

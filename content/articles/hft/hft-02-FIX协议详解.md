@@ -1,6 +1,7 @@
 +++
-title = "02.FIX协议详解"
+title = "FIX协议详解"
 date = 2026-01-13
+weight = 2000
 description = "金融信息交换协议FIX的深度解析：消息结构、会话管理、订单流程与低延迟优化"
 [taxonomies]
 tags = ["hft", "fix", "protocol", "trading"]
@@ -370,5 +371,5 @@ FIX 的二进制替代方案：
 
 ## 相关文章
 
-- [上一篇：HFT领域C++必知必会知识点详解](/articles/hft/hft-01-Cpp必知必会/)
-- [下一篇：FAST协议详解](/articles/hft/hft-03-FAST协议详解/)
+- [上一篇：HFT领域C++必知必会知识点详解](@/articles/hft/hft-01-Cpp必知必会.md)
+- [下一篇：FAST协议详解](@/articles/hft/hft-03-FAST协议详解.md)

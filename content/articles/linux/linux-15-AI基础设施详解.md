@@ -1,7 +1,8 @@
 +++
-title = "15.AI基础设施详解"
+title = "AI基础设施详解"
 description = "AI底层基础设施深度解析：GPU架构与CUDA编程、NVIDIA驱动管理、RDMA网络原理与编程、高性能计算优化"
 date = 2026-01-27
+weight = 15000
 draft = false
 [taxonomies]
 tags = ["Linux", "GPU", "CUDA", "RDMA", "InfiniBand", "AI", "HPC"]
@@ -606,10 +607,10 @@ NCCL_DEBUG=INFO python train.py
 
 ## 相关文章
 
-- [上一篇：存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/)
-- [下一篇：内核内存管理详解](/articles/linux/linux-16-内核内存管理详解/)
+- [上一篇：存储与文件系统详解](@/articles/linux/linux-14-存储与文件系统详解.md)
+- [下一篇：内核内存管理详解](@/articles/linux/linux-16-内核内存管理详解.md)
 
 **延伸阅读**：
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 概念速查
-- [HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/) - NUMA优化
-- [内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/) - 调试工具
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - 概念速查
+- [HFT-CPU亲和性与NUMA优化](@/articles/cpp/cpp-26-Lambda与函数对象详解.md) - NUMA优化
+- [内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md) - 调试工具

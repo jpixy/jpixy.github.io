@@ -1,7 +1,8 @@
 +++
-title = "21.如何设计一个搜索引擎"
+title = "如何设计一个搜索引擎"
 description = "搜索引擎架构设计：倒排索引、分词、相关性排序与分布式检索"
 date = 2025-01-16
+weight = 21000
 [taxonomies]
 tags = ["interview", "system-design", "search", "elasticsearch"]
 +++
@@ -308,5 +309,5 @@ A：需要从每个分片获取from+size条结果，协调节点要汇总排序�
 
 ## 相关文章
 
-- [上一篇：如何设计一个下载功能](/articles/interview/interview-20-设计下载功能/)
-- [下一篇：如何设计一个推荐系统](/articles/interview/interview-22-设计推荐系统/)
+- [上一篇：如何设计一个下载功能](@/articles/interview/interview-20-设计下载功能.md)
+- [下一篇：如何设计一个推荐系统](@/articles/interview/interview-22-设计推荐系统.md)

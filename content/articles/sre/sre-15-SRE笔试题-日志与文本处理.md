@@ -1,6 +1,7 @@
 +++
-title = "15.SRE笔试题-日志与文本处理"
+title = "SRE笔试题-日志与文本处理"
 date = 2026-01-21
+weight = 15000
 description = "SRE面试笔试题精选：日志分析、文本处理、正则表达式、数据统计，Python3完整解答"
 [taxonomies]
 tags = ["SRE", "面试", "Python", "笔试", "日志分析"]
@@ -854,5 +855,5 @@ def merge_logs_with_filter(
 
 ## 相关文章
 
-- [上一篇：SRE组织与文化](/articles/sre/sre-14-SRE组织与文化/)
-- [下一篇：SRE笔试题-系统与网络编程](/articles/sre/sre-16-SRE笔试题-系统与网络编程/)
+- [上一篇：SRE组织与文化](@/articles/sre/sre-14-SRE组织与文化.md)
+- [下一篇：SRE笔试题-系统与网络编程](@/articles/sre/sre-16-SRE笔试题-系统与网络编程.md)

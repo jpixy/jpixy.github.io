@@ -1,6 +1,7 @@
 +++
-title = "07.深度包检测与入侵检测系统"
+title = "深度包检测与入侵检测系统"
 date = 2026-01-21
+weight = 7000
 description = "网络安全核心技术：DPI 深度包检测、IDS 入侵检测、IPS 入侵防御的原理、实现与实战"
 [taxonomies]
 tags = ["security", "dpi", "ids", "ips", "networking", "suricata", "snort"]
@@ -866,6 +867,6 @@ def detect_malware(ja3_hash):
 
 ## 相关文章
 
-- [上一篇：06 - 安全面试指南](/articles/security/sec-06-安全面试指南/)
-- [01 - 安全基础与威胁模型](/articles/security/sec-01-安全基础与威胁模型/)
-- [16 - 网络安全基础](/articles/networking/net-16-网络安全基础/)
+- [上一篇：06 - 安全面试指南](@/articles/security/sec-06-安全面试指南.md)
+- [01 - 安全基础与威胁模型](@/articles/security/sec-01-安全基础与威胁模型.md)
+- [16 - 网络安全基础](@/articles/networking/net-16-网络安全基础.md)

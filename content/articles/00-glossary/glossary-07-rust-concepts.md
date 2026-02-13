@@ -1,7 +1,8 @@
 +++
-title = "07.Rust Concepts"
+title = "Rust Concepts"
 description = "Rust核心概念速查：所有权、借用、生命周期、trait、unsafe等关键概念详解"
 date = 2026-01-26
+weight = 7000
 draft = false
 [taxonomies]
 tags = ["Glossary", "Rust", "Memory Safety", "Reference"]
@@ -45,7 +46,7 @@ let s1 = String::from("hello");
 let s2 = s1;  // 移动，s1失效
 ```
 
-**详细文章**：[所有权与借用](/articles/rust/rust-02-所有权与借用/)
+**详细文章**：[所有权与借用](@/articles/rust/rust-02-所有权与借用.md)
 
 ---
 
@@ -117,7 +118,7 @@ fn main() {
 }  // excerpt和novel同时失效，OK
 ```
 
-**详细文章**：[生命周期详解](/articles/rust/rust-03-生命周期详解/)
+**详细文章**：[生命周期详解](@/articles/rust/rust-03-生命周期详解.md)
 
 ---
 
@@ -202,7 +203,7 @@ let items: Vec<Box<dyn Summary>> = vec![
 - 静态分发：零开销，可内联
 - 动态分发：虚表查找（~1-2ns），无法内联
 
-**详细文章**：[Trait对象与动态分发](/articles/rust/rust-12-Trait对象与动态分发/)
+**详细文章**：[Trait对象与动态分发](@/articles/rust/rust-12-Rust编译器优化详解.md)
 
 ---
 
@@ -419,7 +420,7 @@ async fn main() {
 }
 ```
 
-**详细文章**：[Rust异步编程](/articles/rust/rust-06-异步编程/)
+**详细文章**：[Rust异步编程](@/articles/rust/rust-06-异步编程.md)
 
 ---
 
@@ -531,7 +532,7 @@ unsafe {
 }
 ```
 
-**详细文章**：[unsafe-Rust完全指南](/articles/rust/rust-09-unsafe-Rust完全指南/)
+**详细文章**：[unsafe-Rust完全指南](@/articles/rust/rust-09-Rust与C-C++互操作.md)
 
 ---
 
@@ -558,7 +559,7 @@ pub extern "C" fn call_from_c() {
 }
 ```
 
-**详细文章**：[Rust与C/C++互操作](/articles/rust/rust-10-Rust与C-C++互操作/)
+**详细文章**：[Rust与C/C++互操作](@/articles/rust/rust-10-Rust内存布局与对齐.md)
 
 ---
 
@@ -780,13 +781,13 @@ mem::forget(v);  // 内存泄漏！小心使用
 
 ## 六、延伸阅读
 
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
-- [Rust面试题-所有权与生命周期](/articles/rust/rust-19-Rust面试题-所有权与生命周期/)
-- [HFT-Rust-Lock-Free编程](/articles/rust/rust-15-HFT-Rust-Lock-Free编程/)
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md)
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md)
+- [Rust面试题-所有权与生命周期](@/articles/rust/rust-19-Rust面试指南.md)
+- [HFT-Rust-Lock-Free编程](@/articles/rust/rust-15-HFT-Rust-SIMD编程.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：Python Concepts](/articles/00-glossary/glossary-06-python-concepts/)
+- [上一篇：Python Concepts](@/articles/00-glossary/glossary-06-python-concepts.md)

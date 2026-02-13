@@ -1,6 +1,7 @@
 +++
-title = "02.Python基础知识英文面试"
+title = "Python基础知识英文面试"
 slug = "eng-Py基础知识英文面试"
+weight = 2000
 +++
 
 # eng Py基础知识英文面试
@@ -248,5 +249,5 @@ Would you like me to elaborate on any specific question or provide more coding e
 
 ## 相关文章
 
-- [上一篇：Interview相关英文](/articles/english/eng-01-Interview相关英文/)
-- [下一篇：Python高级知识英文面试](/articles/english/eng-03-Python高级英文面试/)
+- [上一篇：Interview相关英文](@/articles/english/eng-01-Interview相关英文.md)
+- [下一篇：Python高级知识英文面试](@/articles/english/eng-03-Python高级英文面试.md)

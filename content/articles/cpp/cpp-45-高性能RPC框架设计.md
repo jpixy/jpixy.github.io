@@ -1,7 +1,8 @@
 +++
-title = "45 - 高性能 RPC 框架设计"
+title = "高性能 RPC 框架设计"
 description = "深入解析 RPC 框架架构、序列化、传输层设计与性能优化"
 date = 2025-02-07
+weight = 45000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -963,7 +964,7 @@ graph TB
 
 ## 相关文章
 
-- [17 - Lock-Free 数据结构详解](/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解/)
-- [15 - 自定义内存分配器设计](/articles/cpp/cpp-15-HFT自定义内存分配器设计/)
-- [05 - 性能优化技术](/articles/cpp/cpp-05-性能优化技术/)
-- [net-13 - 高性能网络架构](/articles/networking/net-13-高性能网络架构/)
+- [17 - Lock-Free 数据结构详解](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
+- [15 - 自定义内存分配器设计](@/articles/cpp/cpp-15-HFT自定义内存分配器设计.md)
+- [05 - 性能优化技术](@/articles/cpp/cpp-05-性能优化技术.md)
+- [net-13 - 高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)

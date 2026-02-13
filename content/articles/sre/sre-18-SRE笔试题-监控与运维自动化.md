@@ -1,6 +1,7 @@
 +++
-title = "18.SRE笔试题-监控与运维自动化"
+title = "SRE笔试题-监控与运维自动化"
 date = 2026-01-21
+weight = 18000
 description = "SRE面试笔试题精选：监控指标处理、告警逻辑、自动化脚本、配置管理、故障检测，Python3完整解答"
 [taxonomies]
 tags = ["SRE", "面试", "Python", "笔试", "监控", "自动化"]
@@ -2057,5 +2058,5 @@ def fetch_data(url: str):
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-数据结构与算法](/articles/sre/sre-17-SRE笔试题-数据结构与算法/)
-- [下一篇：SRE笔试题-SQL与数据库](/articles/sre/sre-19-SRE笔试题-SQL与数据库/)
+- [上一篇：SRE笔试题-数据结构与算法](@/articles/sre/sre-17-SRE笔试题-数据结构与算法.md)
+- [下一篇：SRE笔试题-SQL与数据库](@/articles/sre/sre-19-SRE笔试题-SQL与数据库.md)

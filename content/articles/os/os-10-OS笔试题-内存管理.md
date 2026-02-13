@@ -1,6 +1,7 @@
 +++
-title = "10.OS笔试题-内存管理"
+title = "OS笔试题-内存管理"
 date = 2026-01-31
+weight = 10000
 description = "操作系统内存管理笔试题：虚拟内存、分页分段、页面置换算法、内存分配"
 [taxonomies]
 tags = ["操作系统", "笔试", "内存管理", "虚拟内存", "页面置换"]
@@ -1009,8 +1010,8 @@ int *create_array_v3(int size) {
 
 ## 相关文章
 
-- [上一篇：OS笔试题-进程与线程](/articles/os/os-09-OS笔试题-进程与线程/)
-- [下一篇：OS笔试题-同步与死锁](/articles/os/os-11-OS笔试题-同步与死锁/)
+- [上一篇：OS笔试题-进程与线程](@/articles/os/os-09-OS笔试题-进程与线程.md)
+- [下一篇：OS笔试题-同步与死锁](@/articles/os/os-11-OS笔试题-同步与死锁.md)
 
 **知识基础**：
-- [内存管理](/articles/os/os-03-内存管理/)
+- [内存管理](@/articles/os/os-03-内存管理.md)

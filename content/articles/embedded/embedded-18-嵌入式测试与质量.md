@@ -1,6 +1,7 @@
 +++
-title = "18.嵌入式测试与质量"
+title = "嵌入式测试与质量"
 date = 2026-01-19
+weight = 18000
 description = "嵌入式软件质量保障：单元测试、静态分析、MISRA C规范、代码审查与持续集成"
 [taxonomies]
 tags = ["embedded", "testing", "quality", "misra", "static-analysis", "ci"]
@@ -532,5 +533,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：嵌入式电机控制](/articles/embedded/embedded-17-电机控制/)
-- [下一篇：802.11 WiFi 协议详解](/articles/embedded/embedded-19-802.11-WiFi协议详解/)
+- [上一篇：嵌入式电机控制](@/articles/embedded/embedded-17-电机控制.md)
+- [下一篇：802.11 WiFi 协议详解](@/articles/embedded/embedded-19-802.11-WiFi协议详解.md)

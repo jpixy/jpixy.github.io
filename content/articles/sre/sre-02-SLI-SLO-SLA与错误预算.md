@@ -1,6 +1,7 @@
 +++
-title = "02.SLI/SLO/SLA与错误预算"
+title = "SLI/SLO/SLA与错误预算"
 date = 2026-01-19
+weight = 2000
 description = "服务质量量化体系：SLI指标设计、SLO目标制定、SLA契约管理、错误预算机制与实践"
 [taxonomies]
 tags = ["SRE", "SLO", "可靠性"]
@@ -339,5 +340,5 @@ SLI/SLO/错误预算是SRE的核心工具，让可靠性工作从"凭感觉"变�
 
 ## 相关文章
 
-- [上一篇：SRE基础与核心理念](/articles/sre/sre-01-SRE基础与核心理念/)
-- [下一篇：可观测性体系建设](/articles/sre/sre-03-可观测性体系建设/)
+- [上一篇：SRE基础与核心理念](@/articles/sre/sre-01-SRE基础与核心理念.md)
+- [下一篇：可观测性体系建设](@/articles/sre/sre-03-可观测性体系建设.md)

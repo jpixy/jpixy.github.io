@@ -1,6 +1,7 @@
 +++
-title = "32.日志分析与故障定位实战"
+title = "日志分析与故障定位实战"
 date = 2026-01-21
+weight = 32000
 description = "SRE日志分析完整指南：系统日志、应用日志、访问日志的分析方法与故障定位技巧"
 [taxonomies]
 tags = ["SRE", "日志", "排查", "实战", "grep", "awk"]
@@ -698,5 +699,5 @@ chmod +x /etc/cron.daily/log-cleanup
 
 ## 相关文章
 
-- [上一篇：进程与服务问题排查实战](/articles/sre/sre-31-进程与服务问题排查实战/)
-- [下一篇：容器问题排查实战](/articles/sre/sre-33-容器问题排查实战/)
+- [上一篇：进程与服务问题排查实战](@/articles/sre/sre-31-进程与服务问题排查实战.md)
+- [下一篇：容器问题排查实战](@/articles/sre/sre-33-容器问题排查实战.md)

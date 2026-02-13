@@ -1,6 +1,7 @@
 +++
-title = "14.HTTP协议详解"
+title = "HTTP协议详解"
 date = 2026-01-19
+weight = 14000
 description = "HTTP协议全解析：HTTP/1.1、HTTP/2、HTTP/3、HTTPS、缓存机制、性能优化"
 [taxonomies]
 tags = ["网络", "HTTP", "协议"]
@@ -370,5 +371,5 @@ HTTP协议是Web开发的基础，理解其工作原理对于性能优化和问�
 
 ## 相关文章
 
-- [上一篇：高性能网络架构](/articles/networking/net-13-高性能网络架构/)
-- [下一篇：DNS详解](/articles/networking/net-15-DNS详解/)
+- [上一篇：高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)
+- [下一篇：DNS详解](@/articles/networking/net-15-DNS详解.md)

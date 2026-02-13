@@ -1,7 +1,8 @@
 +++
-title = "31.如何设计一个秒杀系统"
+title = "如何设计一个秒杀系统"
 description = "秒杀系统架构设计：流量控制、库存扣减、防超卖与高并发解决方案"
 date = 2025-01-16
+weight = 31000
 [taxonomies]
 tags = ["interview", "system-design", "high-concurrency", "flash-sale"]
 +++
@@ -263,5 +264,5 @@ A：解除限流、释放独占资源、未支付订单回滚库存、统计分�
 
 ## 相关文章
 
-- [上一篇：如何设计一个电商系统](/articles/interview/interview-30-设计电商系统/)
-- [下一篇：微服务架构设计原则](/articles/interview/interview-32-微服务架构设计原则/)
+- [上一篇：如何设计一个电商系统](@/articles/interview/interview-30-设计电商系统.md)
+- [下一篇：微服务架构设计原则](@/articles/interview/interview-32-微服务架构设计原则.md)

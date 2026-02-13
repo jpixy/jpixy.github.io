@@ -1,6 +1,7 @@
 +++
-title = "17.Kubernetes污点Taints详解与最佳实践"
+title = "Kubernetes污点Taints详解与最佳实践"
 slug = "k8s-Kubernetes污点Taints详解与最佳实践"
+weight = 19000
 +++
 
 # Kubernetes 污点(Taints)详解与最佳实践
@@ -220,5 +221,5 @@ spec:
 
 ## 相关文章
 
-- [上一篇：PV和PVC详解](/articles/cloud-native/k8s-16-PV和PVC详解/)
-- [下一篇：Istio多区域部署与存储复制](/articles/cloud-native/k8s-18-Istio多区域部署/)
+- [上一篇：PV和PVC详解](@/articles/cloud-native/k8s-16-PV和PVC详解.md)
+- [下一篇：Istio多区域部署与存储复制](@/articles/cloud-native/k8s-18-Istio多区域部署.md)

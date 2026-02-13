@@ -1,7 +1,8 @@
 +++
-title = "03 - MPI 分布式编程"
+title = "MPI 分布式编程"
 description = "深入理解 MPI 编程模型与分布式计算实践"
 date = 2025-02-06
+weight = 3000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -374,6 +375,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：02 - 并行计算基础](/articles/hpc/hpc-02-并行计算基础/)
-- [下一篇：04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
+- [上一篇：02 - 并行计算基础](@/articles/hpc/hpc-02-并行计算基础.md)
+- [下一篇：04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)

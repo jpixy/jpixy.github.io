@@ -1,6 +1,7 @@
 +++
-title = "21.RTOS与实时系统开发"
+title = "RTOS与实时系统开发"
 date = 2026-02-06
+weight = 21000
 description = "实时操作系统详解：FreeRTOS、Zephyr任务调度、实时约束、与Linux PREEMPT_RT对比"
 [taxonomies]
 tags = ["rtos", "freertos", "zephyr", "real-time", "embedded"]
@@ -888,7 +889,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：20 - U-Boot 与 Bootloader 详解](/articles/embedded/embedded-20-U-Boot与Bootloader详解/)
-- [下一篇：22 - 端侧推理引擎对比](/articles/embedded/embedded-22-端侧推理引擎对比/)
-- [09 - 嵌入式 Linux 驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
-- [10 - 无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)
+- [上一篇：20 - U-Boot 与 Bootloader 详解](@/articles/embedded/embedded-20-U-Boot与Bootloader详解.md)
+- [下一篇：22 - 端侧推理引擎对比](@/articles/embedded/embedded-22-端侧推理引擎对比.md)
+- [09 - 嵌入式 Linux 驱动开发](@/articles/embedded/embedded-09-嵌入式Linux驱动开发.md)
+- [10 - 无线通信与物联网协议](@/articles/embedded/embedded-10-无线通信与物联网协议.md)

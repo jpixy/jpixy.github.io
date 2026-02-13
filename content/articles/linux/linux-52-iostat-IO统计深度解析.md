@@ -1,6 +1,7 @@
 +++
-title = "52.iostat IO统计深度解析"
+title = "iostat IO统计深度解析"
 date = 2026-01-31
+weight = 52000
 description = "iostat深度解析：磁盘性能监控、IOPS分析、延迟指标、瓶颈诊断"
 [taxonomies]
 tags = ["Linux", "iostat", "IO", "性能", "监控"]
@@ -341,5 +342,5 @@ done
 
 ## 相关文章
 
-- [上一篇：blktrace块设备追踪深度解析](/articles/linux/linux-51-blktrace块设备追踪深度解析/)
-- [fio磁盘IO性能测试深度解析](/articles/linux/linux-42-fio磁盘IO性能测试深度解析/)
+- [上一篇：blktrace块设备追踪深度解析](@/articles/linux/linux-51-blktrace块设备追踪深度解析.md)
+- [fio磁盘IO性能测试深度解析](@/articles/linux/linux-42-fio磁盘IO性能测试深度解析.md)

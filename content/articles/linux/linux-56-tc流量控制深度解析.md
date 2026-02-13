@@ -1,6 +1,7 @@
 +++
-title = "56.tc流量控制深度解析"
+title = "tc流量控制深度解析"
 date = 2026-01-31
+weight = 56000
 description = "tc深度解析：流量整形、QoS、带宽限制、延迟模拟"
 [taxonomies]
 tags = ["Linux", "tc", "QoS", "流量控制", "网络"]
@@ -401,5 +402,5 @@ tc -s filter show dev eth0
 
 ## 相关文章
 
-- [上一篇：nsenter/unshare命名空间工具深度解析](/articles/linux/linux-55-nsenter-unshare命名空间工具深度解析/)
-- [网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)
+- [上一篇：nsenter/unshare命名空间工具深度解析](@/articles/linux/linux-55-nsenter-unshare命名空间工具深度解析.md)
+- [网络性能分析与调优](@/articles/networking/net-11-网络性能分析与调优.md)

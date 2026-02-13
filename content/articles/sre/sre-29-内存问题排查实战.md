@@ -1,6 +1,7 @@
 +++
-title = "29.内存问题排查实战"
+title = "内存问题排查实战"
 date = 2026-01-21
+weight = 29000
 description = "SRE内存问题排查完整指南：内存泄漏、OOM、Swap深度分析、Slab缓存问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "内存", "排查", "实战", "OOM", "Slab", "Swap", "Linux"]
@@ -1203,5 +1204,5 @@ done
 
 ## 相关文章
 
-- [上一篇：CPU问题排查实战](/articles/sre/sre-28-CPU问题排查实战/)
-- [下一篇：磁盘与存储问题排查实战](/articles/sre/sre-30-磁盘与存储问题排查实战/)
+- [上一篇：CPU问题排查实战](@/articles/sre/sre-28-CPU问题排查实战.md)
+- [下一篇：磁盘与存储问题排查实战](@/articles/sre/sre-30-磁盘与存储问题排查实战.md)

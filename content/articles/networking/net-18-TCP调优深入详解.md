@@ -1,8 +1,9 @@
 +++
-title = "18.TCP调优深入详解(HFT)"
+title = "TCP调优深入详解(HFT)"
 slug = "net-18-TCP调优深入详解"
 description = "深入讲解Linux TCP性能调优：内核参数、拥塞控制算法(BBR/CUBIC)、快速路径、零拷贝(sendfile/splice)与低延迟优化"
 date = 2026-01-21
+weight = 18000
 draft = false
 [taxonomies]
 tags = ["TCP", "网络调优", "BBR", "低延迟", "HFT"]
@@ -460,5 +461,5 @@ TCP调优的核心要点：
 
 ## 相关文章
 
-- [上一篇：网络故障排查](/articles/networking/net-17-网络故障排查/)
-- [下一篇：UDP组播最佳实践(HFT)](/articles/networking/net-19-UDP组播最佳实践/)
+- [上一篇：网络故障排查](@/articles/networking/net-17-网络故障排查.md)
+- [下一篇：UDP组播最佳实践(HFT)](@/articles/networking/net-19-UDP组播最佳实践.md)

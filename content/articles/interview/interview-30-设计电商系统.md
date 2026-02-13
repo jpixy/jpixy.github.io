@@ -1,7 +1,8 @@
 +++
-title = "30.如何设计一个电商系统"
+title = "如何设计一个电商系统"
 description = "电商系统架构设计：商品、订单、库存、支付的核心设计与高并发解决方案"
 date = 2025-01-16
+weight = 30000
 [taxonomies]
 tags = ["interview", "system-design", "e-commerce", "distributed"]
 +++
@@ -441,5 +442,5 @@ A：使用本地事务保证单库一致；库存扣减和订单创建在同一�
 
 ## 相关文章
 
-- [上一篇：如何设计一个订单系统](/articles/interview/interview-29-设计订单系统/)
-- [下一篇：如何设计一个秒杀系统](/articles/interview/interview-31-设计秒杀系统/)
+- [上一篇：如何设计一个订单系统](@/articles/interview/interview-29-设计订单系统.md)
+- [下一篇：如何设计一个秒杀系统](@/articles/interview/interview-31-设计秒杀系统.md)

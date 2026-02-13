@@ -1,7 +1,8 @@
 +++
-title = "26.HFT技术面试技巧"
+title = "HFT技术面试技巧"
 slug = "hft-26-HFT技术面试技巧"
 date = 2026-01-21
+weight = 27000
 description = "HFT技术面试技巧，包括白板编程、系统设计回答框架、如何展示低延迟经验和常见追问应对"
 [taxonomies]
 tags = ["HFT", "面试", "技术面试", "编程", "系统设计"]
@@ -465,4 +466,4 @@ Q: "你犯过什么严重的错误？"
 
 ## 相关文章
 
-- [上一篇：HFT行为面试指南](/articles/hft/hft-26-HFT行为面试指南/)
+- [上一篇：HFT行为面试指南](@/articles/hft/hft-26-HFT行为面试指南.md)

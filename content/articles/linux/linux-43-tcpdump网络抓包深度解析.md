@@ -1,6 +1,7 @@
 +++
-title = "43.tcpdump网络抓包深度解析"
+title = "tcpdump网络抓包深度解析"
 date = 2026-01-31
+weight = 43000
 description = "tcpdump深度解析：libpcap原理、BPF过滤器、协议分析、故障排查"
 [taxonomies]
 tags = ["Linux", "tcpdump", "网络", "抓包", "libpcap"]
@@ -659,5 +660,5 @@ tshark -i eth0 -Y 'http.request.method == GET' -T fields -e http.host -e http.re
 
 ## 相关文章
 
-- [上一篇：fio磁盘IO性能测试深度解析](/articles/linux/linux-42-fio磁盘IO性能测试深度解析/)
-- [网络故障排查实战](/articles/networking/net-12-网络故障排查实战/)
+- [上一篇：fio磁盘IO性能测试深度解析](@/articles/linux/linux-42-fio磁盘IO性能测试深度解析.md)
+- [网络故障排查实战](@/articles/networking/net-12-网络虚拟化技术.md)

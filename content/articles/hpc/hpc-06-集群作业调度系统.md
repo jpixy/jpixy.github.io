@@ -1,7 +1,8 @@
 +++
-title = "06 - 集群作业调度系统"
+title = "集群作业调度系统"
 description = "理解 GPU 集群的作业调度与资源管理"
 date = 2025-02-06
+weight = 6000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -357,7 +358,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：05 - 分布式训练技术详解](/articles/hpc/hpc-05-分布式训练技术详解/)
-- [下一篇：07 - UCX 统一通信框架详解](/articles/hpc/hpc-07-UCX统一通信框架详解/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
-- [01 - HPC 概述与发展史](/articles/hpc/hpc-01-HPC概述与发展史/)
+- [上一篇：05 - 分布式训练技术详解](@/articles/hpc/hpc-05-分布式训练技术详解.md)
+- [下一篇：07 - UCX 统一通信框架详解](@/articles/hpc/hpc-07-UCX统一通信框架详解.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)
+- [01 - HPC 概述与发展史](@/articles/hpc/hpc-01-HPC概述与发展史.md)

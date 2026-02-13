@@ -1,6 +1,7 @@
 +++
-title = "05.嵌入式通信协议详解"
+title = "嵌入式通信协议详解"
 date = 2026-01-19
+weight = 5000
 description = "嵌入式通信协议全面解析：UART、SPI、I2C、CAN、USB工作原理与实战应用"
 [taxonomies]
 tags = ["embedded", "uart", "spi", "i2c", "can", "protocol"]
@@ -246,5 +247,5 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 
 ## 相关文章
 
-- [上一篇：嵌入式开发环境与工具链](/articles/embedded/embedded-04-开发环境与工具链/)
-- [下一篇：RTOS实时操作系统详解](/articles/embedded/embedded-06-RTOS实时操作系统/)
+- [上一篇：嵌入式开发环境与工具链](@/articles/embedded/embedded-04-开发环境与工具链.md)
+- [下一篇：RTOS实时操作系统详解](@/articles/embedded/embedded-06-RTOS实时操作系统.md)

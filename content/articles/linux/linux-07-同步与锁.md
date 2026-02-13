@@ -1,6 +1,7 @@
 +++
-title = "07.同步与锁"
+title = "同步与锁"
 date = 2026-01-19
+weight = 7000
 description = "Linux同步机制：互斥锁、读写锁、条件变量、信号量、futex"
 [taxonomies]
 tags = ["Linux", "同步", "并发"]
@@ -317,5 +318,5 @@ glibc的PTHREAD_MUTEX_ERRORCHECK可以检测同一线程的重复加锁。
 
 ## 相关文章
 
-- [上一篇：网络编程](/articles/linux/linux-06-网络编程/)
-- [下一篇：性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [上一篇：网络编程](@/articles/linux/linux-06-网络编程.md)
+- [下一篇：性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

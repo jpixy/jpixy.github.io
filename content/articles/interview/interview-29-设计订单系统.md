@@ -1,6 +1,7 @@
 +++
-title = "29.如何设计一个订单系统"
+title = "如何设计一个订单系统"
 slug = "interview-如何设计一个订单系统"
+weight = 29000
 +++
 
 # 如何设计一个高性能、高可用的订单系统
@@ -1060,5 +1061,5 @@ P3 (提示): 需要关注，工作时间处理
 
 ## 相关文章
 
-- [上一篇：如何设计一个支付系统](/articles/interview/interview-28-设计支付系统/)
-- [下一篇：如何设计一个电商系统](/articles/interview/interview-30-设计电商系统/)
+- [上一篇：如何设计一个支付系统](@/articles/interview/interview-28-设计支付系统.md)
+- [下一篇：如何设计一个电商系统](@/articles/interview/interview-30-设计电商系统.md)

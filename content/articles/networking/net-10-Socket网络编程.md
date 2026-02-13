@@ -1,6 +1,7 @@
 +++
-title = "10.Socket网络编程"
+title = "Socket网络编程"
 date = 2026-01-19
+weight = 10000
 description = "Socket编程详解：TCP/UDP编程模型、IO模型对比、高性能服务器设计、常见问题"
 [taxonomies]
 tags = ["网络", "Socket", "编程"]
@@ -478,5 +479,5 @@ sysctl -w net.core.somaxconn=65535
 
 ## 相关文章
 
-- [上一篇：多播与组播技术](/articles/networking/net-09-多播与组播技术/)
-- [下一篇：网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)
+- [上一篇：多播与组播技术](@/articles/networking/net-09-多播与组播技术.md)
+- [下一篇：网络性能分析与调优](@/articles/networking/net-11-网络性能分析与调优.md)

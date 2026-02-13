@@ -1,6 +1,7 @@
 +++
-title = "02.排序与搜索"
+title = "排序与搜索"
 date = 2026-01-19
+weight = 2000
 description = "排序算法：快排、归并、堆排序；搜索算法：二分查找及其变体"
 [taxonomies]
 tags = ["算法", "排序", "搜索"]
@@ -398,5 +399,5 @@ def counting_sort(arr):
 
 ## 相关文章
 
-- [上一篇：数据结构基础](/articles/algorithm/algo-01-数据结构基础/)
-- [下一篇：树与图](/articles/algorithm/algo-03-树与图/)
+- [上一篇：数据结构基础](@/articles/algorithm/algo-01-数据结构基础.md)
+- [下一篇：树与图](@/articles/algorithm/algo-03-树与图.md)

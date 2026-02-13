@@ -1,7 +1,8 @@
 +++
-title = "11.Trait对象与动态分发"
+title = "Trait对象与动态分发"
 slug = "rust-12-Trait对象与动态分发"
 date = 2026-01-21
+weight = 11000
 description = "深入剖析Rust的Trait对象机制，包括vtable结构、dyn Trait开销、Object Safety以及静态vs动态分发的选择"
 [taxonomies]
 tags = ["Rust", "Trait", "动态分发", "vtable", "性能"]
@@ -484,5 +485,5 @@ fn print_both(obj: &dyn DisplayDebug) {
 
 ## 相关文章
 
-- [上一篇：Rust内存布局与对齐](/articles/rust/rust-10-Rust内存布局与对齐/)
-- [下一篇：Rust编译器优化详解](/articles/rust/rust-12-Rust编译器优化详解/)
+- [上一篇：Rust内存布局与对齐](@/articles/rust/rust-10-Rust内存布局与对齐.md)
+- [下一篇：Rust编译器优化详解](@/articles/rust/rust-12-Rust编译器优化详解.md)

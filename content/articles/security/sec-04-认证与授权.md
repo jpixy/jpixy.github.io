@@ -1,6 +1,7 @@
 +++
-title = "04.认证与授权"
+title = "认证与授权"
 date = 2026-01-19
+weight = 4000
 description = "认证与授权：身份认证方式、OAuth 2.0、JWT、RBAC、零信任"
 [taxonomies]
 tags = ["安全", "认证", "授权"]
@@ -244,5 +245,5 @@ JWT由三部分组成：Header.Payload.Signature
 
 ## 相关文章
 
-- [上一篇：密码学基础](/articles/security/sec-03-密码学基础/)
-- [下一篇：安全开发实践](/articles/security/sec-05-安全开发实践/)
+- [上一篇：密码学基础](@/articles/security/sec-03-密码学基础.md)
+- [下一篇：安全开发实践](@/articles/security/sec-05-安全开发实践.md)

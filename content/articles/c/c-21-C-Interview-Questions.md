@@ -1,6 +1,7 @@
 +++
-title = "21. C Interview Questions"
+title = "C Interview Questions"
 date = 2026-01-30
+weight = 21000
 description = "C语言高频面试题：指针、内存、预处理、数据结构、算法"
 [taxonomies]
 tags = ["C", "面试", "指针"]
@@ -1009,4 +1010,4 @@ void *worker(void *arg) {
 
 ## 相关文章
 
-- [上一篇：C Written Test Questions](/articles/c/c-20-C-Written-Test-Questions/)
+- [上一篇：C Written Test Questions](@/articles/c/c-20-C-Written-Test-Questions.md)

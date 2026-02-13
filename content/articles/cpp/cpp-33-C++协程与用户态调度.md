@@ -1,7 +1,8 @@
 +++
-title = "33. Coroutines and User-Space Scheduling"
+title = "Coroutines and User-Space Scheduling"
 slug = "cpp-43-C++协程与用户态调度"
 date = 2026-01-21
+weight = 33000
 description = "深入剖析C++20协程机制和用户态调度技术，包括协程原理、Fiber库、调度器设计以及在HFT中的应用"
 [taxonomies]
 tags = ["C++", "协程", "Fiber", "调度器", "并发", "HFT"]
@@ -671,5 +672,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Memory Hierarchy and Bandwidth (HFT)](/articles/cpp/cpp-32-HFT内存层次与带宽优化/)
-- [下一篇：C++ Interview Questions Summary](/articles/cpp/cpp-34-Cpp面试题汇总/)
+- [上一篇：Memory Hierarchy and Bandwidth (HFT)](@/articles/cpp/cpp-32-HFT内存层次与带宽优化.md)
+- [下一篇：C++ Interview Questions Summary](@/articles/cpp/cpp-34-Cpp面试题汇总.md)

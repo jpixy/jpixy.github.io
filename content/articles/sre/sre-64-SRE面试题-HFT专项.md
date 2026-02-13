@@ -1,7 +1,8 @@
 +++
-title = "64.SRE面试题-HFT专项(HFT)"
+title = "SRE面试题-HFT专项(HFT)"
 description = "HFT环境下SRE面试题精选：延迟排查、网络问题、系统调优、容量规划与实战场景分析"
 date = 2026-01-21
+weight = 64000
 draft = false
 [taxonomies]
 tags = ["SRE", "HFT", "面试", "延迟", "性能调优"]
@@ -910,5 +911,5 @@ HFT SRE面试的核心考察点：
 
 ## 相关文章
 
-- [上一篇：交易系统故障演练(HFT)](/articles/sre/sre-63-交易系统故障演练/)
-- [下一篇：SRE面试指南](/articles/sre/sre-65-SRE面试指南/)
+- [上一篇：交易系统故障演练(HFT)](@/articles/sre/sre-63-交易系统故障演练.md)
+- [下一篇：SRE面试指南](@/articles/sre/sre-65-SRE面试指南.md)

@@ -1,7 +1,8 @@
 +++
-title = "16.品牌建设与公关传播"
+title = "品牌建设与公关传播"
 description = "B2B品牌战略、公关传播、媒体关系、危机公关与思想领导力"
 date = 2025-01-16
+weight = 16000
 [taxonomies]
 tags = ["marketing", "business", "brand", "pr", "communication"]
 +++
@@ -544,5 +545,5 @@ Standard（标准）：
 
 ## 相关文章
 
-- [上一篇：数字营销与内容营销](/articles/business/biz-15-数字营销与内容营销/)
-- [下一篇：市场活动策划与执行](/articles/business/biz-17-市场活动策划与执行/)
+- [上一篇：数字营销与内容营销](@/articles/business/biz-15-数字营销与内容营销.md)
+- [下一篇：市场活动策划与执行](@/articles/business/biz-17-市场活动策划与执行.md)

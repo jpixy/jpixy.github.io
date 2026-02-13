@@ -1,6 +1,7 @@
 +++
-title = "14.__getattr__与RESTful API的最佳实践"
+title = "__getattr__与RESTful API的最佳实践"
 slug = "py-__getattr__与RESTfulAPI的最佳实践"
+weight = 14000
 +++
 
 # `__getattr__` 与 RESTful API 的最佳实践
@@ -331,5 +332,5 @@ class AsyncRESTClient:
 
 ## 相关文章
 
-- [上一篇：Python的高阶函数大全和详解](/articles/python/py-13-高阶函数/)
-- [下一篇：Python的并发和并行全面详解](/articles/python/py-15-并发和并行/)
+- [上一篇：Python的高阶函数大全和详解](@/articles/python/py-13-高阶函数.md)
+- [下一篇：Python的并发和并行全面详解](@/articles/python/py-15-并发和并行.md)

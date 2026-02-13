@@ -1,6 +1,6 @@
 +++
 title = "Security"
-sort_by = "title"
+sort_by = "weight"
 +++
 
 安全技术文章，涵盖Web安全、密码学、认证授权、安全开发实践等核心话题。

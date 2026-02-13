@@ -1,6 +1,7 @@
 +++
-title = "01 - 个人量化交易入门指南"
+title = "个人量化交易入门指南"
 date = 2025-01-15
+weight = 1000
 description = "个人如何开展量化交易：定位、思路、技术栈选择，以及与机构的差异化竞争策略"
 [taxonomies]
 tags = ["quant", "trading", "algorithmic-trading", "personal-finance"]
@@ -384,4 +385,4 @@ graph TB
 
 ## 相关文章
 
-- [下一篇：02 - 中低频量化交易最佳实践](/articles/quant/quant-02-中低频量化交易最佳实践/)
+- [下一篇：02 - 中低频量化交易最佳实践](@/articles/quant/quant-02-中低频量化交易最佳实践.md)

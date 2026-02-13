@@ -1,6 +1,7 @@
 +++
-title = "08.性能分析与调试"
+title = "性能分析与调试"
 date = 2026-01-19
+weight = 8000
 description = "Linux性能分析：perf、strace、调试工具、/proc文件系统"
 [taxonomies]
 tags = ["Linux", "性能", "调试"]
@@ -347,6 +348,6 @@ dmesg -T  # 人类可读时间戳
 
 ## 相关文章
 
-- [上一篇：同步与锁](/articles/linux/linux-07-同步与锁/)
-- [下一篇：Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 工具的详细原理和使用方法
+- [上一篇：同步与锁](@/articles/linux/linux-07-同步与锁.md)
+- [下一篇：Linux内核网络栈详解(HFT)](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md) - perf 工具的详细原理和使用方法

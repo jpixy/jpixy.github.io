@@ -1,6 +1,7 @@
 +++
-title = "21.SRE笔试题-Shell脚本速查"
+title = "SRE笔试题-Shell脚本速查"
 date = 2026-01-21
+weight = 21000
 description = "SRE面试Shell脚本常见题目速查：日志分析、进程管理、文本处理、系统监控，核心命令与要点"
 [taxonomies]
 tags = ["SRE", "面试", "Shell", "笔试", "Bash"]
@@ -453,5 +454,5 @@ done
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-综合实战题](/articles/sre/sre-20-SRE笔试题-综合实战题/)
-- [下一篇：SRE笔试题-Kubernetes速查](/articles/sre/sre-22-SRE笔试题-Kubernetes速查/)
+- [上一篇：SRE笔试题-综合实战题](@/articles/sre/sre-20-SRE笔试题-综合实战题.md)
+- [下一篇：SRE笔试题-Kubernetes速查](@/articles/sre/sre-22-SRE笔试题-Kubernetes速查.md)

@@ -1,7 +1,8 @@
 +++
-title = "08.AI & Machine Learning Concepts"
+title = "AI & Machine Learning Concepts"
 description = "AI与机器学习核心概念速查：模型、训练、推理、前向计算、梯度、损失函数、Transformer、RAG、Agent、模型格式等全链路术语索引"
 date = 2026-02-11
+weight = 8000
 draft = false
 [taxonomies]
 tags = ["Glossary", "AI", "Machine Learning", "LLM", "Deep Learning", "Reference"]
@@ -13,7 +14,7 @@ toc = true
 
 本索引收录 AI 与机器学习领域的核心概念，每个概念包含：定义、为什么重要、关键要点，以及面向工程师的类比（便于有后端/系统经验的读者快速对接）。
 
-> **配套文章**：[从模型诞生到 AI 应用：全链路认知](/articles/ai/ai-34-从模型诞生到AI应用全链路认知/)
+> **配套文章**：[从模型诞生到 AI 应用：全链路认知](@/articles/ai/ai-34-从模型诞生到AI应用全链路认知.md)
 
 ---
 
@@ -1226,18 +1227,674 @@ PPL = exp(-1/N × Σᵢ₌₁ᴺ log P(wᵢ | w₁, ..., wᵢ₋₁))
 
 **工程师类比**：上下文窗口 ≈ 函数调用栈大小——超过限制就溢出（截断）。Lost in the Middle ≈ 深层调用栈中间的变量容易被优化器忽略。外推技术 ≈ 动态扩展栈大小但可能牺牲深层的精度。
 
+### 10.8 Normalization (归一化)
+
+**定义**：将网络中间层的激活值重新缩放到均值≈0、方差≈1 的分布，稳定训练过程、加速收敛。
+
+**为什么需要归一化？** 没有归一化时，每层输出的分布会随训练不断漂移（**Internal Covariate Shift**——内部协变量偏移）。后续层不得不持续适应前面层的分布变化 → 训练变慢、不稳定、需要更小的学习率。
+
+```
+无归一化时：
+  第1层输出范围：[-100, 200]    ← 分布随训练一直在变
+  第2层的权重必须不断适应这种变化 → 学习效率低
+  
+  深层时问题更严重：每层的分布偏移叠加
+  → 梯度消失/爆炸 → 训练崩溃
+
+有归一化时：
+  第1层输出 → 归一化到均值≈0、方差≈1 → 再传给第2层
+  第2层总是收到"标准化"的输入 → 训练稳定
+```
+
+#### Batch Normalization (BN，批归一化)
+
+**提出**：Ioffe & Szegedy, 2015。CNN 时代最重要的技术之一。
+
+**原理**：对一个 mini-batch 中**同一通道的所有样本**计算均值和方差，然后归一化。
+
+```
+BN 的计算（对一个通道/特征维度）：
+
+  输入：一个 mini-batch 中 N 个样本的第 k 个特征值 {x₁ₖ, x₂ₖ, ..., xₙₖ}
+
+  步骤 1：计算批次均值    μ_B = (1/N) Σ xᵢₖ
+  步骤 2：计算批次方差    σ²_B = (1/N) Σ (xᵢₖ - μ_B)²
+  步骤 3：归一化          x̂ᵢₖ = (xᵢₖ - μ_B) / √(σ²_B + ε)
+  步骤 4：缩放和偏移      yᵢₖ = γ · x̂ᵢₖ + β
+
+  γ 和 β 是可学习参数（训练时更新）
+  → 模型可以学到"如果不需要归一化，就把 γ 设成 σ、β 设成 μ，恢复原分布"
+  → 不会限制模型表达能力
+```
+
+**BN 在 CNN 中的直觉**：
+
+```
+一张图片经过卷积后：
+  通道 1（边缘特征）的值可能在 [-50, 150]
+  通道 2（颜色特征）的值可能在 [-0.1, 0.3]
+
+BN 对每个通道独立归一化：
+  通道 1：归一化到均值 0、方差 1
+  通道 2：归一化到均值 0、方差 1
+  → 所有通道的"量纲"统一，下一层不用处理尺度差异
+```
+
+**训练 vs 推理时的行为不同**：
+
+| 阶段 | 均值/方差来源 | 说明 |
+|------|-------------|------|
+| **训练** | 当前 mini-batch 的统计量 | 每个 batch 算一次，有一定噪声（相当于隐式正则化） |
+| **推理** | 训练时积累的**滑动平均**（running mean/var） | 推理时不依赖 batch → 单样本也能推理 |
+
+**BN 的问题——为什么 Transformer 不用 BN？**
+
+| 问题 | 说明 |
+|------|------|
+| **依赖 batch size** | batch 太小（如 1~2）时统计量不准，归一化效果差 |
+| **序列长度不一** | NLP 任务中不同样本长度不同，跨样本的同一位置没有统计意义 |
+| **分布式训练复杂** | 多 GPU 时需要同步 BN 统计量（SyncBN），增加通信开销 |
+| **推理时需维护状态** | 需要保存 running mean/var，增加复杂度 |
+
+#### Layer Normalization (LN，层归一化)
+
+**提出**：Ba et al., 2016。专为 RNN/Transformer 设计。
+
+**原理**：对**单个样本**的所有特征维度计算均值和方差——不依赖 batch 中的其他样本。
+
+```
+LN 的计算（对单个样本的一个 token）：
+
+  输入：一个 token 的隐状态向量 x = [x₁, x₂, ..., x_d]（d = 隐藏维度）
+
+  步骤 1：计算该 token 自身的均值    μ = (1/d) Σ xⱼ
+  步骤 2：计算该 token 自身的方差    σ² = (1/d) Σ (xⱼ - μ)²
+  步骤 3：归一化                     x̂ⱼ = (xⱼ - μ) / √(σ² + ε)
+  步骤 4：缩放和偏移                 yⱼ = γ · x̂ⱼ + β
+```
+
+**BN vs LN 的关键区别**：
+
+```
+假设 batch=3, 序列长度=4, 隐藏维度=5
+
+BN 的归一化方向（跨 batch 的同一特征位置）：
+  ┌──────────────────────────┐
+  │ 样本1: [■ □ □ □ □]       │
+  │ 样本2: [■ □ □ □ □]       │  ← BN 对这 3 个 ■ 算均值/方差
+  │ 样本3: [■ □ □ □ □]       │
+  └──────────────────────────┘
+
+LN 的归一化方向（同一样本的所有特征）：
+  ┌──────────────────────────┐
+  │ 样本1: [■ ■ ■ ■ ■]       │  ← LN 对这 5 个 ■ 算均值/方差
+  │ 样本2: [□ □ □ □ □]       │
+  │ 样本3: [□ □ □ □ □]       │
+  └──────────────────────────┘
+```
+
+| 对比维度 | Batch Normalization | Layer Normalization |
+|---------|--------------------|--------------------|
+| **归一化方向** | 跨 batch 的同一特征 | 同一样本的所有特征 |
+| **依赖 batch** | 是（batch 太小效果差） | 否（单样本也能算） |
+| **适用场景** | CNN（图像）| **Transformer / RNN（序列）** |
+| **训练/推理一致** | 否（推理用 running mean） | 是（统计量只来自当前样本） |
+| **参数** | γ, β（每个通道各一个） | γ, β（每个特征维度各一个） |
+
+#### RMSNorm (均方根归一化)
+
+**提出**：Zhang & Sennrich, 2019。Layer Norm 的简化版。
+
+**原理**：去掉 LN 中的"减均值"步骤，只做"除以均方根"+ 缩放。
+
+```
+LayerNorm:  x̂ = (x - μ) / √(σ² + ε) · γ + β    ← 4 步：减均值、算方差、归一化、缩放偏移
+RMSNorm:    x̂ = x / √(mean(x²) + ε) · γ          ← 2 步：算 RMS、缩放
+
+  省略了减均值和偏移 β → 计算量减少约 10-15%
+  效果几乎不变 → 当前所有主流 LLM 都用 RMSNorm
+```
+
+**当前 LLM 的标准配置**：**Pre-Norm + RMSNorm**（LLaMA、Qwen、Mistral、DeepSeek 等全部如此）。
+
+| 模型 | Norm 类型 | Norm 位置 |
+|------|----------|----------|
+| 原始 Transformer (2017) | LayerNorm | Post-Norm |
+| BERT (2018) | LayerNorm | Post-Norm |
+| GPT-2 (2019) | LayerNorm | Pre-Norm |
+| **LLaMA / Qwen / Mistral / DeepSeek** | **RMSNorm** | **Pre-Norm** |
+
+**工程师类比**：归一化 ≈ 在数据管道中加一个"标准化层"——不管上游数据的量纲和范围如何变化，下游服务总是收到格式一致的输入。BN 像"按整个批次的统计信息标准化"（需要攒够一批），LN 像"每条请求独立标准化"（无需等待其他请求）。
+
+---
+
+### 10.9 Evaluation Metrics (评估指标)
+
+**定义**：衡量模型好坏的量化标准。不同任务使用不同指标。
+
+#### 混淆矩阵（Confusion Matrix）
+
+所有分类指标的基础——对二分类问题，将预测结果分为四类：
+
+```
+                    预测结果
+                  正例    负例
+              ┌────────┬────────┐
+  实际  正例  │  TP    │  FN    │
+  标签       ├────────┼────────┤
+        负例  │  FP    │  TN    │
+              └────────┴────────┘
+
+  TP (True Positive)：实际正例，预测正确 → "真阳"
+  FP (False Positive)：实际负例，预测为正 → "假阳"（误报）
+  FN (False Negative)：实际正例，预测为负 → "假阴"（漏报）
+  TN (True Negative)：实际负例，预测正确 → "真阴"
+```
+
+#### 核心指标
+
+| 指标 | 公式 | 含义 | 关注什么 |
+|------|------|------|---------|
+| **Accuracy (准确率)** | (TP+TN) / (TP+TN+FP+FN) | 所有样本中预测正确的比例 | 整体表现 |
+| **Precision (精确率)** | TP / (TP+FP) | 预测为正的样本中，实际为正的比例 | **误报少不少？** |
+| **Recall (召回率)** | TP / (TP+FN) | 实际为正的样本中，被正确预测的比例 | **漏报多不多？** |
+| **F1 Score** | 2·P·R / (P+R) | Precision 和 Recall 的调和平均 | 两者的平衡 |
+
+**Precision vs Recall 的直觉**：
+
+```
+垃圾邮件过滤器：
+  Precision 高 → 标记为"垃圾"的邮件确实是垃圾（误杀少）
+  Recall 高    → 几乎所有垃圾邮件都被抓出来了（漏网少）
+
+  如果 Precision 高但 Recall 低：很多垃圾邮件没被过滤
+  如果 Recall 高但 Precision 低：很多正常邮件被误杀
+
+癌症筛查：
+  Recall 更重要！ 漏诊一个癌症（FN）比误诊（FP）严重得多
+  → 宁可多做几个检查（Precision 稍低），也不能漏掉患者
+
+搜索引擎：
+  Precision 更重要！ 返回的结果要相关（FP 少）
+  用户不关心有些相关结果没返回（FN 可以容忍）
+```
+
+**为什么 Accuracy 有时候不靠谱？——类别不平衡问题**：
+
+```
+1000 个样本中只有 10 个正例（如欺诈交易检测）
+
+  模型 A：全部预测为负 → Accuracy = 990/1000 = 99%！
+  但 TP = 0, Recall = 0% → 一个欺诈都没抓到 → 毫无用处
+
+  这种情况下 Accuracy 具有误导性
+  应该看 Precision, Recall, F1
+```
+
+#### ROC 曲线与 AUC
+
+**ROC 曲线（Receiver Operating Characteristic）**：以不同阈值绘制的 TPR vs FPR 曲线。
+
+```
+  TPR (True Positive Rate) = Recall = TP / (TP+FN)
+  FPR (False Positive Rate) = FP / (FP+TN)
+
+  分类器输出的是概率（如 0.73），选不同阈值得到不同的 TPR 和 FPR：
+
+  阈值 = 0.9 → 很严格 → TP 少、FP 也少 → 曲线左下角
+  阈值 = 0.5 → 中等   → TP 和 FP 都适中 → 曲线中间
+  阈值 = 0.1 → 很宽松 → TP 多、FP 也多 → 曲线右上角
+
+  ROC 曲线：
+    TPR│      ╭────────
+    1  │    ╭╯
+       │  ╭╯          理想曲线（越靠左上角越好）
+       │╭╯
+    0  │╯─────────────
+       0            1  FPR
+```
+
+**AUC（Area Under Curve）**：ROC 曲线下的面积。
+
+| AUC 值 | 含义 |
+|--------|------|
+| 1.0 | 完美分类器 |
+| 0.9~1.0 | 优秀 |
+| 0.8~0.9 | 良好 |
+| 0.7~0.8 | 一般 |
+| 0.5 | 随机猜测（对角线） |
+| < 0.5 | 比随机还差（预测反了） |
+
+**AUC 的优势**：不依赖阈值选择，反映模型的**排序能力**——"正例得分高于负例"的概率。
+
+#### mAP (mean Average Precision)
+
+**用途**：目标检测和信息检索的标准指标。
+
+```
+目标检测中的 mAP：
+
+  对每个类别（猫、狗、车...）：
+    1. 按置信度排序所有检测框
+    2. 计算不同 Recall 水平下的 Precision
+    3. 画出 Precision-Recall 曲线
+    4. 计算曲线下面积 = 该类别的 AP (Average Precision)
+
+  mAP = 所有类别 AP 的平均值
+
+  mAP@0.5 → IoU 阈值为 0.5 时的 mAP（PASCAL VOC 标准）
+  mAP@0.5:0.95 → IoU 从 0.5 到 0.95 的平均 mAP（COCO 标准，更严格）
+```
+
+#### LLM 常用评估指标
+
+| 指标 | 用途 | 说明 |
+|------|------|------|
+| **Perplexity (困惑度)** | 语言模型质量 | 越低越好；表示模型对测试文本的"惊讶程度" |
+| **BLEU** | 机器翻译 | 衡量生成文本与参考文本的 n-gram 重叠度 |
+| **ROUGE** | 文本摘要 | 衡量生成摘要与参考摘要的重叠度 |
+| **MMLU** | 综合知识 | 57 个学科的多选题，衡量模型的知识广度 |
+| **HumanEval** | 代码生成 | 164 个编程题，衡量 pass@k（k 次生成中至少一次通过的概率） |
+| **MT-Bench** | 对话质量 | GPT-4 作为评委打分（1~10），衡量多轮对话能力 |
+| **Chatbot Arena Elo** | 综合对比 | 用户盲测投票，Elo 评分排名（类似国际象棋排名） |
+
+**工程师类比**：评估指标 ≈ 单元测试和性能基准。Accuracy ≈ 简单的 pass/fail 测试；Precision/Recall ≈ 区分"误报"和"漏报"的更细粒度测试；AUC ≈ 不依赖阈值的综合性能评分；mAP ≈ 多维度聚合的性能报告。
+
+---
+
+### 10.10 Mixed Precision Training (混合精度训练)
+
+**定义**：在训练过程中同时使用高精度（FP32）和低精度（FP16/BF16）数据类型，**加速训练**并**减少显存**，同时保持模型精度几乎不损失。
+
+**为什么需要混合精度？**
+
+```
+纯 FP32 训练：
+  每个参数 4 字节 → 7B 模型仅参数就占 28GB
+  加上梯度、优化器状态 → 总显存 ~112GB → 需要多卡
+
+FP16 混合精度训练：
+  前向/反向计算用 FP16 → 速度提升 2-3x（Tensor Core 加速）
+  显存减少 ~40%
+  但不能全用 FP16（精度不够，训练会崩）→ 需要"混合"
+```
+
+#### FP32 / FP16 / BF16 对比
+
+```
+FP32 (单精度，32 位)：
+  [1 位符号] [8 位指数] [23 位尾数]
+  范围：±3.4×10³⁸  精度：~7 位有效数字
+  
+FP16 (半精度，16 位)：
+  [1 位符号] [5 位指数] [10 位尾数]
+  范围：±6.5×10⁴   精度：~3.3 位有效数字
+  ⚠ 范围小 → 大梯度会溢出（overflow）
+  ⚠ 精度低 → 小梯度会下溢（underflow → 变成 0）
+
+BF16 (Brain Float 16，Google 提出)：
+  [1 位符号] [8 位指数] [7 位尾数]
+  范围：±3.4×10³⁸  精度：~2.4 位有效数字
+  ✓ 范围和 FP32 一样大 → 不容易溢出
+  ✗ 精度比 FP16 还低 → 但训练时够用
+```
+
+| 类型 | 位数 | 范围 | 精度 | 训练适用性 |
+|------|------|------|------|-----------|
+| **FP32** | 32 | ±3.4×10³⁸ | 高 | 默认，安全但慢 |
+| **FP16** | 16 | ±6.5×10⁴ | 中 | 快，但需要 Loss Scaling 防溢出 |
+| **BF16** | 16 | ±3.4×10³⁸ | 低 | 快，范围大不需要 Loss Scaling，**当前主流** |
+| **TF32** | 19 | ±3.4×10³⁸ | 中 | NVIDIA Ampere+ 默认，透明加速 |
+
+#### AMP (Automatic Mixed Precision) 工作原理
+
+```
+AMP 的核心策略：
+
+  ┌─────────────────────────────────────────────────────┐
+  │                                                     │
+  │  用 FP16/BF16 的操作（计算密集型，受益于 Tensor Core）：│
+  │    • 矩阵乘法（Linear、Conv、Attention 的 QKV 计算）  │
+  │    • 卷积运算                                        │
+  │    → 速度提升 2-3x                                   │
+  │                                                     │
+  │  必须用 FP32 的操作（对精度敏感）：                     │
+  │    • Loss 计算                                       │
+  │    • Softmax                                        │
+  │    • Layer Normalization / Batch Normalization        │
+  │    • 权重更新（optimizer step）                       │
+  │    → 防止精度损失导致训练崩溃                          │
+  │                                                     │
+  └─────────────────────────────────────────────────────┘
+```
+
+**Master Weights（FP32 主权重副本）**：
+
+```
+混合精度训练的内存布局：
+
+  FP32 主权重（Master Weights）：28GB  ← 优化器更新这份
+  FP16 权重副本：14GB                  ← 前向/反向用这份
+  FP16 梯度：14GB
+  FP32 优化器状态（Adam 的 m 和 v）：56GB
+
+  为什么需要 FP32 主权重？
+    FP16 的精度只有 ~3 位有效数字
+    学习率 × 梯度 = 非常小的更新量（如 0.00001）
+    FP16 无法表示 "100.0 + 0.00001 = 100.00001"（精度丢失）
+    → 必须用 FP32 做加法，更新后再转回 FP16
+```
+
+#### Loss Scaling（损失缩放）
+
+FP16 训练的关键技巧——解决梯度下溢问题：
+
+```
+问题：
+  梯度很小（如 0.000001）→ FP16 表示为 0 → 参数不更新 → 训练失败
+
+Loss Scaling 的解决方案：
+  1. 前向计算完得到 loss
+  2. loss × scale_factor（如 1024）→ 放大后的 loss
+  3. 反向传播（所有梯度同比放大 1024 倍）→ 不会下溢了！
+  4. 更新前：梯度 ÷ scale_factor → 恢复真实梯度
+  5. 用真实梯度更新 FP32 主权重
+
+动态 Loss Scaling：
+  scale_factor 初始很大（如 2¹⁶ = 65536）
+  如果检测到梯度溢出（NaN/Inf）→ scale_factor 减半，跳过这步更新
+  如果连续 N 步没有溢出 → scale_factor 翻倍
+  → 自动找到最大的安全缩放因子
+```
+
+**PyTorch AMP 代码示例**：
+
+```python
+from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()  # 动态 Loss Scaling
+
+for data, target in dataloader:
+    optimizer.zero_grad()
+    
+    with autocast(dtype=torch.float16):  # 自动选择 FP16/FP32
+        output = model(data)             # 前向：FP16
+        loss = criterion(output, target) # Loss：FP32
+    
+    scaler.scale(loss).backward()        # 反向：放大梯度
+    scaler.step(optimizer)               # 更新：缩小梯度 → FP32 更新
+    scaler.update()                      # 调整 scale_factor
+```
+
+**BF16 训练则更简单**——因为范围够大，不需要 Loss Scaling：
+
+```python
+with autocast(dtype=torch.bfloat16):  # BF16 不需要 GradScaler
+    output = model(data)
+    loss = criterion(output, target)
+loss.backward()
+optimizer.step()
+```
+
+**当前业界标准**：
+
+| 硬件 | 推荐精度 | 说明 |
+|------|---------|------|
+| **A100 / H100** | BF16 | 原生支持 BF16 Tensor Core，无需 Loss Scaling |
+| **V100** | FP16 + Loss Scaling | 不支持 BF16 |
+| **4090（消费级）** | FP16 或 BF16 | 支持两者 |
+
+**工程师类比**：混合精度 ≈ 在系统中用不同精度处理不同模块——日志用 int 节省空间，财务计算用 decimal 保证精度，中间数据用 float 提速。Loss Scaling ≈ 处理浮点精度不足时的"放大→处理→缩小"策略，类似音频工程中的增益控制。
+
+---
+
+### 10.11 Roofline Model (Roofline 性能模型)
+
+**定义**：一种可视化分析工具，帮助判断一个计算任务（kernel）是**计算受限（Compute-Bound）**还是**访存受限（Memory-Bound）**，从而指导优化方向。
+
+**核心概念**：
+
+```
+两个关键指标：
+
+  1. 算术强度（Arithmetic Intensity）= 计算量(FLOPs) / 数据搬运量(Bytes)
+     单位：FLOPs/Byte
+     含义：每搬运 1 字节数据，能做多少次浮点运算
+
+  2. 可达性能（Attainable Performance）= min(峰值算力, 峰值带宽 × 算术强度)
+```
+
+**Roofline 图的直觉**：
+
+```
+  性能                        ╱ 峰值算力（屋顶平坦段）
+(GFLOPS)                    ╱
+    │                     ╱──────────────────
+    │                   ╱
+    │                 ╱    ← 屋顶的斜面 = 峰值带宽
+    │               ╱
+    │             ╱
+    │           ╱
+    │         ╱
+    │       ╱        Ridge Point
+    │     ╱          （脊点：斜面和平坦段的交界）
+    │   ╱
+    │ ╱
+    │╱──────────────────────────────────
+    └──────────────────────────────────→
+              算术强度 (FLOPs/Byte)
+
+  脊点左边：Memory-Bound（性能受限于数据搬运速度）
+  脊点右边：Compute-Bound（性能受限于计算单元速度）
+```
+
+**如何判断你的 kernel 在哪里？**
+
+```
+以 NVIDIA A100 为例：
+  峰值算力（FP16 Tensor Core）：312 TFLOPS
+  HBM 带宽：2.0 TB/s
+
+  脊点 = 峰值算力 / 峰值带宽 = 312T / 2.0T = 156 FLOPs/Byte
+
+  你的 kernel 算术强度：
+    < 156 → Memory-Bound → 优化方向：减少数据搬运（融合算子、缓存优化）
+    > 156 → Compute-Bound → 优化方向：提高计算效率（Tensor Core、指令优化）
+```
+
+**常见操作的算术强度分析**：
+
+| 操作 | 算术强度 | 瓶颈类型 | 说明 |
+|------|---------|---------|------|
+| **Element-wise (ReLU, Add)** | ~0.25 | **严重 Memory-Bound** | 每个元素只做 1 次运算但要读写 1 次 |
+| **Layer Norm / BN** | ~4-10 | **Memory-Bound** | 需要多次读写，计算量不大 |
+| **GEMM (矩阵乘法)** | M·N·K/(M·K+K·N)·sizeof | 通常 **Compute-Bound** | 矩阵够大时计算密集 |
+| **Attention (无 Flash)** | ~10-50 | **Memory-Bound** | N² 的显存访问拖累 |
+| **Flash Attention** | ~50-200 | **接近 Compute-Bound** | 通过 tiling 减少 HBM 访问 |
+| **Conv2d (大 batch)** | ~100-500 | **Compute-Bound** | 卷积天然计算密集 |
+
+**怎么画 Roofline？实操步骤**：
+
+```
+步骤 1：获取硬件参数
+  峰值算力：查 GPU spec（注意区分 FP32/FP16/INT8）
+  峰值带宽：查 HBM 带宽
+
+步骤 2：计算你的 kernel 的算术强度
+  FLOPs = 浮点运算次数（用 torch.profiler 或手动计算）
+  Bytes = 读写的数据量（输入+输出的字节数）
+  AI = FLOPs / Bytes
+
+步骤 3：在 Roofline 图上标点
+  x = AI, y = 实测 GFLOPS
+  → 离"屋顶"越近 → 优化越充分
+  → 离"屋顶"越远 → 还有优化空间
+
+步骤 4：判断优化方向
+  在斜面下方 → Memory-Bound → 减少数据搬运
+  在平坦段下方 → Compute-Bound → 提高计算效率
+```
+
+**NVIDIA Nsight Compute 可以直接生成 Roofline 图**：
+
+```bash
+# 用 Nsight Compute 分析 kernel
+ncu --set roofline -o profile_output ./your_cuda_program
+
+# 打开 Nsight Compute UI 查看 Roofline 图
+# 每个 kernel 自动标在图上，一目了然
+```
+
+**Roofline 在 LLM 推理中的应用**：
+
+```
+LLM 推理的两个阶段：
+
+  Prefill（首 token 生成）：
+    大矩阵乘法 → 算术强度高 → Compute-Bound
+    优化：Tensor Core、Flash Attention
+
+  Decode（逐 token 生成）：
+    batch=1 时矩阵乘法退化为矩阵-向量乘 → 算术强度极低 → Memory-Bound
+    优化：量化（减少数据量）、KV Cache（减少重复计算）、Continuous Batching（增大 batch）
+```
+
+**工程师类比**：Roofline ≈ 系统性能分析中的"瓶颈诊断图"。Memory-Bound ≈ I/O 密集型任务（数据库查询），Compute-Bound ≈ CPU 密集型任务（加密计算）。知道瓶颈在哪，才知道优化什么——I/O 密集型任务加 CPU 无用，CPU 密集型任务加 SSD 无用。
+
+---
+
+### 10.12 Knowledge Distillation Engineering Practice (知识蒸馏工程实践)
+
+**定义**：用一个已训练好的大模型（**教师 Teacher**）来指导一个小模型（**学生 Student**）的训练，使小模型在参数量少得多的情况下，尽可能接近大模型的性能。
+
+**核心思想——"软标签"比"硬标签"信息量更大**：
+
+```
+硬标签（传统训练）：
+  图片是猫 → 标签 = [1, 0, 0]（猫=1, 狗=0, 鸟=0）
+  信息量：只告诉模型"这是猫"
+
+软标签（蒸馏）：
+  教师模型输出 → [0.85, 0.12, 0.03]（猫=0.85, 狗=0.12, 鸟=0.03）
+  信息量：告诉模型"这很像猫，有点像狗，不太像鸟"
+  
+  → 软标签蕴含了类别之间的相似性结构
+  → 狗和猫比鸟更相似（0.12 vs 0.03）
+  → 这种"暗知识（dark knowledge）"帮助学生模型学得更好
+```
+
+**Temperature（温度）的作用**：
+
+```
+教师模型的原始输出（logits）：[5.0, 2.0, 0.5]
+
+T=1（标准 Softmax）→ [0.85, 0.12, 0.03]  ← 差异很大，接近硬标签
+T=5（高温 Softmax）→ [0.52, 0.30, 0.18]  ← 差异缩小，暴露更多类间关系
+T=20                → [0.38, 0.34, 0.28]  ← 几乎均匀，太模糊了
+
+蒸馏通常用 T=2~10：既保留类间关系，又不过于模糊
+训练完成后推理用 T=1（恢复正常 Softmax）
+```
+
+**蒸馏损失函数**：
+
+```
+L_total = α · L_hard + (1-α) · L_soft
+
+L_hard = CrossEntropy(student_output, ground_truth)     ← 标准损失
+L_soft = KL_divergence(student_soft, teacher_soft) · T²  ← 蒸馏损失
+
+  α 通常取 0.1~0.5（蒸馏损失占主导）
+  T² 缩放因子：因为高温 Softmax 的梯度被 T 缩小了，乘 T² 补偿
+```
+
+**PyTorch 代码示例**：
+
+```python
+import torch
+import torch.nn.functional as F
+
+def distillation_loss(student_logits, teacher_logits, labels, T=4.0, alpha=0.3):
+    """知识蒸馏损失函数"""
+    # 硬标签损失：学生 vs 真实标签
+    hard_loss = F.cross_entropy(student_logits, labels)
+    
+    # 软标签损失：学生 vs 教师（高温 Softmax）
+    student_soft = F.log_softmax(student_logits / T, dim=-1)
+    teacher_soft = F.softmax(teacher_logits / T, dim=-1)
+    soft_loss = F.kl_div(student_soft, teacher_soft, reduction='batchmean') * (T ** 2)
+    
+    # 加权组合
+    return alpha * hard_loss + (1 - alpha) * soft_loss
+
+
+# 训练循环
+teacher_model.eval()  # 教师模型冻结
+student_model.train()
+
+for data, labels in dataloader:
+    with torch.no_grad():
+        teacher_logits = teacher_model(data)    # 教师前向（不需要梯度）
+    
+    student_logits = student_model(data)        # 学生前向
+    loss = distillation_loss(student_logits, teacher_logits, labels)
+    
+    loss.backward()
+    optimizer.step()
+    optimizer.zero_grad()
+```
+
+**LLM 蒸馏的特殊性**：
+
+```
+CV 蒸馏（分类任务）：
+  教师输出 = 类别概率分布（如 1000 维向量）
+  → 直接对齐概率分布即可
+
+LLM 蒸馏（序列生成任务）：
+  教师输出 = 每个 token 位置的词表概率分布（如 32000 维 × 序列长度）
+  → 逐 token 对齐概率分布
+
+  但还有更多可以蒸馏的：
+  ① 输出层蒸馏：对齐最后一层的概率分布（最常用）
+  ② 隐层蒸馏：对齐中间层的隐状态（如 TinyBERT）
+  ③ 注意力蒸馏：对齐注意力权重矩阵（如 MiniLM）
+  ④ 特征图蒸馏：对齐中间层的特征表示（如 DistilBERT）
+```
+
+**业界蒸馏案例**：
+
+| 教师 → 学生 | 压缩比 | 性能保留 | 方法 |
+|------------|--------|---------|------|
+| BERT-Base → **DistilBERT** | 参数减少 40% | 保留 97% 性能 | 隐层蒸馏 + 三重损失 |
+| BERT-Base → **TinyBERT** | 参数减少 86% | 保留 96% 性能 | 两阶段蒸馏（预训练+微调） |
+| GPT-4 → **Phi-3** | 巨大 | 在特定任务上接近 GPT-4 | 合成数据 + 输出蒸馏 |
+| LLaMA 70B → **LLaMA 8B** | 约 9x | 特定任务保留 ~90% | 输出蒸馏 + 指令数据 |
+| 大模型 → **Gemma 2B** | 极大 | 移动端可用 | Google 的多阶段蒸馏 |
+
+**蒸馏 vs 其他压缩方法**：
+
+| 方法 | 何时用 | 压缩率 | 保留性能 |
+|------|-------|--------|---------|
+| **量化** | 部署时 | 2-8x | 95-99% |
+| **剪枝** | 训练后 | 2-10x | 90-98% |
+| **蒸馏** | 训练时 | 2-100x | 90-97% |
+| **蒸馏+量化** | 先蒸馏再量化 | 10-400x | 85-95% |
+
+**工程师类比**：蒸馏 ≈ 资深工程师（教师）带新人（学生）。新人不需要重复资深工程师多年的试错经历，通过导师的"经验总结"（软标签）快速达到接近的水平。温度 ≈ 导师讲解的详细程度——太简略（T=1）只说"这样做"，太啰嗦（T=20）信息太模糊。
+
 ---
 
 ## Further Reading
 
-- [从模型诞生到 AI 应用：全链路认知](/articles/ai/ai-34-从模型诞生到AI应用全链路认知/)
-- [推理系统工程师 C++ 入门学习计划](/articles/ai/ai-33-推理系统工程师C++入门学习计划/)
-- [AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
-- [Linux & System Concepts](/articles/00-glossary/glossary-01-linux-concepts/)
-- [C++ Concepts](/articles/00-glossary/glossary-05-cpp-concepts/)
+- [从模型诞生到 AI 应用：全链路认知](@/articles/ai/ai-34-从模型诞生到AI应用全链路认知.md)
+- [推理系统工程师 C++ 入门学习计划](@/articles/ai/ai-33-推理系统工程师C++入门学习计划.md)
+- [AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)
+- [Linux & System Concepts](@/articles/00-glossary/glossary-01-linux-concepts.md)
+- [C++ Concepts](@/articles/00-glossary/glossary-05-cpp-concepts.md)
 
 ---
 
 ## Related Articles
 
-- [上一篇：Rust Concepts](/articles/00-glossary/glossary-07-rust-concepts/)
+- [上一篇：Rust Concepts](@/articles/00-glossary/glossary-07-rust-concepts.md)

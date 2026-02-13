@@ -1,7 +1,8 @@
 +++
-title = "01.Ethernet基础与帧结构详解"
+title = "Ethernet基础与帧结构详解"
 description = "以太网帧结构、MAC地址、VLAN、以太网类型演进、MTU/Jumbo Frame、流量控制与交换机转发原理"
 date = 2025-01-16
+weight = 1000
 [taxonomies]
 tags = ["networking", "ethernet", "layer2", "vlan", "fundamentals"]
 [extra]
@@ -723,4 +724,4 @@ A：Auto-negotiation（IEEE 802.3）通过 **FLP（Fast Link Pulse）** 在物�
 
 ## 相关文章
 
-- [下一篇：如何实现可靠的UDP](/articles/networking/net-02-可靠UDP实现/)
+- [下一篇：如何实现可靠的UDP](@/articles/networking/net-02-可靠UDP实现.md)

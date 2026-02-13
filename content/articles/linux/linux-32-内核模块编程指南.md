@@ -1,6 +1,7 @@
 +++
-title = "32.内核模块编程指南"
+title = "内核模块编程指南"
 date = 2026-02-02
+weight = 32000
 description = "Linux内核模块：模块加载、符号导出、参数传递、设备驱动编写"
 [taxonomies]
 tags = ["Linux", "内核", "模块", "驱动开发"]
@@ -634,6 +635,6 @@ cat /sys/kernel/debug/kmemleak
 
 ## 相关文章
 
-- [上一篇：Linux容器基础详解](/articles/linux/linux-31-Linux容器基础详解/)
-- [下一篇：内核内存分配器详解](/articles/linux/linux-33-内核内存分配器详解/)
-- [Linux设备驱动模型详解](/articles/linux/linux-30-Linux设备驱动模型详解/)
+- [上一篇：Linux容器基础详解](@/articles/linux/linux-31-Linux容器基础详解.md)
+- [下一篇：内核内存分配器详解](@/articles/linux/linux-33-内核内存分配器详解.md)
+- [Linux设备驱动模型详解](@/articles/linux/linux-30-Linux设备驱动模型详解.md)

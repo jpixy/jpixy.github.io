@@ -1,7 +1,8 @@
 +++
-title = "14.存储与文件系统详解"
+title = "存储与文件系统详解"
 description = "Linux存储技术深度解析：VFS架构、NVMe驱动原理、SPDK用户态存储、FUSE用户态文件系统开发"
 date = 2026-01-27
+weight = 14000
 draft = false
 [taxonomies]
 tags = ["Linux", "Storage", "NVMe", "SPDK", "FUSE", "FileSystem"]
@@ -587,6 +588,6 @@ fi->nonseekable = 0;
 
 ## 相关文章
 
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 概念速查
-- [文件系统与IO](/articles/linux/linux-04-文件系统与IO/) - 基础知识
-- [内存映射与高效IO](/articles/linux/linux-11-内存映射与高效IO/) - mmap/零拷贝
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - 概念速查
+- [文件系统与IO](@/articles/linux/linux-04-文件系统与IO.md) - 基础知识
+- [内存映射与高效IO](@/articles/linux/linux-11-内存映射与高效IO.md) - mmap/零拷贝

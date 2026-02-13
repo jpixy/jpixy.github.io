@@ -1,6 +1,7 @@
 +++
-title = "04.动态规划"
+title = "动态规划"
 date = 2026-01-19
+weight = 4000
 description = "动态规划：核心思想、状态设计、经典问题、优化技巧"
 [taxonomies]
 tags = ["算法", "动态规划", "DP"]
@@ -347,5 +348,5 @@ def tsp(dist):
 
 ## 相关文章
 
-- [上一篇：树与图](/articles/algorithm/algo-03-树与图/)
-- [下一篇：回溯与贪心](/articles/algorithm/algo-05-回溯与贪心/)
+- [上一篇：树与图](@/articles/algorithm/algo-03-树与图.md)
+- [下一篇：回溯与贪心](@/articles/algorithm/algo-05-回溯与贪心.md)

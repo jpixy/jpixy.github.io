@@ -1,8 +1,9 @@
 +++
-title = "10.在线算法与流式计算(HFT)"
+title = "在线算法与流式计算(HFT)"
 slug = "algo-10-在线算法与流式计算"
 description = "深入讲解在线算法与流式计算：滑动窗口统计、Welford在线均值/方差、Reservoir Sampling、流式Top-K、EMA与VWAP计算"
 date = 2026-01-21
+weight = 10000
 draft = false
 [taxonomies]
 tags = ["在线算法", "流式计算", "滑动窗口", "VWAP", "HFT"]
@@ -818,12 +819,12 @@ private:
 
 ## 概念速查
 
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 滑动窗口、时间复杂度等概念速查
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 实时计算、VWAP等概念速查
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - 滑动窗口、时间复杂度等概念速查
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md) - 实时计算、VWAP等概念速查
 
 ---
 
 ## 相关文章
 
-- [上一篇：概率数据结构详解(HFT)](/articles/algorithm/algo-09-概率数据结构详解/)
-- [下一篇：平衡树详解](/articles/algorithm/algo-11-平衡树详解/)
+- [上一篇：概率数据结构详解(HFT)](@/articles/algorithm/algo-09-概率数据结构详解.md)
+- [下一篇：平衡树详解](@/articles/algorithm/algo-11-平衡树详解.md)

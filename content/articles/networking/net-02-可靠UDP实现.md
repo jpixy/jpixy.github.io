@@ -1,7 +1,8 @@
 +++
-title = "02.可靠UDP传输详解"
+title = "可靠UDP传输详解"
 description = "可靠UDP实现原理、ARQ机制、QUIC/KCP/UDT协议对比、FEC前向纠错与生产实践"
 date = 2025-01-16
+weight = 2000
 [taxonomies]
 tags = ["networking", "udp", "quic", "kcp", "reliable-transport", "protocol"]
 [extra]
@@ -579,5 +580,5 @@ A：核心区别在于**拥塞信号的判断方式**。CUBIC 是基于丢包的
 
 ## 相关文章
 
-- [上一篇：Ethernet基础](/articles/networking/net-01-Ethernet基础/)
-- [下一篇：OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
+- [上一篇：Ethernet基础](@/articles/networking/net-01-Ethernet基础.md)
+- [下一篇：OpenvSwitch介绍](@/articles/networking/net-03-OpenvSwitch介绍.md)

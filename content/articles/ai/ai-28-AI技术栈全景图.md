@@ -1,7 +1,8 @@
 +++
-title = "28 - AI 技术栈全景图"
+title = "AI 技术栈全景图"
 description = "从应用到硬件的完整分层，理解 AI 系统全貌与岗位定位"
 date = 2025-02-06
+weight = 28000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -513,14 +514,14 @@ graph TB
 
 ### 8.2 下一步
 
-- 如果你对职业路径感兴趣 → 阅读 [29 - AI C++ 工程师职业路径](/articles/ai/ai-29-AI-C++工程师职业路径/)
-- 如果你想深入推理系统 → 阅读 [AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
+- 如果你对职业路径感兴趣 → 阅读 [29 - AI C++ 工程师职业路径](@/articles/ai/ai-29-AI-C++工程师职业路径.md)
+- 如果你想深入推理系统 → 阅读 [AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：27 - 计算机视觉与 OpenCV 实战](/articles/ai/ai-27-计算机视觉与OpenCV实战/)
-- [下一篇：29 - AI C++ 工程师职业路径](/articles/ai/ai-29-AI-C++工程师职业路径/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [24 - GPU Kernel 开发详解](/articles/ai/ai-24-GPU-Kernel开发详解/)
+- [上一篇：27 - 计算机视觉与 OpenCV 实战](@/articles/ai/ai-27-计算机视觉与OpenCV实战.md)
+- [下一篇：29 - AI C++ 工程师职业路径](@/articles/ai/ai-29-AI-C++工程师职业路径.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [24 - GPU Kernel 开发详解](@/articles/ai/ai-24-GPU-Kernel开发详解.md)

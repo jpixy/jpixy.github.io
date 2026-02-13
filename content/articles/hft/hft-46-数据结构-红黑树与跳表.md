@@ -1,6 +1,7 @@
 +++
-title = "46.数据结构-红黑树与跳表"
+title = "数据结构-红黑树与跳表"
 date = 2026-02-02
+weight = 46000
 description = "高性能数据结构：红黑树、跳表、AVL树原理与实现"
 [taxonomies]
 tags = ["HFT", "数据结构", "红黑树", "跳表", "算法"]
@@ -1006,6 +1007,6 @@ A:
 
 ## 相关文章
 
-- [HFT面试题-算法与数据结构](/articles/hft/hft-23-HFT面试题-算法与数据结构/)
-- [HFT笔试题-订单簿与撮合](/articles/hft/hft-41-HFT笔试题-订单簿与撮合/)
-- [OrderBook实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+- [HFT面试题-算法与数据结构](@/articles/hft/hft-23-HFT面试题-算法与数据结构.md)
+- [HFT笔试题-订单簿与撮合](@/articles/hft/hft-41-HFT笔试题-订单簿与撮合.md)
+- [OrderBook实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)

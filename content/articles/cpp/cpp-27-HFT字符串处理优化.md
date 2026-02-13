@@ -1,6 +1,7 @@
 +++
-title = "27. String Processing Optimization (HFT)"
+title = "String Processing Optimization (HFT)"
 date = 2026-01-21
+weight = 27000
 description = "深入剖析C++字符串处理优化技术，包括std::string_view、SSO、零拷贝字符串、固定长度字符串等HFT关键技术"
 [taxonomies]
 tags = ["C++", "字符串", "性能优化", "HFT", "低延迟", "string_view"]
@@ -495,5 +496,5 @@ auto result = std::format_to(buffer, "Order: {}", order_id);
 
 ## 相关文章
 
-- [上一篇：Lambda and Function Objects](/articles/cpp/cpp-26-Lambda与函数对象详解/)
-- [下一篇：Testing and Debugging](/articles/cpp/cpp-28-C++测试与调试实战/)
+- [上一篇：Lambda and Function Objects](@/articles/cpp/cpp-26-Lambda与函数对象详解.md)
+- [下一篇：Testing and Debugging](@/articles/cpp/cpp-28-C++测试与调试实战.md)

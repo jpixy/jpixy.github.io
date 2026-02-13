@@ -1,7 +1,8 @@
 +++
-title = "08.如何设计一个分布式锁"
+title = "如何设计一个分布式锁"
 description = "分布式锁设计：Redis、ZooKeeper、数据库实现方案对比与生产实践"
 date = 2025-01-16
+weight = 8000
 [taxonomies]
 tags = ["interview", "system-design", "distributed-lock", "redis", "zookeeper"]
 +++
@@ -326,5 +327,5 @@ A：基于ZAB协议保证数据一致性；临时节点在客户端断开后自�
 
 ## 相关文章
 
-- [上一篇：分布式事务解决方案](/articles/interview/interview-07-分布式事务方案/)
-- [下一篇：如何设计一个分布式ID生成器](/articles/interview/interview-09-设计分布式ID生成器/)
+- [上一篇：分布式事务解决方案](@/articles/interview/interview-07-分布式事务方案.md)
+- [下一篇：如何设计一个分布式ID生成器](@/articles/interview/interview-09-设计分布式ID生成器.md)

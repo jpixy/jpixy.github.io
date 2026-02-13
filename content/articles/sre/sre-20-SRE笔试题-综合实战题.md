@@ -1,6 +1,7 @@
 +++
-title = "20.SRE笔试题-综合实战题"
+title = "SRE笔试题-综合实战题"
 date = 2026-01-21
+weight = 20000
 description = "SRE面试笔试题精选：接近真实场景的综合题目，故障排查、系统设计、自动化脚本，Python3完整解答"
 [taxonomies]
 tags = ["SRE", "面试", "Python", "笔试", "实战", "系统设计"]
@@ -1811,5 +1812,5 @@ for incident in incidents:
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-SQL与数据库](/articles/sre/sre-19-SRE笔试题-SQL与数据库/)
-- [下一篇：SRE笔试题-Shell脚本速查](/articles/sre/sre-21-SRE笔试题-Shell脚本速查/)
+- [上一篇：SRE笔试题-SQL与数据库](@/articles/sre/sre-19-SRE笔试题-SQL与数据库.md)
+- [下一篇：SRE笔试题-Shell脚本速查](@/articles/sre/sre-21-SRE笔试题-Shell脚本速查.md)

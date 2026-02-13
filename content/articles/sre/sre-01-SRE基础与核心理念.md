@@ -1,6 +1,7 @@
 +++
-title = "01.SRE基础与核心理念"
+title = "SRE基础与核心理念"
 date = 2026-01-19
+weight = 1000
 description = "SRE核心概念详解：起源与发展、职责边界、与传统运维的区别、核心原则与实践方法论"
 [taxonomies]
 tags = ["SRE", "可靠性", "运维"]
@@ -222,4 +223,4 @@ SRE不是一个职位，而是一种文化和实践方法。无论组织规模�
 
 ## 相关文章
 
-- [下一篇：SLI/SLO/SLA与错误预算](/articles/sre/sre-02-SLI-SLO-SLA与错误预算/)
+- [下一篇：SLI/SLO/SLA与错误预算](@/articles/sre/sre-02-SLI-SLO-SLA与错误预算.md)

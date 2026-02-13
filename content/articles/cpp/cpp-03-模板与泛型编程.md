@@ -1,6 +1,7 @@
 +++
-title = "03. Templates and Generic Programming"
+title = "Templates and Generic Programming"
 date = 2026-01-19
+weight = 3000
 description = "C++模板详解：函数模板、类模板、模板特化、SFINAE、可变参数模板"
 [taxonomies]
 tags = ["C++", "模板", "泛型"]
@@ -417,5 +418,5 @@ process(42);  // 错误：int不满足Container概念
 
 ## 相关文章
 
-- [上一篇：Modern C++ Features](/articles/cpp/cpp-02-现代Cpp特性详解/)
-- [下一篇：Concurrency and Multithreading](/articles/cpp/cpp-04-并发编程详解/)
+- [上一篇：Modern C++ Features](@/articles/cpp/cpp-02-现代Cpp特性详解.md)
+- [下一篇：Concurrency and Multithreading](@/articles/cpp/cpp-04-并发编程详解.md)

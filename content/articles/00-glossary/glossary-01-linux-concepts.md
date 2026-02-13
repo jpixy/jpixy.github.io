@@ -1,7 +1,8 @@
 +++
-title = "01.Linux & System Concepts"
+title = "Linux & System Concepts"
 description = "Linux系统核心概念速查：进程、内存、IO模型、调度，以及内核/Glibc/Systemd/调试工具/存储/AI基础设施概念索引"
 date = 2026-01-26
+weight = 1000
 draft = false
 [taxonomies]
 tags = ["Glossary", "Linux", "Kernel", "System", "Reference"]
@@ -69,7 +70,7 @@ void worker() {
 }
 ```
 
-**详细文章**：[HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/)
+**详细文章**：[HFT-CPU亲和性与NUMA优化](@/articles/cpp/cpp-26-Lambda与函数对象详解.md)
 
 ---
 
@@ -131,7 +132,7 @@ for (size_t i = 0; i < size; i += 4096) {
 }
 ```
 
-**详细文章**：[内存映射与高效IO(HFT)](/articles/linux/linux-11-内存映射与高效IO/)
+**详细文章**：[内存映射与高效IO(HFT)](@/articles/linux/linux-11-内存映射与高效IO.md)
 
 ---
 
@@ -206,7 +207,7 @@ numactl --cpunodebind=0 --membind=0 ./app
 void* ptr = numa_alloc_onnode(size, node_id);
 ```
 
-**详细文章**：[HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/)
+**详细文章**：[HFT-CPU亲和性与NUMA优化](@/articles/cpp/cpp-26-Lambda与函数对象详解.md)
 
 ---
 
@@ -277,7 +278,7 @@ class Statistics {
 };
 ```
 
-**详细文章**：[HFT缓存友好数据结构设计](/articles/ccpp/cpp-25-HFT缓存友好数据结构设计/)
+**详细文章**：[HFT缓存友好数据结构设计](@/articles/cpp/cpp-25-C++20-23新特性详解.md)
 
 ---
 
@@ -377,7 +378,7 @@ ssize_t sent = sendfile(socket_fd, file_fd, &offset, count);
 3. **跨设备限制**：sendfile只支持某些fd组合
 4. **大文件分块**：需要循环调用处理大文件
 
-**详细文章**：[内存映射与高效IO(HFT)](/articles/linux/linux-11-内存映射与高效IO/)
+**详细文章**：[内存映射与高效IO(HFT)](@/articles/linux/linux-11-内存映射与高效IO.md)
 
 ---
 
@@ -562,7 +563,7 @@ io_uring_wait_cqe(&ring, &cqe);
 io_uring_cqe_seen(&ring, cqe);
 ```
 
-**详细文章**：[io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
+**详细文章**：[io_uring详解(HFT)](@/articles/networking/net-20-io_uring详解.md)
 
 ---
 
@@ -624,7 +625,7 @@ dmesg | grep -i tsc
 # tsc: Detected 2400.002 MHz TSC
 ```
 
-**详细文章**：[Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
+**详细文章**：[Linux时间子系统(HFT)](@/articles/linux/linux-10-Linux时间子系统.md)
 
 ---
 
@@ -727,7 +728,7 @@ int main() {
 }
 ```
 
-**详细文章**：[HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/)
+**详细文章**：[HFT-CPU亲和性与NUMA优化](@/articles/cpp/cpp-26-Lambda与函数对象详解.md)
 
 ---
 
@@ -760,7 +761,7 @@ spin_lock_irq(&lock);       // 禁止抢占 + 硬中断
 spin_lock_irqsave(&lock, flags);  // 同上，保存中断状态
 ```
 
-**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+**详细文章**：[内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)
 
 ---
 
@@ -804,7 +805,7 @@ kfree(old_ptr);
 - 路由表查询
 - 文件系统 dcache
 
-**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+**详细文章**：[内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)
 
 ---
 
@@ -841,7 +842,7 @@ smp_rmb();     // 确保读 flag 在读 data 之前
 use(data);
 ```
 
-**详细文章**：[内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+**详细文章**：[内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)
 
 ---
 
@@ -944,7 +945,7 @@ ls /sys/fs/cgroup/
 
 **核心子系统**：进程调度、内存管理、文件系统、网络栈、设备驱动、中断处理
 
-**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/)
+**详细文章**：[内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md)
 
 ---
 
@@ -954,7 +955,7 @@ ls /sys/fs/cgroup/
 
 **核心功能**：stdio、stdlib、pthread、动态链接器、内存分配器(ptmalloc2)
 
-**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#二glibc-gnu-c-library)
+**详细文章**：[内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md#er-glibc-gnu-c-library)
 
 ---
 
@@ -964,7 +965,7 @@ ls /sys/fs/cgroup/
 
 **核心概念**：Unit、Service、Target、Timer、journalctl
 
-**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#三systemd)
+**详细文章**：[内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md#san-systemd)
 
 ---
 
@@ -974,7 +975,7 @@ ls /sys/fs/cgroup/
 
 **核心组件**：GCC(编译器)、Binutils(as/ld/objdump)、GDB(调试器)、Glibc(C库)
 
-**详细文章**：[内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/#四toolchain-工具链)
+**详细文章**：[内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md#si-toolchain-gong-ju-lian)
 
 ---
 
@@ -986,7 +987,7 @@ ls /sys/fs/cgroup/
 
 **用途**：分析 Kernel Panic，定位崩溃根因
 
-**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#一crash-内核崩溃分析)
+**详细文章**：[内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md#yi-crash-nei-he-beng-kui-fen-xi)
 
 ---
 
@@ -996,7 +997,7 @@ ls /sys/fs/cgroup/
 
 **用途**：程序调试、core dump 分析、远程调试
 
-**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#二gdb-gnu-debugger-高级技巧)
+**详细文章**：[内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md#er-gdb-gnu-debugger-gao-ji-ji-qiao)
 
 ---
 
@@ -1006,7 +1007,7 @@ ls /sys/fs/cgroup/
 
 **用途**：追踪内核函数调用、事件追踪、性能分析
 
-**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#三ftrace-函数追踪器)
+**详细文章**：[内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md#san-ftrace-han-shu-zhui-zong-qi)
 
 ---
 
@@ -1016,7 +1017,7 @@ ls /sys/fs/cgroup/
 
 **用途**：低开销追踪、自定义探针、生产环境性能分析
 
-**详细文章**：[内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/#四bpftrace--ebpf)
+**详细文章**：[内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md#si-bpftrace-ebpf)
 
 ---
 
@@ -1028,7 +1029,7 @@ ls /sys/fs/cgroup/
 
 **核心结构**：super_block、inode、dentry、file
 
-**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#一linux-文件系统架构)
+**详细文章**：[存储与文件系统详解](@/articles/linux/linux-14-存储与文件系统详解.md#yi-linux-wen-jian-xi-tong-jia-gou)
 
 ---
 
@@ -1038,7 +1039,7 @@ ls /sys/fs/cgroup/
 
 **特点**：PCIe 直连、多队列、低延迟(~10μs)、高 IOPS(~1M+)
 
-**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#二nvme-驱动与原理)
+**详细文章**：[存储与文件系统详解](@/articles/linux/linux-14-存储与文件系统详解.md#er-nvme-qu-dong-yu-yuan-li)
 
 ---
 
@@ -1048,7 +1049,7 @@ ls /sys/fs/cgroup/
 
 **特点**：绕过内核、轮询模式、零拷贝、延迟~2-5μs
 
-**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#三spdk-storage-performance-development-kit)
+**详细文章**：[存储与文件系统详解](@/articles/linux/linux-14-存储与文件系统详解.md#san-spdk-storage-performance-development-kit)
 
 ---
 
@@ -1058,7 +1059,7 @@ ls /sys/fs/cgroup/
 
 **用途**：无需修改内核即可实现文件系统(sshfs、s3fs等)
 
-**详细文章**：[存储与文件系统详解](/articles/linux/linux-14-存储与文件系统详解/#四用户态文件系统-fuse)
+**详细文章**：[存储与文件系统详解](@/articles/linux/linux-14-存储与文件系统详解.md#si-yong-hu-tai-wen-jian-xi-tong-fuse)
 
 ---
 
@@ -1070,7 +1071,7 @@ ls /sys/fs/cgroup/
 
 **软件栈**：CUDA Runtime → cuDNN/cuBLAS → PyTorch/TensorFlow
 
-**详细文章**：[AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/#一gpu-计算与驱动)
+**详细文章**：[AI基础设施详解](@/articles/linux/linux-15-AI基础设施详解.md#yi-gpu-ji-suan-yu-qu-dong)
 
 ---
 
@@ -1082,7 +1083,7 @@ ls /sys/fs/cgroup/
 
 **技术**：InfiniBand、RoCE v2、iWARP
 
-**详细文章**：[AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/#二rdma-remote-direct-memory-access)
+**详细文章**：[AI基础设施详解](@/articles/linux/linux-15-AI基础设施详解.md#er-rdma-remote-direct-memory-access)
 
 ---
 
@@ -1092,14 +1093,14 @@ ls /sys/fs/cgroup/
 
 ## 九、延伸阅读
 
-- [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/)
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
-- [Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
+- [网络核心概念索引](@/articles/00-glossary/glossary-02-networking-concepts.md)
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md)
+- [Linux内核网络栈详解(HFT)](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [Linux时间子系统(HFT)](@/articles/linux/linux-10-Linux时间子系统.md)
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md)
 
 ---
 
 ## 相关文章
 
-- [下一篇：Networking Concepts](/articles/00-glossary/glossary-02-networking-concepts/)
+- [下一篇：Networking Concepts](@/articles/00-glossary/glossary-02-networking-concepts.md)

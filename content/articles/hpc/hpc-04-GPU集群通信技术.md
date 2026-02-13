@@ -1,7 +1,8 @@
 +++
-title = "04 - GPU 集群通信技术"
+title = "GPU 集群通信技术"
 description = "深入理解 GPU 集群的通信架构与优化技术"
 date = 2025-02-06
+weight = 4000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -397,8 +398,8 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：03 - MPI 分布式编程](/articles/hpc/hpc-03-MPI分布式编程/)
-- [下一篇：05 - 分布式训练技术详解](/articles/hpc/hpc-05-分布式训练技术详解/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
-- [07 - UCX 统一通信框架详解](/articles/hpc/hpc-07-UCX统一通信框架详解/)
-- [net-27 - 网内计算技术详解](/articles/networking/net-27-网内计算技术详解/)
+- [上一篇：03 - MPI 分布式编程](@/articles/hpc/hpc-03-MPI分布式编程.md)
+- [下一篇：05 - 分布式训练技术详解](@/articles/hpc/hpc-05-分布式训练技术详解.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)
+- [07 - UCX 统一通信框架详解](@/articles/hpc/hpc-07-UCX统一通信框架详解.md)
+- [net-27 - 网内计算技术详解](@/articles/networking/net-27-网内计算技术详解.md)

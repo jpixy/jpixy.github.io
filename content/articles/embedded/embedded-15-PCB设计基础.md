@@ -1,6 +1,7 @@
 +++
-title = "15.PCB设计基础"
+title = "PCB设计基础"
 date = 2026-01-19
+weight = 15000
 description = "嵌入式工程师必备PCB知识：原理图阅读、PCB结构、Layout要点、电磁兼容与调试"
 [taxonomies]
 tags = ["embedded", "pcb", "hardware", "emc", "layout", "schematic"]
@@ -433,5 +434,5 @@ MCU复位电路设计：
 
 ## 相关文章
 
-- [上一篇：固件OTA升级设计](/articles/embedded/embedded-14-固件OTA升级/)
-- [下一篇：汽车电子与AUTOSAR](/articles/embedded/embedded-16-汽车电子与AUTOSAR/)
+- [上一篇：固件OTA升级设计](@/articles/embedded/embedded-14-固件OTA升级.md)
+- [下一篇：汽车电子与AUTOSAR](@/articles/embedded/embedded-16-汽车电子与AUTOSAR.md)

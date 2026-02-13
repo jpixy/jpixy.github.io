@@ -1,6 +1,7 @@
 +++
-title = "05.eBPF详解"
+title = "eBPF详解"
 slug = "net-eBPF详解"
+weight = 5000
 +++
 
 # eBPF介绍
@@ -139,5 +140,5 @@ sudo ./user_program
 
 ## 相关文章
 
-- [上一篇：DPDK详解](/articles/networking/net-04-DPDK详解/)
-- [下一篇：TCP/IP协议栈基础](/articles/networking/net-06-TCPIP协议栈基础/)
+- [上一篇：DPDK详解](@/articles/networking/net-04-DPDK详解.md)
+- [下一篇：TCP/IP协议栈基础](@/articles/networking/net-06-TCPIP协议栈基础.md)

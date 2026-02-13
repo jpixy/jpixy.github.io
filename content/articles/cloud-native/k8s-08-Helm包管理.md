@@ -1,7 +1,8 @@
 +++
-title = "08.Helm包管理详解"
+title = "Helm包管理详解"
 description = "Helm架构、Chart开发、模板语法、依赖管理、生命周期钩子与生产环境最佳实践"
 date = 2025-01-16
+weight = 10000
 [taxonomies]
 tags = ["kubernetes", "container", "helm", "devops", "package"]
 [extra]
@@ -1222,5 +1223,5 @@ A：`helm rollback` **不是**真正意义上的「恢复到过去的状态」�
 
 ## 相关文章
 
-- [上一篇：Kubernetes运维与故障排查](/articles/cloud-native/k8s-07-运维与故障排查/)
-- [下一篇：Kubernetes架构与关键组件详解](/articles/cloud-native/k8s-09-架构与关键组件详解/)
+- [上一篇：Kubernetes运维与故障排查](@/articles/cloud-native/k8s-07-运维与故障排查.md)
+- [下一篇：Kubernetes架构与关键组件详解](@/articles/cloud-native/k8s-09-架构与关键组件详解.md)

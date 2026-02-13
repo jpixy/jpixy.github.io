@@ -1,7 +1,8 @@
 +++
-title = "01.企业部门职能与协作详解"
+title = "企业部门职能与协作详解"
 description = "通过具体案例解释市场部、销售部、售前、渠道、公关等部门的职责与协作"
 date = 2025-01-16
+weight = 1000
 [taxonomies]
 tags = ["business", "organization", "sales", "marketing", "enterprise"]
 +++
@@ -537,4 +538,4 @@ graph TB
 
 ## 相关文章
 
-- [下一篇：销售获客与客户开发](/articles/business/biz-02-销售获客与客户开发/)
+- [下一篇：销售获客与客户开发](@/articles/business/biz-02-销售获客与客户开发.md)

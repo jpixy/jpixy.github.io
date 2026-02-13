@@ -1,7 +1,8 @@
 +++
-title = "47.Python性能优化-Cython详解"
+title = "Python性能优化-Cython详解"
 slug = "py-48-Python性能优化-Cython详解"
 date = 2026-01-21
+weight = 47000
 description = "深入剖析Cython的使用方法，包括Cython语法、类型声明、与C交互、GIL释放和编译优化"
 [taxonomies]
 tags = ["Python", "Cython", "性能优化", "C扩展", "HFT"]
@@ -536,5 +537,5 @@ print(f"NumPy: {time.time() - start:.3f}s")
 
 ## 相关文章
 
-- [上一篇：算法笔试-高级字符串算法](/articles/python/py-46-算法笔试-高级字符串算法/)
-- [下一篇：Python性能优化-Numba详解](/articles/python/py-48-Python性能优化-Numba详解/)
+- [上一篇：算法笔试-高级字符串算法](@/articles/python/py-46-算法笔试-高级字符串算法.md)
+- [下一篇：Python性能优化-Numba详解](@/articles/python/py-48-Python性能优化-Numba详解.md)

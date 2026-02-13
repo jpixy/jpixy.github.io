@@ -1,6 +1,7 @@
 +++
-title = "18 - 个人自动化量化交易入门：从零到实盘的完整指南"
+title = "个人自动化量化交易入门：从零到实盘的完整指南"
 date = 2025-01-15
+weight = 18000
 description = "个人量化交易全面入门：高频vs中低频定位、交易速度限制、中国大陆vs国际市场对比、开户实操、市场成熟度分析"
 [taxonomies]
 tags = ["quant", "algorithmic-trading", "personal-trading", "china-market", "global-market", "beginner"]
@@ -1041,7 +1042,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：17 - 事件驱动策略](/articles/quant/quant-17-事件驱动策略/)
-- [下一篇：19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)
-- [20 - 极速交易系统详解](/articles/quant/quant-20-极速交易系统详解/)
-- [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
+- [上一篇：17 - 事件驱动策略](@/articles/quant/quant-17-事件驱动策略.md)
+- [下一篇：19 - CTP 期货开户与期货公司选择](@/articles/quant/quant-19-CTP期货开户与期货公司选择.md)
+- [20 - 极速交易系统详解](@/articles/quant/quant-20-极速交易系统详解.md)
+- [21 - 量化开发技术栈选择](@/articles/quant/quant-21-量化开发技术栈选择.md)

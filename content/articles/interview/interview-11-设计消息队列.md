@@ -1,7 +1,8 @@
 +++
-title = "11.如何设计一个消息队列"
+title = "如何设计一个消息队列"
 description = "消息队列架构设计：消息模型、持久化、可靠投递与高可用方案"
 date = 2025-01-16
+weight = 11000
 [taxonomies]
 tags = ["interview", "system-design", "message-queue", "kafka", "distributed"]
 +++
@@ -410,5 +411,5 @@ A：固定延迟级别队列；时间轮算法；或依赖外部定时系统。
 
 ## 相关文章
 
-- [上一篇：如何设计一个分布式缓存系统](/articles/interview/interview-10-设计分布式缓存/)
-- [下一篇：如何设计一个类似Kafka的消息队列](/articles/interview/interview-12-设计Kafka消息队列/)
+- [上一篇：如何设计一个分布式缓存系统](@/articles/interview/interview-10-设计分布式缓存.md)
+- [下一篇：如何设计一个类似Kafka的消息队列](@/articles/interview/interview-12-设计Kafka消息队列.md)

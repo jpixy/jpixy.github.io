@@ -1,7 +1,8 @@
 +++
-title = "03 - vLLM 架构与源码解析"
+title = "vLLM 架构与源码解析"
 description = "深入理解 vLLM 的核心架构、关键组件和实现原理"
 date = 2025-02-06
+weight = 3000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -734,6 +735,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：02 - LLM 推理优化全景](/articles/ai-infra/infra-02-LLM推理优化全景/)
-- [下一篇：04 - TensorRT-LLM 详解](/articles/ai-infra/infra-04-TensorRT-LLM详解/)
-- [25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
+- [上一篇：02 - LLM 推理优化全景](@/articles/ai-infra/ai-infra-02-LLM推理优化全景.md)
+- [下一篇：04 - TensorRT-LLM 详解](@/articles/ai-infra/ai-infra-04-TensorRT-LLM详解.md)
+- [25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)

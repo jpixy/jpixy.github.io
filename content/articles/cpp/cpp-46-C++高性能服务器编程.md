@@ -1,7 +1,8 @@
 +++
-title = "46 - C++ 高性能服务器编程"
+title = "C++ 高性能服务器编程"
 description = "从架构设计到实现细节，构建百万级并发的 C++ 网络服务器"
 date = 2025-02-07
+weight = 46000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -983,7 +984,7 @@ int main() {
 
 ## 相关文章
 
-- [45 - 高性能 RPC 框架设计](/articles/cpp/cpp-45-高性能RPC框架设计/)
-- [17 - Lock-Free 数据结构详解](/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解/)
-- [15 - 自定义内存分配器设计](/articles/cpp/cpp-15-HFT自定义内存分配器设计/)
-- [net-13 - 高性能网络架构](/articles/networking/net-13-高性能网络架构/)
+- [45 - 高性能 RPC 框架设计](@/articles/cpp/cpp-45-高性能RPC框架设计.md)
+- [17 - Lock-Free 数据结构详解](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
+- [15 - 自定义内存分配器设计](@/articles/cpp/cpp-15-HFT自定义内存分配器设计.md)
+- [net-13 - 高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)

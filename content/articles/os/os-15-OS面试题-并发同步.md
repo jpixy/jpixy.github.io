@@ -1,6 +1,7 @@
 +++
-title = "15.OS面试题-并发同步"
+title = "OS面试题-并发同步"
 date = 2026-01-31
+weight = 15000
 description = "操作系统并发同步面试题：死锁、信号量、互斥量、经典同步问题深度解析"
 [taxonomies]
 tags = ["操作系统", "面试", "同步", "死锁", "信号量"]
@@ -885,5 +886,5 @@ bool request_resources(int i, int request[]) {
 
 ## 相关文章
 
-- [上一篇：OS面试题-文件系统](/articles/os/os-14-OS面试题-文件系统/)
-- [下一篇：OS笔试题-文件系统](/articles/os/os-16-OS笔试题-文件系统/)
+- [上一篇：OS面试题-文件系统](@/articles/os/os-14-OS面试题-文件系统.md)
+- [下一篇：OS笔试题-文件系统](@/articles/os/os-16-OS笔试题-文件系统.md)

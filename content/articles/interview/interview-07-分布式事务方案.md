@@ -1,7 +1,8 @@
 +++
-title = "07.分布式事务解决方案"
+title = "分布式事务解决方案"
 description = "分布式事务：2PC、TCC、Saga模式的原理与最佳实践"
 date = 2025-01-16
+weight = 7000
 [taxonomies]
 tags = ["interview", "distributed", "transaction", "microservices", "consistency"]
 +++
@@ -393,5 +394,5 @@ A：首先考虑能否避免分布式事务；其次考虑业务是否接受最�
 
 ## 相关文章
 
-- [上一篇：Kafka为什么这么快](/articles/interview/interview-06-Kafka为什么这么快/)
-- [下一篇：如何设计一个分布式锁](/articles/interview/interview-08-设计分布式锁/)
+- [上一篇：Kafka为什么这么快](@/articles/interview/interview-06-Kafka为什么这么快.md)
+- [下一篇：如何设计一个分布式锁](@/articles/interview/interview-08-设计分布式锁.md)

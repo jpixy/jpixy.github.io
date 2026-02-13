@@ -1,7 +1,8 @@
 +++
-title = "04.HFT Concepts"
+title = "HFT Concepts"
 description = "HFT核心概念速查索引：高频交易系统的关键技术概念详解，包括延迟优化、网络技术、交易系统设计等"
 date = 2026-01-26
+weight = 4000
 draft = false
 [taxonomies]
 tags = ["Glossary", "HFT", "Low Latency", "Trading", "Reference"]
@@ -43,7 +44,7 @@ tags = ["Glossary", "HFT", "Low Latency", "Trading", "Reference"]
 
 **面试要点**：能够分解延迟来源，给出每个环节的典型数值和优化方法。
 
-**详细文章**：[HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)
+**详细文章**：[HFT系统延迟分析方法](@/articles/hft/hft-12-HFT系统延迟分析方法.md)
 
 ---
 
@@ -76,7 +77,7 @@ cyclictest -t1 -p99 -i1000 -a1 -n -m -d0
 histogram -p99 latencies.dat
 ```
 
-**详细文章**：[低延迟系统运维指南(HFT)](/articles/sre/sre-61-低延迟系统运维指南/)
+**详细文章**：[低延迟系统运维指南(HFT)](@/articles/sre/sre-61-HFT基础设施最佳实践.md)
 
 ---
 
@@ -111,7 +112,7 @@ class TradingEngine {
 };
 ```
 
-**详细文章**：[HFT分支预测与热路径优化](/articles/ccpp/cpp-24-HFT分支预测与热路径优化/)
+**详细文章**：[HFT分支预测与热路径优化](@/articles/cpp/cpp-24-模板高级技巧详解.md)
 
 ---
 
@@ -149,7 +150,7 @@ while (true) {
 - 固定频率：防止CPU降频
 - 独占核心：专用于轮询的核心
 
-**详细文章**：[HFT-CPU亲和性与NUMA优化](/articles/ccpp/cpp-26-HFT-CPU亲和性与NUMA优化/)
+**详细文章**：[HFT-CPU亲和性与NUMA优化](@/articles/cpp/cpp-26-Lambda与函数对象详解.md)
 
 ---
 
@@ -181,7 +182,7 @@ while (true) {
 3. **轮询模式**：替代中断
 4. **无锁队列**：rte_ring实现
 
-**详细文章**：[DPDK深度实践](/articles/hft/hft-20-DPDK深度实践/)
+**详细文章**：[DPDK深度实践](@/articles/hft/hft-20-高性能序列化技术.md)
 
 ---
 
@@ -208,7 +209,7 @@ while (true) {
 - 路由优化：最短物理路径
 - 网络设备：低延迟交换机
 
-**详细文章**：[HFT基础设施最佳实践(HFT)](/articles/sre/sre-62-HFT基础设施最佳实践/)
+**详细文章**：[HFT基础设施最佳实践(HFT)](@/articles/sre/sre-62-金融系统合规与审计.md)
 
 ---
 
@@ -252,7 +253,7 @@ void parseAddOrder(const char* buf) {
 }
 ```
 
-**详细文章**：[ITCH与OUCH协议详解](/articles/hft/hft-04-ITCH与OUCH协议详解/)
+**详细文章**：[ITCH与OUCH协议详解](@/articles/hft/hft-04-ITCH与OUCH协议详解.md)
 
 ---
 
@@ -280,7 +281,7 @@ void parseAddOrder(const char* buf) {
 | 成本 | 低 | 高 |
 | 适用 | 一般应用 | HFT/金融 |
 
-**详细文章**：[Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
+**详细文章**：[Linux时间子系统(HFT)](@/articles/linux/linux-10-Linux时间子系统.md)
 
 ---
 
@@ -319,7 +320,7 @@ class OrderBook {
 };
 ```
 
-**详细文章**：[OrderBook实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+**详细文章**：[OrderBook实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)
 
 ---
 
@@ -382,7 +383,7 @@ bool preTradeRiskCheck(const Order& order) {
 - 最大日亏损（kill switch触发点）
 - 价格偏离限制
 
-**详细文章**：[HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)
+**详细文章**：[HFT风控系统设计](@/articles/hft/hft-15-HFT风控系统设计.md)
 
 ---
 
@@ -411,7 +412,7 @@ bool preTradeRiskCheck(const Order& order) {
 - Avellaneda-Stoikov：库存风险管理
 - Guéant-Lehalle-Fernandez-Tapia：最优报价
 
-**详细文章**：[MarketMaking策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
+**详细文章**：[MarketMaking策略原理](@/articles/hft/hft-14-MarketMaking策略原理.md)
 
 ---
 
@@ -452,7 +453,7 @@ std::sort(orders.begin(), orders.end(),
 // 之后处理时分支预测更准确
 ```
 
-**详细文章**：[HFT分支预测与热路径优化](/articles/ccpp/cpp-24-HFT分支预测与热路径优化/)
+**详细文章**：[HFT分支预测与热路径优化](@/articles/cpp/cpp-24-模板高级技巧详解.md)
 
 ---
 
@@ -492,7 +493,7 @@ public:
 };
 ```
 
-**详细文章**：[HFT自定义内存分配器设计](/articles/ccpp/cpp-20-HFT自定义内存分配器设计/)
+**详细文章**：[HFT自定义内存分配器设计](@/articles/cpp/cpp-20-HFT缓存友好数据结构设计.md)
 
 ---
 
@@ -591,7 +592,7 @@ public:
 - `Size`为2的幂：用位与替代取模
 - 正确的内存序：acquire/release语义
 
-**详细文章**：[HFT-Lock-Free数据结构详解](/articles/ccpp/cpp-22-HFT-Lock-Free数据结构详解/)
+**详细文章**：[HFT-Lock-Free数据结构详解](@/articles/cpp/cpp-22-HFT高精度时间测量.md)
 
 ---
 
@@ -647,7 +648,7 @@ flowchart TD
 - 调试困难
 - 人才稀缺且昂贵
 
-**详细文章**：[Solarflare与FPGA网卡](/articles/hft/hft-21-Solarflare与FPGA网卡/)
+**详细文章**：[Solarflare与FPGA网卡](@/articles/hft/hft-21-交易系统容错与恢复.md)
 
 ---
 
@@ -721,7 +722,7 @@ auto cycles = end - start;
 auto ns = cycles * 1e9 / cpu_freq_hz;
 ```
 
-**详细文章**：[HFT高精度时间测量](/articles/ccpp/cpp-27-HFT高精度时间测量/)
+**详细文章**：[HFT高精度时间测量](@/articles/cpp/cpp-27-HFT字符串处理优化.md)
 
 ---
 
@@ -761,17 +762,17 @@ void printStats() {
 
 ## 六、延伸阅读
 
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - Linux系统编程基础
-- [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/) - 网络编程基础
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 算法基础
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - C++编程基础
-- [HFT系统设计面试题](/articles/hft/hft-16-HFT面试题-系统设计/)
-- [HFT面试题-算法与数据结构](/articles/hft/hft-17-HFT面试题-算法与数据结构/)
-- [HFT技术面试技巧](/articles/hft/hft-26-HFT技术面试技巧/)
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - Linux系统编程基础
+- [网络核心概念索引](@/articles/00-glossary/glossary-02-networking-concepts.md) - 网络编程基础
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - 算法基础
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md) - C++编程基础
+- [HFT系统设计面试题](@/articles/hft/hft-16-DPDK深度实践.md)
+- [HFT面试题-算法与数据结构](@/articles/hft/hft-17-Solarflare与FPGA网卡.md)
+- [HFT技术面试技巧](@/articles/hft/hft-26-HFT行为面试指南.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：Algorithm & Data Structure Concepts](/articles/00-glossary/glossary-03-algorithm-concepts/)
-- [下一篇：C++ Concepts](/articles/00-glossary/glossary-05-cpp-concepts/)
+- [上一篇：Algorithm & Data Structure Concepts](@/articles/00-glossary/glossary-03-algorithm-concepts.md)
+- [下一篇：C++ Concepts](@/articles/00-glossary/glossary-05-cpp-concepts.md)

@@ -1,6 +1,7 @@
 +++
-title = "07.TCP协议详解"
+title = "TCP协议详解"
 date = 2026-01-19
+weight = 7000
 description = "TCP深入解析：三次握手四次挥手、滑动窗口、拥塞控制、常见问题与调优"
 [taxonomies]
 tags = ["网络", "TCP", "协议"]
@@ -421,5 +422,5 @@ net.ipv4.tcp_keepalive_probes = 5
 
 ## 相关文章
 
-- [上一篇：TCP/IP协议栈基础](/articles/networking/net-06-TCPIP协议栈基础/)
-- [下一篇：UDP与可靠UDP](/articles/networking/net-08-UDP与可靠UDP/)
+- [上一篇：TCP/IP协议栈基础](@/articles/networking/net-06-TCPIP协议栈基础.md)
+- [下一篇：UDP与可靠UDP](@/articles/networking/net-08-UDP与可靠UDP.md)

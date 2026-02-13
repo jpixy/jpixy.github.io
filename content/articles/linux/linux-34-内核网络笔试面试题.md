@@ -1,6 +1,7 @@
 +++
-title = "34.内核网络笔试面试题"
+title = "内核网络笔试面试题"
 date = 2026-02-02
+weight = 34000
 description = "Linux内核网络：socket、TCP/IP栈、epoll、零拷贝、网络性能优化"
 [taxonomies]
 tags = ["Linux", "内核", "网络", "TCP", "epoll"]
@@ -664,6 +665,6 @@ setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(flag));
 
 ## 相关文章
 
-- [Linux内核网络栈详解](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [HFT面试题-网络优化](/articles/hft/hft-34-HFT面试题-网络优化/)
-- [HFT笔试题-网络编程](/articles/hft/hft-35-HFT笔试题-网络编程/)
+- [Linux内核网络栈详解](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [HFT面试题-网络优化](@/articles/hft/hft-34-HFT面试题-网络优化.md)
+- [HFT笔试题-网络编程](@/articles/hft/hft-35-HFT笔试题-网络编程.md)

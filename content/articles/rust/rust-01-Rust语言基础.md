@@ -1,6 +1,7 @@
 +++
-title = "01.Rust语言基础"
+title = "Rust语言基础"
 date = 2026-01-19
+weight = 1000
 description = "Rust入门：语法基础、数据类型、控制流、函数、模块系统"
 [taxonomies]
 tags = ["Rust", "基础", "入门"]
@@ -447,4 +448,4 @@ Rust的语法设计强调安全和明确，虽然学习曲线陡峭，但能帮�
 
 ## 相关文章
 
-- [下一篇：所有权与借用](/articles/rust/rust-02-所有权与借用/)
+- [下一篇：所有权与借用](@/articles/rust/rust-02-所有权与借用.md)

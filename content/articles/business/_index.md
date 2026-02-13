@@ -1,6 +1,6 @@
 +++
 title = "Business & Sales"
-sort_by = "title"
+sort_by = "weight"
 template = "section.html"
 page_template = "page.html"
 +++

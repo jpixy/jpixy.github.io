@@ -1,6 +1,7 @@
 +++
-title = "09.LangGraph实践指南"
+title = "LangGraph实践指南"
 date = 2025-01-13
+weight = 9000
 description = "通过实战案例学习LangGraph，掌握状态机设计、循环控制、条件分支等核心技能"
 [taxonomies]
 tags = ["ai", "langgraph", "agent", "llm", "workflow", "practice"]
@@ -715,5 +716,5 @@ Agent        → tools + 循环
 
 ## 相关文章
 
-- [上一篇：LangGraph详解](/articles/ai/ai-08-LangGraph详解/)
-- [下一篇：AI Agent智能体架构详解](/articles/ai/ai-10-Agent智能体架构详解/)
+- [上一篇：LangGraph详解](@/articles/ai/ai-08-LangGraph详解.md)
+- [下一篇：AI Agent智能体架构详解](@/articles/ai/ai-10-Agent智能体架构详解.md)

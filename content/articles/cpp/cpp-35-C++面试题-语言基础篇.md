@@ -1,6 +1,7 @@
 +++
-title = "35. Interview - Language Basics"
+title = "Interview - Language Basics"
 date = 2026-01-21
+weight = 35000
 description = "C++语言基础面试题汇总，包括基本类型、引用与指针、const、类型转换、作用域等核心概念"
 [taxonomies]
 tags = ["C++", "面试题", "语言基础"]
@@ -357,5 +358,5 @@ foo(nullptr);  // 明确调用foo(int*)
 
 ## 相关文章
 
-- [上一篇：C++ Interview Questions Summary](/articles/cpp/cpp-34-Cpp面试题汇总/)
-- [下一篇：Interview - Memory and Object Model](/articles/cpp/cpp-36-C++面试题-内存与对象模型/)
+- [上一篇：C++ Interview Questions Summary](@/articles/cpp/cpp-34-Cpp面试题汇总.md)
+- [下一篇：Interview - Memory and Object Model](@/articles/cpp/cpp-36-C++面试题-内存与对象模型.md)

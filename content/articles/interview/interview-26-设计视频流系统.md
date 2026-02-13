@@ -1,7 +1,8 @@
 +++
-title = "26.如何设计一个视频流系统"
+title = "如何设计一个视频流系统"
 description = "视频流系统设计：视频处理、存储分发、播放优化与直播架构"
 date = 2025-01-16
+weight = 26000
 [taxonomies]
 tags = ["interview", "system-design", "video", "streaming", "cdn"]
 +++
@@ -405,5 +406,5 @@ A：CDN多级缓存，边缘节点承载流量；热门内容预热；弹性扩�
 
 ## 相关文章
 
-- [上一篇：如何设计一个通知推送系统](/articles/interview/interview-25-设计通知推送系统/)
-- [下一篇：如何设计一个对象存储系统](/articles/interview/interview-27-设计对象存储系统/)
+- [上一篇：如何设计一个通知推送系统](@/articles/interview/interview-25-设计通知推送系统.md)
+- [下一篇：如何设计一个对象存储系统](@/articles/interview/interview-27-设计对象存储系统.md)

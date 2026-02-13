@@ -1,7 +1,8 @@
 +++
-title = "34 - 从模型诞生到 AI 应用：全链路认知"
+title = "从模型诞生到 AI 应用：全链路认知"
 description = "从「模型是什么」到「AI 应用落地」的端到端认知：模型本质、训练与推理、为何 RAG 更贴近你的理解、原理与业界实践、大模型与传统 ML 的本质区别"
 date = 2026-02-11
+weight = 34000
 draft = false
 [taxonomies]
 tags = ["AI", "大模型", "训练", "推理", "RAG", "Agent", "全链路"]
@@ -13,7 +14,8 @@ toc = true
 
 本文用「从一粒沙子到一颗 CPU」式的思路，从零讲清：**模型到底是什么、如何诞生、如何被训练与利用**，再到**原理上的端到端生命链**与**业界最佳实践中的一条龙实现**，以及**大模型与传统机器学习的本质不同**。目标是让你对「从训练出一个模型到诞生一个 AI 应用」有完整、不跑偏的认知。
 
-> **术语速查**：文中涉及的技术术语均收录在 **[AI & ML 术语表](/articles/00-glossary/glossary-08-ai-ml-concepts/)** 中，点击术语链接即可跳转到详细解释。如果遇到不熟悉的概念，优先查阅术语表。
+> **术语速查**：文中涉及的技术术语均收录在 **[AI & ML 术语表](@/articles/00-glossary/glossary-08-ai-ml-concepts.md)** 中，点击术语链接即可跳转到详细解释。如果遇到不熟悉的概念，优先查阅术语表。  
+> **发音指南**：英文术语的业界标准发音（音标 + 中文近似读音）见 **[AI & ML 术语发音指南](@/articles/00-glossary/glossary-09-ai-pronunciation-guide.md)**。
 
 ### 你的问题与扩展话题——是否都覆盖？
 
@@ -60,11 +62,13 @@ toc = true
 | **为什么需要导出到 ONNX/GGUF？不能直接用 PyTorch 推理吗？** | V (5.7) | 依赖、性能、跨语言、量化对比；何时用哪种格式。 |
 | 业界最佳实践：一条龙如何真实实现？框架、格式(ONNX 等)？ | VI | 训练框架与流程、模型格式表、推理与部署、RAG/Agent 组件、一条龙对应。 |
 | 大模型和传统 ML 本质不同？为什么大模型这么成功？ | VII | 传统 ML vs 大模型对比、本质区别表、为何影响更大。 |
-| **「涌现」是什么原理？为什么模型会出现「没教过」的能力？** | VII (7.5) | 量变到质变、评估阶梯效应、隐式技能叠加；做菜类比。 |
-| **什么时候用 Prompt / 微调 / 从零训练？** | VII (7.5) | 决策流程图：Prompt → RAG → 微调 → 预训练；90% 场景 Prompt+RAG 就够。 |
-| **为什么 LLM 改 prompt 就能做不同任务？传统 ML 却要单独训模型？** | VII (7.5) | In-Context Learning + Few-shot Prompting + 预训练隐式学会所有语言模式。 |
-| **为什么"堆参数堆数据"就能让模型变好？有上限吗？** | VII (7.5) | Scaling Laws 幂律 + 为什么传统 ML 没有这种效果。 |
-| **模型为什么不能全背下来？为什么要泛化？** | VII (7.5) | 过拟合 = 没用 + 梯度下降如何促成「学规律忘噪声」+ 工程保护手段。 |
+| **传统 ML 在 2026 年还有用吗？能替代大模型吗？** | VII (7.5) | ML 至今主力场景、硬件对比、速度/成本差 100 万倍、共存而非取代。 |
+| **传统 ML 一条龙和大模型一条龙有什么区别？** | VII (7.6) | ML 全流程（特征工程→XGBoost→CPU 部署）vs 大模型全流程；完整对比表。 |
+| **「涌现」是什么原理？为什么模型会出现「没教过」的能力？** | VII (7.7) | 量变到质变、评估阶梯效应、隐式技能叠加；做菜类比。 |
+| **什么时候用 Prompt / 微调 / 从零训练？** | VII (7.7) | 决策流程图：Prompt → RAG → 微调 → 预训练；90% 场景 Prompt+RAG 就够。 |
+| **为什么 LLM 改 prompt 就能做不同任务？传统 ML 却要单独训模型？** | VII (7.7) | In-Context Learning + Few-shot Prompting + 预训练隐式学会所有语言模式。 |
+| **为什么"堆参数堆数据"就能让模型变好？有上限吗？** | VII (7.7) | Scaling Laws 幂律 + 为什么传统 ML 没有这种效果。 |
+| **模型为什么不能全背下来？为什么要泛化？** | VII (7.7) | 过拟合 = 没用 + 梯度下降如何促成「学规律忘噪声」+ 工程保护手段。 |
 | 从一粒沙到 CPU：全貌认知 | VIII | 六点总结 + 全链路图。 |
 
 若你**先要建立直觉**，可按 **I → II → III** 顺序读；**对「向量库/推理」纠偏**重点看 **IV**；**看整片森林**看 **V、VIII**；**要落地选型**看 **VI**；**理解为何是今天这样**看 **VII**。
@@ -84,14 +88,14 @@ toc = true
 
 ### 1.1 模型不是「向量数据库」
 
-- **[向量数据库](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-3-vector-database-xiang-liang-shu-ju-ku)**：存的是**一堆已经算好的向量**，检索时用「查询向量」去比对、找[最近邻](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-4-nearest-neighbor-zui-jin-lin-sou-suo)，返回的是**库里已有的某几条记录**。本质是**存储 + 相似度搜索**。
-- **[模型](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-1-model-mo-xing)**：由两部分组成——**[计算图](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-6-computational-graph-ji-suan-tu)**（定义"怎么算"：先乘后加再激活、层与层如何连接）+ **[参数（权重）](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-2-parameters-and-weights-can-shu-yu-quan-zhong)**（决定"具体算什么值"）。给定输入，沿着计算图、用当前权重**算**出输出。本质是**可计算的函数**，不是「一堆现成答案等你来查」。
+- **[向量数据库](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-3-vector-database-xiang-liang-shu-ju-ku)**：存的是**一堆已经算好的向量**，检索时用「查询向量」去比对、找[最近邻](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-4-nearest-neighbor-zui-jin-lin-sou-suo)，返回的是**库里已有的某几条记录**。本质是**存储 + 相似度搜索**。
+- **[模型](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-1-model-mo-xing)**：由两部分组成——**[计算图](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-6-computational-graph-ji-suan-tu)**（定义"怎么算"：先乘后加再激活、层与层如何连接）+ **[参数（权重）](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-2-parameters-and-weights-can-shu-yu-quan-zhong)**（决定"具体算什么值"）。给定输入，沿着计算图、用当前权重**算**出输出。本质是**可计算的函数**，不是「一堆现成答案等你来查」。
 
-> **计算图保存在哪里？** 取决于文件格式：**[ONNX](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-1-onnx-open-neural-network-exchange) 和 TensorRT 引擎里同时保存了计算图和权重**（一个文件即可独立运行）；PyTorch 的 `.pt` / SafeTensors 文件通常只保存权重，计算图定义在 Python 代码里（`nn.Module` 类），需要代码+权重配合才能运行；GGUF 只保存权重+元数据，计算图由 llama.cpp 代码内置；HuggingFace 发布模型时用 `config.json`（描述架构参数：层数、head 数等）+ `model.safetensors`（权重），计算图由 `transformers` 库根据 config 动态构建。
+> **计算图保存在哪里？** 取决于文件格式：**[ONNX](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-1-onnx-open-neural-network-exchange) 和 TensorRT 引擎里同时保存了计算图和权重**（一个文件即可独立运行）；PyTorch 的 `.pt` / SafeTensors 文件通常只保存权重，计算图定义在 Python 代码里（`nn.Module` 类），需要代码+权重配合才能运行；GGUF 只保存权重+元数据，计算图由 llama.cpp 代码内置；HuggingFace 发布模型时用 `config.json`（描述架构参数：层数、head 数等）+ `model.safetensors`（权重），计算图由 `transformers` 库根据 config 动态构建。
 
-所以：**模型 ≠ 向量数据库**。把模型比喻成向量数据库，会让人误以为「推理 = 在模型里查最匹配的向量」，而真实情况是「[推理](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-5-inference-tui-li) = 把输入喂进模型，沿着计算图做一遍[前向计算](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-3-forward-pass-qian-xiang-ji-suan)得到输出」。这种误解会连带导致：以为训练是在「造一堆向量」、以为 ONNX 里装的是「可被查的库」——实际上训练是在**固定计算图的前提下调权重**，ONNX 里装的是**可执行的计算图+权重**。
+所以：**模型 ≠ 向量数据库**。把模型比喻成向量数据库，会让人误以为「推理 = 在模型里查最匹配的向量」，而真实情况是「[推理](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-5-inference-tui-li) = 把输入喂进模型，沿着计算图做一遍[前向计算](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-3-forward-pass-qian-xiang-ji-suan)得到输出」。这种误解会连带导致：以为训练是在「造一堆向量」、以为 ONNX 里装的是「可被查的库」——实际上训练是在**固定计算图的前提下调权重**，ONNX 里装的是**可执行的计算图+权重**。
 
-**为什么容易想到「向量数据库」？** 因为在 [RAG](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-3-rag-jian-suo-zeng-qiang-sheng-cheng) 这类应用里，确实会先「准备一堆向量」、再「用查询向量去比对、找最匹配、再汇总」——整条流程里既有向量又有比对，容易让人以为「模型 = 向量库」。关键区分在于：**向量库是应用里单独存向量、做检索的组件**；**模型是生产向量或生成文本的「函数」**，两者职责不同，不能混为一谈。
+**为什么容易想到「向量数据库」？** 因为在 [RAG](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-3-rag-jian-suo-zeng-qiang-sheng-cheng) 这类应用里，确实会先「准备一堆向量」、再「用查询向量去比对、找最匹配、再汇总」——整条流程里既有向量又有比对，容易让人以为「模型 = 向量库」。关键区分在于：**向量库是应用里单独存向量、做检索的组件**；**模型是生产向量或生成文本的「函数」**，两者职责不同，不能混为一谈。
 
 ### 1.2 模型更合适的比喻
 
@@ -104,7 +108,7 @@ toc = true
 
 **一句话**：模型 = **计算图（结构）+ 权重（参数）= 一个从输入到输出的可计算函数**。训练是在「固定计算图的前提下调权重」；推理是「沿着计算图、用训练好的权重对新输入算一遍」。
 
-**一个极简数值例子（帮助固化直觉）**：假设有一个最简单的线性模型 `y = W·x + b`，输入 `x` 是向量，输出 `y` 是标量；**参数**就是 `W`（矩阵）和 `b`（偏置）。训练就是根据很多个 (x, y) 样本，把 W 和 b 调成合适的值；推理就是**给定新的 x，代入当前的 W 和 b 算一遍得到 y**——没有任何「查表」或「找最像的 x」的步骤，就是纯计算。神经网络无非是很多层这样的运算加非线性（[激活函数](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-4-activation-function-ji-huo-han-shu)）堆叠而成，本质相同：参数固定后，推理 = 代入输入、按层计算、得到输出。
+**一个极简数值例子（帮助固化直觉）**：假设有一个最简单的线性模型 `y = W·x + b`，输入 `x` 是向量，输出 `y` 是标量；**参数**就是 `W`（矩阵）和 `b`（偏置）。训练就是根据很多个 (x, y) 样本，把 W 和 b 调成合适的值；推理就是**给定新的 x，代入当前的 W 和 b 算一遍得到 y**——没有任何「查表」或「找最像的 x」的步骤，就是纯计算。神经网络无非是很多层这样的运算加非线性（[激活函数](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-4-activation-function-ji-huo-han-shu)）堆叠而成，本质相同：参数固定后，推理 = 代入输入、按层计算、得到输出。
 
 ### 1.3 常见疑问澄清
 
@@ -114,7 +118,7 @@ toc = true
 
 **几乎等价**。严格来说，参数 = 权重（W）+ 偏置（b）+ 其他可训练张量。但业界习惯上「参数」和「权重」混用：说「这个模型有 70 亿参数」和「70 亿权重」表达的是同一件事。所以当你看到「模型 = 结构 + 参数」，这里的「参数」就是指**所有可调的数字**。不存在「参数是一回事、权重是另一回事」的情况——它们是同义词。
 
-> 详见术语表：[Parameters and Weights (参数与权重)](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-2-parameters-and-weights-can-shu-yu-quan-zhong)
+> 详见术语表：[Parameters and Weights (参数与权重)](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-2-parameters-and-weights-can-shu-yu-quan-zhong)
 
 #### 「结构」「架构」「计算图」三者什么关系？
 
@@ -124,7 +128,7 @@ toc = true
 |------|------|------|
 | **架构 (Architecture)** | 人设计的「蓝图」——几层、每层什么类型、怎么连接 | 设计图纸 |
 | **结构 (Structure)** | 和架构含义几乎相同，指模型的拓扑形状 | 同上 |
-| **[计算图 (Computational Graph)](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-6-computational-graph-ji-suan-tu)** | 架构的**可执行表示**——把蓝图翻译成具体的运算节点和数据流 | 施工完成后的电路板 |
+| **[计算图 (Computational Graph)](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-6-computational-graph-ji-suan-tu)** | 架构的**可执行表示**——把蓝图翻译成具体的运算节点和数据流 | 施工完成后的电路板 |
 
 你可以理解为：**架构是设计图纸，计算图是施工完成后的电路板**。日常讨论中说「模型结构」「模型架构」「模型的计算图」基本是同一个东西。
 
@@ -349,7 +353,7 @@ Swish(x) = x · sigmoid(x)
 
 **直觉**：SwiGLU 有两条路径——一条用 Swish 做「门控」（决定哪些信息通过），另一条做线性变换，两者**逐元素相乘**。相比 ReLU 的"硬开关"（负数直接归零），SwiGLU 的"软门控"更平滑，让模型学到更细腻的特征。LLaMA、Qwen、Mistral 等当前主流 LLM **全部**使用 SwiGLU。
 
-详见术语表 **[Activation Function](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-4-activation-function-ji-huo-han-shu)**。
+详见术语表 **[Activation Function](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-4-activation-function-ji-huo-han-shu)**。
 
 #### [基础] 为什么模型需要那么多层？一层不够吗？
 
@@ -1707,28 +1711,28 @@ ResNet 中：
 
 ### 2.1 训练需要什么
 
-- **数据**：输入–输出对（监督）或纯输入（无监督/[自监督](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-2-self-supervised-learning-zi-jian-du-xue-xi)）。例如：  
+- **数据**：输入–输出对（监督）或纯输入（无监督/[自监督](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-2-self-supervised-learning-zi-jian-du-xue-xi)）。例如：  
   - 图像分类：(图像, 类别)  
-  - [LLM](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-3-llm-da-yu-yan-mo-xing)：大量文本，用「前文预测下一个 [token](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-1-token-ci-yuan)」自监督。  
-- **模型结构（架构 / [计算图](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-6-computational-graph-ji-suan-tu)）**：层数、每层类型（Linear、Attention、Conv 等）、[激活函数](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-4-activation-function-ji-huo-han-shu)、连接方式等。**结构是人事先设计好的**，训练不改结构，只改**参数**（即权重+偏置，详见 [1.3 常见疑问澄清](#1-3-chang-jian-yi-wen-cheng-qing)）。  
-- **[损失函数](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-5-loss-function-sun-shi-han-shu)**：衡量「模型当前输出」和「期望输出」差多少。训练目标 = 最小化损失。  
-- **[优化器](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-5-optimizer-you-hua-qi)**：在参数空间里怎么「走」才能让损失下降（如 SGD、Adam）。  
-- **算力**：**GPU**/集群，做大量矩阵运算和[梯度](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-2-gradient-ti-du)反传。
+  - [LLM](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-3-llm-da-yu-yan-mo-xing)：大量文本，用「前文预测下一个 [token](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-1-token-ci-yuan)」自监督。  
+- **模型结构（架构 / [计算图](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-6-computational-graph-ji-suan-tu)）**：层数、每层类型（Linear、Attention、Conv 等）、[激活函数](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-4-activation-function-ji-huo-han-shu)、连接方式等。**结构是人事先设计好的**，训练不改结构，只改**参数**（即权重+偏置，详见 [1.3 常见疑问澄清](#1-3-chang-jian-yi-wen-cheng-qing)）。  
+- **[损失函数](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-5-loss-function-sun-shi-han-shu)**：衡量「模型当前输出」和「期望输出」差多少。训练目标 = 最小化损失。  
+- **[优化器](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-5-optimizer-you-hua-qi)**：在参数空间里怎么「走」才能让损失下降（如 SGD、Adam）。  
+- **算力**：**GPU**/集群，做大量矩阵运算和[梯度](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-2-gradient-ti-du)反传。
 
-**「参数」长什么样？** 参数就是模型里所有可调的**数字**，通常组织成**矩阵/张量**。例如一个线性层有「权重矩阵 W」和「偏置 b」；[Transformer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-4-transformer) 里每层有 Q/K/V 的权重、MLP 的权重等。小模型几百万个参数，大模型几百亿到万亿级。训练前后**结构不变**，变的就是这些数字的取值。
+**「参数」长什么样？** 参数就是模型里所有可调的**数字**，通常组织成**矩阵/张量**。例如一个线性层有「权重矩阵 W」和「偏置 b」；[Transformer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-4-transformer) 里每层有 Q/K/V 的权重、MLP 的权重等。小模型几百万个参数，大模型几百亿到万亿级。训练前后**结构不变**，变的就是这些数字的取值。
 
-**参数一开始从哪来？** 训练开始前，参数需要**初始化**——常用随机初始化（如 Xavier、Kaiming），或加载已有[预训练](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-1-pre-training-yu-xun-lian)权重再继续训（[微调](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-2-fine-tuning-wei-diao)）。不会「没有参数」：结构定义了多少个参数，就会先填上初始值，再通过训练一步步更新到收敛。
+**参数一开始从哪来？** 训练开始前，参数需要**初始化**——常用随机初始化（如 Xavier、Kaiming），或加载已有[预训练](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-1-pre-training-yu-xun-lian)权重再继续训（[微调](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-2-fine-tuning-wei-diao)）。不会「没有参数」：结构定义了多少个参数，就会先填上初始值，再通过训练一步步更新到收敛。
 
 ### 2.2 训练在做什么（本质）
 
-1. **[前向传播](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-3-forward-pass-qian-xiang-ji-suan)**：拿**一个 [batch](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-7-batch)** 的数据，用**当前参数**从第一层算到最后一层，得到预测输出。  
-2. **算损失**：用[损失函数](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-5-loss-function-sun-shi-han-shu)比较「模型预测」和「真实标签/目标」，得到一个标量（损失值）。损失越大说明当前参数越差。  
-3. **[反向传播](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-3-backpropagation-fan-xiang-chuan-bo)**：从损失往回算，得到**每个参数**对损失的**[梯度](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-2-gradient-ti-du)**（即：这个参数往哪个方向、改变多少，能让损失下降）。  
-4. **更新参数**：[优化器](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-5-optimizer-you-hua-qi)根据梯度和历史信息，按一定步长更新每个参数。  
-本质上是**[梯度下降](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-4-gradient-descent-ti-du-xia-jiang)**：沿梯度反方向更新参数，使损失一步一步变小，直到收敛。  
-5. 重复 1～4：通常会把整个数据集扫多遍（每遍叫一个 [epoch](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-6-epoch)），每遍里按 batch 一批批算；**一步** = 一个 batch 的前向+反传+更新。训练很多步直到损失足够低或收敛。
+1. **[前向传播](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-3-forward-pass-qian-xiang-ji-suan)**：拿**一个 [batch](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-7-batch-pi-ci)** 的数据，用**当前参数**从第一层算到最后一层，得到预测输出。  
+2. **算损失**：用[损失函数](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-5-loss-function-sun-shi-han-shu)比较「模型预测」和「真实标签/目标」，得到一个标量（损失值）。损失越大说明当前参数越差。  
+3. **[反向传播](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-3-backpropagation-fan-xiang-chuan-bo)**：从损失往回算，得到**每个参数**对损失的**[梯度](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-2-gradient-ti-du)**（即：这个参数往哪个方向、改变多少，能让损失下降）。  
+4. **更新参数**：[优化器](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-5-optimizer-you-hua-qi)根据梯度和历史信息，按一定步长更新每个参数。  
+本质上是**[梯度下降](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-4-gradient-descent-ti-du-xia-jiang)**：沿梯度反方向更新参数，使损失一步一步变小，直到收敛。  
+5. 重复 1～4：通常会把整个数据集扫多遍（每遍叫一个 [epoch](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-6-epoch-lun-ci)），每遍里按 batch 一批批算；**一步** = 一个 batch 的前向+反传+更新。训练很多步直到损失足够低或收敛。
 
-**为什么要用 batch，而不是一次用全量数据？** 全量数据一起算会占满[显存](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-8-vram-xian-cun)/内存，且梯度往往用「一个 batch 的平均」就足够估计方向了；用 batch 还能带来一定的随机性，有利于泛化。所以实际训练是「小步快跑」：每步只看一批样本，更新一次参数，再换下一批。
+**为什么要用 batch，而不是一次用全量数据？** 全量数据一起算会占满[显存](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-8-vram-xian-cun)/内存，且梯度往往用「一个 batch 的平均」就足够估计方向了；用 batch 还能带来一定的随机性，有利于泛化。所以实际训练是「小步快跑」：每步只看一批样本，更新一次参数，再换下一批。
 
 **结果**：你得到的是**一组确定下来的参数**（权重）。这组参数 + 固定的模型结构，就构成了「模型」——一个输入→输出的函数。保存下来就是「模型文件」（如 `.pt`、`.onnx`、`.gguf`），里面主要是参数（和描述结构的元数据），**不是**一堆向量等着被查。
 
@@ -1752,7 +1756,7 @@ ResNet 中：
 
 #### [基础] Token 是什么？为什么不直接按「字」或「词」训练？
 
-文章中反复出现「[token](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-1-token-ci-yuan)」，它是 LLM 处理文本的**最小单位**——但既不是字符，也不是词，而是介于两者之间的**子词片段（subword）**。
+文章中反复出现「[token](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-1-token-ci-yuan)」，它是 LLM 处理文本的**最小单位**——但既不是字符，也不是词，而是介于两者之间的**子词片段（subword）**。
 
 **为什么不按字符训练？**
 - 字符粒度太细：英文 26 个字母 + 标点，每个字母没有语义——模型要花大量算力从字母拼出词、再理解词义。序列极长（一句话 = 几十上百个字符），计算成本高。
@@ -1778,7 +1782,7 @@ ResNet 中：
 
 **核心思想**：高频词（"the"、"你好"）整个成为一个 token；低频/新词被拆成已知的子词片段 → **词表可控 + 无 OOV + 序列长度适中**。这就是为什么 LLM 的输入输出都以 token 为单位，而不是字或词。
 
-详见术语表 **[Token](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-1-token-ci-yuan)** 和 **[Tokenizer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-2-tokenizer-fen-ci-qi)**。
+详见术语表 **[Token](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-1-token-ci-yuan)** 和 **[Tokenizer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-2-tokenizer-fen-ci-qi)**。
 
 #### [基础] 为什么 LLM 的训练目标是「预测下一个 token」？
 
@@ -1922,7 +1926,7 @@ ResNet 中：
 
 ### 3.1 推理在做什么
 
-- **[推理（Inference）](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-5-inference-tui-li)**：拿已经训练好的**固定参数**，对**新的、从未见过的输入**做**一次或多次[前向计算](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-3-forward-pass-qian-xiang-ji-suan)**，得到输出。  
+- **[推理（Inference）](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-5-inference-tui-li)**：拿已经训练好的**固定参数**，对**新的、从未见过的输入**做**一次或多次[前向计算](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-3-forward-pass-qian-xiang-ji-suan)**，得到输出。  
 - **不做**：不更新参数、不查表、不在「模型里找最像的向量」。就是**算**：输入 → 模型(参数) → 输出。
 
 **训练和推理用同一套参数**：训练结束后，参数就**冻结**了；推理时只是**读取**这组参数做前向计算，**不会**再写回或更新。所以「模型文件」本质上就是这组参数的持久化；加载到内存/显存后，推理服务就反复用同一份参数服务无数请求。
@@ -1932,15 +1936,15 @@ ResNet 中：
 | 模型类型 | 输入 | 输出 | 推理在干嘛 |
 |----------|------|------|------------|
 | 图像分类 | 一张图 | 类别 / 概率 | 前向算一遍，取概率最大的那一类 |
-| [LLM](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-3-llm-da-yu-yan-mo-xing) | 当前文本上下文 | 下一个 token 的概率分布 | 前向算一遍得到概率分布，按[采样策略](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-6-sampling-cai-yang-ce-lue)选一个 token 拼到上下文末尾，再做下一次前向……如此[自回归](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-5-autoregressive-zi-hui-gui)循环。生成 N 个 token 就要做 **N 次**前向计算，所以长回答更耗算力、更慢。 |
-| [嵌入模型](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-2-embedding-model-qian-ru-mo-xing) | 一段文本 | 一个[向量](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-1-embedding-qian-ru) | 前向算一遍，取最后一层或某层作为这段文本的「向量表示」；语义相近的文本，向量会接近。常用于检索、聚类。 |
+| [LLM](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-3-llm-da-yu-yan-mo-xing) | 当前文本上下文 | 下一个 token 的概率分布 | 前向算一遍得到概率分布，按[采样策略](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-6-sampling-cai-yang-ce-lue)选一个 token 拼到上下文末尾，再做下一次前向……如此[自回归](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-5-autoregressive-zi-hui-gui)循环。生成 N 个 token 就要做 **N 次**前向计算，所以长回答更耗算力、更慢。 |
+| [嵌入模型](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-2-embedding-model-qian-ru-mo-xing) | 一段文本 | 一个[向量](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-1-embedding-qian-ru) | 前向算一遍，取最后一层或某层作为这段文本的「向量表示」；语义相近的文本，向量会接近。常用于检索、聚类。 |
 | 序列到序列(Seq2Seq) | 源序列 | 目标序列 | 编码器前向 + 解码器自回归 |
 
 共同点：都是**用同一套参数、对输入做数学运算**，得到输出；没有「在模型内部做向量比对」这一步。
 
 ### 3.3 模型文件里有什么、没有什么
 
-- **有**：模型结构描述（[计算图](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-6-computational-graph-ji-suan-tu)）+ 参数（权重）。  
+- **有**：模型结构描述（[计算图](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-6-computational-graph-ji-suan-tu)）+ 参数（权重）。  
 - **没有**：训练数据、向量库、历史查询结果。  
 推理时只依赖「结构 + 参数」；向量库（若用到）是**应用层单独维护**的，不属于模型本身。
 
@@ -1951,7 +1955,7 @@ ResNet 中：
 
 #### [基础] 为什么 LLM 生成文本那么慢？不能一次输出全部吗？
 
-**不能**。LLM 是[自回归](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-5-autoregressive-zi-hui-gui)模型——每次只生成**一个 token**，然后把它拼到输入末尾，再算下一个。就像写作文：每写一个字都要重新通读前文、决定下一个字。
+**不能**。LLM 是[自回归](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-5-autoregressive-zi-hui-gui)模型——每次只生成**一个 token**，然后把它拼到输入末尾，再算下一个。就像写作文：每写一个字都要重新通读前文、决定下一个字。
 
 - 生成 100 个 token → 要做 **100 次前向计算**
 - 生成 1000 个 token → **1000 次**
@@ -2048,17 +2052,17 @@ INT4（4位整数） ：70B × 0.5 byte = 35 GB    ← 激进量化
 ### 4.2 偏差在哪里
 
 - **训练产出的不是向量库**：训练产出的是**模型**（例如嵌入模型），ONNX 是这个模型的格式，不是「存好的一堆向量」。  
-- **推理不是「在 ONNX 里查向量」**：推理是「用 ONNX 模型算输出」；**向量比对**发生在**单独的[向量数据库](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-3-vector-database-xiang-liang-shu-ju-ku)**里（由应用层用 Faiss、Milvus、pgvector 等实现）。  
+- **推理不是「在 ONNX 里查向量」**：推理是「用 ONNX 模型算输出」；**向量比对**发生在**单独的[向量数据库](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-3-vector-database-xiang-liang-shu-ju-ku)**里（由应用层用 Faiss、Milvus、pgvector 等实现）。  
 - **「查最匹配的向量、再汇总」**：这描述的是 **RAG 的检索阶段 + 生成阶段**，不是「模型本身的推理」。
 
 ### 4.3 为什么 RAG 更贴近你的思路
 
-**[RAG](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-3-rag-jian-suo-zeng-qiang-sheng-cheng) 要解决什么问题？** 大模型的知识来自训练数据，有**截止时间**、也**不包含**你的私域文档（公司制度、产品手册等）。RAG 的做法是：不重新训练模型，而是用**检索**把「相关文档」捞出来，和用户问题一起喂给模型，让模型**基于这些文档**生成答案，从而补足「模型不知道」的部分。
+**[RAG](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-3-rag-jian-suo-zeng-qiang-sheng-cheng) 要解决什么问题？** 大模型的知识来自训练数据，有**截止时间**、也**不包含**你的私域文档（公司制度、产品手册等）。RAG 的做法是：不重新训练模型，而是用**检索**把「相关文档」捞出来，和用户问题一起喂给模型，让模型**基于这些文档**生成答案，从而补足「模型不知道」的部分。
 
 在 RAG 里，确实有「向量 + 比对 + 汇总」的完整流程，而且**检索**那部分非常像你脑中的画面：
 
-1. **先有「一堆向量」**：用[嵌入模型](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-2-embedding-model-qian-ru-mo-xing)对文档/[chunk](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-5-chunk-wen-dang-fen-kuai) 算向量，存进向量数据库。  
-2. **查询时**：用同一个嵌入模型把查询变成查询向量；在向量数据库里做[最近邻搜索](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-4-nearest-neighbor-zui-jin-lin-sou-suo)，找到最匹配的文档/chunk。  
+1. **先有「一堆向量」**：用[嵌入模型](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-2-embedding-model-qian-ru-mo-xing)对文档/[chunk](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-5-chunk-wen-dang-fen-kuai) 算向量，存进向量数据库。  
+2. **查询时**：用同一个嵌入模型把查询变成查询向量；在向量数据库里做[最近邻搜索](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-4-nearest-neighbor-zui-jin-lin-sou-suo)，找到最匹配的文档/chunk。  
 3. **汇总**：把检索到的文档和查询一起喂给 LLM，让 LLM 生成最终答案。
 
 所以：  
@@ -2093,7 +2097,7 @@ flowchart LR
 - **查询阶段**：用嵌入模型得到查询向量 → 在**向量库**里比对找最匹配 → 把「问题+检索结果」交给 LLM **汇总**成答案。  
 这样整条链就和你「向量+比对+汇总」的思路一致了，只是**模型**负责「生产向量」和「生成答案」，**向量库**负责「存向量+相似度搜索」。
 
-**「汇总」时 LLM 的输入长什么样？** 典型做法是把「系统提示 + 检索到的文档片段 + 用户问题」拼成一段 [prompt](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-1-prompt-ti-shi)，例如：「你是一个助手。请根据以下文档回答问题。文档：…… 问题：公司年假制度？」LLM 的推理就是根据这段 prompt 自回归生成答案；模型**不会**主动去「查」文档，文档是应用层**事先**塞进 prompt 的。
+**「汇总」时 LLM 的输入长什么样？** 典型做法是把「系统提示 + 检索到的文档片段 + 用户问题」拼成一段 [prompt](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-1-prompt-ti-shi)，例如：「你是一个助手。请根据以下文档回答问题。文档：…… 问题：公司年假制度？」LLM 的推理就是根据这段 prompt 自回归生成答案；模型**不会**主动去「查」文档，文档是应用层**事先**塞进 prompt 的。
 
 
 ### 4.4 深度追问
@@ -2130,34 +2134,34 @@ RAG 的检索靠**向量相似度**——但模型怎么知道"公司年假制�
 
 ## V. End-to-End Lifecycle: From Data to AI Agent
 
-下面用「原理层面」把从数据到 [Agent](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-4-ai-agent) 应用串成一条线，不涉及具体框架名（具体框架在第六节）。
+下面用「原理层面」把从数据到 [Agent](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-4-ai-agent) 应用串成一条线，不涉及具体框架名（具体框架在第六节）。
 
 ### 5.1 阶段 0：数据与目标
 
 - **定目标**：要解决什么问题？分类、生成、检索、决策、对话等。目标决定用什么数据、什么损失、什么架构。  
 - **准备数据**：监督学习需要 (输入, 标签)；无监督/自监督只需大量输入（如文本、图像）。强化学习则需要与环境交互得到 (状态, 动作, 奖励) 等。  
-- **大模型常见做法**：海量文本，不标标签，用「给定前文预测下一个 token」作为[自监督](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-2-self-supervised-learning-zi-jian-du-xue-xi)目标；模型在预测下一个词的过程中学会语法、事实和推理。
+- **大模型常见做法**：海量文本，不标标签，用「给定前文预测下一个 token」作为[自监督](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-2-self-supervised-learning-zi-jian-du-xue-xi)目标；模型在预测下一个词的过程中学会语法、事实和推理。
 
 **目标与数据如何互相约束？** 目标定了「要解决什么」（如分类、生成、检索），就决定了需要什么样的数据（有标签 / 无标签 / 多模态）和什么样的损失函数；数据又反过来约束你能训多大的模型、用什么架构。例如要做「多语言对话」，就需要多语种文本或对话数据；要做「图像分类」，就需要 (图像, 类别) 对。
 
 ### 5.2 阶段 1：模型架构与训练
 
-- **设计或选择架构**：如 [Transformer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-4-transformer)（LLM、BERT）、CNN（ResNet）、或嵌入模型（sentence-transformers 类）。架构决定「输入怎么一层层变形成输出」。  
-- **[训练](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-1-training-xun-lian)**：数据按 batch 喂入，反复做「前向 → 损失 → 反传 → 更新参数」，直到在验证集上表现稳定。  
+- **设计或选择架构**：如 [Transformer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-4-transformer)（LLM、BERT）、CNN（ResNet）、或嵌入模型（sentence-transformers 类）。架构决定「输入怎么一层层变形成输出」。  
+- **[训练](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-1-training-xun-lian)**：数据按 batch 喂入，反复做「前向 → 损失 → 反传 → 更新参数」，直到在验证集上表现稳定。  
 - **产出**：**一组收敛后的参数**（即模型）。可保存为框架原生格式（如 `.pt`），便于后续导出或继续训练。
 
 ### 5.3 阶段 2：导出与部署格式（原理）
 
-- 训练时用的是**框架原生**格式（如 [PyTorch](/articles/00-glossary/glossary-08-ai-ml-concepts/#6-1-pytorch) 的 `.pt`），依赖该框架才能加载和跑。  
-- **为什么需要「导出」这一步？** 训练框架体积大、依赖多，且主要面向 Python；而推理往往需要**轻量、跨语言（C++/Java/Go）、跨设备（边缘/手机）**，或交给**专用[推理引擎](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-6-inference-engine-tui-li-yin-qing)**做算子融合、量化等优化。导出成 ONNX/TensorRT/GGUF 等格式后，就可以用更小的运行时或专用引擎来跑，延迟和吞吐更容易优化。  
-  - **[ONNX](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-1-onnx-open-neural-network-exchange)**：通用计算图格式，很多框架都能导出、很多引擎都能跑；适合「一次导出、多处部署」。  
-  - **[TensorRT](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-2-tensorrt) / OpenVINO / [GGUF](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-3-gguf-and-ggml) 等**：针对特定硬件或场景做进一步优化（量化、算子融合等）。  
+- 训练时用的是**框架原生**格式（如 [PyTorch](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#6-1-pytorch) 的 `.pt`），依赖该框架才能加载和跑。  
+- **为什么需要「导出」这一步？** 训练框架体积大、依赖多，且主要面向 Python；而推理往往需要**轻量、跨语言（C++/Java/Go）、跨设备（边缘/手机）**，或交给**专用[推理引擎](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-6-inference-engine-tui-li-yin-qing)**做算子融合、量化等优化。导出成 ONNX/TensorRT/GGUF 等格式后，就可以用更小的运行时或专用引擎来跑，延迟和吞吐更容易优化。  
+  - **[ONNX](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-1-onnx-open-neural-network-exchange)**：通用计算图格式，很多框架都能导出、很多引擎都能跑；适合「一次导出、多处部署」。  
+  - **[TensorRT](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-2-tensorrt) / OpenVINO / [GGUF](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-3-gguf-and-ggml) 等**：针对特定硬件或场景做进一步优化（量化、算子融合等）。  
 - 无论哪种格式，文件里都是「**计算图 + 参数**」，**不包含**训练数据、向量库或业务知识库。
 
 ### 5.4 阶段 3：推理服务
 
-- **加载**：把模型文件（结构+参数）读入内存或[显存](/articles/00-glossary/glossary-08-ai-ml-concepts/#2-8-vram-xian-cun)，初始化成可执行的「函数」。  
-- **请求处理**：收到输入后做**[前向计算](/articles/00-glossary/glossary-08-ai-ml-concepts/#1-3-forward-pass-qian-xiang-ji-suan)**，返回输出（如类别、文本、向量）。  
+- **加载**：把模型文件（结构+参数）读入内存或[显存](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#2-8-vram-xian-cun)，初始化成可执行的「函数」。  
+- **请求处理**：收到输入后做**[前向计算](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#1-3-forward-pass-qian-xiang-ji-suan)**，返回输出（如类别、文本、向量）。  
 - **工程层面**：可做批处理（多个请求一起算）、流式（边算边返回）、多副本与负载均衡，以满足延迟和吞吐需求。
 
 ### 5.5 阶段 4：应用层组合（RAG / Agent 等）
@@ -2165,10 +2169,10 @@ RAG 的检索靠**向量相似度**——但模型怎么知道"公司年假制�
 - **RAG**：  
   - **离线**：用嵌入模型把业务文档/chunk 转成向量，写入向量数据库。  
   - **在线**：用户提问 → 嵌入模型得到查询向量 → 在向量库中做最近邻检索 → 把「问题 + 检索到的文档」作为上下文交给 LLM → LLM 生成最终答案。  
-- **[Agent](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-4-ai-agent)**：  
+- **[Agent](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-4-ai-agent)**：  
   - 以 LLM 为「大脑」：规划步骤、决定调用哪个工具、根据工具结果再生成或再决策。  
   - **工具**：搜索、代码执行、查库、调 API；RAG 可视为一种「检索工具」。  
-  - **编排**：用 [LangChain、LangGraph](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-7-langchain-langgraph-llamaindex) 等把「LLM + 工具 + 人机交互」串成完整流程。  
+  - **编排**：用 [LangChain、LangGraph](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-7-langchain-langgraph-llamaindex) 等把「LLM + 工具 + 人机交互」串成完整流程。  
 
 所以：**从模型到 Agent** = 一个或多个**推理服务（模型）** + **应用逻辑**（编排、工具、向量库、API）。
 
@@ -2201,7 +2205,7 @@ flowchart TB
 
 #### [进阶] 为什么 Transformer 取代了 RNN/LSTM？Attention（注意力）是什么？为什么重要？
 
-文中反复提到「[Transformer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-4-transformer)」，它在 2017 年之后几乎统一了 NLP 乃至 CV 领域。为什么？
+文中反复提到「[Transformer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-4-transformer)」，它在 2017 年之后几乎统一了 NLP 乃至 CV 领域。为什么？
 
 **RNN/LSTM 的根本问题——串行 + 长程遗忘**：
 
@@ -2243,7 +2247,7 @@ Transformer 处理同一句话：
 
 **一句话**：RNN 像排队传话——队伍太长信息就变了；Transformer 像开圆桌会议——每个人都能同时听到所有人说的话。正是这种**全局并行交互**的能力，让 Transformer 可以处理超长文本、训练超大模型、成为 GPT/LLaMA/BERT 等所有当代明星模型的基础架构。
 
-详见术语表 **[Transformer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-4-transformer)** 和 **[Attention Mechanism](/articles/00-glossary/glossary-08-ai-ml-concepts/#10-5-attention-mechanism-zhu-yi-li-ji-zhi)**。
+详见术语表 **[Transformer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-4-transformer)** 和 **[Attention Mechanism](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#10-5-attention-mechanism-zhu-yi-li-ji-zhi)**。
 
 #### [进阶] 为什么需要导出到 ONNX/GGUF？不能直接用 PyTorch 推理吗？
 
@@ -2275,10 +2279,60 @@ Transformer 处理同一句话：
 
 | 环节 | 常见做法 |
 |------|----------|
-| **框架** | **[PyTorch](/articles/00-glossary/glossary-08-ai-ml-concepts/#6-1-pytorch)** 为主（研究 + 工业），TensorFlow 仍有一定存量；JAX 在研究和部分大厂。 |
-| **大模型训练** | 单卡放不下模型和 batch，所以用**[分布式训练](/articles/00-glossary/glossary-08-ai-ml-concepts/#6-2-distributed-training-fen-bu-shi-xun-lian)**：多卡/多机，**数据并行**、**张量并行**、**流水线并行**；常用 Megatron-LM、DeepSpeed、FSDP、Colossal-AI 等。 |
-| **数据** | 数据清洗、去重、格式化；[tokenizer](/articles/00-glossary/glossary-08-ai-ml-concepts/#3-2-tokenizer-fen-ci-qi)（如 [HuggingFace](/articles/00-glossary/glossary-08-ai-ml-concepts/#6-3-huggingface-hf) tokenizers、sentencepiece）；数据加载与预处理（DataLoader、流式）。 |
+| **框架** | 见下方详细对比。**[PyTorch](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#6-1-pytorch)** 是当前压倒性主流，但不是唯一选择。 |
+| **大模型训练** | 单卡放不下模型和 batch，所以用**[分布式训练](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#6-2-distributed-training-fen-bu-shi-xun-lian)**：多卡/多机，**数据并行**、**张量并行**、**流水线并行**；常用 Megatron-LM、DeepSpeed、FSDP、Colossal-AI 等。 |
+| **数据** | 数据清洗、去重、格式化；[tokenizer](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#3-2-tokenizer-fen-ci-qi)（如 [HuggingFace](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#6-3-huggingface-hf) tokenizers、sentencepiece）；数据加载与预处理（DataLoader、流式）。 |
 | **保存** | PyTorch：`torch.save()` → `.pt` / `.pth`；HF：`model.save_pretrained()` → 目录（config + 分片权重）。 |
+
+**训练框架详细对比——不止 PyTorch 一个选择：**
+
+框架是"定义和执行计算图的工具"，不是计算图本身。同样的 Transformer 架构，用 PyTorch、JAX、TensorFlow 都能定义出**相同的计算图**——区别在于执行效率、编程体验、生态和硬件绑定。
+
+| 框架 | 市场份额 | 代表模型/用户 | 核心优势 | 核心劣势 | 适用场景 |
+|------|---------|-------------|---------|---------|---------|
+| **PyTorch** | ~80%（研究+工业） | LLaMA、Qwen、Mistral、DeepSeek、几乎所有开源 LLM | 动态图直觉好、调试方便、生态最大（HuggingFace 全面支持）、社区活跃 | 原生分布式训练需搭配第三方库（DeepSpeed/FSDP）；编译优化起步较晚（torch.compile） | 绝大多数场景的首选 |
+| **JAX** | ~10%（Google 系） | **Gemini、PaLM、Gemma**（Google）；DeepMind 全部研究 | 函数式编程 + XLA 编译 → TPU 上性能极强；`jit` + `vmap` + `pmap` 原生支持向量化和并行 | 学习曲线陡峭（纯函数式）；生态较小；调试困难（编译后错误难定位） | Google 内部 / TPU 集群 / 需要极致编译优化的研究 |
+| **TensorFlow** | ~8%（存量+部署） | 早期 Google 模型；大量生产系统存量 | TFLite（移动端/边缘端部署仍是主流）；TF Serving 成熟；Keras 入门友好 | 研究领域已基本被 PyTorch 取代；TF2 的 Eager Mode 性能不如 PyTorch；API 历史包袱重 | 存量系统维护 / 移动端部署（TFLite） |
+| **PaddlePaddle（飞桨）** | 中国市场 ~15% | 百度文心一言、百度搜索 | 配合国产芯片（昆仑芯、昇腾）；中文文档和社区完善；国产化替代需求 | 全球生态小；英文社区几乎无；开源模型支持少 | 国产化 / 中国政企客户 / 百度生态 |
+| **MindSpore** | 华为生态 | 盘古大模型 | 深度适配华为昇腾 NPU；支持自动并行 | 绑定华为硬件；社区极小；开源模型支持极少 | 华为生态 / 昇腾 NPU 集群 |
+
+**为什么 PyTorch 成了压倒性主流？**
+
+```
+2016-2018：TensorFlow 占据主流（Google 推动，工业界先行）
+           PyTorch 在学术界崛起（动态图 → 调试方便 → 研究者喜爱）
+
+2019-2020：学术论文绝大多数转向 PyTorch
+           → 新模型/新方法首先用 PyTorch 实现
+           → 工业界想用新模型 → 也开始切 PyTorch
+
+2021-至今：HuggingFace 生态全面绑定 PyTorch
+           → 几乎所有开源 LLM 都是 PyTorch 格式
+           → 工业界追随开源 → PyTorch 份额持续扩大
+           → Google 内部不用 PyTorch，但也没推广 TF，而是切到了 JAX
+
+结果：PyTorch ≈ 事实标准（de facto standard）
+     不是因为它技术上绝对最优，而是因为生态最大、社区最活跃
+     → 类似 Linux 之于服务器、JavaScript 之于前端
+```
+
+**框架的选择是否限制了模型能力？——不限制。**
+
+```
+框架决定的：怎么定义计算图、怎么执行、在什么硬件上跑
+框架不决定的：计算图本身（架构）、参数数量、模型能力
+
+同一个 LLaMA 架构：
+  用 PyTorch 训练 → 得到 .pt 文件
+  用 JAX 训练    → 得到 JAX checkpoint
+  → 模型能力完全一样（同样的架构+同样的数据+同样的训练策略）
+
+框架的区别只体现在：
+  - 训练速度（JAX 在 TPU 上可能更快）
+  - 显存效率（不同框架的内存管理不同）
+  - 开发效率（PyTorch 调试更方便）
+  - 生态支持（PyTorch 的开源模型最多）
+```
 
 ### 6.2 模型格式：训练产物与推理用格式
 
@@ -2286,10 +2340,10 @@ Transformer 处理同一句话：
 |------|------------|------|
 | **.pt / .pth** | PyTorch 原生 | 训练时保存、可在 PyTorch 里直接加载；含结构+参数或仅参数。 |
 | **HF 目录** | HuggingFace | `config.json` + `pytorch_model.bin`（或 safetensors）；便于版本管理与分享。 |
-| **[ONNX](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-1-onnx-open-neural-network-exchange)** | 导出 | 跨框架、跨硬件的计算图格式；PyTorch / TF 都可导出；推理用 ONNX Runtime、TensorRT 等。 |
-| **[TensorRT](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-2-tensorrt)** | 导出/优化 | NVIDIA 推理引擎的格式，对 GPU 做大量优化。 |
-| **[GGUF / GGML](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-3-gguf-and-ggml)** | 量化与推理 | llama.cpp 生态；便于 CPU/边缘推理、量化（INT8/INT4）。 |
-| **[SafeTensors](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-4-safetensors)** | 存权重 | 只存权重、安全格式；常与 HF 或自定义结构一起用。 |
+| **[ONNX](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-1-onnx-open-neural-network-exchange)** | 导出 | 跨框架、跨硬件的计算图格式；PyTorch / TF 都可导出；推理用 ONNX Runtime、TensorRT 等。 |
+| **[TensorRT](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-2-tensorrt)** | 导出/优化 | NVIDIA 推理引擎的格式，对 GPU 做大量优化。 |
+| **[GGUF / GGML](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-3-gguf-and-ggml)** | 量化与推理 | llama.cpp 生态；便于 CPU/边缘推理、量化（INT8/INT4）。 |
+| **[SafeTensors](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-4-safetensors)** | 存权重 | 只存权重、安全格式；常与 HF 或自定义结构一起用。 |
 
 **重要**：这些格式存的都是「**模型（结构+参数）**」，没有「向量库」；向量库由应用用专门组件单独建和查。
 
@@ -2305,7 +2359,7 @@ Transformer 处理同一句话：
 | 层级 | 常见技术 |
 |------|----------|
 | **Python 推理** | PyTorch 原生、ONNX Runtime、HuggingFace `transformers` + `pipeline`。适合实验、小流量或嵌入模型。 |
-| **高性能 / 生产** | [vLLM、TGI、TensorRT-LLM、llama.cpp](/articles/00-glossary/glossary-08-ai-ml-concepts/#5-6-inference-engine-tui-li-yin-qing)、OpenLLM 等；解决高吞吐、连续批处理（continuous batching）、显存优化（如 PagedAttention）、流式输出等问题。 |
+| **高性能 / 生产** | [vLLM、TGI、TensorRT-LLM、llama.cpp](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#5-6-inference-engine-tui-li-yin-qing)、OpenLLM 等；解决高吞吐、连续批处理（continuous batching）、显存优化（如 PagedAttention）、流式输出等问题。 |
 | **服务化** | 封装成 HTTP/gRPC API；K8s、负载均衡、扩缩容。 |
 | **嵌入模型** | sentence-transformers、ONNX 导出后在应用里调；向量写入向量 DB。 |
 
@@ -2313,28 +2367,422 @@ Transformer 处理同一句话：
 
 | 组件 | 常见技术 |
 |------|----------|
-| **[向量库](/articles/00-glossary/glossary-08-ai-ml-concepts/#4-3-vector-database-xiang-liang-shu-ju-ku)** | Faiss、Milvus、Qdrant、pgvector、Elasticsearch（kNN）、Pinecone 等。 |
-| **编排/框架** | [LangChain、LangGraph、LlamaIndex](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-7-langchain-langgraph-llamaindex)、Semantic Kernel、CrewAI 等。 |
-| **[Agent](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-4-ai-agent)** | 上述框架 + 工具调用（[function calling](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-5-function-calling-han-shu-diao-yong)）、[ReAct](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-6-react)、规划与反思。 |
+| **[向量库](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#4-3-vector-database-xiang-liang-shu-ju-ku)** | Faiss、Milvus、Qdrant、pgvector、Elasticsearch（kNN）、Pinecone 等。 |
+| **编排/框架** | [LangChain、LangGraph、LlamaIndex](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-7-langchain-langgraph-llamaindex)、Semantic Kernel、CrewAI 等。 |
+| **[Agent](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-4-ai-agent)** | 上述框架 + 工具调用（[function calling](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-5-function-calling-han-shu-diao-yong)）、[ReAct](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-6-react)、规划与反思。 |
 
-### 6.5 一条龙在业界的大致对应
+### 6.5 两条龙：业界的两条完全不同的路线
+
+**你选哪条，取决于你是"造模型的人"还是"用模型的人"**。这是当前 AI 行业最根本的分工——90% 以上的公司走路线 B，只有少数大厂走路线 A。
+
+---
+
+#### 路线 A：从头训练/微调模型（大厂/模型公司）
+
+适用于：OpenAI、Meta、Google、阿里、百度、DeepSeek 等**自己训练基座模型**的公司，或需要在特定领域**深度微调**的团队。
+
+```mermaid
+flowchart TD
+    A1["📦 原始数据<br/>网页爬取 / 书籍 / 代码 / 对话"]
+    A2["🧹 数据清洗与预处理<br/>去重 / 过滤 / 质量评分 / 脱敏"]
+    A3["✂️ Tokenizer 训练<br/>BPE / WordPiece / Unigram<br/>构建词表（32K~128K token）"]
+    A4["🏗️ 架构设计<br/>Transformer 变体 / 层数 / 隐藏维度<br/>Attention 类型 / 激活函数"]
+    A5["🔧 分布式训练<br/>PyTorch + DeepSpeed/Megatron/FSDP<br/>数据并行 + 张量并行 + 流水线并行<br/>混合精度 BF16 / FP16"]
+    A6["📊 训练监控<br/>Loss 曲线 / 学习率调度<br/>Checkpoint 保存 / 评估"]
+    A7["🎓 对齐训练<br/>SFT（指令微调）<br/>RLHF / DPO（人类偏好对齐）"]
+    A8["💾 模型保存<br/>.pt / SafeTensors / HF 目录"]
+    A9["⚡ 模型导出与优化<br/>ONNX / TensorRT / GGUF<br/>量化 INT8/INT4 / 剪枝"]
+    A10["🚀 推理服务部署<br/>vLLM / TGI / TensorRT-LLM<br/>llama.cpp / Triton Server"]
+    A11["🌐 开放 API<br/>OpenAI 兼容接口<br/>供应用层调用"]
+
+    A1 --> A2 --> A3 --> A4 --> A5 --> A6 --> A7 --> A8 --> A9 --> A10 --> A11
+```
+
+**路线 A 各环节详解**：
+
+**第 1 步：数据收集与清洗（耗时最长、最脏的活）**
+
+| 环节 | 具体工作 | 工具/方法 | 挑战 |
+|------|---------|---------|------|
+| **数据来源** | 网页爬取（Common Crawl）、书籍、论文、代码（GitHub）、对话数据 | Scrapy、CCNet、数据供应商 | 版权、隐私、质量参差 |
+| **去重** | 精确去重（hash）+ 模糊去重（MinHash/SimHash） | datasketch、deduplicate-text-datasets | 训练数据几 TB，去重计算量巨大 |
+| **质量过滤** | 语言检测、色情/暴力过滤、低质量过滤（困惑度打分） | fastText lang-id、自定义分类器 | 过滤太严 → 数据不够；过滤太松 → 垃圾数据 |
+| **数据配比** | 中文/英文/代码/数学的比例调整 | 人工决策 + 实验 | 配比直接影响模型各方面能力 |
 
 ```
-数据(原始/标注) 
-  → 预处理 + Tokenizer
-  → PyTorch/其它框架 训练（单机/分布式）
-  → 保存：.pt / HF 目录 / SafeTensors
-  → 导出：ONNX / TensorRT / GGUF（按部署需求）
-  → 推理服务：vLLM / TGI / ONNX Runtime / llama.cpp 等
-  → 应用：LangChain/LangGraph + 向量库(Faiss/Milvus/…) + LLM API
-  → 最终形态：RAG 问答、Agent、助手等
+数据量级参考：
+  LLaMA 1 (2023)：1.4 万亿 token
+  LLaMA 2 (2023)：2.0 万亿 token
+  LLaMA 3 (2024)：15 万亿 token
+  Qwen 2.5 (2024)：18 万亿 token
+
+  1 万亿 token ≈ 几百 TB 原始文本（清洗后）
+  数据清洗团队通常 5~20 人，清洗周期 3~6 个月
 ```
 
-**一个具体的 RAG 一条龙示例（从文档到用户拿到答案）**：  
-1. **建库**：把公司文档切 chunk → 用 HuggingFace/sentence-transformers 的嵌入模型算向量 → 写入 Milvus/Faiss。  
-2. **服务**：LLM 用 vLLM 或 OpenAI 兼容 API 部署；嵌入模型可原样用 Python 或导出 ONNX 在应用里调。  
-3. **请求**：用户问「公司年假制度？」→ 嵌入模型得到查询向量 → 在向量库检索 top-k 文档 → 把「问题+文档」拼成 prompt 给 LLM → LLM 生成「根据制度文档，年假为……」  
-整条链里：**模型**只负责「算向量」和「生成文本」；**向量库**负责「存+查」；**应用代码**负责编排。
+**第 2 步：Tokenizer 训练**
+
+```
+为什么 Tokenizer 也要"训练"？
+
+  Tokenizer 的词表决定了模型"认识"哪些基本单元
+  不同语言/领域需要不同的词表
+
+  例：
+    通用英文 Tokenizer："hello" → [hello]（1 个 token）
+    但遇到 "中文"       → [中, 文] 或 [ä¸, ­æ, ...]（多个 token）
+    → 中文被拆得太碎 → 效率低、效果差
+
+  所以训练自己的 Tokenizer：
+    1. 在目标数据上运行 BPE 算法
+    2. 自动学习最频繁的子词组合
+    3. 中英文混合数据 → 词表同时包含常见中文字/词和英文子词
+    4. 词表大小通常 32K~128K
+
+  工具：sentencepiece、HuggingFace tokenizers
+  耗时：几小时到一天（在清洗好的数据上）
+```
+
+**第 3 步：架构设计（决定模型的"骨架"）**
+
+| 决策 | 选项 | 当前主流 | 影响 |
+|------|------|---------|------|
+| **基础架构** | Encoder-only / Decoder-only / Encoder-Decoder | **Decoder-only**（GPT 系列、LLaMA、Qwen） | 决定模型的生成方式 |
+| **层数** | 24~80+ | 32（7B）、40（13B）、80（70B） | 越深 → 抽象能力越强 |
+| **隐藏维度** | 2048~8192+ | 4096（7B）、5120（13B）、8192（70B） | 越宽 → 每层容量越大 |
+| **注意力** | MHA / MQA / GQA | **GQA**（LLaMA 3、Qwen 2.5） | GQA 在推理速度和效果间折中 |
+| **FFN 激活** | ReLU / GELU / SwiGLU | **SwiGLU**（几乎所有新模型） | SwiGLU 效果更好 |
+| **归一化** | LayerNorm / RMSNorm | **RMSNorm + Pre-Norm** | 训练更稳定 |
+| **位置编码** | 绝对 / RoPE / ALiBi | **RoPE**（几乎所有新模型） | 支持长上下文外推 |
+| **词表大小** | 32K~128K+ | 32K（LLaMA 2）、128K（LLaMA 3） | 大词表 → 多语言更好 |
+
+```
+一个具体的架构配置示例（LLaMA 3 8B）：
+
+  {
+    "架构": "Decoder-only Transformer",
+    "层数": 32,
+    "隐藏维度": 4096,
+    "注意力头数": 32（GQA，KV 头数 8）,
+    "FFN 中间维度": 14336,
+    "FFN 激活": "SwiGLU",
+    "归一化": "RMSNorm (Pre-Norm)",
+    "位置编码": "RoPE (θ=500000)",
+    "词表大小": 128256,
+    "最大上下文": 8192 token,
+    "总参数量": 约 80 亿
+  }
+```
+
+**第 4 步：分布式训练（最烧钱的环节）**
+
+```
+为什么需要分布式？
+
+  LLaMA 3 8B 参数量 = 80 亿
+  FP32 训练显存需求：
+    参数：80 亿 × 4 字节 = 32 GB
+    梯度：32 GB
+    优化器状态（Adam m+v）：64 GB
+    激活值：~50-100 GB（取决于 batch size 和序列长度）
+    → 总计 ~180-230 GB → 单张 A100 (80GB) 放不下
+
+  解决方案——多卡/多机并行：
+    数据并行：每张卡放完整模型，不同卡处理不同数据
+    张量并行：一层的矩阵切成多份，分给多张卡
+    流水线并行：不同层放在不同卡上
+    ZeRO：把优化器状态/梯度/参数分片到多张卡
+
+  实际训练规模：
+    LLaMA 3 8B：~数百张 A100，训练几周
+    LLaMA 3 70B：~数千张 A100，训练几个月
+    GPT-4：推测 ~25000 张 A100，训练数月
+```
+
+| 训练框架 | 特点 | 典型用户 |
+|---------|------|---------|
+| **PyTorch + FSDP** | 原生支持、简单易用 | 中小规模训练 |
+| **DeepSpeed (ZeRO)** | 显存效率极高、ZeRO-3 | 微软、开源社区 |
+| **Megatron-LM** | 张量并行+流水线并行、性能最优 | NVIDIA、大规模预训练 |
+| **Megatron-DeepSpeed** | 两者结合 | LLaMA 3、大规模预训练 |
+| **Colossal-AI** | 自动并行策略 | 学术界、中小团队 |
+
+**第 5 步：对齐训练（让模型"听话"）**
+
+```
+预训练完的模型（Base Model）：
+  只会"续写文本"——给它一段话，它接着写
+  不会"回答问题"——给它一个问题，它可能继续编问题而不是回答
+
+对齐训练让模型从"续写机器"变成"问答助手"：
+
+  阶段 1：SFT（Supervised Fine-Tuning，指令微调）
+    数据：几万~几十万条 (指令, 回答) 对
+    效果：模型学会"看到问题就回答"的格式
+    工具：PyTorch + HuggingFace TRL 库
+
+  阶段 2：RLHF / DPO（人类偏好对齐）
+    数据：人类标注的"好回答 vs 差回答"偏好对
+    效果：模型学会生成人类更喜欢的回答风格
+    工具：TRL + PPO/DPO 算法
+```
+
+**第 6 步：模型导出与优化（从训练到部署的桥梁）**
+
+| 导出格式 | 用途 | 优化手段 |
+|---------|------|---------|
+| **HF 目录** (SafeTensors + config.json) | 开源分发、HuggingFace Hub | 原始精度，便于微调 |
+| **GGUF** | llama.cpp 本地推理 | 内置量化（Q4_K_M 等），CPU 可跑 |
+| **ONNX** | 跨平台推理 | 图优化 + 算子融合 |
+| **TensorRT 引擎** | NVIDIA GPU 极致推理 | 层融合 + Kernel 自动调优 + FP16/INT8 |
+
+**第 7 步：推理服务部署**
+
+| 引擎 | 核心技术 | 适用场景 |
+|------|---------|---------|
+| **vLLM** | PagedAttention + Continuous Batching | 高吞吐 LLM 服务（最流行） |
+| **TGI** | HuggingFace 官方，支持 Flash Attention | HuggingFace 生态 |
+| **TensorRT-LLM** | TensorRT + 定制 Kernel | NVIDIA GPU 极致性能 |
+| **llama.cpp** | 纯 C++ + 量化 | 本地/边缘/CPU 推理 |
+| **Triton Inference Server** | 多模型管理 + 动态 Batching | 生产级多模型服务 |
+
+---
+
+#### 路线 B：直接用现成模型 + RAG/Agent（绝大多数公司）
+
+适用于：**90% 以上的 AI 应用开发者**——不训练模型，直接用现成的基座大模型，搭配自己的知识库和业务逻辑。**你可能一辈子都不需要走路线 A**。
+
+```mermaid
+flowchart TD
+    B1["📄 公司文档 / 业务数据<br/>PDF / Word / 网页 / 数据库"]
+    B2["✂️ 文档切分<br/>按段落/语义切成 chunk<br/>每段 256~1024 token"]
+    B3["🔢 向量化<br/>用现成嵌入模型<br/>BGE / text-embedding-ada-002<br/>（不训练，拿来就用）"]
+    B4["🗄️ 写入向量库<br/>Milvus / Faiss / Qdrant / pgvector"]
+    B5["🤖 选择 LLM<br/>调 API: OpenAI / Claude / Qwen<br/>或本地部署: vLLM + 开源模型<br/>（不训练，拿来就用）"]
+    B6["⚙️ 应用编排<br/>LangChain / LangGraph / LlamaIndex<br/>定义 RAG 流程 / Agent 工具"]
+    B7["👤 用户提问"]
+    B8["🔍 向量检索<br/>问题 → 向量 → top-k 相关文档"]
+    B9["📝 拼接 Prompt<br/>系统提示 + 检索到的文档 + 用户问题"]
+    B10["💬 LLM 生成回答<br/>基于检索到的文档生成<br/>有据可查，减少幻觉"]
+
+    B1 --> B2 --> B3 --> B4
+    B5 --> B6
+    B4 --> B6
+    B7 --> B8 --> B9 --> B10
+    B6 -.->|编排| B8
+    B6 -.->|编排| B9
+    B6 -.->|编排| B10
+```
+
+**路线 B 各环节详解**：
+
+**第 1 步：文档准备与切分（你的核心数据工作）**
+
+```
+输入：公司的各种文档
+  ├── 制度文档（PDF）：年假制度、报销流程、安全规范...
+  ├── 技术文档（Markdown/HTML）：API 文档、架构设计...
+  ├── 知识库（Word/Confluence）：FAQ、案例库、培训材料...
+  └── 结构化数据（数据库）：产品目录、价格表...
+
+切分策略（Chunking）：
+  方法 1：固定长度切分（每 512 token 一段，重叠 50 token）
+    简单粗暴，适合初期快速搭建
+
+  方法 2：语义切分（按段落/章节/句子边界切）
+    效果更好，但需要更多工程工作
+
+  方法 3：递归切分（先按大标题 → 再按小标题 → 再按段落）
+    LangChain 的 RecursiveCharacterTextSplitter 就是这个思路
+
+切分注意事项：
+  太短（<100 token）→ 上下文不完整，检索到也没用
+  太长（>1024 token）→ 噪音太多，会稀释关键信息
+  重叠（overlap）→ 避免关键信息被切断在两段交界处
+```
+
+**第 2 步：向量化（用现成嵌入模型，不训练）**
+
+```
+你做的事情：
+  chunk 文本 → 调用嵌入模型 API → 得到向量 → 存入向量库
+
+嵌入模型选择（都是现成的，拿来就用）：
+
+  商业 API：
+    OpenAI text-embedding-3-small：$0.02/1M token，1536 维
+    OpenAI text-embedding-3-large：$0.13/1M token，3072 维
+
+  开源模型（可本地部署）：
+    BGE-large-zh-v1.5：中文最佳之一，1024 维
+    bge-m3：多语言，支持稀疏+稠密混合检索
+    e5-mistral-7b-instruct：基于 LLM 的嵌入模型
+
+代码示例：
+  from sentence_transformers import SentenceTransformer
+  model = SentenceTransformer("BAAI/bge-large-zh-v1.5")  # 下载即用
+  vectors = model.encode(chunks)  # chunks = 切好的文档段落列表
+  # → vectors 是一个 (N, 1024) 的矩阵，N = chunk 数量
+```
+
+**第 3 步：向量库（存储和检索）**
+
+| 向量库 | 类型 | 适用规模 | 特点 |
+|-------|------|---------|------|
+| **Faiss** | 库（内嵌到代码中） | 几百万条以下 | Meta 开源，速度极快，适合原型和小规模 |
+| **Milvus** | 独立服务 | 几百万~几十亿条 | 分布式，生产级，支持混合检索 |
+| **Qdrant** | 独立服务 | 几百万~几亿条 | Rust 写的，API 友好，支持过滤 |
+| **pgvector** | PostgreSQL 扩展 | 几百万条以下 | 如果已有 PG，加个扩展就行 |
+| **Elasticsearch kNN** | ES 扩展 | 大规模 | 如果已有 ES，加 kNN 插件即可 |
+| **Pinecone** | 云服务 | 任意规模 | 全托管，不用运维，按用量付费 |
+
+```
+选型决策：
+  刚开始做原型？ → Faiss（几行代码搞定）
+  已有 PostgreSQL？ → pgvector（加个扩展）
+  生产环境 + 大规模？ → Milvus 或 Qdrant
+  不想运维？ → Pinecone（云服务）
+```
+
+**第 4 步：选择 LLM（不训练，直接用）**
+
+```
+方案 1：调 API（最简单）
+  provider = "openai"  # 或 "anthropic" / "qwen" / "deepseek"
+  response = client.chat.completions.create(
+      model="gpt-4o",
+      messages=[{"role": "user", "content": prompt}]
+  )
+  优点：零运维、随时可用
+  缺点：数据外传（隐私问题）、按量付费、依赖第三方
+
+方案 2：本地部署开源模型（数据不出门）
+  # 用 vLLM 部署 Qwen 2.5 7B
+  vllm serve Qwen/Qwen2.5-7B-Instruct --port 8000
+  # 然后用 OpenAI 兼容 API 调用
+  client = OpenAI(base_url="http://localhost:8000/v1")
+  优点：数据不外传、无 API 费用、可定制
+  缺点：需要 GPU（7B 模型需要 ~16GB 显存）
+
+方案 3：本地 CPU 推理（无 GPU 也能跑）
+  # 用 llama.cpp 的量化模型
+  ./llama-server -m qwen2.5-7b-instruct-q4_k_m.gguf --port 8080
+  优点：消费级电脑就能跑、无需 GPU
+  缺点：速度慢（几 token/秒）、只适合个人使用或演示
+```
+
+**第 5 步：应用编排（你的核心代码工作）**
+
+```
+一个完整的 RAG 应用代码骨架（Python + LangChain）：
+
+  # 1. 加载向量库
+  vectorstore = Milvus(embedding_function=embeddings, collection_name="docs")
+
+  # 2. 创建检索器
+  retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+
+  # 3. 定义 Prompt 模板
+  prompt = ChatPromptTemplate.from_messages([
+      ("system", "你是公司知识助手。根据以下文档回答问题，如果文档中没有相关信息，请说明。"),
+      ("human", "相关文档：\n{context}\n\n问题：{question}")
+  ])
+
+  # 4. 组装链
+  chain = (
+      {"context": retriever, "question": RunnablePassthrough()}
+      | prompt
+      | llm
+      | StrOutputParser()
+  )
+
+  # 5. 调用
+  answer = chain.invoke("公司年假制度是什么？")
+```
+
+**第 6 步：用户请求的完整流转**
+
+```
+用户提问：「研发部门的加班补贴政策是什么？」
+
+  ① 嵌入模型把问题变成向量 [0.12, -0.34, 0.56, ...]
+
+  ② 向量库中检索 top-5 最相关的 chunk：
+     - chunk_17: "研发部门加班补贴标准为：工作日加班按 1.5 倍..."（相似度 0.92）
+     - chunk_23: "加班审批流程：需提前在 OA 系统中..."（相似度 0.85）
+     - chunk_41: "研发中心绩效考核办法..."（相似度 0.71）
+     - ...
+
+  ③ 拼接成 Prompt：
+     """
+     系统：你是公司知识助手。根据以下文档回答问题。
+     
+     相关文档：
+     [chunk_17 内容]
+     [chunk_23 内容]
+     [chunk_41 内容]
+     
+     问题：研发部门的加班补贴政策是什么？
+     """
+
+  ④ LLM 生成回答：
+     "根据公司制度文档，研发部门的加班补贴政策如下：
+      1. 工作日加班按 1.5 倍基本工资计算...
+      2. 加班需提前在 OA 系统中提交审批...
+      3. ..."
+
+  ⑤ 返回给用户（可附带引用来源）
+```
+
+---
+
+**两条路线的全面对比**：
+
+| 维度 | 路线 A（训练模型） | 路线 B（用现成模型+RAG） |
+|------|------------------|----------------------|
+| **谁做** | 大厂、模型公司、AI 基础设施团队 | 绝大多数应用开发者 |
+| **需要训练吗** | 是（预训练或微调） | **不需要**——直接用现成基座模型 |
+| **核心团队** | 算法研究员 + 训练工程师 + 数据工程师 | 后端工程师 + 产品经理 |
+| **核心工作** | 数据清洗、分布式训练、模型优化 | 知识库建设、应用编排、Prompt 工程 |
+| **硬件成本** | 几百~几万张 GPU | 几张 GPU 或零（调 API） |
+| **资金成本** | 几百万~几亿美元 | 几千~几万美元/月 |
+| **技术门槛** | 极高（分布式训练、CUDA 优化、对齐训练） | 中等（Python + 框架 + 向量检索） |
+| **周期** | 几个月~一年（预训练）；几周（微调） | 几天~几周（RAG 应用） |
+| **模型能力** | 可以定制任何能力 | 受限于基座模型的能力上限 |
+| **知识更新** | 需要重训/微调 | **实时**——更新向量库即可 |
+| **适用场景** | 通用基座模型、特定领域深度定制 | 企业知识问答、客服、助手、搜索增强 |
+
+**什么时候需要从路线 B 升级到路线 A？**
+
+| 场景 | 路线 B（RAG）够用吗？ | 需要路线 A（微调）吗？ |
+|------|-------------------|-------------------|
+| 公司内部知识问答 | ✅ RAG 完全够用 | 不需要 |
+| 客服对话机器人 | ✅ RAG + Prompt 够用 | 不需要 |
+| 代码助手 | ✅ 基座模型自带代码能力 + RAG 补充 | 不需要 |
+| 特定格式/风格输出 | ⚠ Prompt 可能不够 | 可能需要 SFT 微调 |
+| 专业领域（医疗/法律） | ⚠ 基座模型可能不懂专业术语 | 可能需要领域微调 |
+| 多语言/小语种 | ⚠ 基座模型可能不支持 | 需要微调或换模型 |
+| 做自己的基座模型 | ❌ 不适用 | 需要完整预训练（路线 A） |
+
+**路线 B 的决策流程**：
+
+```
+遇到一个 AI 需求：
+  ↓
+尝试 Prompt Engineering（零成本）→ 效果够好 → 上线 ✓
+  ↓ 不够好
+加入 RAG（检索+知识库）→ 效果够好 → 上线 ✓
+  ↓ 不够好
+换更强的基座模型（GPT-4o / Claude 3.5）→ 效果够好 → 上线 ✓
+  ↓ 不够好
+加入 Agent + 工具调用 → 效果够好 → 上线 ✓
+  ↓ 还是不够好
+→ 考虑 LoRA 微调（路线 A 的轻量版）
+  ↓ 还是不够好
+→ 考虑全量微调或预训练（路线 A 完整版）
+
+90% 的需求在前 4 步就解决了
+```
 
 ---
 
@@ -2345,17 +2793,17 @@ Transformer 处理同一句话：
 ### 7.1 传统机器学习（约 2012 年前后到 Transformer 前）
 
 - **任务与模型一一对应**：一个模型通常只做一类任务（如一种分类、一种回归）；换任务要重新设计特征或换模型。  
-- **强依赖[特征工程](/articles/00-glossary/glossary-08-ai-ml-concepts/#9-1-feature-engineering-te-zheng-gong-cheng)**：人设计特征，模型只学「特征→标签」的映射；天花板受限于特征质量。例如做点击率预估，要人工构造「用户过去 7 天点击次数」「物品类别」「时间戳是否周末」等特征，再喂给 [LR](/articles/00-glossary/glossary-08-ai-ml-concepts/#9-2-lr-xian-xing-mo-xing)、[GBDT](/articles/00-glossary/glossary-08-ai-ml-concepts/#9-3-gbdt-ti-du-ti-sheng-shu) 等；特征设计不好，模型上限就低。  
+- **强依赖[特征工程](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#9-1-feature-engineering-te-zheng-gong-cheng)**：人设计特征，模型只学「特征→标签」的映射；天花板受限于特征质量。例如做点击率预估，要人工构造「用户过去 7 天点击次数」「物品类别」「时间戳是否周末」等特征，再喂给 [LR](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#9-2-lr-xian-xing-mo-xing)、[GBDT](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#9-3-gbdt-ti-du-ti-sheng-shu) 等；特征设计不好，模型上限就低。  
 - **数据规模与模型规模**：数据量和参数量相对有限；泛化主要在同一分布内。  
 - **应用方式**：多为「单点能力」——一个接口一个能力（如情感分类、点击率预估、推荐排序、风控评分），每个场景单独收集数据、训模型、上线接口，难以自然组合成「通用助手」。
 
 ### 7.2 大模型 / 今日 AI（Transformer + 预训练 + 缩放）
 
-- **[预训练](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-1-pre-training-yu-xun-lian) + 泛化**：在海量文本（或多模态）上做自监督预训练，得到一个**通用表示与推理能力**的模型；再通过 [prompt](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-1-prompt-ti-shi) 或[微调](/articles/00-glossary/glossary-08-ai-ml-concepts/#7-2-fine-tuning-wei-diao)适配多种任务。**一个模型，多任务、多语言、多场景**。  
+- **[预训练](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-1-pre-training-yu-xun-lian) + 泛化**：在海量文本（或多模态）上做自监督预训练，得到一个**通用表示与推理能力**的模型；再通过 [prompt](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-1-prompt-ti-shi) 或[微调](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#7-2-fine-tuning-wei-diao)适配多种任务。**一个模型，多任务、多语言、多场景**。  
 - **弱化特征工程**：端到端学习表示；人主要提供「提示」或少量样本，而不是手造特征。  
 - **提示 vs 微调**：**提示**是只改输入文本，**不更新**模型参数，适合快速试任务；**微调**是继续用任务数据更新参数，效果往往更好但需要数据和算力。  
-- **[Scaling Laws（规模定律）](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-3-scaling-laws-gui-mo-ding-lu)**：大量实验表明，随着**数据量、参数量、算力**同时增大，模型在各类任务上的表现会**持续、可预测地提升**，没有很快碰到天花板。这给了「做大模型」明确回报，推动业界不断堆规模。  
-- **[涌现（Emergence）](/articles/00-glossary/glossary-08-ai-ml-concepts/#8-4-emergence-yong-xian)**：在达到一定规模后，模型会突然出现训练目标里没有显式要求的**新能力**，例如：零样本/少样本泛化、多步推理、按指令执行、使用工具等。传统小模型很少看到这种「跨任务、跨语言」的涌现。  
+- **[Scaling Laws（规模定律）](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-3-scaling-laws-gui-mo-ding-lu)**：大量实验表明，随着**数据量、参数量、算力**同时增大，模型在各类任务上的表现会**持续、可预测地提升**，没有很快碰到天花板。这给了「做大模型」明确回报，推动业界不断堆规模。  
+- **[涌现（Emergence）](@/articles/00-glossary/glossary-08-ai-ml-concepts.md#8-4-emergence-yong-xian)**：在达到一定规模后，模型会突然出现训练目标里没有显式要求的**新能力**，例如：零样本/少样本泛化、多步推理、按指令执行、使用工具等。传统小模型很少看到这种「跨任务、跨语言」的涌现。  
 - **交互形态**：以**对话/助手**形式存在，可串联检索、代码、API，形成 Agent，更贴近「一个系统」而非「一个接口」。
 
 ### 7.3 本质区别（简要）
@@ -2377,8 +2825,289 @@ Transformer 处理同一句话：
 
 传统 ML 没有消失，仍在推荐、风控、时序等场景发挥重要作用；但「以 LLM 为中心的 AI 应用」之所以影响大，是因为它改变了**谁可以用 AI、怎么用、能做成什么形态**。
 
+### 7.5 传统 ML 在 2026 年还有用吗？——不只有用，某些场景大模型根本替代不了
 
-### 7.5 深度追问
+> **深入阅读**：传统 ML 从零到产品的完整一条龙（数据、特征工程、模型、训练、评估、部署、监控、工业案例）见独立文章 **[ai-36（传统机器学习：从零到产品全链路）](@/articles/ai/ai-36-传统机器学习从零到产品全链路.md)**。
+
+**一句话结论：ML 和 LLM 解决的是完全不同的问题。LLM 取代 ML 就像飞机取代汽车——看起来更高级，但你不会开飞机去楼下超市买菜。**
+
+**传统 ML 至今仍是主力的领域（2026 年现状）**：
+
+| 领域 | 每天请求量 | 延迟要求 | 用 LLM？ | 用什么 ML？ |
+|------|----------|---------|---------|-----------|
+| **广告排序**（Google/Meta/字节） | 几百亿次 | < 10ms | ❌ 太慢太贵 | DeepFM、DIN、GBDT |
+| **推荐系统**（抖音/淘宝/Netflix） | 几十亿次 | < 50ms | ❌ 太慢太贵 | Wide&Deep、双塔模型 |
+| **风控/反欺诈**（银行/支付宝） | 几亿次 | < 5ms | ❌ 太慢 | XGBoost、LightGBM |
+| **量化交易**（对冲基金） | 几百万次 | < 1μs | ❌ 差 6 个数量级 | LR、GBDT、简单 NN |
+| **搜索排序**（第一阶段粗排） | 几十亿次 | < 5ms | ❌ 成本不可接受 | GBDT + 简单 NN |
+| **工业质检**（工厂产线） | 连续实时 | < 100ms | ❌ 无需语言能力 | 小型 CNN / SVM |
+| **时序预测**（天气/电力/库存） | — | — | ❌ 结构化数据 | ARIMA、Prophet、LightGBM |
+
+**为什么这些场景不用 LLM？**
+
+```
+ML 推理：
+  输入：一行结构化特征（用户ID、商品ID、历史行为...）→ 100 个数字
+  模型：XGBoost（几百棵树，几 MB）
+  输出：一个概率（0.73 = "73% 可能点击"）
+  耗时：~1 微秒
+  成本：CPU 即可，每次 < 0.00001 分
+
+LLM 推理：
+  输入：一段文本 prompt
+  模型：GPT-4（几百 GB，需要多张 A100）
+  输出：一段文本
+  耗时：~1-10 秒
+  成本：每次 ~0.01-0.1 元
+
+  差距：速度差 100 万倍，成本差 1 万倍
+  → 广告系统每天几百亿次请求 × 0.01 元/次 = 每天几亿元
+  → 不可能用 LLM
+```
+
+**ML vs LLM 的硬件需求对比**：
+
+| 维度 | 传统 ML | LLM |
+|------|--------|-----|
+| **训练硬件** | 笔记本 CPU 就够（XGBoost） | 几百~几万张 A100 GPU |
+| **训练时间** | 几分钟~几小时 | 几周~几个月 |
+| **训练成本** | 几乎为零~几百美元 | 几百万~几亿美元 |
+| **推理硬件** | CPU 即可 | 至少一张 GPU（或调 API） |
+| **推理延迟** | 微秒~毫秒级 | 秒级 |
+| **模型大小** | 几 KB ~ 几百 MB | 几 GB ~ 几百 GB |
+| **单次推理成本** | < 0.00001 元 | 0.01 ~ 0.1 元 |
+
+**ML 能再次崛起取代大模型吗？——不会取代，但会长期共存。**
+
+```
+ML 擅长的：                         LLM 擅长的：
+  结构化/表格数据                      非结构化数据（文本、对话）
+  低延迟决策（微秒级）                  语言理解和生成
+  高吞吐（每秒百万次）                  多任务通用能力
+  可解释性强                           创造性任务
+  资源消耗极低                         推理和规划
+
+  └── 互补，不是替代 ──┘
+
+类比：
+  ML ≈ 汽车（日常通勤、高频短途、便宜高效）
+  LLM ≈ 飞机（跨城长途、复杂任务、昂贵但能到达汽车到不了的地方）
+  → 飞机没有取代汽车，汽车也没有被淘汰
+  → 你不会开飞机去楼下买菜，也不会开车去跨洋
+```
+
+**未来趋势——ML 和 LLM 的融合**：
+
+```
+当前已经在发生的融合：
+
+  1. LLM 辅助特征工程
+     传统做法：人手动设计特征
+     新做法：让 LLM 分析数据，自动建议特征 → 再喂给 XGBoost
+
+  2. LLM 做粗理解，ML 做精决策
+     搜索系统：LLM 理解用户意图 → ML 模型精排结果
+     广告系统：LLM 理解广告文案 → ML 模型预测点击率
+
+  3. LLM 生成训练数据
+     用 LLM 给无标签数据打标签 → 训练小型 ML 模型部署到线上
+     → 兼顾 LLM 的理解能力和 ML 的推理效率
+```
+
+### 7.6 传统 ML 一条龙：和大模型一条龙的对比
+
+上面 6.5 节展示了大模型的两条路线。这里展示**传统 ML 的一条龙**——和大模型形成鲜明对比。
+
+```mermaid
+flowchart TD
+    M1["📋 业务需求定义<br/>预测什么？分类/回归/排序？<br/>延迟/吞吐要求？"]
+    M2["📊 数据收集<br/>数据库查询 / 日志采集 / 埋点<br/>通常是结构化表格数据"]
+    M3["🧹 数据清洗<br/>缺失值处理 / 异常值检测<br/>数据对齐 / 采样"]
+    M4["🔧 特征工程<br/>（ML 最核心的工作）<br/>人工设计特征 / 特征交叉<br/>特征选择 / 特征编码"]
+    M5["📐 模型选择与训练<br/>XGBoost / LightGBM / LR<br/>在笔记本或单台服务器上训练<br/>几分钟~几小时"]
+    M6["📏 模型评估<br/>交叉验证 / AUC / F1<br/>A/B 测试"]
+    M7["🚀 部署上线<br/>模型序列化 → 加载到线上服务<br/>CPU 即可，延迟 < 10ms"]
+    M8["📈 监控与迭代<br/>特征漂移检测 / 定期重训<br/>新特征开发"]
+
+    M1 --> M2 --> M3 --> M4 --> M5 --> M6 --> M7 --> M8
+    M8 -->|迭代| M4
+```
+
+**ML 一条龙各环节详解**：
+
+**第 1 步：业务需求定义**
+
+```
+ML 项目的第一步是精确定义"预测什么"：
+
+  广告排序：给定（用户, 广告, 上下文）→ 预测点击概率
+  风控：给定（交易特征）→ 预测是否欺诈（二分类）
+  推荐：给定（用户, 候选商品列表）→ 给每个商品打分排序
+  量化交易：给定（行情特征）→ 预测涨跌概率
+  流失预警：给定（用户行为特征）→ 预测是否流失
+
+  注意：ML 的每个任务都需要一个明确的"标签"（y）
+  → 你必须能回答"什么叫对，什么叫错"
+  → LLM 不需要——它的标签就是"下一个 token"
+```
+
+**第 2 步：数据收集（结构化表格数据为主）**
+
+```
+ML 的数据通常长这样（一行 = 一个样本，一列 = 一个特征）：
+
+  user_id | age | gender | last_7d_clicks | item_category | is_weekend | label
+  --------|-----|--------|----------------|---------------|------------|------
+  u001    | 25  | M      | 12             | 电子产品       | 1          | 1（点击）
+  u002    | 38  | F      | 3              | 服装           | 0          | 0（未点击）
+  u003    | 22  | M      | 45             | 游戏           | 1          | 1（点击）
+
+  数据来源：
+    - 数据库（MySQL/Hive）查询历史数据
+    - 埋点日志（用户行为日志）
+    - 第三方数据（天气、经济指标等）
+
+  数据量：通常几万~几亿行，每行几十~几百列
+  对比 LLM：LLM 的训练数据是文本（万亿 token），ML 是表格（行×列）
+```
+
+**第 3 步：特征工程（ML 最核心、最耗时的环节——大模型没有这一步）**
+
+```
+特征工程 = 人类根据业务理解，手动构造对预测有帮助的数值特征
+
+  原始数据：用户 u001 在过去 30 天的购买记录
+  
+  人工构造的特征：
+    f1: 过去 7 天购买次数 = 3
+    f2: 过去 30 天购买金额 = 1580 元
+    f3: 最近一次购买距今天数 = 2
+    f4: 购买品类数 = 4
+    f5: 平均客单价 = 527 元
+    f6: 周末购买占比 = 0.67
+    f7: 是否买过同类商品 = 1
+    f8: 用户注册天数 = 365
+    ...可能几十到几百个特征
+
+  这就是"特征工程"——ML 工程师 70% 的时间花在这里
+  特征设计好坏直接决定模型效果的天花板
+  → 这也是 ML 最大的痛点：太依赖人的领域经验
+
+  对比 LLM：
+    LLM 不需要特征工程——直接吃原始文本
+    "端到端学习"= 模型自己从原始数据中提取特征
+    → 这是 LLM 相对 ML 最大的进步之一
+```
+
+**第 4 步：模型选择与训练（几分钟搞定）**
+
+| 模型 | 适用场景 | 训练时间 | 特点 |
+|------|---------|---------|------|
+| **LR（逻辑回归）** | 线性关系、可解释性要求高 | 秒级 | 最简单，基线模型 |
+| **XGBoost** | 表格数据万能选手 | 分钟级 | Kaggle 竞赛冠军常客 |
+| **LightGBM** | 大数据量表格数据 | 分钟级 | 比 XGBoost 更快，内存更少 |
+| **CatBoost** | 有大量类别特征 | 分钟级 | 自动处理类别特征 |
+| **Random Forest** | 不想调参、快速基线 | 分钟级 | 稳定，不容易过拟合 |
+| **DeepFM / DIN** | 推荐系统、广告排序 | 小时级 | 自动学习特征交叉 |
+
+```python
+# XGBoost 训练——就这么简单（对比 LLM 训练要几千行代码+几千张 GPU）
+
+import xgboost as xgb
+from sklearn.model_selection import train_test_split
+
+# 加载数据
+X_train, X_test, y_train, y_test = train_test_split(features, labels)
+
+# 训练（笔记本 CPU 上几分钟）
+model = xgb.XGBClassifier(
+    n_estimators=500,
+    max_depth=6,
+    learning_rate=0.1,
+    objective='binary:logistic'
+)
+model.fit(X_train, y_train, eval_set=[(X_test, y_test)])
+
+# 预测（微秒级）
+probabilities = model.predict_proba(X_test)
+```
+
+**第 5 步：模型评估**
+
+```
+ML 的评估比 LLM 严格得多——因为有明确的标签
+
+  标准流程：
+    1. 划分训练集/验证集/测试集（如 70/15/15）
+    2. 在验证集上调超参数（如树的深度、学习率）
+    3. 在测试集上评估最终性能
+    4. 使用适合业务的指标（AUC、F1、精确率、召回率等）
+
+  A/B 测试：
+    上线前：在真实流量中分一小部分给新模型
+    对比新模型 vs 老模型的业务指标（点击率、转化率、收入）
+    → 这是 ML 上线的"金标准"，LLM 应用通常缺少这么严格的评估
+```
+
+**第 6 步：部署上线（极其轻量）**
+
+```
+ML 模型部署 vs LLM 部署：
+
+  ML 模型：
+    模型大小：几 MB ~ 几百 MB
+    运行环境：CPU（无需 GPU）
+    延迟：< 10ms（通常 < 1ms）
+    服务框架：Flask / FastAPI / 直接嵌入业务代码
+    内存占用：几十 MB
+    → 一台普通服务器能承载每秒几万次请求
+
+  LLM 模型：
+    模型大小：几 GB ~ 几百 GB
+    运行环境：GPU（必须）
+    延迟：1-10 秒
+    服务框架：vLLM / TGI / TensorRT-LLM
+    显存占用：几 GB ~ 几百 GB
+    → 一张 A100 承载每秒几十次请求
+```
+
+**第 7 步：监控与迭代（持续优化）**
+
+```
+ML 上线不是结束——特征分布会漂移，模型会老化
+
+  监控内容：
+    - 特征分布是否变化（Data Drift）
+    - 预测分布是否变化（Concept Drift）
+    - 业务指标是否下降
+
+  迭代周期：
+    - 简单场景：每周/每月重训
+    - 复杂场景：每天/每小时重训（如广告排序）
+    - 核心改进方向：开发新特征 → 回到第 3 步
+
+  对比 LLM：
+    LLM 不存在"特征漂移"（它吃的是文本）
+    但存在"知识过时"（训练数据有截止日期）
+    → 用 RAG 补充新知识，或定期重训
+```
+
+**ML 一条龙 vs 大模型一条龙——完整对比**：
+
+| 环节 | 传统 ML | 大模型（路线 A 训练） | 大模型（路线 B RAG） |
+|------|--------|-------------------|-------------------|
+| **数据** | 结构化表格（几 MB~几 GB） | 文本/多模态（几 TB~几十 TB） | 业务文档（几 MB~几 GB） |
+| **数据处理** | 特征工程（人工，最耗时） | Tokenizer + 清洗 | 切 chunk + 向量化 |
+| **训练** | 笔记本 CPU，几分钟 | 几千张 GPU，几个月 | **不训练** |
+| **模型大小** | 几 MB | 几 GB ~ 几百 GB | 用现成的 |
+| **部署** | CPU，一台服务器 | GPU 集群 | API 或几张 GPU |
+| **推理延迟** | < 1ms | 1-10 秒 | 1-10 秒 |
+| **推理成本** | 几乎为零 | 0.01-0.1 元/次 | 0.01-0.1 元/次 |
+| **核心工作** | 特征工程 + 调参 | 数据+训练+对齐 | 知识库+Prompt+编排 |
+| **迭代** | 开发新特征 → 重训 | 加数据 → 重训/微调 | 更新向量库 |
+| **团队** | 1-3 个 ML 工程师 | 几十~几百人 | 2-5 个开发工程师 |
+
+### 7.7 深度追问
 
 > 以下追问按难度分层标注：**[基础]** 适合所有读者；**[进阶]** 适合想深入理解原理的读者；**[前沿]** 适合对前沿研究感兴趣的读者。主线阅读可跳过本节，需要时再回来查阅。
 
@@ -2594,4 +3323,4 @@ flowchart LR
 
 ---
 
-> **术语速查**：本文涉及的所有技术术语（模型、参数、前向计算、梯度、损失函数、反向传播、Token、LLM、Transformer、嵌入、向量数据库、ONNX、推理、RAG、Agent 等）均有详细解释，请参阅 **[AI & ML 术语表](/articles/00-glossary/glossary-08-ai-ml-concepts/)**。
+> **术语速查**：本文涉及的所有技术术语（模型、参数、前向计算、梯度、损失函数、反向传播、Token、LLM、Transformer、嵌入、向量数据库、ONNX、推理、RAG、Agent 等）均有详细解释，请参阅 **[AI & ML 术语表](@/articles/00-glossary/glossary-08-ai-ml-concepts.md)**。

@@ -1,6 +1,7 @@
 +++
-title = "01.安全基础与威胁模型"
+title = "安全基础与威胁模型"
 date = 2026-01-19
+weight = 1000
 description = "安全基础：CIA三要素、威胁建模、攻击面分析、安全原则"
 [taxonomies]
 tags = ["安全", "威胁模型", "基础"]
@@ -211,4 +212,4 @@ tags = ["安全", "威胁模型", "基础"]
 
 ## 相关文章
 
-- [下一篇：Web安全详解](/articles/security/sec-02-Web安全详解/)
+- [下一篇：Web安全详解](@/articles/security/sec-02-Web安全详解.md)

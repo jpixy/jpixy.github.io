@@ -1,6 +1,7 @@
 +++
-title = "29. Benchmarking and Performance Testing"
+title = "Benchmarking and Performance Testing"
 date = 2026-01-21
+weight = 29000
 description = "深入剖析C++性能基准测试方法，包括Google Benchmark、统计显著性、微基准陷阱、性能回归检测等"
 [taxonomies]
 tags = ["C++", "性能测试", "Benchmark", "HFT", "性能优化"]
@@ -513,5 +514,5 @@ perf script > out.perf
 
 ## 相关文章
 
-- [上一篇：Testing and Debugging](/articles/cpp/cpp-28-C++测试与调试实战/)
-- [下一篇：Build Systems and Toolchain](/articles/cpp/cpp-30-C++构建系统与工具链/)
+- [上一篇：Testing and Debugging](@/articles/cpp/cpp-28-C++测试与调试实战.md)
+- [下一篇：Build Systems and Toolchain](@/articles/cpp/cpp-30-C++构建系统与工具链.md)

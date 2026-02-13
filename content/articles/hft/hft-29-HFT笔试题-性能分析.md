@@ -1,6 +1,7 @@
 +++
-title = "29.HFT笔试题-性能分析"
+title = "HFT笔试题-性能分析"
 date = 2026-01-31
+weight = 29000
 description = "HFT性能分析笔试题：延迟测量、perf工具、火焰图、性能瓶颈定位"
 [taxonomies]
 tags = ["HFT", "笔试", "性能分析", "perf", "低延迟"]
@@ -1153,6 +1154,6 @@ perf stat -e branch-misses,instructions ./optimized
 
 ## 相关文章
 
-- [上一篇：HFT笔试题-无锁数据结构](/articles/hft/hft-28-HFT笔试题-无锁数据结构/)
-- [下一篇：HFT笔试题-缓存友好编程](/articles/hft/hft-30-HFT笔试题-缓存友好编程/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 底层原理详解
+- [上一篇：HFT笔试题-无锁数据结构](@/articles/hft/hft-28-HFT笔试题-无锁数据结构.md)
+- [下一篇：HFT笔试题-缓存友好编程](@/articles/hft/hft-30-HFT笔试题-缓存友好编程.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md) - perf 底层原理详解

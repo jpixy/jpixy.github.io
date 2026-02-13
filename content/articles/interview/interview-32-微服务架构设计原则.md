@@ -1,7 +1,8 @@
 +++
-title = "32.微服务架构设计原则"
+title = "微服务架构设计原则"
 description = "微服务架构设计：服务拆分策略、边界划分、通信模式与演进路径"
 date = 2025-01-16
+weight = 32000
 [taxonomies]
 tags = ["interview", "microservices", "architecture", "design", "distributed"]
 +++
@@ -382,5 +383,5 @@ A：使用Saga补偿事务；接受最终一致性；事件驱动同步；避免
 
 ## 相关文章
 
-- [上一篇：如何设计一个秒杀系统](/articles/interview/interview-31-设计秒杀系统/)
-- [下一篇：服务注册发现与API网关](/articles/interview/interview-33-服务注册与API网关/)
+- [上一篇：如何设计一个秒杀系统](@/articles/interview/interview-31-设计秒杀系统.md)
+- [下一篇：服务注册发现与API网关](@/articles/interview/interview-33-服务注册与API网关.md)

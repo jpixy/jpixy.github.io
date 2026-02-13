@@ -1,6 +1,7 @@
 +++
-title = "20.高性能序列化技术"
+title = "高性能序列化技术"
 date = 2026-01-21
+weight = 20000
 description = "深入剖析高性能序列化技术，包括SBE、FlatBuffers、Cap'n Proto、零拷贝解析和性能对比"
 [taxonomies]
 tags = ["HFT", "序列化", "SBE", "FlatBuffers", "低延迟"]
@@ -501,5 +502,5 @@ table Order {
 
 ## 相关文章
 
-- [上一篇：全球主要交易所技术对比](/articles/hft/hft-19-全球主要交易所技术对比/)
-- [下一篇：交易系统容错与恢复](/articles/hft/hft-21-交易系统容错与恢复/)
+- [上一篇：全球主要交易所技术对比](@/articles/hft/hft-19-全球主要交易所技术对比.md)
+- [下一篇：交易系统容错与恢复](@/articles/hft/hft-21-交易系统容错与恢复.md)

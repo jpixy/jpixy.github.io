@@ -1,6 +1,7 @@
 +++
-title = "10. Memory Model and Cache Optimization (HFT)"
+title = "Memory Model and Cache Optimization (HFT)"
 date = 2026-01-21
+weight = 10000
 description = "深入剖析C++11内存模型、CPU缓存层次结构、Cache Line、False Sharing、Memory Ordering等核心概念，HFT低延迟系统必备知识"
 [taxonomies]
 tags = ["C++", "内存模型", "缓存优化", "HFT", "低延迟", "并发"]
@@ -711,5 +712,5 @@ seq_cst在x86上通常需要额外的mfence指令，开销更大。
 
 ## 相关文章
 
-- [上一篇：Copy and Move Semantics](/articles/cpp/cpp-09-深浅拷贝与移动语义详解/)
-- [下一篇：Virtual Functions and Polymorphism](/articles/cpp/cpp-11-虚函数与多态底层实现/)
+- [上一篇：Copy and Move Semantics](@/articles/cpp/cpp-09-深浅拷贝与移动语义详解.md)
+- [下一篇：Virtual Functions and Polymorphism](@/articles/cpp/cpp-11-虚函数与多态底层实现.md)

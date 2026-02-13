@@ -1,7 +1,8 @@
 +++
-title = "08.unsafe Rust完全指南"
+title = "unsafe Rust完全指南"
 slug = "rust-09-unsafe-Rust完全指南"
 date = 2026-01-21
+weight = 8000
 description = "深入剖析unsafe Rust的正确使用方式，包括裸指针、unsafe trait、内存安全不变量、FFI边界以及Miri检测工具"
 [taxonomies]
 tags = ["Rust", "unsafe", "FFI", "内存安全", "HFT"]
@@ -509,5 +510,5 @@ pub fn parse_header(buffer: &[u8]) -> Option<&MarketDataHeader> {
 
 ## 相关文章
 
-- [上一篇：嵌入式Rust](/articles/rust/rust-07-嵌入式Rust/)
-- [下一篇：Rust与C/C++互操作](/articles/rust/rust-09-Rust与C-C++互操作/)
+- [上一篇：嵌入式Rust](@/articles/rust/rust-07-嵌入式Rust.md)
+- [下一篇：Rust与C/C++互操作](@/articles/rust/rust-09-Rust与C-C++互操作.md)

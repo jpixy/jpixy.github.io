@@ -1,6 +1,7 @@
 +++
-title = "03 - 中国大陆量化交易接口与数据"
+title = "中国大陆量化交易接口与数据"
 date = 2025-01-15
+weight = 3000
 description = "中国大陆个人量化交易可用的交易接口、可交易产品、数据来源及回测平台详解"
 [taxonomies]
 tags = ["quant", "trading", "china", "api", "data"]
@@ -502,5 +503,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：02 - 中低频量化交易最佳实践](/articles/quant/quant-02-中低频量化交易最佳实践/)
-- [下一篇：04 - 全球量化交易接口与数据](/articles/quant/quant-04-全球量化交易接口与数据/)
+- [上一篇：02 - 中低频量化交易最佳实践](@/articles/quant/quant-02-中低频量化交易最佳实践.md)
+- [下一篇：04 - 全球量化交易接口与数据](@/articles/quant/quant-04-全球量化交易接口与数据.md)

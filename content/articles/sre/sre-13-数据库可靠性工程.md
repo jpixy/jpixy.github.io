@@ -1,6 +1,7 @@
 +++
-title = "13.数据库可靠性工程"
+title = "数据库可靠性工程"
 date = 2026-01-19
+weight = 13000
 description = "DBRE实践：数据库高可用、备份恢复、主从切换、性能优化、变更管理"
 [taxonomies]
 tags = ["SRE", "数据库", "DBRE"]
@@ -408,5 +409,5 @@ DBRE的核心：**像对待代码一样对待数据库——版本控制、自�
 
 ## 相关文章
 
-- [上一篇：Kubernetes SRE实践](/articles/sre/sre-12-Kubernetes-SRE实践/)
-- [下一篇：SRE组织与文化](/articles/sre/sre-14-SRE组织与文化/)
+- [上一篇：Kubernetes SRE实践](@/articles/sre/sre-12-Kubernetes-SRE实践.md)
+- [下一篇：SRE组织与文化](@/articles/sre/sre-14-SRE组织与文化.md)

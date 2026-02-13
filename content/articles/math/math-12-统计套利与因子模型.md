@@ -1,7 +1,8 @@
 +++
-title = "12.统计套利与因子模型(HFT)"
+title = "统计套利与因子模型(HFT)"
 description = "深入讲解统计套利与因子模型：配对交易数学、PCA/ICA、协方差估计、Barra风险模型、因子分析与组合优化"
 date = 2026-01-21
+weight = 12000
 draft = false
 [taxonomies]
 tags = ["统计套利", "因子模型", "PCA", "风险模型", "量化", "HFT"]
@@ -839,5 +840,5 @@ constraints = {
 
 ## 相关文章
 
-- [上一篇：时间序列分析详解(HFT)](/articles/math/math-11-时间序列分析详解/)
-- [下一篇：数值计算与浮点精度(HFT)](/articles/math/math-13-数值计算与浮点精度/)
+- [上一篇：时间序列分析详解(HFT)](@/articles/math/math-11-时间序列分析详解.md)
+- [下一篇：数值计算与浮点精度(HFT)](@/articles/math/math-13-数值计算与浮点精度.md)

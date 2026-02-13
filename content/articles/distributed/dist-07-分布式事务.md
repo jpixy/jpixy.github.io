@@ -1,6 +1,7 @@
 +++
-title = "07.分布式事务"
+title = "分布式事务"
 date = 2026-01-20
+weight = 7000
 description = "分布式事务：2PC、3PC、Saga、TCC、最终一致性"
 [taxonomies]
 tags = ["分布式", "事务", "一致性"]
@@ -263,5 +264,5 @@ MySQL、PostgreSQL等支持XA事务。
 
 ## 相关文章
 
-- [上一篇：分布式存储](/articles/distributed/dist-06-分布式存储/)
-- [下一篇：分布式系统面试](/articles/distributed/dist-08-分布式系统面试/)
+- [上一篇：分布式存储](@/articles/distributed/dist-06-分布式存储.md)
+- [下一篇：分布式系统面试](@/articles/distributed/dist-08-分布式系统面试.md)

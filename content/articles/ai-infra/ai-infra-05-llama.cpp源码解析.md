@@ -1,7 +1,8 @@
 +++
-title = "05 - llama.cpp 源码解析"
+title = "llama.cpp 源码解析"
 description = "深入理解纯 C/C++ 实现的 LLM 推理引擎"
 date = 2025-02-06
+weight = 5000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -538,6 +539,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：04 - TensorRT-LLM 详解](/articles/ai-infra/infra-04-TensorRT-LLM详解/)
-- [下一篇：06 - Triton Inference Server 实战](/articles/ai-infra/infra-06-Triton-Inference-Server实战/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
+- [上一篇：04 - TensorRT-LLM 详解](@/articles/ai-infra/ai-infra-04-TensorRT-LLM详解.md)
+- [下一篇：06 - Triton Inference Server 实战](@/articles/ai-infra/ai-infra-06-Triton-Inference-Server实战.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)

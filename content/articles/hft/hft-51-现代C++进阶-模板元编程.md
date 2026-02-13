@@ -1,6 +1,7 @@
 +++
-title = "51.现代C++进阶-模板元编程"
+title = "现代C++进阶-模板元编程"
 date = 2026-02-02
+weight = 51000
 description = "模板元编程：SFINAE、类型萃取、编译期计算、变参模板"
 [taxonomies]
 tags = ["HFT", "C++", "模板", "元编程", "SFINAE"]
@@ -770,6 +771,6 @@ A: 当编译器实例化模板时，如果替换模板参数导致类型无效�
 
 ## 相关文章
 
-- [现代C++进阶-C++17与20特性](/articles/hft/hft-50-现代C++进阶-C++17与20特性/)
-- [Cpp必知必会](/articles/hft/hft-01-Cpp必知必会/)
-- [HFT笔试题-缓存友好编程](/articles/hft/hft-30-HFT笔试题-缓存友好编程/)
+- [现代C++进阶-C++17与20特性](@/articles/hft/hft-50-现代C++进阶-C++17与20特性.md)
+- [Cpp必知必会](@/articles/hft/hft-01-Cpp必知必会.md)
+- [HFT笔试题-缓存友好编程](@/articles/hft/hft-30-HFT笔试题-缓存友好编程.md)

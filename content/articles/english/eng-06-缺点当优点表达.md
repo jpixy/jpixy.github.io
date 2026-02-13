@@ -1,6 +1,7 @@
 +++
-title = "06.缺点当成优点表达"
+title = "缺点当成优点表达"
 slug = "eng-缺点当成优点表达"
+weight = 6000
 +++
 
 # eng 缺点当成优点表达
@@ -299,5 +300,5 @@ Need me to drill deeper into any specific scenario?
 
 ## 相关文章
 
-- [上一篇：QA相关英文](/articles/english/eng-05-QA相关英文/)
-- [下一篇：K8S相关英语](/articles/english/eng-07-K8S相关英语/)
+- [上一篇：QA相关英文](@/articles/english/eng-05-QA相关英文.md)
+- [下一篇：K8S相关英语](@/articles/english/eng-07-K8S相关英语.md)

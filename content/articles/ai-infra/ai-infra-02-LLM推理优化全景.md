@@ -1,7 +1,8 @@
 +++
-title = "02 - LLM 推理优化全景"
+title = "LLM 推理优化全景"
 description = "系统梳理 LLM 推理优化的各个维度，从算子到系统的完整视角"
 date = 2025-02-06
+weight = 2000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -1818,8 +1819,8 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：01 - AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
-- [下一篇：03 - vLLM 架构与源码解析](/articles/ai-infra/infra-03-vLLM架构与源码解析/)
-- [25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
-- [32 - Triton GPU 编程详解](/articles/ai/ai-32-Triton-GPU编程详解/)
-- [11 - 多模态 LLM 推理优化](/articles/ai-infra/infra-11-多模态LLM推理优化/)
+- [上一篇：01 - AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)
+- [下一篇：03 - vLLM 架构与源码解析](@/articles/ai-infra/ai-infra-03-vLLM架构与源码解析.md)
+- [25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)
+- [32 - Triton GPU 编程详解](@/articles/ai/ai-32-Triton-GPU编程详解.md)
+- [11 - 多模态 LLM 推理优化](@/articles/ai-infra/ai-infra-11-多模态LLM推理优化.md)

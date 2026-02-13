@@ -1,6 +1,7 @@
 +++
-title = "41.时间同步与NTP问题排查实战"
+title = "时间同步与NTP问题排查实战"
 date = 2026-01-21
+weight = 41000
 description = "SRE时间同步问题排查完整指南：NTP配置、时间偏差检测、分布式系统时钟同步"
 [taxonomies]
 tags = ["SRE", "NTP", "时间同步", "chrony", "排查", "实战"]
@@ -620,5 +621,5 @@ check_sources
 
 ## 相关文章
 
-- [上一篇：证书与HTTPS问题排查实战](/articles/sre/sre-40-证书与HTTPS问题排查实战/)
-- [下一篇：系统启动与引导问题排查实战](/articles/sre/sre-42-系统启动与引导问题排查实战/)
+- [上一篇：证书与HTTPS问题排查实战](@/articles/sre/sre-40-证书与HTTPS问题排查实战.md)
+- [下一篇：系统启动与引导问题排查实战](@/articles/sre/sre-42-系统启动与引导问题排查实战.md)

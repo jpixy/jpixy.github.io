@@ -1,6 +1,7 @@
 +++
-title = "55.SRE面试题-网络协议详解"
+title = "SRE面试题-网络协议详解"
 date = 2026-01-21
+weight = 55000
 description = "SRE面试必备：TCP/IP协议、HTTP/HTTPS、DNS、网络排查等核心问题详解"
 [taxonomies]
 tags = ["SRE", "面试", "TCP", "HTTP", "网络", "DNS"]
@@ -979,5 +980,5 @@ CDN缓存策略：
 
 ## 相关文章
 
-- [上一篇：SRE面试题-Linux系统基础](/articles/sre/sre-54-SRE面试题-Linux系统基础/)
-- [下一篇：SRE面试题-容器与Kubernetes](/articles/sre/sre-56-SRE面试题-容器与Kubernetes/)
+- [上一篇：SRE面试题-Linux系统基础](@/articles/sre/sre-54-SRE面试题-Linux系统基础.md)
+- [下一篇：SRE面试题-容器与Kubernetes](@/articles/sre/sre-56-SRE面试题-容器与Kubernetes.md)

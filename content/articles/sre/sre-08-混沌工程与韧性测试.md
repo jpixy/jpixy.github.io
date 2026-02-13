@@ -1,6 +1,7 @@
 +++
-title = "08.混沌工程与韧性测试"
+title = "混沌工程与韧性测试"
 date = 2026-01-19
+weight = 8000
 description = "混沌工程实践：原理与方法论、故障注入类型、实验设计、工具链、组织推广"
 [taxonomies]
 tags = ["SRE", "混沌工程", "韧性"]
@@ -428,5 +429,5 @@ spec:
 
 ## 相关文章
 
-- [上一篇：变更管理与发布工程](/articles/sre/sre-07-变更管理与发布工程/)
-- [下一篇：自动化与Toil消除](/articles/sre/sre-09-自动化与Toil消除/)
+- [上一篇：变更管理与发布工程](@/articles/sre/sre-07-变更管理与发布工程.md)
+- [下一篇：自动化与Toil消除](@/articles/sre/sre-09-自动化与Toil消除.md)

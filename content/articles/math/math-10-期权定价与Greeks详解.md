@@ -1,7 +1,8 @@
 +++
-title = "10.期权定价与Greeks详解(HFT)"
+title = "期权定价与Greeks详解(HFT)"
 description = "深入讲解期权定价理论：Black-Scholes模型推导、Greeks敏感性分析、隐含波动率、波动率曲面与二叉树定价"
 date = 2026-01-21
+weight = 10000
 draft = false
 [taxonomies]
 tags = ["期权定价", "Black-Scholes", "Greeks", "隐含波动率", "量化", "HFT"]
@@ -718,5 +719,5 @@ for N in [5, 10, 21, 63, 252]:
 
 ## 相关文章
 
-- [上一篇：金融数学基础(HFT)](/articles/math/math-09-金融数学基础/)
-- [下一篇：时间序列分析详解(HFT)](/articles/math/math-11-时间序列分析详解/)
+- [上一篇：金融数学基础(HFT)](@/articles/math/math-09-金融数学基础.md)
+- [下一篇：时间序列分析详解(HFT)](@/articles/math/math-11-时间序列分析详解.md)

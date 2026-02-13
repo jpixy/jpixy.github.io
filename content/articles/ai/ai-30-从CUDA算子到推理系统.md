@@ -1,7 +1,8 @@
 +++
-title = "30 - 从 CUDA 算子到推理系统"
+title = "从 CUDA 算子到推理系统"
 description = "理解 CUDA 算子与推理系统的关系，明确技术发展方向"
 date = 2025-02-06
+weight = 30000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -558,8 +559,8 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：29 - AI C++ 工程师职业路径](/articles/ai/ai-29-AI-C++工程师职业路径/)
-- [下一篇：31 - AI C++ 工程师入门实战指南](/articles/ai/ai-31-AI-C++工程师入门实战指南/)
-- [AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
+- [上一篇：29 - AI C++ 工程师职业路径](@/articles/ai/ai-29-AI-C++工程师职业路径.md)
+- [下一篇：31 - AI C++ 工程师入门实战指南](@/articles/ai/ai-31-AI-C++工程师入门实战指南.md)
+- [AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)

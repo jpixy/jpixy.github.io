@@ -1,6 +1,7 @@
 +++
-title = "13.no_std与嵌入式Rust"
+title = "no_std与嵌入式Rust"
 date = 2026-01-21
+weight = 13000
 description = "深入剖析Rust的no_std环境，包括alloc crate、全局分配器、panic handler、嵌入式HAL等"
 [taxonomies]
 tags = ["Rust", "no_std", "嵌入式", "分配器", "裸机"]
@@ -556,5 +557,5 @@ impl OutputPin for GpioPin {
 
 ## 相关文章
 
-- [上一篇：Rust编译器优化详解](/articles/rust/rust-12-Rust编译器优化详解/)
-- [下一篇：HFT-Rust Lock-Free编程](/articles/rust/rust-14-HFT-Rust-Lock-Free编程/)
+- [上一篇：Rust编译器优化详解](@/articles/rust/rust-12-Rust编译器优化详解.md)
+- [下一篇：HFT-Rust Lock-Free编程](@/articles/rust/rust-14-HFT-Rust-Lock-Free编程.md)

@@ -1,7 +1,8 @@
 +++
-title = "12.内核与系统组件详解"
+title = "内核与系统组件详解"
 description = "Linux操作系统核心组件深度解析：内核架构与编译、Glibc内存分配器、Systemd服务管理、工具链与编译流程"
 date = 2026-01-27
+weight = 12000
 draft = false
 [taxonomies]
 tags = ["Linux", "Kernel", "Glibc", "Systemd", "Toolchain", "System"]
@@ -462,6 +463,6 @@ file main_arm
 
 ## 相关文章
 
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 概念速查
-- [内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/) - Crash/GDB/Ftrace/BPFtrace
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/) - perf/strace/Valgrind
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - 概念速查
+- [内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md) - Crash/GDB/Ftrace/BPFtrace
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md) - perf/strace/Valgrind

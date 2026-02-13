@@ -1,6 +1,7 @@
 +++
-title = "24.HFT行为面试指南"
+title = "HFT行为面试指南"
 date = 2026-01-21
+weight = 26000
 description = "HFT行为面试指南，包括为什么选择HFT、压力处理、团队协作、失败案例和职业规划"
 [taxonomies]
 tags = ["HFT", "面试", "行为面试", "职业发展", "软技能"]
@@ -400,5 +401,5 @@ Result:
 
 ## 相关文章
 
-- [上一篇：HFT面试题-智力与概率题](/articles/hft/hft-25-HFT面试题-智力与概率题/)
-- [下一篇：HFT技术面试技巧](/articles/hft/hft-27-HFT技术面试技巧/)
+- [上一篇：HFT面试题-智力与概率题](@/articles/hft/hft-25-HFT面试题-智力与概率题.md)
+- [下一篇：HFT技术面试技巧](@/articles/hft/hft-27-HFT技术面试技巧.md)

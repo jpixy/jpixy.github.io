@@ -1,6 +1,7 @@
 +++
-title = "50.Elasticsearch问题排查实战"
+title = "Elasticsearch问题排查实战"
 date = 2026-01-21
+weight = 50000
 description = "SRE Elasticsearch问题排查完整指南：集群健康、分片问题、索引性能、查询优化"
 [taxonomies]
 tags = ["SRE", "Elasticsearch", "搜索", "排查", "实战"]
@@ -765,5 +766,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：云服务问题排查实战](/articles/sre/sre-49-云服务问题排查实战/)
-- [下一篇：负载均衡深入排查实战](/articles/sre/sre-51-负载均衡深入排查实战/)
+- [上一篇：云服务问题排查实战](@/articles/sre/sre-49-云服务问题排查实战.md)
+- [下一篇：负载均衡深入排查实战](@/articles/sre/sre-51-负载均衡深入排查实战.md)

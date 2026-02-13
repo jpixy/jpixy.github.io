@@ -1,6 +1,7 @@
 +++
-title = "12.如何设计一个类似Kafka的消息队列"
+title = "如何设计一个类似Kafka的消息队列"
 slug = "interview-如何设计一个类似Kafka的消息队列"
+weight = 12000
 +++
 
 # 如何设计一个类似 Kafka 的分布式消息队列
@@ -1213,5 +1214,5 @@ public void replicaFetch() {
 
 ## 相关文章
 
-- [上一篇：如何设计一个消息队列](/articles/interview/interview-11-设计消息队列/)
-- [下一篇：如何设计多线程消费消息模型](/articles/interview/interview-13-多线程消费模型/)
+- [上一篇：如何设计一个消息队列](@/articles/interview/interview-11-设计消息队列.md)
+- [下一篇：如何设计多线程消费消息模型](@/articles/interview/interview-13-多线程消费模型.md)

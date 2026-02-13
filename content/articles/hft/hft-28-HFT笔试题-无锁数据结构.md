@@ -1,6 +1,7 @@
 +++
-title = "28.HFT笔试题-无锁数据结构"
+title = "HFT笔试题-无锁数据结构"
 date = 2026-01-31
+weight = 28000
 description = "HFT无锁数据结构笔试题：CAS原理、SPSC队列、无锁栈、ABA问题、内存序"
 [taxonomies]
 tags = ["HFT", "笔试", "无锁", "CAS", "低延迟"]
@@ -1000,8 +1001,8 @@ void *pop() {
 
 ## 相关文章
 
-- [上一篇：HFT技术面试技巧](/articles/hft/hft-27-HFT技术面试技巧/)
-- [下一篇：HFT笔试题-性能分析](/articles/hft/hft-29-HFT笔试题-性能分析/)
+- [上一篇：HFT技术面试技巧](@/articles/hft/hft-27-HFT技术面试技巧.md)
+- [下一篇：HFT笔试题-性能分析](@/articles/hft/hft-29-HFT笔试题-性能分析.md)
 
 **知识基础**：
-- [HFT-Cpp必知必会](/articles/hft/hft-01-Cpp必知必会/)
+- [HFT-Cpp必知必会](@/articles/hft/hft-01-Cpp必知必会.md)

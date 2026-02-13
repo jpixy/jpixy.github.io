@@ -1,7 +1,8 @@
 +++
-title = "15.如何设计一个限流系统"
+title = "如何设计一个限流系统"
 description = "限流系统设计：令牌桶、漏桶、滑动窗口算法与分布式限流实践"
 date = 2025-01-16
+weight = 15000
 [taxonomies]
 tags = ["interview", "system-design", "rate-limiting", "distributed"]
 +++
@@ -358,5 +359,5 @@ A：返回429状态码和Retry-After头；客户端实现退避重试；或进�
 
 ## 相关文章
 
-- [上一篇：如何设计一个限流器](/articles/interview/interview-14-设计限流器/)
-- [下一篇：如何设计一个定时任务系统](/articles/interview/interview-16-设计定时任务系统/)
+- [上一篇：如何设计一个限流器](@/articles/interview/interview-14-设计限流器.md)
+- [下一篇：如何设计一个定时任务系统](@/articles/interview/interview-16-设计定时任务系统.md)

@@ -1,7 +1,8 @@
 +++
-title = "13.定价策略与报价管理"
+title = "定价策略与报价管理"
 description = "产品定价策略、报价管理、折扣政策与价格谈判"
 date = 2025-01-16
+weight = 13000
 [taxonomies]
 tags = ["sales", "business", "pricing", "negotiation", "strategy"]
 +++
@@ -556,5 +557,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：SaaS销售方法论](/articles/business/biz-12-SaaS销售方法论/)
-- [下一篇：销售预测与漏斗管理](/articles/business/biz-14-销售预测与漏斗管理/)
+- [上一篇：SaaS销售方法论](@/articles/business/biz-12-SaaS销售方法论.md)
+- [下一篇：销售预测与漏斗管理](@/articles/business/biz-14-销售预测与漏斗管理.md)

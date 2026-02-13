@@ -1,6 +1,7 @@
 +++
-title = "30. Build Systems and Toolchain"
+title = "Build Systems and Toolchain"
 date = 2026-01-21
+weight = 30000
 description = "深入剖析C++构建系统和开发工具链，包括CMake高级用法、Bazel、编译优化、静态分析工具等"
 [taxonomies]
 tags = ["C++", "CMake", "Bazel", "构建系统", "工具链"]
@@ -539,5 +540,5 @@ jobs:
 
 ## 相关文章
 
-- [上一篇：Benchmarking and Performance Testing](/articles/cpp/cpp-29-性能基准测试设计/)
-- [下一篇：CPU Microarchitecture Optimization (HFT)](/articles/cpp/cpp-31-HFT-CPU微架构与性能优化/)
+- [上一篇：Benchmarking and Performance Testing](@/articles/cpp/cpp-29-性能基准测试设计.md)
+- [下一篇：CPU Microarchitecture Optimization (HFT)](@/articles/cpp/cpp-31-HFT-CPU微架构与性能优化.md)

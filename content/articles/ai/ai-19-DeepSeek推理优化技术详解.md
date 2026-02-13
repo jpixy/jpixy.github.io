@@ -1,6 +1,7 @@
 +++
-title = "19.DeepSeek推理优化技术详解"
+title = "DeepSeek推理优化技术详解"
 date = 2026-01-14
+weight = 19000
 description = "深入解析DeepSeek的ESS架构、CPU Offloading、专家并行等推理优化技术，揭示其高性价比推理服务背后的技术创新"
 [taxonomies]
 tags = ["ai", "deepseek", "inference", "optimization", "gpu", "cpu", "llm"]
@@ -397,5 +398,5 @@ DeepSeek 的推理优化技术展示了**系统级思维**的重要性：
 
 ## 相关文章
 
-- [上一篇：边缘AI与端侧部署详解](/articles/ai/ai-18-边缘AI与端侧部署详解/)
-- [下一篇：实战项目-智能知识助手开发全流程](/articles/ai/ai-20-实战项目智能知识助手开发全流程/)
+- [上一篇：边缘AI与端侧部署详解](@/articles/ai/ai-18-边缘AI与端侧部署详解.md)
+- [下一篇：实战项目-智能知识助手开发全流程](@/articles/ai/ai-20-实战项目智能知识助手开发全流程.md)

@@ -1,6 +1,7 @@
 +++
-title = "26.ROCm与AMD GPU开发"
+title = "ROCm与AMD GPU开发"
 date = 2026-02-06
+weight = 26000
 description = "AMD GPU开发指南：ROCm平台、HIP编程、MIOpen、与CUDA的迁移对比，适用于MI系列GPU开发"
 [taxonomies]
 tags = ["rocm", "hip", "amd", "gpu", "miopen"]
@@ -755,7 +756,7 @@ __builtin_amdgcn_readfirstlane(val);  // 读取第一个 lane 的值
 
 ## 相关文章
 
-- [上一篇：25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
-- [下一篇：27 - 计算机视觉与 OpenCV 实战](/articles/ai/ai-27-计算机视觉与OpenCV实战/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [24 - GPU Kernel 开发详解](/articles/ai/ai-24-GPU-Kernel开发详解/)
+- [上一篇：25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)
+- [下一篇：27 - 计算机视觉与 OpenCV 实战](@/articles/ai/ai-27-计算机视觉与OpenCV实战.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [24 - GPU Kernel 开发详解](@/articles/ai/ai-24-GPU-Kernel开发详解.md)

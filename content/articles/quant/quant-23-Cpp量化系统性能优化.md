@@ -1,6 +1,7 @@
 +++
-title = "23 - C++ 量化系统性能优化"
+title = "C++ 量化系统性能优化"
 date = 2025-01-21
+weight = 23000
 description = "个人量化交易系统的 C++ 性能优化：延迟分析、内存优化、并发设计、编译器优化、实战案例"
 [taxonomies]
 tags = ["quant", "cpp", "performance", "optimization", "low-latency"]
@@ -961,6 +962,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：22 - C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)
-- [下一篇：24 - A股程序化交易接口：QMT 与 Ptrade](/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade/)
-- [21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
+- [上一篇：22 - C++ 个人量化交易实战](@/articles/quant/quant-22-Cpp个人量化交易实战.md)
+- [下一篇：24 - A股程序化交易接口：QMT 与 Ptrade](@/articles/quant/quant-24-A股程序化交易接口QMT与Ptrade.md)
+- [21 - 量化开发技术栈选择](@/articles/quant/quant-21-量化开发技术栈选择.md)

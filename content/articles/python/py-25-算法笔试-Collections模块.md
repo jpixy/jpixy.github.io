@@ -1,6 +1,7 @@
 +++
-title = "25.算法笔试-Collections模块"
+title = "算法笔试-Collections模块"
 date = 2026-01-21
+weight = 25000
 description = "Python3算法笔试必备：Counter、defaultdict、deque、OrderedDict详解"
 [taxonomies]
 tags = ["Python", "算法", "笔试", "collections", "面试"]
@@ -680,5 +681,5 @@ combined['size']    # 'medium' (从defaults找到)
 
 ## 相关文章
 
-- [上一篇：算法笔试-基础数据结构](/articles/python/py-24-算法笔试-基础数据结构/)
-- [下一篇：算法笔试-排序与搜索](/articles/python/py-26-算法笔试-排序与搜索/)
+- [上一篇：算法笔试-基础数据结构](@/articles/python/py-24-算法笔试-基础数据结构.md)
+- [下一篇：算法笔试-排序与搜索](@/articles/python/py-26-算法笔试-排序与搜索.md)

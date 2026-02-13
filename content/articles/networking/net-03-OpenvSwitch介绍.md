@@ -1,7 +1,8 @@
 +++
-title = "03.Open vSwitch详解"
+title = "Open vSwitch详解"
 description = "OVS架构、核心组件、OpenFlow流表、OVSDB、数据转发流程、DPDK加速与生产实践"
 date = 2025-01-16
+weight = 3000
 [taxonomies]
 tags = ["networking", "ovs", "sdn", "openflow", "virtualization", "cloud"]
 [extra]
@@ -938,5 +939,5 @@ ping -M do -s 1423 <remote_ip>  # 1451 → 应该不通（如果 MTU 问题存�
 
 ## 相关文章
 
-- [上一篇：如何实现可靠的UDP](/articles/networking/net-02-可靠UDP实现/)
-- [下一篇：DPDK详解](/articles/networking/net-04-DPDK详解/)
+- [上一篇：如何实现可靠的UDP](@/articles/networking/net-02-可靠UDP实现.md)
+- [下一篇：DPDK详解](@/articles/networking/net-04-DPDK详解.md)

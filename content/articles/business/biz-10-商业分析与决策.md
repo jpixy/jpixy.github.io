@@ -1,7 +1,8 @@
 +++
-title = "10.商业分析与决策"
+title = "商业分析与决策"
 description = "商业模式分析、市场分析、竞争分析与商业决策框架"
 date = 2025-01-16
+weight = 10000
 [taxonomies]
 tags = ["business", "analysis", "strategy", "decision-making", "market"]
 +++
@@ -646,5 +647,5 @@ O：成为中国领先的CRM厂商
 
 ## 相关文章
 
-- [上一篇：渠道销售与伙伴管理](/articles/business/biz-09-渠道销售与伙伴管理/)
-- [下一篇：政府与央国企销售](/articles/business/biz-11-政府与央国企销售/)
+- [上一篇：渠道销售与伙伴管理](@/articles/business/biz-09-渠道销售与伙伴管理.md)
+- [下一篇：政府与央国企销售](@/articles/business/biz-11-政府与央国企销售.md)

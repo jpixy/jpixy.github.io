@@ -1,6 +1,7 @@
 +++
-title = "15. Memory Alignment and Struct Packing"
+title = "Memory Alignment and Struct Packing"
 date = 2026-01-30
+weight = 15000
 description = "Deep dive into memory alignment, struct padding, and packing techniques in C"
 [taxonomies]
 tags = ["C", "Memory", "Alignment", "Performance"]
@@ -346,5 +347,5 @@ memcpy(&aligned_b, &p.b, sizeof(int));
 
 ## 相关文章
 
-- [上一篇：IO Multiplexing (select/poll/epoll)](/articles/c/c-14-IO多路复用详解/)
-- [下一篇：Volatile and Memory Barriers (HFT)](/articles/c/c-16-Volatile-Memory-Barriers/)
+- [上一篇：IO Multiplexing (select/poll/epoll)](@/articles/c/c-14-IO多路复用详解.md)
+- [下一篇：Volatile and Memory Barriers (HFT)](@/articles/c/c-16-Volatile-Memory-Barriers.md)

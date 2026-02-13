@@ -1,7 +1,8 @@
 +++
-title = "19.Rust面试题-所有权与生命周期"
+title = "Rust面试题-所有权与生命周期"
 slug = "rust-19-Rust面试题-所有权与生命周期"
 date = 2026-01-21
+weight = 20000
 description = "Rust面试中关于所有权和生命周期的常见问题，包括借用规则、生命周期省略、NLL、self-referential struct和Pin"
 [taxonomies]
 tags = ["Rust", "面试", "所有权", "生命周期", "Pin"]
@@ -483,5 +484,5 @@ impl<'a, T> LendingIterator for WindowsMut<'a, T> {
 
 ## 相关文章
 
-- [上一篇：Rust面试指南](/articles/rust/rust-19-Rust面试指南/)
-- [下一篇：Rust面试题-并发与性能](/articles/rust/rust-21-Rust面试题-并发与性能/)
+- [上一篇：Rust面试指南](@/articles/rust/rust-19-Rust面试指南.md)
+- [下一篇：Rust面试题-并发与性能](@/articles/rust/rust-21-Rust面试题-并发与性能.md)

@@ -1,6 +1,7 @@
 +++
-title = "04.Prompt工程与思维链详解"
+title = "Prompt工程与思维链详解"
 date = 2026-01-13
+weight = 4000
 description = "Prompt Engineering深度解析：提示设计原则、思维链推理、高级技巧与实战模式"
 [taxonomies]
 tags = ["ai", "prompt-engineering", "chain-of-thought", "llm"]
@@ -528,5 +529,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：大模型文件格式与保存信息详解](/articles/ai/ai-03-大模型文件格式详解/)
-- [下一篇：RAG检索增强生成详解](/articles/ai/ai-05-RAG检索增强生成详解/)
+- [上一篇：大模型文件格式与保存信息详解](@/articles/ai/ai-03-大模型文件格式详解.md)
+- [下一篇：RAG检索增强生成详解](@/articles/ai/ai-05-RAG检索增强生成详解.md)

@@ -1,7 +1,8 @@
 +++
-title = "03.Redis高可用架构"
+title = "Redis高可用架构"
 description = "Redis高可用方案：主从复制、哨兵模式、集群模式的原理与最佳实践"
 date = 2025-01-16
+weight = 3000
 [taxonomies]
 tags = ["interview", "database", "redis", "high-availability", "cluster"]
 +++
@@ -308,5 +309,5 @@ A：数据量单机可承载选哨兵，更简单；需要分片扩展选集群�
 
 ## 相关文章
 
-- [上一篇：Redis为什么这么快](/articles/interview/interview-02-Redis为什么这么快/)
-- [下一篇：MySQL索引原理与查询优化](/articles/interview/interview-04-MySQL索引与优化/)
+- [上一篇：Redis为什么这么快](@/articles/interview/interview-02-Redis为什么这么快.md)
+- [下一篇：MySQL索引原理与查询优化](@/articles/interview/interview-04-MySQL索引与优化.md)

@@ -1,6 +1,7 @@
 +++
-title = "06.数值计算"
+title = "数值计算"
 date = 2026-01-20
+weight = 6000
 description = "数值计算：浮点精度、数值稳定性、矩阵分解、迭代方法"
 [taxonomies]
 tags = ["数学", "数值计算", "精度"]
@@ -279,5 +280,5 @@ Adam、RMSprop等根据历史梯度调整学习率。
 
 ## 相关文章
 
-- [上一篇：信息论基础](/articles/math/math-05-信息论基础/)
-- [下一篇：机器学习数学](/articles/math/math-07-机器学习数学/)
+- [上一篇：信息论基础](@/articles/math/math-05-信息论基础.md)
+- [下一篇：机器学习数学](@/articles/math/math-07-机器学习数学.md)

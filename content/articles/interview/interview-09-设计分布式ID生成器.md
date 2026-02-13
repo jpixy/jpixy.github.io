@@ -1,7 +1,8 @@
 +++
-title = "09.如何设计一个分布式ID生成器"
+title = "如何设计一个分布式ID生成器"
 description = "分布式唯一ID生成方案对比：UUID、雪花算法、号段模式与工程实践"
 date = 2025-01-16
+weight = 9000
 [taxonomies]
 tags = ["interview", "system-design", "distributed", "snowflake"]
 +++
@@ -241,5 +242,5 @@ A：雪花算法的ID可以通过位运算提取时间戳部分，转换为具�
 
 ## 相关文章
 
-- [上一篇：如何设计一个分布式锁](/articles/interview/interview-08-设计分布式锁/)
-- [下一篇：如何设计一个分布式缓存系统](/articles/interview/interview-10-设计分布式缓存/)
+- [上一篇：如何设计一个分布式锁](@/articles/interview/interview-08-设计分布式锁.md)
+- [下一篇：如何设计一个分布式缓存系统](@/articles/interview/interview-10-设计分布式缓存.md)

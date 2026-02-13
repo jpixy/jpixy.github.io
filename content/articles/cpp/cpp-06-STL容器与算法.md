@@ -1,6 +1,7 @@
 +++
-title = "06. STL Containers and Algorithms"
+title = "STL Containers and Algorithms"
 date = 2026-01-19
+weight = 6000
 description = "STL详解：序列容器、关联容器、容器适配器、迭代器、常用算法"
 [taxonomies]
 tags = ["C++", "STL", "容器"]
@@ -355,5 +356,5 @@ STL是C++的核心库，熟练使用可以大大提高开发效率和代码质�
 
 ## 相关文章
 
-- [上一篇：Performance Optimization](/articles/cpp/cpp-05-性能优化技术/)
-- [下一篇：Design Patterns in C++](/articles/cpp/cpp-07-设计模式实践/)
+- [上一篇：Performance Optimization](@/articles/cpp/cpp-05-性能优化技术.md)
+- [下一篇：Design Patterns in C++](@/articles/cpp/cpp-07-设计模式实践.md)

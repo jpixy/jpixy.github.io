@@ -1,6 +1,7 @@
 +++
-title = "27.网络问题排查实战"
+title = "网络问题排查实战"
 date = 2026-01-21
+weight = 27000
 description = "SRE网络问题排查完整指南：连接失败、延迟高、丢包、MTU、TCP连接状态、Idle连接问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "网络", "排查", "MTU", "TCP", "Idle连接", "CLOSE_WAIT", "TIME_WAIT", "VPN"]
@@ -1917,5 +1918,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：压力测试实战指南](/articles/sre/sre-26-压力测试实战指南/)
-- [下一篇：CPU问题排查实战](/articles/sre/sre-28-CPU问题排查实战/)
+- [上一篇：压力测试实战指南](@/articles/sre/sre-26-压力测试实战指南.md)
+- [下一篇：CPU问题排查实战](@/articles/sre/sre-28-CPU问题排查实战.md)

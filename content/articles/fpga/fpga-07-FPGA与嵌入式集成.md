@@ -1,6 +1,7 @@
 +++
-title = "07.FPGA与嵌入式集成"
+title = "FPGA与嵌入式集成"
 date = 2026-01-20
+weight = 7000
 description = "SoC设计：FPGA+处理器、AXI总线、软硬件协同、Zynq实践"
 [taxonomies]
 tags = ["FPGA", "SoC", "AXI"]
@@ -254,5 +255,5 @@ FPGA与处理器的结合发挥各自优势，是现代嵌入式系统的重要�
 
 ## 相关文章
 
-- [上一篇：高级设计技术](/articles/fpga/fpga-06-高级设计技术/)
-- [下一篇：FPGA面试指南](/articles/fpga/fpga-08-FPGA面试指南/)
+- [上一篇：高级设计技术](@/articles/fpga/fpga-06-高级设计技术.md)
+- [下一篇：FPGA面试指南](@/articles/fpga/fpga-08-FPGA面试指南.md)

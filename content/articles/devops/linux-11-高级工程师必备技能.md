@@ -1,6 +1,7 @@
 +++
-title = "11.Linux高级工程师必备技能详解"
+title = "Linux高级工程师必备技能详解"
 date = 2026-01-12
+weight = 11000
 description = "面向HFT/量化交易等高性能场景的Linux系统工程师核心技能清单"
 [taxonomies]
 tags = ["linux", "devops", "performance", "hft"]
@@ -770,5 +771,5 @@ dmesg -T | tail -50
 
 ## 相关文章
 
-- [上一篇：Linux自动化运维深度指南](/articles/devops/linux-10-自动化运维指南/)
-- [下一篇：BIOS与硬件级调优指南](/articles/devops/linux-12-BIOS与硬件级调优/)
+- [上一篇：Linux自动化运维深度指南](@/articles/devops/linux-10-自动化运维指南.md)
+- [下一篇：BIOS与硬件级调优指南](@/articles/devops/linux-12-BIOS与硬件级调优.md)

@@ -1,6 +1,7 @@
 +++
-title = "37.应用性能分析实战"
+title = "应用性能分析实战"
 date = 2026-01-21
+weight = 37000
 description = "SRE应用性能分析完整指南：火焰图、调用链追踪、APM工具的使用与性能问题定位"
 [taxonomies]
 tags = ["SRE", "性能", "火焰图", "APM", "排查", "实战"]
@@ -1066,6 +1067,6 @@ ls -la $OUTPUT_DIR
 
 ## 相关文章
 
-- [上一篇：高可用与故障切换实战](/articles/sre/sre-36-高可用与故障切换实战/)
-- [下一篇：监控告警排查实战](/articles/sre/sre-38-监控告警排查实战/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/) - perf 底层原理详解
+- [上一篇：高可用与故障切换实战](@/articles/sre/sre-36-高可用与故障切换实战.md)
+- [下一篇：监控告警排查实战](@/articles/sre/sre-38-监控告警排查实战.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md) - perf 底层原理详解

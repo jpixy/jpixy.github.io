@@ -1,6 +1,7 @@
 +++
-title = "24. Advanced Template Techniques"
+title = "Advanced Template Techniques"
 date = 2026-01-21
+weight = 24000
 description = "深入剖析C++模板高级技术，包括变参模板、模板特化、CRTP深入、Expression Templates、Tag Dispatch等核心技术"
 [taxonomies]
 tags = ["C++", "模板", "泛型编程", "元编程", "HFT"]
@@ -552,5 +553,5 @@ void save(const T& obj) {
 
 ## 相关文章
 
-- [上一篇：Compiler Optimization and Profiling (HFT)](/articles/cpp/cpp-23-HFT编译器优化与Profile/)
-- [下一篇：C++20/23 New Features](/articles/cpp/cpp-25-C++20-23新特性详解/)
+- [上一篇：Compiler Optimization and Profiling (HFT)](@/articles/cpp/cpp-23-HFT编译器优化与Profile.md)
+- [下一篇：C++20/23 New Features](@/articles/cpp/cpp-25-C++20-23新特性详解.md)

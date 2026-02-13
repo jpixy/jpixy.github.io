@@ -1,6 +1,7 @@
 +++
-title = "59.SRE面试题-系统设计与架构"
+title = "SRE面试题-系统设计与架构"
 date = 2026-01-21
+weight = 59000
 description = "SRE面试必备：高可用设计、负载均衡、限流降级、分布式系统等核心问题详解"
 [taxonomies]
 tags = ["SRE", "面试", "系统设计", "高可用", "分布式", "架构"]
@@ -929,5 +930,5 @@ return 1
 
 ## 相关文章
 
-- [上一篇：SRE面试题-监控与故障排查](/articles/sre/sre-58-SRE面试题-监控与故障排查/)
-- [下一篇：低延迟系统运维指南(HFT)](/articles/sre/sre-60-低延迟系统运维指南/)
+- [上一篇：SRE面试题-监控与故障排查](@/articles/sre/sre-58-SRE面试题-监控与故障排查.md)
+- [下一篇：低延迟系统运维指南(HFT)](@/articles/sre/sre-60-低延迟系统运维指南.md)

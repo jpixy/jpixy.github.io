@@ -1,6 +1,7 @@
 +++
-title = "28.内核笔试题-文件系统与VFS"
+title = "内核笔试题-文件系统与VFS"
 date = 2026-01-31
+weight = 28000
 description = "Linux内核文件系统与VFS笔试题：VFS架构、inode、dentry、页缓存、文件操作深度解析"
 [taxonomies]
 tags = ["Linux", "笔试", "VFS", "文件系统", "inode", "页缓存"]
@@ -1458,5 +1459,5 @@ int main() {
 
 ## 导航
 
-- [上一篇：内核面试题-系统调用](/articles/linux/linux-27-内核面试题-系统调用/)
-- [下一篇：内核面试题-文件系统与VFS](/articles/linux/linux-29-内核面试题-文件系统与VFS/)
+- [上一篇：内核面试题-系统调用](@/articles/linux/linux-27-内核面试题-系统调用.md)
+- [下一篇：内核面试题-文件系统与VFS](@/articles/linux/linux-29-内核面试题-文件系统与VFS.md)

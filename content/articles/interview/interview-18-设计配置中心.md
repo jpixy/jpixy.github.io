@@ -1,7 +1,8 @@
 +++
-title = "18.如何设计一个配置中心"
+title = "如何设计一个配置中心"
 description = "分布式配置中心设计：配置管理、动态更新、灰度发布与高可用方案"
 date = 2025-01-16
+weight = 18000
 [taxonomies]
 tags = ["interview", "system-design", "configuration", "distributed"]
 +++
@@ -364,5 +365,5 @@ A：加密存储，客户端解密；特殊权限控制；审计日志。
 
 ## 相关文章
 
-- [上一篇：如何设计一个高性能定时器系统](/articles/interview/interview-17-设计高性能定时器/)
-- [下一篇：如何设计一个短链接服务](/articles/interview/interview-19-设计短链接服务/)
+- [上一篇：如何设计一个高性能定时器系统](@/articles/interview/interview-17-设计高性能定时器.md)
+- [下一篇：如何设计一个短链接服务](@/articles/interview/interview-19-设计短链接服务.md)

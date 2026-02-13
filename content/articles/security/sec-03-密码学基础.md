@@ -1,6 +1,7 @@
 +++
-title = "03.密码学基础"
+title = "密码学基础"
 date = 2026-01-19
+weight = 3000
 description = "密码学基础：对称加密、非对称加密、哈希、数字签名、PKI"
 [taxonomies]
 tags = ["安全", "密码学", "加密"]
@@ -263,5 +264,5 @@ AEAD避免了单独使用加密和MAC可能导致的错误组合。现代系统�
 
 ## 相关文章
 
-- [上一篇：Web安全详解](/articles/security/sec-02-Web安全详解/)
-- [下一篇：认证与授权](/articles/security/sec-04-认证与授权/)
+- [上一篇：Web安全详解](@/articles/security/sec-02-Web安全详解.md)
+- [下一篇：认证与授权](@/articles/security/sec-04-认证与授权.md)

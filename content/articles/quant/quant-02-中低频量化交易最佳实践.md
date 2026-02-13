@@ -1,6 +1,7 @@
 +++
-title = "02 - 中低频量化交易最佳实践"
+title = "中低频量化交易最佳实践"
 date = 2025-01-15
+weight = 2000
 description = "适合个人投资者的中低频量化交易策略开发、回测、执行的最佳实践指南"
 [taxonomies]
 tags = ["quant", "trading", "mid-frequency", "best-practices"]
@@ -409,5 +410,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：01 - 个人量化交易入门指南](/articles/quant/quant-01-个人量化交易入门指南/)
-- [下一篇：03 - 中国大陆量化交易接口与数据](/articles/quant/quant-03-中国大陆量化交易接口与数据/)
+- [上一篇：01 - 个人量化交易入门指南](@/articles/quant/quant-01-个人量化交易入门指南.md)
+- [下一篇：03 - 中国大陆量化交易接口与数据](@/articles/quant/quant-03-中国大陆量化交易接口与数据.md)

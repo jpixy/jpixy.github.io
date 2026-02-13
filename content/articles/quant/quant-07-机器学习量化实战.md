@@ -1,6 +1,7 @@
 +++
-title = "07 - 机器学习量化实战"
+title = "机器学习量化实战"
 date = 2025-01-15
+weight = 7000
 description = "机器学习在量化交易中的应用：特征工程、模型选择、过拟合控制、ML策略实战"
 [taxonomies]
 tags = ["quant", "machine-learning", "feature-engineering", "xgboost", "deep-learning"]
@@ -624,5 +625,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：06 - 量化交易风险管理与资金管理](/articles/quant/quant-06-量化交易风险管理与资金管理/)
-- [下一篇：08 - 回测系统设计与实现](/articles/quant/quant-08-回测系统设计与实现/)
+- [上一篇：06 - 量化交易风险管理与资金管理](@/articles/quant/quant-06-量化交易风险管理与资金管理.md)
+- [下一篇：08 - 回测系统设计与实现](@/articles/quant/quant-08-回测系统设计与实现.md)

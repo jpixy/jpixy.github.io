@@ -1,7 +1,8 @@
 +++
-title = "25 - 用户态网络协议栈设计"
+title = "用户态网络协议栈设计"
 description = "Kernel Bypass 技术与高性能用户态协议栈架构设计详解"
 date = 2025-02-07
+weight = 25000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -720,7 +721,7 @@ graph TB
 
 ## 相关文章
 
-- [04 - DPDK 详解](/articles/networking/net-04-DPDK详解/)
-- [24 - DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
-- [13 - 高性能网络架构](/articles/networking/net-13-高性能网络架构/)
-- [07 - TCP 协议详解](/articles/networking/net-07-TCP协议详解/)
+- [04 - DPDK 详解](@/articles/networking/net-04-DPDK详解.md)
+- [24 - DPU 与智能网卡技术详解](@/articles/networking/net-24-DPU与智能网卡技术详解.md)
+- [13 - 高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)
+- [07 - TCP 协议详解](@/articles/networking/net-07-TCP协议详解.md)

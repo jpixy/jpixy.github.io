@@ -1,7 +1,8 @@
 +++
-title = "12. Compile-Time Computation and constexpr"
+title = "Compile-Time Computation and constexpr"
 slug = "cpp-17-编译期计算与constexpr"
 date = 2026-01-21
+weight = 12000
 description = "深入剖析C++编译期计算、constexpr函数、consteval、编译期容器等核心概念，将运行时开销转移到编译期"
 [taxonomies]
 tags = ["C++", "constexpr", "编译期计算", "模板元编程", "性能优化"]
@@ -428,5 +429,5 @@ static_assert(factorial_constexpr(5) == 120);
 
 ## 相关文章
 
-- [上一篇：Virtual Functions and Polymorphism](/articles/cpp/cpp-11-虚函数与多态底层实现/)
-- [下一篇：Type Traits and SFINAE](/articles/cpp/cpp-13-类型萃取与SFINAE详解/)
+- [上一篇：Virtual Functions and Polymorphism](@/articles/cpp/cpp-11-虚函数与多态底层实现.md)
+- [下一篇：Type Traits and SFINAE](@/articles/cpp/cpp-13-类型萃取与SFINAE详解.md)

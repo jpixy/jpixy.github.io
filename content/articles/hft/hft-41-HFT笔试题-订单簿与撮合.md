@@ -1,6 +1,7 @@
 +++
-title = "41.HFT笔试题-订单簿与撮合"
+title = "HFT笔试题-订单簿与撮合"
 date = 2026-02-02
+weight = 41000
 description = "HFT笔试：订单簿实现、撮合引擎、价格优先时间优先、订单类型"
 [taxonomies]
 tags = ["HFT", "笔试", "订单簿", "撮合", "数据结构"]
@@ -572,6 +573,6 @@ ImbalanceMetrics calculate_imbalance(const OrderBook& book, int levels = 5) {
 
 ## 相关文章
 
-- [OrderBook实现详解](/articles/hft/hft-13-OrderBook实现详解/)
-- [交易所撮合引擎原理](/articles/hft/hft-18-交易所撮合引擎原理/)
-- [HFT面试题-算法与数据结构](/articles/hft/hft-23-HFT面试题-算法与数据结构/)
+- [OrderBook实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)
+- [交易所撮合引擎原理](@/articles/hft/hft-18-交易所撮合引擎原理.md)
+- [HFT面试题-算法与数据结构](@/articles/hft/hft-23-HFT面试题-算法与数据结构.md)

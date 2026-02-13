@@ -1,7 +1,8 @@
 +++
-title = "09. Copy and Move Semantics"
+title = "Copy and Move Semantics"
 slug = "cpp-14-深浅拷贝与移动语义详解"
 date = 2026-01-21
+weight = 9000
 description = "深入剖析C++拷贝语义与移动语义的底层机制，包括拷贝构造、移动构造、RVO/NRVO、完美转发等核心概念，HFT系统性能优化必备知识"
 [taxonomies]
 tags = ["C++", "移动语义", "性能优化", "HFT", "面试"]
@@ -683,5 +684,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Project Practices and Toolchain](/articles/cpp/cpp-08-项目实践与工具链/)
-- [下一篇：Memory Model and Cache Optimization (HFT)](/articles/cpp/cpp-10-HFT内存模型与缓存优化/)
+- [上一篇：Project Practices and Toolchain](@/articles/cpp/cpp-08-项目实践与工具链.md)
+- [下一篇：Memory Model and Cache Optimization (HFT)](@/articles/cpp/cpp-10-HFT内存模型与缓存优化.md)

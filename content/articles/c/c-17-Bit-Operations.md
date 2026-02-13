@@ -1,6 +1,7 @@
 +++
-title = "17. Bit Operations and Tricks"
+title = "Bit Operations and Tricks"
 date = 2026-01-30
+weight = 17000
 description = "Essential bit manipulation techniques for systems programming and interviews"
 [taxonomies]
 tags = ["C", "Bit Operations", "Algorithms", "Interview"]
@@ -366,5 +367,5 @@ uint32_t reverse_bits(uint32_t n) {
 
 ## 相关文章
 
-- [上一篇：Volatile and Memory Barriers (HFT)](/articles/c/c-16-Volatile-Memory-Barriers/)
-- [下一篇：Lock-Free Ring Buffer (HFT)](/articles/c/c-18-Ring-Buffer/)
+- [上一篇：Volatile and Memory Barriers (HFT)](@/articles/c/c-16-Volatile-Memory-Barriers.md)
+- [下一篇：Lock-Free Ring Buffer (HFT)](@/articles/c/c-18-Ring-Buffer.md)

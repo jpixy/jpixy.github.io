@@ -1,7 +1,8 @@
 +++
-title = "34.数据库选型指南"
+title = "数据库选型指南"
 description = "数据库选型：关系型、NoSQL、NewSQL的特点对比与场景选择"
 date = 2025-01-16
+weight = 34000
 [taxonomies]
 tags = ["interview", "database", "mysql", "mongodb", "architecture"]
 +++
@@ -344,4 +345,4 @@ A：明确需求（数据模型、规模、一致性）→ 评估候选方案 �
 
 ## 相关文章
 
-- [上一篇：服务注册发现与API网关](/articles/interview/interview-33-服务注册与API网关/)
+- [上一篇：服务注册发现与API网关](@/articles/interview/interview-33-服务注册与API网关.md)

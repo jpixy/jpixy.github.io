@@ -1,6 +1,7 @@
 +++
-title = "43.C++面试题-内存与对象模型"
+title = "C++面试题-内存与对象模型"
 date = 2026-01-31
+weight = 43000
 description = "C++内存与对象模型面试题：虚函数表、内存布局、智能指针、RAII深度解析"
 [taxonomies]
 tags = ["C++", "面试", "内存", "对象模型", "智能指针"]
@@ -2021,5 +2022,5 @@ std::unique_ptr<T> make_unique(Args... args) {
 
 ## 相关文章
 
-- [上一篇：C++笔试题-模板元编程](/articles/cpp/cpp-42-C++笔试题-模板元编程/)
-- [下一篇：C++面试题-并发与多线程](/articles/cpp/cpp-44-C++面试题-并发与多线程/)
+- [上一篇：C++笔试题-模板元编程](@/articles/cpp/cpp-42-C++笔试题-模板元编程.md)
+- [下一篇：C++面试题-并发与多线程](@/articles/cpp/cpp-44-C++面试题-并发与多线程.md)

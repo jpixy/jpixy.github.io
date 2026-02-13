@@ -1,7 +1,8 @@
 +++
-title = "20. Cache-Friendly Data Structures (HFT)"
+title = "Cache-Friendly Data Structures (HFT)"
 slug = "cpp-25-HFT缓存友好数据结构设计"
 date = 2026-01-21
+weight = 20000
 description = "深入剖析缓存友好的数据结构设计，包括SoA vs AoS、数据布局优化、Cache-Oblivious算法，HFT低延迟系统核心技术"
 [taxonomies]
 tags = ["C++", "缓存优化", "数据结构", "HFT", "低延迟", "Data-Oriented Design"]
@@ -416,5 +417,5 @@ vtune -collect memory-access ./app
 
 ## 相关文章
 
-- [上一篇：Branch Prediction and Hot Path (HFT)](/articles/cpp/cpp-19-HFT分支预测与热路径优化/)
-- [下一篇：CPU Affinity and NUMA (HFT)](/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化/)
+- [上一篇：Branch Prediction and Hot Path (HFT)](@/articles/cpp/cpp-19-HFT分支预测与热路径优化.md)
+- [下一篇：CPU Affinity and NUMA (HFT)](@/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化.md)

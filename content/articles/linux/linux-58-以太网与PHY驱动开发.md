@@ -1,6 +1,7 @@
 +++
-title = "58.以太网与 PHY 驱动开发"
+title = "以太网与 PHY 驱动开发"
 date = 2026-01-21
+weight = 58000
 description = "Linux 以太网驱动开发完整指南：net_device 架构、NAPI、PHY 驱动、MAC 驱动、DMA 描述符、ethtool 接口"
 [taxonomies]
 tags = ["linux", "driver", "ethernet", "phy", "networking", "kernel"]
@@ -1584,7 +1585,7 @@ $ sysctl -w net.core.netdev_budget_usecs=8000
 
 ## 相关文章
 
-- [上一篇：57 - iptables/nftables 防火墙深度解析](/articles/linux/linux-57-iptables-nftables防火墙深度解析/)
-- [下一篇：59 - PCIe 驱动开发](/articles/linux/linux-59-PCIe驱动开发/)
-- [30 - Linux 设备驱动模型详解](/articles/linux/linux-30-Linux设备驱动模型详解/)
-- [09 - Linux 内核网络栈详解](/articles/linux/linux-09-Linux内核网络栈详解/)
+- [上一篇：57 - iptables/nftables 防火墙深度解析](@/articles/linux/linux-57-iptables-nftables防火墙深度解析.md)
+- [下一篇：59 - PCIe 驱动开发](@/articles/linux/linux-59-PCIe驱动开发.md)
+- [30 - Linux 设备驱动模型详解](@/articles/linux/linux-30-Linux设备驱动模型详解.md)
+- [09 - Linux 内核网络栈详解](@/articles/linux/linux-09-Linux内核网络栈详解.md)

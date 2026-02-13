@@ -1,7 +1,8 @@
 +++
-title = "11. Virtual Functions and Polymorphism"
+title = "Virtual Functions and Polymorphism"
 slug = "cpp-16-虚函数与多态底层实现"
 date = 2026-01-21
+weight = 11000
 description = "深入剖析C++虚函数表(vtable)、虚函数指针(vptr)、动态分发机制、CRTP静态多态等底层实现原理，HFT系统性能优化必备知识"
 [taxonomies]
 tags = ["C++", "虚函数", "多态", "vtable", "HFT", "性能优化"]
@@ -634,5 +635,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Memory Model and Cache Optimization (HFT)](/articles/cpp/cpp-10-HFT内存模型与缓存优化/)
-- [下一篇：Compile-Time Computation and constexpr](/articles/cpp/cpp-12-编译期计算与constexpr/)
+- [上一篇：Memory Model and Cache Optimization (HFT)](@/articles/cpp/cpp-10-HFT内存模型与缓存优化.md)
+- [下一篇：Compile-Time Computation and constexpr](@/articles/cpp/cpp-12-编译期计算与constexpr.md)

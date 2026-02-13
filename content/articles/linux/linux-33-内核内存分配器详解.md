@@ -1,6 +1,7 @@
 +++
-title = "33.内核内存分配器详解"
+title = "内核内存分配器详解"
 date = 2026-02-02
+weight = 33000
 description = "Linux内核内存分配：Buddy System、Slab/Slub、kmalloc、页回收、OOM"
 [taxonomies]
 tags = ["Linux", "内核", "内存", "Buddy", "Slab"]
@@ -567,6 +568,6 @@ slub_debug=FZPU
 
 ## 相关文章
 
-- [上一篇：内核模块编程指南](/articles/linux/linux-32-内核模块编程指南/)
-- [内核内存管理详解](/articles/linux/linux-16-内核内存管理详解/)
-- [OS笔试题-内存管理](/articles/os/os-10-OS笔试题-内存管理/)
+- [上一篇：内核模块编程指南](@/articles/linux/linux-32-内核模块编程指南.md)
+- [内核内存管理详解](@/articles/linux/linux-16-内核内存管理详解.md)
+- [OS笔试题-内存管理](@/articles/os/os-10-OS笔试题-内存管理.md)

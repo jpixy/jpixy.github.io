@@ -1,7 +1,8 @@
 +++
-title = "13.内核调试工具详解"
+title = "内核调试工具详解"
 description = "Linux内核调试与追踪工具深度解析：Crash崩溃分析、GDB高级调试、Ftrace函数追踪、BPFtrace可编程追踪"
 date = 2026-01-27
+weight = 13000
 draft = false
 [taxonomies]
 tags = ["Linux", "Debug", "Crash", "GDB", "Ftrace", "BPFtrace", "eBPF"]
@@ -540,6 +541,6 @@ offcputime       # 离CPU时间分析
 
 ## 相关文章
 
-- [Linux核心概念索引](/articles/00-glossary/glossary-01-linux-concepts/) - 概念速查
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/) - perf/strace/Valgrind
-- [内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/) - 内核/Glibc/Systemd
+- [Linux核心概念索引](@/articles/00-glossary/glossary-01-linux-concepts.md) - 概念速查
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md) - perf/strace/Valgrind
+- [内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md) - 内核/Glibc/Systemd

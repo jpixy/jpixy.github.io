@@ -1,6 +1,7 @@
 +++
-title = "29.内核面试题-文件系统与VFS"
+title = "内核面试题-文件系统与VFS"
 date = 2026-01-31
+weight = 29000
 description = "Linux内核文件系统与VFS面试题：VFS架构、inode、dentry、页缓存、文件操作深度解析"
 [taxonomies]
 tags = ["Linux", "面试", "VFS", "文件系统", "inode", "页缓存"]
@@ -1053,4 +1054,4 @@ module_exit(myfs_exit);
 
 ## 导航
 
-- [上一篇：内核笔试题-文件系统与VFS](/articles/linux/linux-28-内核笔试题-文件系统与VFS/)
+- [上一篇：内核笔试题-文件系统与VFS](@/articles/linux/linux-28-内核笔试题-文件系统与VFS.md)

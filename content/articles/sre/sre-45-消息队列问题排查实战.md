@@ -1,6 +1,7 @@
 +++
-title = "45.消息队列问题排查实战"
+title = "消息队列问题排查实战"
 date = 2026-01-21
+weight = 45000
 description = "SRE消息队列问题排查完整指南：Kafka、RabbitMQ、Redis队列的积压、延迟、故障排查"
 [taxonomies]
 tags = ["SRE", "消息队列", "Kafka", "RabbitMQ", "排查", "实战"]
@@ -817,5 +818,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：故障排查方法论与检查清单](/articles/sre/sre-44-故障排查方法论与检查清单/)
-- [下一篇：缓存问题排查实战](/articles/sre/sre-46-缓存问题排查实战/)
+- [上一篇：故障排查方法论与检查清单](@/articles/sre/sre-44-故障排查方法论与检查清单.md)
+- [下一篇：缓存问题排查实战](@/articles/sre/sre-46-缓存问题排查实战.md)

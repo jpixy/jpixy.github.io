@@ -1,6 +1,7 @@
 +++
-title = "02.进程与线程"
+title = "进程与线程"
 date = 2026-01-19
+weight = 2000
 description = "进程与线程：fork、exec、pthread、进程间通信机制"
 [taxonomies]
 tags = ["Linux", "进程", "线程", "IPC"]
@@ -240,5 +241,5 @@ Unix域socket用于本机进程通信，比网络socket更高效。
 
 ## 相关文章
 
-- [上一篇：Linux系统编程概述](/articles/linux/linux-01-系统编程概述/)
-- [下一篇：内存管理](/articles/linux/linux-03-内存管理/)
+- [上一篇：Linux系统编程概述](@/articles/linux/linux-01-系统编程概述.md)
+- [下一篇：内存管理](@/articles/linux/linux-03-内存管理.md)

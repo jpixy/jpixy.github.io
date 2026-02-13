@@ -1,6 +1,7 @@
 +++
-title = "51.负载均衡深入排查实战"
+title = "负载均衡深入排查实战"
 date = 2026-01-21
+weight = 51000
 description = "SRE负载均衡深入排查完整指南：Nginx、HAProxy、Envoy高级配置与问题排查"
 [taxonomies]
 tags = ["SRE", "负载均衡", "Nginx", "HAProxy", "Envoy", "排查", "实战"]
@@ -850,5 +851,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：Elasticsearch问题排查实战](/articles/sre/sre-50-Elasticsearch问题排查实战/)
-- [下一篇：定时任务问题排查实战](/articles/sre/sre-52-定时任务问题排查实战/)
+- [上一篇：Elasticsearch问题排查实战](@/articles/sre/sre-50-Elasticsearch问题排查实战.md)
+- [下一篇：定时任务问题排查实战](@/articles/sre/sre-52-定时任务问题排查实战.md)

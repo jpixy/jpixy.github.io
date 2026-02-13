@@ -1,7 +1,8 @@
 +++
-title = "19.如何设计一个短链接服务"
+title = "如何设计一个短链接服务"
 description = "短链接服务的系统设计：ID生成、编码策略、重定向优化与高可用架构"
 date = 2025-01-16
+weight = 19000
 [taxonomies]
 tags = ["interview", "system-design", "architecture", "url-shortener"]
 +++
@@ -285,5 +286,5 @@ A：无状态服务多实例、缓存集群、数据库主从、多机房部署�
 
 ## 相关文章
 
-- [上一篇：如何设计一个配置中心](/articles/interview/interview-18-设计配置中心/)
-- [下一篇：如何设计一个下载功能](/articles/interview/interview-20-设计下载功能/)
+- [上一篇：如何设计一个配置中心](@/articles/interview/interview-18-设计配置中心.md)
+- [下一篇：如何设计一个下载功能](@/articles/interview/interview-20-设计下载功能.md)

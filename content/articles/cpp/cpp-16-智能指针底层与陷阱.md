@@ -1,7 +1,8 @@
 +++
-title = "16. Smart Pointers Internals and Pitfalls"
+title = "Smart Pointers Internals and Pitfalls"
 slug = "cpp-21-智能指针底层与陷阱"
 date = 2026-01-21
+weight = 16000
 description = "深入剖析unique_ptr、shared_ptr、weak_ptr的底层实现、性能开销和常见陷阱"
 [taxonomies]
 tags = ["C++", "智能指针", "内存管理", "性能优化", "RAII"]
@@ -374,5 +375,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Custom Memory Allocators (HFT)](/articles/cpp/cpp-15-HFT自定义内存分配器设计/)
-- [下一篇：Lock-Free Data Structures (HFT)](/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解/)
+- [上一篇：Custom Memory Allocators (HFT)](@/articles/cpp/cpp-15-HFT自定义内存分配器设计.md)
+- [下一篇：Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)

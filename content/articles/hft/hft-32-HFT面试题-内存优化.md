@@ -1,6 +1,7 @@
 +++
-title = "32.HFT面试题-内存优化"
+title = "HFT面试题-内存优化"
 date = 2026-01-31
+weight = 32000
 description = "HFT内存优化面试题：大页、预分配、对象池、内存对齐、NUMA深度解析"
 [taxonomies]
 tags = ["HFT", "面试", "内存", "大页", "低延迟"]
@@ -826,5 +827,5 @@ int max = (a > b) ? a : b;  // 可能生成 cmov
 
 ## 相关文章
 
-- [上一篇：HFT面试题-CPU与缓存优化](/articles/hft/hft-31-HFT面试题-CPU与缓存优化/)
-- [下一篇：HFT面试题-锁与无锁编程](/articles/hft/hft-33-HFT面试题-锁与无锁编程/)
+- [上一篇：HFT面试题-CPU与缓存优化](@/articles/hft/hft-31-HFT面试题-CPU与缓存优化.md)
+- [下一篇：HFT面试题-锁与无锁编程](@/articles/hft/hft-33-HFT面试题-锁与无锁编程.md)

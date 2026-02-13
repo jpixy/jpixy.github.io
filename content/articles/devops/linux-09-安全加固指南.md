@@ -1,6 +1,7 @@
 +++
-title = "09.Linux安全加固深度指南"
+title = "Linux安全加固深度指南"
 date = 2026-01-12
+weight = 9000
 description = "SSH加固、防火墙、审计系统、SELinux/AppArmor的深度剖析与最佳实践"
 [taxonomies]
 tags = ["linux", "security", "ssh", "firewall", "selinux"]
@@ -1032,5 +1033,5 @@ aa-logprof
 
 ## 相关文章
 
-- [上一篇：Linux网络技术深度指南](/articles/devops/linux-08-网络技术指南/)
-- [下一篇：Linux自动化运维深度指南](/articles/devops/linux-10-自动化运维指南/)
+- [上一篇：Linux网络技术深度指南](@/articles/devops/linux-08-网络技术指南.md)
+- [下一篇：Linux自动化运维深度指南](@/articles/devops/linux-10-自动化运维指南.md)

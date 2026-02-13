@@ -1,7 +1,8 @@
 +++
-title = "06.To B销售全流程详解"
+title = "To B销售全流程详解"
 description = "企业级销售从线索到回款的完整流程、关键节点与最佳实践"
 date = 2025-01-16
+weight = 6000
 [taxonomies]
 tags = ["sales", "business", "b2b", "enterprise", "sales-process"]
 +++
@@ -400,5 +401,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：售前工作方法论](/articles/business/biz-05-售前工作方法论/)
-- [下一篇：销售谈判与成单技巧](/articles/business/biz-07-销售谈判与成单技巧/)
+- [上一篇：售前工作方法论](@/articles/business/biz-05-售前工作方法论.md)
+- [下一篇：销售谈判与成单技巧](@/articles/business/biz-07-销售谈判与成单技巧.md)

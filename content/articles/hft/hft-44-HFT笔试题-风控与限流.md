@@ -1,6 +1,7 @@
 +++
-title = "44.HFT笔试题-风控与限流"
+title = "HFT笔试题-风控与限流"
 date = 2026-02-02
+weight = 44000
 description = "HFT笔试：风控系统、限流算法、熔断器、订单检查"
 [taxonomies]
 tags = ["HFT", "笔试", "风控", "限流", "熔断"]
@@ -715,6 +716,6 @@ private:
 
 ## 相关文章
 
-- [HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)
-- [交易系统容错与恢复](/articles/hft/hft-21-交易系统容错与恢复/)
-- [HFT合规与监管要求](/articles/hft/hft-40-HFT合规与监管要求/)
+- [HFT风控系统设计](@/articles/hft/hft-15-HFT风控系统设计.md)
+- [交易系统容错与恢复](@/articles/hft/hft-21-交易系统容错与恢复.md)
+- [HFT合规与监管要求](@/articles/hft/hft-40-HFT合规与监管要求.md)

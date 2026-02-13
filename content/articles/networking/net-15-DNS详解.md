@@ -1,6 +1,7 @@
 +++
-title = "15.DNS详解"
+title = "DNS详解"
 date = 2026-01-19
+weight = 15000
 description = "DNS深入解析：解析原理、记录类型、DNS架构、性能优化、安全防护"
 [taxonomies]
 tags = ["网络", "DNS", "协议"]
@@ -388,5 +389,5 @@ DNS是互联网的基础设施，其可用性直接影响所有网络服务。�
 
 ## 相关文章
 
-- [上一篇：HTTP协议详解](/articles/networking/net-14-HTTP协议详解/)
-- [下一篇：网络安全基础](/articles/networking/net-16-网络安全基础/)
+- [上一篇：HTTP协议详解](@/articles/networking/net-14-HTTP协议详解.md)
+- [下一篇：网络安全基础](@/articles/networking/net-16-网络安全基础.md)

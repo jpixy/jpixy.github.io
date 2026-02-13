@@ -1,6 +1,7 @@
 +++
-title = "55.nsenter/unshare命名空间工具深度解析"
+title = "nsenter/unshare命名空间工具深度解析"
 date = 2026-01-31
+weight = 55000
 description = "nsenter/unshare深度解析：Linux命名空间、容器调试、进程隔离"
 [taxonomies]
 tags = ["Linux", "namespace", "nsenter", "unshare", "容器"]
@@ -408,5 +409,5 @@ sudo nsenter -t $PID -n ss -tn
 
 ## 相关文章
 
-- [上一篇：objdump/readelf二进制分析深度解析](/articles/linux/linux-54-objdump-readelf二进制分析深度解析/)
-- [Docker容器技术](/articles/sre/sre-20-Docker容器技术/)
+- [上一篇：objdump/readelf二进制分析深度解析](@/articles/linux/linux-54-objdump-readelf二进制分析深度解析.md)
+- [Docker容器技术](@/articles/sre/sre-20-SRE笔试题-综合实战题.md)

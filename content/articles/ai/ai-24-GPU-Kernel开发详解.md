@@ -1,6 +1,7 @@
 +++
-title = "24.GPU Kernel开发详解"
+title = "GPU Kernel开发详解"
 date = 2026-02-06
+weight = 24000
 description = "高性能GPU Kernel开发：从GEMM到Attention，深入理解Tensor Core、内存优化、CUTLASS架构"
 [taxonomies]
 tags = ["cuda", "kernel", "gemm", "tensor-core", "cutlass", "optimization"]
@@ -1679,7 +1680,7 @@ ncu --diff v1.ncu-rep v2.ncu-rep
 
 ## 相关文章
 
-- [上一篇：23 - AI 底层开发路线图](/articles/ai/ai-23-AI底层开发路线图/)
-- [下一篇：25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [22 - CUDA 实战应用场景详解](/articles/ai/ai-22-CUDA实战应用场景详解/)
+- [上一篇：23 - AI 底层开发路线图](@/articles/ai/ai-23-AI底层开发路线图.md)
+- [下一篇：25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [22 - CUDA 实战应用场景详解](@/articles/ai/ai-22-CUDA实战应用场景详解.md)

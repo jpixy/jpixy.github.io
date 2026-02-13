@@ -1,6 +1,7 @@
 +++
-title = "36. Interview - Memory and Object Model"
+title = "Interview - Memory and Object Model"
 date = 2026-01-21
+weight = 36000
 description = "C++内存管理与对象模型面试题汇总，包括内存布局、构造析构、虚函数表、继承等核心概念"
 [taxonomies]
 tags = ["C++", "面试题", "内存管理", "对象模型"]
@@ -403,5 +404,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：Interview - Language Basics](/articles/cpp/cpp-35-C++面试题-语言基础篇/)
-- [下一篇：Interview - Concurrency and Multithreading](/articles/cpp/cpp-37-C++面试题-并发与多线程/)
+- [上一篇：Interview - Language Basics](@/articles/cpp/cpp-35-C++面试题-语言基础篇.md)
+- [下一篇：Interview - Concurrency and Multithreading](@/articles/cpp/cpp-37-C++面试题-并发与多线程.md)

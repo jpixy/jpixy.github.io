@@ -1,6 +1,7 @@
 +++
-title = "18. Lock-Free Ring Buffer (HFT)"
+title = "Lock-Free Ring Buffer (HFT)"
 date = 2026-01-30
+weight = 18000
 description = "High-performance lock-free ring buffer implementation for low-latency systems"
 [taxonomies]
 tags = ["C", "HFT", "Lock-Free", "Data Structures", "Low-Latency"]
@@ -362,5 +363,5 @@ int main(void) {
 
 ## 相关文章
 
-- [上一篇：Bit Operations and Tricks](/articles/c/c-17-Bit-Operations/)
-- [下一篇：Cache-Friendly C Programming (HFT)](/articles/c/c-19-Cache-Friendly-Programming/)
+- [上一篇：Bit Operations and Tricks](@/articles/c/c-17-Bit-Operations.md)
+- [下一篇：Cache-Friendly C Programming (HFT)](@/articles/c/c-19-Cache-Friendly-Programming.md)

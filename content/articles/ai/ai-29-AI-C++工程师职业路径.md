@@ -1,7 +1,8 @@
 +++
-title = "29 - AI C++ 工程师职业路径"
+title = "AI C++ 工程师职业路径"
 description = "从技能要求到学习路线，全面解析 AI 领域 C++ 工程师的职业发展"
 date = 2025-02-06
+weight = 29000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -738,6 +739,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：28 - AI 技术栈全景图](/articles/ai/ai-28-AI技术栈全景图/)
-- [下一篇：30 - 从 CUDA 算子到推理系统](/articles/ai/ai-30-从CUDA算子到推理系统/)
-- [AI 推理系统架构概述](/articles/ai-infra/infra-01-AI推理系统架构概述/)
+- [上一篇：28 - AI 技术栈全景图](@/articles/ai/ai-28-AI技术栈全景图.md)
+- [下一篇：30 - 从 CUDA 算子到推理系统](@/articles/ai/ai-30-从CUDA算子到推理系统.md)
+- [AI 推理系统架构概述](@/articles/ai-infra/ai-infra-01-AI推理系统架构概述.md)

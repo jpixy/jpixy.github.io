@@ -1,7 +1,8 @@
 +++
-title = "55.Python双下划线变量详解"
+title = "Python双下划线变量详解"
 description = "Python模块级双下划线变量详解：__name__、__main__、__file__、__all__等核心概念"
 date = 2026-01-27
+weight = 55000
 draft = false
 [taxonomies]
 tags = ["Python", "Module", "Dunder", "Best Practice"]
@@ -654,13 +655,13 @@ mypackage/
 
 ## 概念速查
 
-- [Python核心概念索引](/articles/00-glossary/glossary-06-python-concepts/) - GIL、装饰器、生成器等概念速查
-- [Python类特殊方法](/articles/python/py-08-类特殊方法/) - `__init__`、`__str__` 等类魔术方法
-- [Python定制类特殊方法大全](/articles/python/py-09-定制类特殊方法/) - 完整的类 dunder 方法列表
+- [Python核心概念索引](@/articles/00-glossary/glossary-06-python-concepts.md) - GIL、装饰器、生成器等概念速查
+- [Python类特殊方法](@/articles/python/py-08-类特殊方法.md) - `__init__`、`__str__` 等类魔术方法
+- [Python定制类特殊方法大全](@/articles/python/py-09-定制类特殊方法.md) - 完整的类 dunder 方法列表
 
 ---
 
 ## 相关文章
 
-- [上一篇：Python异步编程详解](/articles/python/py-54-Python异步编程详解/)
-- [下一篇：Python常见高难度面试问题](/articles/python/py-56-高难度面试问题/)
+- [上一篇：Python异步编程详解](@/articles/python/py-54-Python异步编程详解.md)
+- [下一篇：Python常见高难度面试问题](@/articles/python/py-56-高难度面试问题.md)

@@ -1,6 +1,7 @@
 +++
-title = "41.iperf3网络带宽测试深度解析"
+title = "iperf3网络带宽测试深度解析"
 date = 2026-01-31
+weight = 41000
 description = "iperf3深度解析：网络带宽测试原理、TCP/UDP测试、多流并发、性能调优"
 [taxonomies]
 tags = ["Linux", "iperf3", "网络", "带宽测试", "性能"]
@@ -620,5 +621,5 @@ iperf3 -c 192.168.1.100 -u -b 64K -l 160 -t 60
 
 ## 相关文章
 
-- [上一篇：GDB调试器深度解析](/articles/linux/linux-40-GDB调试器深度解析/)
-- [网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)
+- [上一篇：GDB调试器深度解析](@/articles/linux/linux-40-GDB调试器深度解析.md)
+- [网络性能分析与调优](@/articles/networking/net-11-网络性能分析与调优.md)

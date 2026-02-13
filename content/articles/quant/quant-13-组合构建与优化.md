@@ -1,6 +1,7 @@
 +++
-title = "13 - 组合构建与优化"
+title = "组合构建与优化"
 date = 2025-01-15
+weight = 13000
 description = "量化投资组合构建：资产配置、风险平价、组合优化、再平衡策略"
 [taxonomies]
 tags = ["quant", "portfolio", "optimization", "risk-parity", "asset-allocation"]
@@ -574,5 +575,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：12 - 期权量化入门](/articles/quant/quant-12-期权量化入门/)
-- [下一篇：14 - 量化交易常见错误案例](/articles/quant/quant-14-量化交易常见错误案例/)
+- [上一篇：12 - 期权量化入门](@/articles/quant/quant-12-期权量化入门.md)
+- [下一篇：14 - 量化交易常见错误案例](@/articles/quant/quant-14-量化交易常见错误案例.md)

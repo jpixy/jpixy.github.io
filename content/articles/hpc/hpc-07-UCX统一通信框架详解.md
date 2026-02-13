@@ -1,7 +1,8 @@
 +++
-title = "07 - UCX 统一通信框架详解"
+title = "UCX 统一通信框架详解"
 description = "Unified Communication X 架构、编程接口与高性能应用开发"
 date = 2025-02-07
+weight = 7000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -583,7 +584,7 @@ export UCX_MAX_RNDV_RAILS=2
 
 ## 相关文章
 
-- [03 - MPI 分布式编程](/articles/hpc/hpc-03-MPI分布式编程/)
-- [04 - GPU 集群通信技术](/articles/hpc/hpc-04-GPU集群通信技术/)
-- [05 - 分布式训练技术详解](/articles/hpc/hpc-05-分布式训练技术详解/)
-- [net-21 - RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
+- [03 - MPI 分布式编程](@/articles/hpc/hpc-03-MPI分布式编程.md)
+- [04 - GPU 集群通信技术](@/articles/hpc/hpc-04-GPU集群通信技术.md)
+- [05 - 分布式训练技术详解](@/articles/hpc/hpc-05-分布式训练技术详解.md)
+- [net-21 - RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)

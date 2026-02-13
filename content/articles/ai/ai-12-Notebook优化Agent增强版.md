@@ -1,6 +1,7 @@
 +++
-title = "12.Notebook优化Agent增强版"
+title = "Notebook优化Agent增强版"
 date = 2025-01-14
+weight = 12000
 description = "在基础版Notebook优化Agent上，集成RAG知识检索和MCP协议，实现更智能的错误诊断和修复"
 [taxonomies]
 tags = ["ai", "agent", "jupyter", "rag", "mcp", "langchain", "langgraph"]
@@ -376,5 +377,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：Notebook执行Agent架构设计](/articles/ai/ai-11-Notebook执行Agent架构设计/)
-- [下一篇：AI高级知识与技能详解](/articles/ai/ai-13-AI高级知识与技能详解/)
+- [上一篇：Notebook执行Agent架构设计](@/articles/ai/ai-11-Notebook执行Agent架构设计.md)
+- [下一篇：AI高级知识与技能详解](@/articles/ai/ai-13-AI高级知识与技能详解.md)

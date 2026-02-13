@@ -1,6 +1,7 @@
 +++
-title = "09.嵌入式Linux驱动开发"
+title = "嵌入式Linux驱动开发"
 date = 2026-01-19
+weight = 9000
 description = "嵌入式Linux驱动开发：字符设备、平台驱动、设备树、内核模块、Buildroot/Yocto"
 [taxonomies]
 tags = ["embedded", "linux", "driver", "kernel", "devicetree", "yocto"]
@@ -585,5 +586,5 @@ ls /sys/bus/platform/devices/
 
 ## 相关文章
 
-- [上一篇：嵌入式项目实战案例](/articles/embedded/embedded-08-项目实战案例/)
-- [下一篇：无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)
+- [上一篇：嵌入式项目实战案例](@/articles/embedded/embedded-08-项目实战案例.md)
+- [下一篇：无线通信与物联网协议](@/articles/embedded/embedded-10-无线通信与物联网协议.md)

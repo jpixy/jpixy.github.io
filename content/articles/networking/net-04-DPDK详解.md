@@ -1,6 +1,7 @@
 +++
-title = "04.DPDK详解"
+title = "DPDK详解"
 slug = "net-DPDK详解"
+weight = 4000
 +++
 
 # DPDK介绍
@@ -87,5 +88,5 @@ include $(RTE_SDK)/mk/rte.extapp.mk
 
 ## 相关文章
 
-- [上一篇：OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
-- [下一篇：eBPF详解](/articles/networking/net-05-eBPF详解/)
+- [上一篇：OpenvSwitch介绍](@/articles/networking/net-03-OpenvSwitch介绍.md)
+- [下一篇：eBPF详解](@/articles/networking/net-05-eBPF详解.md)

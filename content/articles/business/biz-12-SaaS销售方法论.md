@@ -1,7 +1,8 @@
 +++
-title = "12.SaaS销售方法论"
+title = "SaaS销售方法论"
 description = "MEDDIC、Challenger Sale、SPIN等现代销售方法论详解与实战应用"
 date = 2025-01-16
+weight = 12000
 [taxonomies]
 tags = ["sales", "business", "saas", "methodology", "meddic", "challenger"]
 +++
@@ -645,5 +646,5 @@ T - Timeline（时间）
 
 ## 相关文章
 
-- [上一篇：政府与央国企销售](/articles/business/biz-11-政府与央国企销售/)
-- [下一篇：定价策略与报价管理](/articles/business/biz-13-定价策略与报价管理/)
+- [上一篇：政府与央国企销售](@/articles/business/biz-11-政府与央国企销售.md)
+- [下一篇：定价策略与报价管理](@/articles/business/biz-13-定价策略与报价管理.md)

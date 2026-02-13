@@ -1,6 +1,7 @@
 +++
-title = "03.可观测性体系建设"
+title = "可观测性体系建设"
 date = 2026-01-19
+weight = 3000
 description = "可观测性三大支柱：Metrics指标体系、Logs日志管理、Traces分布式追踪，以及统一可观测性平台建设"
 [taxonomies]
 tags = ["SRE", "可观测性", "监控"]
@@ -461,5 +462,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：SLI/SLO/SLA与错误预算](/articles/sre/sre-02-SLI-SLO-SLA与错误预算/)
-- [下一篇：告警设计与On-Call实践](/articles/sre/sre-04-告警设计与OnCall实践/)
+- [上一篇：SLI/SLO/SLA与错误预算](@/articles/sre/sre-02-SLI-SLO-SLA与错误预算.md)
+- [下一篇：告警设计与On-Call实践](@/articles/sre/sre-04-告警设计与OnCall实践.md)

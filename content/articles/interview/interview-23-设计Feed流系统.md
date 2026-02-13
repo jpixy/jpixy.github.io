@@ -1,7 +1,8 @@
 +++
-title = "23.如何设计一个Feed流系统"
+title = "如何设计一个Feed流系统"
 description = "Feed流系统架构设计：推拉模式、Timeline构建、热点处理与实时性保障"
 date = 2025-01-16
+weight = 23000
 [taxonomies]
 tags = ["interview", "system-design", "feed", "timeline", "social"]
 +++
@@ -327,5 +328,5 @@ A：推模式下取关后收件箱已有的内容不删除（复杂且必要性�
 
 ## 相关文章
 
-- [上一篇：如何设计一个推荐系统](/articles/interview/interview-22-设计推荐系统/)
-- [下一篇：如何设计一个即时通讯系统](/articles/interview/interview-24-设计即时通讯系统/)
+- [上一篇：如何设计一个推荐系统](@/articles/interview/interview-22-设计推荐系统.md)
+- [下一篇：如何设计一个即时通讯系统](@/articles/interview/interview-24-设计即时通讯系统.md)

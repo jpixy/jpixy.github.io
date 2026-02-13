@@ -1,6 +1,7 @@
 +++
-title = "35.eBPF技术深度解析"
+title = "eBPF技术深度解析"
 date = 2026-02-02
+weight = 35000
 description = "eBPF原理、程序类型、Map、验证器、CO-RE、应用场景"
 [taxonomies]
 tags = ["Linux", "eBPF", "内核", "性能", "网络"]
@@ -898,6 +899,6 @@ A: CO-RE 解决 eBPF 程序的可移植性问题。通过 BTF 类型信息和运
 
 ## 相关文章
 
-- [Linux内核网络栈详解](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [内核调试工具详解](/articles/linux/linux-13-内核调试工具详解/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [Linux内核网络栈详解](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [内核调试工具详解](@/articles/linux/linux-13-内核调试工具详解.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

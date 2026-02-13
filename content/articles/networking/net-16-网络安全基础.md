@@ -1,6 +1,7 @@
 +++
-title = "16.网络安全基础"
+title = "网络安全基础"
 date = 2026-01-19
+weight = 16000
 description = "网络安全核心概念：加密技术、TLS/SSL、防火墙、常见攻击与防护"
 [taxonomies]
 tags = ["网络", "安全", "加密"]
@@ -355,5 +356,5 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 ## 相关文章
 
-- [上一篇：DNS详解](/articles/networking/net-15-DNS详解/)
-- [下一篇：网络故障排查](/articles/networking/net-17-网络故障排查/)
+- [上一篇：DNS详解](@/articles/networking/net-15-DNS详解.md)
+- [下一篇：网络故障排查](@/articles/networking/net-17-网络故障排查.md)

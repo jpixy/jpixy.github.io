@@ -1,6 +1,7 @@
 +++
-title = "04.企业级云VPN服务架构设计与技术深度解析"
+title = "企业级云VPN服务架构设计与技术深度解析"
 slug = "insights-企业级云VPN服务架构设计与技术深度解析"
+weight = 4000
 +++
 
 # 企业级云 VPN 服务架构设计与技术深度解析
@@ -942,5 +943,5 @@ time ping -c 1 <peer_ip>
 
 ## 相关文章
 
-- [上一篇：Staff级别面试项目选择与技术亮点分析](/articles/insights/insights-03-Staff面试项目分析/)
-- [下一篇：网络是计算存储网络三大件的瓶颈吗](/articles/insights/insights-05-网络瓶颈分析/)
+- [上一篇：Staff级别面试项目选择与技术亮点分析](@/articles/insights/insights-03-Staff面试项目分析.md)
+- [下一篇：网络是计算存储网络三大件的瓶颈吗](@/articles/insights/insights-05-网络瓶颈分析.md)

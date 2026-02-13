@@ -1,6 +1,7 @@
 +++
-title = "05.信号处理"
+title = "信号处理"
 date = 2026-01-19
+weight = 5000
 description = "Linux信号机制：信号类型、处理方式、可靠信号、信号安全"
 [taxonomies]
 tags = ["Linux", "信号", "异步"]
@@ -245,5 +246,5 @@ signalfd将信号转换为文件描述符事件，可以用read读取，配合ep
 
 ## 相关文章
 
-- [上一篇：文件系统与I/O](/articles/linux/linux-04-文件系统与IO/)
-- [下一篇：网络编程](/articles/linux/linux-06-网络编程/)
+- [上一篇：文件系统与I/O](@/articles/linux/linux-04-文件系统与IO.md)
+- [下一篇：网络编程](@/articles/linux/linux-06-网络编程.md)

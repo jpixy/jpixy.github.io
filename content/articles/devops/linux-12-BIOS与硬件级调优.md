@@ -1,6 +1,7 @@
 +++
-title = "12.BIOS与硬件级调优指南"
+title = "BIOS与硬件级调优指南"
 date = 2026-01-12
+weight = 12000
 description = "C-States、P-States、Turbo Boost等硬件级性能调优的深度剖析"
 [taxonomies]
 tags = ["linux", "performance", "bios", "hardware", "tuning"]
@@ -529,4 +530,4 @@ perf stat -e power/energy-cores/,power/energy-pkg/ -I 1000
 
 ## 相关文章
 
-- [上一篇：Linux高级工程师必备技能详解](/articles/devops/linux-11-高级工程师必备技能/)
+- [上一篇：Linux高级工程师必备技能详解](@/articles/devops/linux-11-高级工程师必备技能.md)

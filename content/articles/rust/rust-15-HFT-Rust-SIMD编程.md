@@ -1,6 +1,7 @@
 +++
-title = "15.HFT-Rust SIMD编程"
+title = "HFT-Rust SIMD编程"
 date = 2026-01-21
+weight = 15000
 description = "深入剖析Rust的SIMD编程技术，包括std::simd、packed_simd、portable_simd以及向量化优化案例"
 [taxonomies]
 tags = ["Rust", "SIMD", "向量化", "性能优化", "HFT"]
@@ -458,5 +459,5 @@ fn prefetch_next<T>(data: &[T], current_idx: usize) {
 
 ## 相关文章
 
-- [上一篇：HFT-Rust Lock-Free编程](/articles/rust/rust-14-HFT-Rust-Lock-Free编程/)
-- [下一篇：HFT-Rust高性能网络编程](/articles/rust/rust-16-HFT-Rust高性能网络编程/)
+- [上一篇：HFT-Rust Lock-Free编程](@/articles/rust/rust-14-HFT-Rust-Lock-Free编程.md)
+- [下一篇：HFT-Rust高性能网络编程](@/articles/rust/rust-16-HFT-Rust高性能网络编程.md)

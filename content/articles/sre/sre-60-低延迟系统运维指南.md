@@ -1,8 +1,9 @@
 +++
-title = "60.低延迟系统运维指南(HFT)"
+title = "低延迟系统运维指南(HFT)"
 slug = "sre-61-低延迟系统运维指南"
 description = "深入讲解HFT环境下低延迟系统的运维方法论：延迟监控、抖动分析、内核参数调优、硬件配置最佳实践与告警设计"
 date = 2026-01-21
+weight = 60000
 draft = false
 [taxonomies]
 tags = ["SRE", "HFT", "低延迟", "运维", "性能优化"]
@@ -951,5 +952,5 @@ HFT环境下，每一微秒的改进都可能带来显著的收益优势。SRE�
 
 ## 相关文章
 
-- [上一篇：SRE面试题-系统设计与架构](/articles/sre/sre-59-SRE面试题-系统设计与架构/)
-- [下一篇：HFT基础设施最佳实践(HFT)](/articles/sre/sre-61-HFT基础设施最佳实践/)
+- [上一篇：SRE面试题-系统设计与架构](@/articles/sre/sre-59-SRE面试题-系统设计与架构.md)
+- [下一篇：HFT基础设施最佳实践(HFT)](@/articles/sre/sre-61-HFT基础设施最佳实践.md)

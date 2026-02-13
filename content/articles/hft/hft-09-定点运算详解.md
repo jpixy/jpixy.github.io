@@ -1,6 +1,7 @@
 +++
-title = "09.定点运算详解"
+title = "定点运算详解"
 date = 2026-01-13
+weight = 9000
 description = "高频交易系统定点运算深度解析：精度控制、运算优化、溢出处理与金融计算实践"
 [taxonomies]
 tags = ["hft", "optimization", "fixed-point", "arithmetic"]
@@ -519,5 +520,5 @@ cny_raw = (usd_raw * rate_raw) / 10000
 
 ## 相关文章
 
-- [上一篇：流水线技术详解](/articles/hft/hft-08-流水线技术详解/)
-- [下一篇：低延迟系统前沿技术与新趋势](/articles/hft/hft-10-前沿技术与新趋势/)
+- [上一篇：流水线技术详解](@/articles/hft/hft-08-流水线技术详解.md)
+- [下一篇：低延迟系统前沿技术与新趋势](@/articles/hft/hft-10-前沿技术与新趋势.md)

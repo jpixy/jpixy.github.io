@@ -1,7 +1,8 @@
 +++
-title = "14.销售预测与漏斗管理"
+title = "销售预测与漏斗管理"
 description = "销售漏斗管理、销售预测方法、Pipeline健康度与CRM最佳实践"
 date = 2025-01-16
+weight = 14000
 [taxonomies]
 tags = ["sales", "business", "pipeline", "forecast", "crm"]
 +++
@@ -529,5 +530,5 @@ QBR内容：
 
 ## 相关文章
 
-- [上一篇：定价策略与报价管理](/articles/business/biz-13-定价策略与报价管理/)
-- [下一篇：数字营销与内容营销](/articles/business/biz-15-数字营销与内容营销/)
+- [上一篇：定价策略与报价管理](@/articles/business/biz-13-定价策略与报价管理.md)
+- [下一篇：数字营销与内容营销](@/articles/business/biz-15-数字营销与内容营销.md)

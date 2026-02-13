@@ -1,6 +1,7 @@
 +++
-title = "09.OS笔试题-进程与线程"
+title = "OS笔试题-进程与线程"
 date = 2026-01-31
+weight = 9000
 description = "操作系统进程与线程笔试题：进程状态、线程模型、IPC机制、进程调度算法"
 [taxonomies]
 tags = ["操作系统", "笔试", "进程", "线程", "IPC"]
@@ -1137,8 +1138,8 @@ void *thread_func(void *arg) {
 
 ## 相关文章
 
-- [上一篇：安全与保护](/articles/os/os-08-安全与保护/)
-- [下一篇：OS笔试题-内存管理](/articles/os/os-10-OS笔试题-内存管理/)
+- [上一篇：安全与保护](@/articles/os/os-08-安全与保护.md)
+- [下一篇：OS笔试题-内存管理](@/articles/os/os-10-OS笔试题-内存管理.md)
 
 **知识基础**：
-- [进程管理](/articles/os/os-02-进程管理/)
+- [进程管理](@/articles/os/os-02-进程管理.md)

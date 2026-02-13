@@ -1,6 +1,7 @@
 +++
-title = "06.分布式存储"
+title = "分布式存储"
 date = 2026-01-20
+weight = 6000
 description = "分布式存储：复制策略、分片技术、一致性哈希、数据放置"
 [taxonomies]
 tags = ["分布式", "存储", "分片"]
@@ -263,5 +264,5 @@ HBase、Cassandra的设计来源。
 
 ## 相关文章
 
-- [上一篇：Raft算法详解](/articles/distributed/dist-05-Raft算法详解/)
-- [下一篇：分布式事务](/articles/distributed/dist-07-分布式事务/)
+- [上一篇：Raft算法详解](@/articles/distributed/dist-05-Raft算法详解.md)
+- [下一篇：分布式事务](@/articles/distributed/dist-07-分布式事务.md)

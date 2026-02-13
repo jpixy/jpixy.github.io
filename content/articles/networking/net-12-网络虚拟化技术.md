@@ -1,6 +1,7 @@
 +++
-title = "12.网络虚拟化技术"
+title = "网络虚拟化技术"
 date = 2026-01-19
+weight = 12000
 description = "网络虚拟化详解：Linux虚拟网络设备、VLAN、VXLAN、网络命名空间、容器网络"
 [taxonomies]
 tags = ["网络", "虚拟化", "容器"]
@@ -426,5 +427,5 @@ ovs-ofctl add-flow br0 "in_port=1,actions=output:2"
 
 ## 相关文章
 
-- [上一篇：网络性能分析与调优](/articles/networking/net-11-网络性能分析与调优/)
-- [下一篇：高性能网络架构](/articles/networking/net-13-高性能网络架构/)
+- [上一篇：网络性能分析与调优](@/articles/networking/net-11-网络性能分析与调优.md)
+- [下一篇：高性能网络架构](@/articles/networking/net-13-高性能网络架构.md)

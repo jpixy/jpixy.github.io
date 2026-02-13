@@ -1,6 +1,7 @@
 +++
-title = "04.项目交付与敏捷实践"
+title = "项目交付与敏捷实践"
 date = 2025-01-15
+weight = 4000
 description = "技术管理者项目交付指南：Scrum/Kanban实践、Sprint管理、风险控制、延期处理等核心话题"
 [taxonomies]
 tags = ["leadership", "management", "agile", "scrum", "project-management", "interview"]
@@ -570,5 +571,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：员工发展与辅导指南](/articles/leadership/mgr-03-员工发展与辅导指南/)
-- [下一篇：团队冲突与管理挑战详解](/articles/leadership/mgr-05-团队冲突与管理挑战/)
+- [上一篇：员工发展与辅导指南](@/articles/leadership/mgr-03-员工发展与辅导指南.md)
+- [下一篇：团队冲突与管理挑战详解](@/articles/leadership/mgr-05-团队冲突与管理挑战.md)

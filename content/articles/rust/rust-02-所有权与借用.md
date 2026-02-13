@@ -1,7 +1,8 @@
 +++
-title = "02.所有权与借用"
+title = "所有权与借用"
 slug = "rust-02-所有权与借用"
 date = 2026-01-19
+weight = 2000
 description = "Rust核心：所有权规则、移动语义、借用规则、引用、生命周期入门"
 [taxonomies]
 tags = ["Rust", "所有权", "借用"]
@@ -383,5 +384,5 @@ fn process(s: Option<String>) -> String {
 
 ## 相关文章
 
-- [上一篇：Rust语言基础](/articles/rust/rust-01-Rust语言基础/)
-- [下一篇：生命周期详解](/articles/rust/rust-03-生命周期详解/)
+- [上一篇：Rust语言基础](@/articles/rust/rust-01-Rust语言基础.md)
+- [下一篇：生命周期详解](@/articles/rust/rust-03-生命周期详解.md)

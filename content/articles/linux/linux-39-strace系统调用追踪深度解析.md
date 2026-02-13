@@ -1,6 +1,7 @@
 +++
-title = "39.strace系统调用追踪深度解析"
+title = "strace系统调用追踪深度解析"
 date = 2026-01-31
+weight = 39000
 description = "strace深度解析：ptrace原理、系统调用追踪、性能分析、故障排查实战"
 [taxonomies]
 tags = ["Linux", "strace", "系统调用", "调试", "故障排查"]
@@ -614,6 +615,6 @@ grep "ENOENT" trace.log
 
 ## 相关文章
 
-- [上一篇：Valgrind内存分析工具深度解析](/articles/linux/linux-38-Valgrind内存分析工具深度解析/)
-- [perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
-- [eBPF技术深度解析](/articles/linux/linux-35-eBPF技术深度解析/)
+- [上一篇：Valgrind内存分析工具深度解析](@/articles/linux/linux-38-Valgrind内存分析工具深度解析.md)
+- [perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md)
+- [eBPF技术深度解析](@/articles/linux/linux-35-eBPF技术深度解析.md)

@@ -1,6 +1,7 @@
 +++
-title = "38.Valgrind内存分析工具深度解析"
+title = "Valgrind内存分析工具深度解析"
 date = 2026-01-31
+weight = 38000
 description = "Valgrind深度解析：工作原理、Memcheck内存检测、Helgrind线程分析、Cachegrind缓存分析"
 [taxonomies]
 tags = ["Linux", "Valgrind", "内存分析", "调试", "性能分析"]
@@ -811,6 +812,6 @@ exit 0
 
 ## 相关文章
 
-- [上一篇：perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
-- [内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+- [上一篇：perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)
+- [内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)

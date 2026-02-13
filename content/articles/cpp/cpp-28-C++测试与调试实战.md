@@ -1,6 +1,7 @@
 +++
-title = "28. Testing and Debugging"
+title = "Testing and Debugging"
 date = 2026-01-21
+weight = 28000
 description = "深入剖析C++测试框架和调试工具，包括GTest/GMock、Sanitizers、Valgrind、GDB高级技巧等"
 [taxonomies]
 tags = ["C++", "测试", "调试", "GTest", "Sanitizers", "Valgrind"]
@@ -576,5 +577,5 @@ void processOrder(const Order& order) {
 
 ## 相关文章
 
-- [上一篇：String Processing Optimization (HFT)](/articles/cpp/cpp-27-HFT字符串处理优化/)
-- [下一篇：Benchmarking and Performance Testing](/articles/cpp/cpp-29-性能基准测试设计/)
+- [上一篇：String Processing Optimization (HFT)](@/articles/cpp/cpp-27-HFT字符串处理优化.md)
+- [下一篇：Benchmarking and Performance Testing](@/articles/cpp/cpp-29-性能基准测试设计.md)

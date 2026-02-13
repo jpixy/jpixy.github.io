@@ -1,6 +1,7 @@
 +++
-title = "21.交易系统容错与恢复"
+title = "交易系统容错与恢复"
 date = 2026-01-21
+weight = 21000
 description = "深入剖析交易系统容错与恢复，包括热备/温备/冷备、主从切换、状态同步和订单恢复"
 [taxonomies]
 tags = ["HFT", "容错", "高可用", "恢复", "交易系统"]
@@ -662,5 +663,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：高性能序列化技术](/articles/hft/hft-20-高性能序列化技术/)
-- [下一篇：HFT面试题-系统设计](/articles/hft/hft-22-HFT面试题-系统设计/)
+- [上一篇：高性能序列化技术](@/articles/hft/hft-20-高性能序列化技术.md)
+- [下一篇：HFT面试题-系统设计](@/articles/hft/hft-22-HFT面试题-系统设计.md)

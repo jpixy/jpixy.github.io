@@ -1,6 +1,7 @@
 +++
-title = "05 - 个人量化常用策略详解"
+title = "个人量化常用策略详解"
 date = 2025-01-15
+weight = 5000
 description = "适合个人投资者的量化策略详解：趋势跟踪、均值回归、动量、因子投资等经典策略原理与实现"
 [taxonomies]
 tags = ["quant", "trading", "strategy", "momentum", "mean-reversion", "factor-investing"]
@@ -565,5 +566,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：04 - 全球量化交易接口与数据](/articles/quant/quant-04-全球量化交易接口与数据/)
-- [下一篇：06 - 量化交易风险管理与资金管理](/articles/quant/quant-06-量化交易风险管理与资金管理/)
+- [上一篇：04 - 全球量化交易接口与数据](@/articles/quant/quant-04-全球量化交易接口与数据.md)
+- [下一篇：06 - 量化交易风险管理与资金管理](@/articles/quant/quant-06-量化交易风险管理与资金管理.md)

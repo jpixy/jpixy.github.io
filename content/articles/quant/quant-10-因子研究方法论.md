@@ -1,6 +1,7 @@
 +++
-title = "10 - 因子研究方法论"
+title = "因子研究方法论"
 date = 2025-01-15
+weight = 10000
 description = "量化因子投资方法论：因子挖掘、因子检验、因子合成、因子衰减与监控"
 [taxonomies]
 tags = ["quant", "factor-investing", "alpha", "research", "ic-analysis"]
@@ -644,5 +645,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：09 - 从回测到实盘](/articles/quant/quant-09-从回测到实盘/)
-- [下一篇：11 - 加密货币量化交易](/articles/quant/quant-11-加密货币量化/)
+- [上一篇：09 - 从回测到实盘](@/articles/quant/quant-09-从回测到实盘.md)
+- [下一篇：11 - 加密货币量化交易](@/articles/quant/quant-11-加密货币量化.md)

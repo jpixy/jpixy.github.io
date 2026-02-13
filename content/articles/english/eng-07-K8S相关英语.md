@@ -1,6 +1,7 @@
 +++
-title = "07.K8S相关英语"
+title = "K8S相关英语"
 slug = "k8s-K8S相关英语"
+weight = 7000
 +++
 
 # Example: Locality-Aware DestinationRule
@@ -728,4 +729,4 @@ Would you like to explore specific configurations (e.g., Istio `ServiceEntry` fo
 
 ## 相关文章
 
-- [上一篇：缺点当成优点表达](/articles/english/eng-06-缺点当优点表达/)
+- [上一篇：缺点当成优点表达](@/articles/english/eng-06-缺点当优点表达.md)

@@ -1,6 +1,7 @@
 +++
-title = "09.高级管理话题-组织预算与向上管理"
+title = "高级管理话题-组织预算与向上管理"
 date = 2025-01-15
+weight = 9000
 description = "Director+级别管理话题：组织架构设计、团队拆分、预算与资源规划、深度向上管理技巧"
 [taxonomies]
 tags = ["leadership", "management", "organization", "budget", "managing-up", "director", "interview"]
@@ -415,5 +416,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：技术领导力与架构治理](/articles/leadership/mgr-08-技术领导力与架构治理/)
-- [下一篇：管理者面试高频问题汇总](/articles/leadership/mgr-10-管理者面试问题汇总/)
+- [上一篇：技术领导力与架构治理](@/articles/leadership/mgr-08-技术领导力与架构治理.md)
+- [下一篇：管理者面试高频问题汇总](@/articles/leadership/mgr-10-管理者面试问题汇总.md)

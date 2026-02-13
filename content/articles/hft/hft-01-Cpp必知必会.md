@@ -1,6 +1,7 @@
 +++
-title = "01.HFT领域C++必知必会知识点详解"
+title = "HFT领域C++必知必会知识点详解"
 date = 2025-01-10
+weight = 1000
 description = "高频交易系统中 C++ 开发者必须掌握的核心知识点，涵盖低延迟优化、内存管理、并发编程、网络编程等关键技术"
 +++
 
@@ -729,4 +730,4 @@ private:
 
 ## 相关文章
 
-- [下一篇：FIX协议详解](/articles/hft/hft-02-FIX协议详解/)
+- [下一篇：FIX协议详解](@/articles/hft/hft-02-FIX协议详解.md)

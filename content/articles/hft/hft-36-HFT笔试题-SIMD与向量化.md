@@ -1,6 +1,7 @@
 +++
-title = "36.HFT笔试题-SIMD与向量化"
+title = "HFT笔试题-SIMD与向量化"
 date = 2026-01-31
+weight = 36000
 description = "HFT SIMD与向量化笔试题：SSE/AVX指令集、内存对齐、向量化计算、编译器自动向量化深度解析"
 [taxonomies]
 tags = ["HFT", "笔试", "SIMD", "AVX", "向量化", "性能优化"]
@@ -1646,5 +1647,5 @@ mindmap
 
 ## 导航
 
-- [上一篇：HFT笔试题-网络编程](/articles/hft/hft-35-HFT笔试题-网络编程/)
-- [下一篇：HFT面试题-系统架构](/articles/hft/hft-37-HFT面试题-系统架构/)
+- [上一篇：HFT笔试题-网络编程](@/articles/hft/hft-35-HFT笔试题-网络编程.md)
+- [下一篇：HFT面试题-系统架构](@/articles/hft/hft-37-HFT面试题-系统架构.md)

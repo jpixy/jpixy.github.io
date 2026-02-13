@@ -1,6 +1,7 @@
 +++
-title = "20.内核笔试题-进程调度"
+title = "内核笔试题-进程调度"
 date = 2026-01-31
+weight = 20000
 description = "Linux内核进程调度笔试题：CFS算法、vruntime计算、实时调度、上下文切换"
 [taxonomies]
 tags = ["Linux", "内核", "笔试", "调度", "CFS"]
@@ -1291,8 +1292,8 @@ void scheduler_tick(void) {
 
 ## 相关文章
 
-- [上一篇：内核笔试题-内存管理](/articles/linux/linux-19-内核笔试题-内存管理/)
-- [下一篇：内核笔试题-同步机制](/articles/linux/linux-21-内核笔试题-同步机制/)
+- [上一篇：内核笔试题-内存管理](@/articles/linux/linux-19-内核笔试题-内存管理.md)
+- [下一篇：内核笔试题-同步机制](@/articles/linux/linux-21-内核笔试题-同步机制.md)
 
 **知识基础**：
-- [中断与系统调用详解](/articles/linux/linux-17-中断与系统调用详解/)
+- [中断与系统调用详解](@/articles/linux/linux-17-中断与系统调用详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "11.Notebook执行Agent架构设计"
+title = "Notebook执行Agent架构设计"
 date = 2025-01-13
+weight = 11000
 description = "基于LangGraph设计一个AI Agent，自动将无法一键执行的Notebook改写为可自动化执行的版本"
 [taxonomies]
 tags = ["ai", "agent", "jupyter", "langchain", "langgraph", "automation"]
@@ -442,5 +443,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：AI Agent智能体架构详解](/articles/ai/ai-10-Agent智能体架构详解/)
-- [下一篇：Notebook优化Agent增强版](/articles/ai/ai-12-Notebook优化Agent增强版/)
+- [上一篇：AI Agent智能体架构详解](@/articles/ai/ai-10-Agent智能体架构详解.md)
+- [下一篇：Notebook优化Agent增强版](@/articles/ai/ai-12-Notebook优化Agent增强版.md)

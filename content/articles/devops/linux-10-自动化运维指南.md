@@ -1,6 +1,7 @@
 +++
-title = "10.Linux自动化运维深度指南"
+title = "Linux自动化运维深度指南"
 date = 2026-01-12
+weight = 10000
 description = "Ansible、Terraform、Python自动化的核心概念、架构设计与最佳实践"
 [taxonomies]
 tags = ["linux", "automation", "ansible", "terraform", "python"]
@@ -590,5 +591,5 @@ infrastructure/
 
 ## 相关文章
 
-- [上一篇：Linux安全加固深度指南](/articles/devops/linux-09-安全加固指南/)
-- [下一篇：Linux高级工程师必备技能详解](/articles/devops/linux-11-高级工程师必备技能/)
+- [上一篇：Linux安全加固深度指南](@/articles/devops/linux-09-安全加固指南.md)
+- [下一篇：Linux高级工程师必备技能详解](@/articles/devops/linux-11-高级工程师必备技能.md)

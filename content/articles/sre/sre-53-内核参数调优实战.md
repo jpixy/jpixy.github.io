@@ -1,6 +1,7 @@
 +++
-title = "53.内核参数调优实战"
+title = "内核参数调优实战"
 date = 2026-01-21
+weight = 53000
 description = "SRE内核参数调优完整指南：sysctl、ulimit、网络/内存/文件系统调优"
 [taxonomies]
 tags = ["SRE", "内核", "调优", "sysctl", "ulimit", "性能"]
@@ -803,5 +804,5 @@ fs.file-max = 6553560
 
 ## 相关文章
 
-- [上一篇：定时任务问题排查实战](/articles/sre/sre-52-定时任务问题排查实战/)
-- [下一篇：SRE面试题-Linux系统基础](/articles/sre/sre-54-SRE面试题-Linux系统基础/)
+- [上一篇：定时任务问题排查实战](@/articles/sre/sre-52-定时任务问题排查实战.md)
+- [下一篇：SRE面试题-Linux系统基础](@/articles/sre/sre-54-SRE面试题-Linux系统基础.md)

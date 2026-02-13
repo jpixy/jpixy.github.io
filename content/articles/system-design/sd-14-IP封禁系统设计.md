@@ -1,6 +1,7 @@
 +++
-title = "14.IP封禁系统设计 (IP Blocking System)"
+title = "IP封禁系统设计 (IP Blocking System)"
 date = 2026-01-29
+weight = 14000
 description = "系统设计面试真题：大规模IP封禁系统完整设计，包含IPv4 Bitmap、IPv6 Radix Tree、多层缓存、实时同步、灰度上线"
 [taxonomies]
 tags = ["系统设计", "面试", "IP封禁", "Bitmap", "Radix Tree", "分布式"]
@@ -1013,4 +1014,4 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：分布式限流器设计 (Rate Limiter)](/articles/system-design/sd-13-分布式限流器设计/)
+- [上一篇：分布式限流器设计 (Rate Limiter)](@/articles/system-design/sd-13-分布式限流器设计.md)

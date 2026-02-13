@@ -1,6 +1,7 @@
 +++
-title = "42.HFT笔试题-延迟测量与优化"
+title = "HFT笔试题-延迟测量与优化"
 date = 2026-02-02
+weight = 42000
 description = "HFT笔试：延迟测量、时间戳精度、热路径优化、分支预测"
 [taxonomies]
 tags = ["HFT", "笔试", "延迟", "性能", "优化"]
@@ -596,6 +597,6 @@ void trading_thread() {
 
 ## 相关文章
 
-- [HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)
-- [HFT笔试题-性能分析](/articles/hft/hft-29-HFT笔试题-性能分析/)
-- [HFT面试题-CPU与缓存优化](/articles/hft/hft-31-HFT面试题-CPU与缓存优化/)
+- [HFT系统延迟分析方法](@/articles/hft/hft-12-HFT系统延迟分析方法.md)
+- [HFT笔试题-性能分析](@/articles/hft/hft-29-HFT笔试题-性能分析.md)
+- [HFT面试题-CPU与缓存优化](@/articles/hft/hft-31-HFT面试题-CPU与缓存优化.md)

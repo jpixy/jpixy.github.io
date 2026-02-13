@@ -1,6 +1,7 @@
 +++
-title = "03.一致性模型详解"
+title = "一致性模型详解"
 date = 2026-01-20
+weight = 3000
 description = "一致性模型：线性化、顺序一致性、因果一致性、最终一致性"
 [taxonomies]
 tags = ["分布式", "一致性", "模型"]
@@ -242,5 +243,5 @@ R + W > N 保证读到最新值。
 
 ## 相关文章
 
-- [上一篇：时间与顺序](/articles/distributed/dist-02-时间与顺序/)
-- [下一篇：Paxos算法详解](/articles/distributed/dist-04-Paxos算法详解/)
+- [上一篇：时间与顺序](@/articles/distributed/dist-02-时间与顺序.md)
+- [下一篇：Paxos算法详解](@/articles/distributed/dist-04-Paxos算法详解.md)

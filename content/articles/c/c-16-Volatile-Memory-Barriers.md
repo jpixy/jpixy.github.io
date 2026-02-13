@@ -1,6 +1,7 @@
 +++
-title = "16. Volatile and Memory Barriers (HFT)"
+title = "Volatile and Memory Barriers (HFT)"
 date = 2026-01-30
+weight = 16000
 description = "Understanding volatile, memory barriers, and compiler/CPU reordering in high-performance C code"
 [taxonomies]
 tags = ["C", "HFT", "Memory", "Concurrency", "Low-Latency"]
@@ -389,5 +390,5 @@ clang -fsanitize=thread # Detect races
 
 ## 相关文章
 
-- [上一篇：Memory Alignment and Struct Packing](/articles/c/c-15-Memory-Alignment/)
-- [下一篇：Bit Operations and Tricks](/articles/c/c-17-Bit-Operations/)
+- [上一篇：Memory Alignment and Struct Packing](@/articles/c/c-15-Memory-Alignment.md)
+- [下一篇：Bit Operations and Tricks](@/articles/c/c-17-Bit-Operations.md)

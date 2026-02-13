@@ -1,7 +1,8 @@
 +++
-title = "06.异步编程"
+title = "异步编程"
 slug = "rust-06-异步编程"
 date = 2026-01-19
+weight = 6000
 description = "Rust异步：async/await、Future、tokio运行时、异步模式"
 [taxonomies]
 tags = ["Rust", "异步", "tokio"]
@@ -479,5 +480,5 @@ Rust的异步编程需要理解Future和运行时的概念，tokio是最常用�
 
 ## 相关文章
 
-- [上一篇：并发编程](/articles/rust/rust-05-并发编程/)
-- [下一篇：嵌入式Rust](/articles/rust/rust-07-嵌入式Rust/)
+- [上一篇：并发编程](@/articles/rust/rust-05-并发编程.md)
+- [下一篇：嵌入式Rust](@/articles/rust/rust-07-嵌入式Rust.md)

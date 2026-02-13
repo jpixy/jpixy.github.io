@@ -1,6 +1,7 @@
 +++
-title = "59.PCIe 驱动开发"
+title = "PCIe 驱动开发"
 date = 2026-01-21
+weight = 59000
 description = "Linux PCIe 驱动开发完整指南：PCIe 基础、配置空间、BAR、DMA、MSI/MSI-X 中断、驱动开发实战"
 [taxonomies]
 tags = ["linux", "driver", "pcie", "kernel", "dma", "interrupt"]
@@ -1333,6 +1334,6 @@ $ echo 0000:00:1f.0 > /sys/kernel/debug/aer_inject/inject
 
 ## 相关文章
 
-- [上一篇：58 - 以太网与 PHY 驱动开发](/articles/linux/linux-58-以太网与PHY驱动开发/)
-- [30 - Linux 设备驱动模型详解](/articles/linux/linux-30-Linux设备驱动模型详解/)
-- [17 - 中断与系统调用详解](/articles/linux/linux-17-中断与系统调用详解/)
+- [上一篇：58 - 以太网与 PHY 驱动开发](@/articles/linux/linux-58-以太网与PHY驱动开发.md)
+- [30 - Linux 设备驱动模型详解](@/articles/linux/linux-30-Linux设备驱动模型详解.md)
+- [17 - 中断与系统调用详解](@/articles/linux/linux-17-中断与系统调用详解.md)

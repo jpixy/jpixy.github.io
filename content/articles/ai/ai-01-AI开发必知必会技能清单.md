@@ -1,6 +1,7 @@
 +++
-title = "01.AI开发必知必会技能清单"
+title = "AI开发必知必会技能清单"
 date = 2026-01-12
+weight = 1000
 description = "2024-2026年AI开发者需要掌握的核心知识与技能体系"
 [taxonomies]
 tags = ["ai", "machine-learning", "deep-learning", "llm"]
@@ -746,4 +747,4 @@ RAG：Retrieval-Augmented Generation for Knowledge-Intensive NLP
 
 ## 相关文章
 
-- [下一篇：大模型训练为什么GPU比CPU更合适](/articles/ai/ai-02-大模型训练为什么GPU比CPU更合适/)
+- [下一篇：大模型训练为什么GPU比CPU更合适](@/articles/ai/ai-02-大模型训练为什么GPU比CPU更合适.md)

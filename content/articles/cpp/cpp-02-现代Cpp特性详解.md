@@ -1,6 +1,7 @@
 +++
-title = "02. Modern C++ Features"
+title = "Modern C++ Features"
 date = 2026-01-19
+weight = 2000
 description = "C++11/14/17/20核心特性：auto、智能指针、lambda、移动语义、并发"
 [taxonomies]
 tags = ["C++", "C++11", "现代C++"]
@@ -405,5 +406,5 @@ std::visit([](auto&& arg) {
 
 ## 相关文章
 
-- [上一篇：C vs C++ Memory Management](/articles/cpp/cpp-01-C和Cpp内存管理对比/)
-- [下一篇：Templates and Generic Programming](/articles/cpp/cpp-03-模板与泛型编程/)
+- [上一篇：C vs C++ Memory Management](@/articles/cpp/cpp-01-C和Cpp内存管理对比.md)
+- [下一篇：Templates and Generic Programming](@/articles/cpp/cpp-03-模板与泛型编程.md)

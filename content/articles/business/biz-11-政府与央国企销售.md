@@ -1,7 +1,8 @@
 +++
-title = "11.政府与央国企销售"
+title = "政府与央国企销售"
 description = "中国政府采购、央企国企销售特点、合规要求与实战策略"
 date = 2025-01-16
+weight = 11000
 [taxonomies]
 tags = ["sales", "business", "government", "enterprise", "china"]
 +++
@@ -673,5 +674,5 @@ Coach（内线）：
 
 ## 相关文章
 
-- [上一篇：商业分析与决策](/articles/business/biz-10-商业分析与决策/)
-- [下一篇：SaaS销售方法论](/articles/business/biz-12-SaaS销售方法论/)
+- [上一篇：商业分析与决策](@/articles/business/biz-10-商业分析与决策.md)
+- [下一篇：SaaS销售方法论](@/articles/business/biz-12-SaaS销售方法论.md)

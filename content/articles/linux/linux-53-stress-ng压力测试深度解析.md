@@ -1,6 +1,7 @@
 +++
-title = "53.stress-ng压力测试深度解析"
+title = "stress-ng压力测试深度解析"
 date = 2026-01-31
+weight = 53000
 description = "stress-ng深度解析：CPU/内存/IO压力测试、系统稳定性验证"
 [taxonomies]
 tags = ["Linux", "stress-ng", "压力测试", "性能", "稳定性"]
@@ -359,5 +360,5 @@ done
 
 ## 相关文章
 
-- [上一篇：iostat IO统计深度解析](/articles/linux/linux-52-iostat-IO统计深度解析/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [上一篇：iostat IO统计深度解析](@/articles/linux/linux-52-iostat-IO统计深度解析.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

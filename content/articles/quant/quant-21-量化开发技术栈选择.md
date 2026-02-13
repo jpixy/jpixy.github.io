@@ -1,6 +1,7 @@
 +++
-title = "21 - 量化开发技术栈选择：Python vs C++ vs Rust"
+title = "量化开发技术栈选择：Python vs C++ vs Rust"
 date = 2025-01-18
+weight = 21000
 description = "深入分析个人量化交易的编程语言选择：Python、C++、Rust的优劣对比，中国大陆与国际市场的接口支持情况"
 [taxonomies]
 tags = ["quant", "programming", "python", "cpp", "rust", "china-market", "global-market"]
@@ -1026,7 +1027,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：20 - 极速交易系统详解](/articles/quant/quant-20-极速交易系统详解/)
-- [下一篇：22 - C++ 个人量化交易实战](/articles/quant/quant-22-Cpp个人量化交易实战/)
-- [18 - 个人自动化量化交易入门](/articles/quant/quant-18-个人自动化量化交易入门/)
-- [19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)
+- [上一篇：20 - 极速交易系统详解](@/articles/quant/quant-20-极速交易系统详解.md)
+- [下一篇：22 - C++ 个人量化交易实战](@/articles/quant/quant-22-Cpp个人量化交易实战.md)
+- [18 - 个人自动化量化交易入门](@/articles/quant/quant-18-个人自动化量化交易入门.md)
+- [19 - CTP 期货开户与期货公司选择](@/articles/quant/quant-19-CTP期货开户与期货公司选择.md)

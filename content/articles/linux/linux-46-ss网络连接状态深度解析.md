@@ -1,6 +1,7 @@
 +++
-title = "46.ss网络连接状态深度解析"
+title = "ss网络连接状态深度解析"
 date = 2026-01-31
+weight = 46000
 description = "ss深度解析：Socket统计、TCP状态、连接分析、netstat替代"
 [taxonomies]
 tags = ["Linux", "ss", "网络", "Socket", "连接"]
@@ -514,5 +515,5 @@ real    0m5.234s
 
 ## 相关文章
 
-- [上一篇：netcat网络工具深度解析](/articles/linux/linux-45-netcat网络工具深度解析/)
-- [网络故障排查实战](/articles/networking/net-12-网络故障排查实战/)
+- [上一篇：netcat网络工具深度解析](@/articles/linux/linux-45-netcat网络工具深度解析.md)
+- [网络故障排查实战](@/articles/networking/net-12-网络虚拟化技术.md)

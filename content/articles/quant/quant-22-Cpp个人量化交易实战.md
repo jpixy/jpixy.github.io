@@ -1,6 +1,7 @@
 +++
-title = "22 - C++ 个人量化交易实战"
+title = "C++ 个人量化交易实战"
 date = 2025-01-20
+weight = 22000
 description = "个人使用 C++ 进行量化交易的完整指南：何时需要 C++、开发环境搭建、常用库、实战代码、与 Python 混合开发"
 [taxonomies]
 tags = ["quant", "cpp", "trading", "performance", "personal-trading"]
@@ -1582,5 +1583,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
-- [下一篇：23 - C++ 量化系统性能优化](/articles/quant/quant-23-Cpp量化系统性能优化/)
+- [上一篇：21 - 量化开发技术栈选择](@/articles/quant/quant-21-量化开发技术栈选择.md)
+- [下一篇：23 - C++ 量化系统性能优化](@/articles/quant/quant-23-Cpp量化系统性能优化.md)

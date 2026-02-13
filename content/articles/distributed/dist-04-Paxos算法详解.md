@@ -1,6 +1,7 @@
 +++
-title = "04.Paxos算法详解"
+title = "Paxos算法详解"
 date = 2026-01-20
+weight = 4000
 description = "Paxos共识算法：基本Paxos、Multi-Paxos、实现挑战"
 [taxonomies]
 tags = ["分布式", "Paxos", "共识"]
@@ -243,5 +244,5 @@ Paxos是分布式共识的奠基性算法。理解其原理对于理解所有共
 
 ## 相关文章
 
-- [上一篇：一致性模型详解](/articles/distributed/dist-03-一致性模型详解/)
-- [下一篇：Raft算法详解](/articles/distributed/dist-05-Raft算法详解/)
+- [上一篇：一致性模型详解](@/articles/distributed/dist-03-一致性模型详解.md)
+- [下一篇：Raft算法详解](@/articles/distributed/dist-05-Raft算法详解.md)

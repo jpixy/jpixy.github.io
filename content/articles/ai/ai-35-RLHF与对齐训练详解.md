@@ -1,7 +1,8 @@
 +++
-title = "35 - RLHF 与对齐训练详解"
+title = "RLHF 与对齐训练详解"
 description = "从人类反馈强化学习到直接偏好优化：LLM 对齐训练的原理、算法、工程实践与前沿方向"
 date = 2026-02-12
+weight = 35000
 draft = false
 [taxonomies]
 tags = ["AI", "RLHF", "PPO", "DPO", "对齐", "训练"]
@@ -649,6 +650,6 @@ Step 5: 部署
 
 ## 相关文章
 
-- [34 - 从模型诞生到AI应用全链路认知](/articles/ai/ai-34-从模型诞生到ai应用全链路认知/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
-- [Glossary: AI/ML Concepts](/articles/00-glossary/glossary-08-ai-ml-concepts/)
+- [34 - 从模型诞生到AI应用全链路认知](@/articles/ai/ai-34-从模型诞生到AI应用全链路认知.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)
+- [Glossary: AI/ML Concepts](@/articles/00-glossary/glossary-08-ai-ml-concepts.md)

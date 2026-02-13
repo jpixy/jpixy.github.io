@@ -1,7 +1,8 @@
 +++
-title = "06 - Triton Inference Server 实战"
+title = "Triton Inference Server 实战"
 description = "企业级 AI 模型服务化部署指南"
 date = 2025-02-06
+weight = 6000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -414,6 +415,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：05 - llama.cpp 源码解析](/articles/ai-infra/infra-05-llama.cpp源码解析/)
-- [下一篇：07 - 推理调度与 Batching 策略](/articles/ai-infra/infra-07-推理调度与Batching策略/)
-- [03 - vLLM 架构与源码解析](/articles/ai-infra/infra-03-vLLM架构与源码解析/)
+- [上一篇：05 - llama.cpp 源码解析](@/articles/ai-infra/ai-infra-05-llama.cpp源码解析.md)
+- [下一篇：07 - 推理调度与 Batching 策略](@/articles/ai-infra/ai-infra-07-推理调度与Batching策略.md)
+- [03 - vLLM 架构与源码解析](@/articles/ai-infra/ai-infra-03-vLLM架构与源码解析.md)

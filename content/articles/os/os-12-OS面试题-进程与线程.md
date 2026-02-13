@@ -1,6 +1,7 @@
 +++
-title = "12.OS面试题-进程与线程"
+title = "OS面试题-进程与线程"
 date = 2026-01-31
+weight = 12000
 description = "操作系统进程与线程面试题：进程状态、线程模型、IPC机制、上下文切换深度解析"
 [taxonomies]
 tags = ["操作系统", "面试", "进程", "线程", "IPC"]
@@ -837,5 +838,5 @@ nonvoluntary_ctxt_switches:     567
 
 ## 相关文章
 
-- [上一篇：OS笔试题-同步与死锁](/articles/os/os-11-OS笔试题-同步与死锁/)
-- [下一篇：OS面试题-内存管理](/articles/os/os-13-OS面试题-内存管理/)
+- [上一篇：OS笔试题-同步与死锁](@/articles/os/os-11-OS笔试题-同步与死锁.md)
+- [下一篇：OS面试题-内存管理](@/articles/os/os-13-OS面试题-内存管理.md)

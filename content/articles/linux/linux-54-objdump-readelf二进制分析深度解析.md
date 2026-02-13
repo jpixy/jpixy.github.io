@@ -1,6 +1,7 @@
 +++
-title = "54.objdump/readelf二进制分析深度解析"
+title = "objdump/readelf二进制分析深度解析"
 date = 2026-01-31
+weight = 54000
 description = "objdump/readelf深度解析：ELF格式、反汇编、符号表、调试信息"
 [taxonomies]
 tags = ["Linux", "objdump", "readelf", "ELF", "逆向"]
@@ -411,5 +412,5 @@ show_deps 0 "$1"
 
 ## 相关文章
 
-- [上一篇：stress-ng压力测试深度解析](/articles/linux/linux-53-stress-ng压力测试深度解析/)
-- [GDB调试器深度解析](/articles/linux/linux-40-GDB调试器深度解析/)
+- [上一篇：stress-ng压力测试深度解析](@/articles/linux/linux-53-stress-ng压力测试深度解析.md)
+- [GDB调试器深度解析](@/articles/linux/linux-40-GDB调试器深度解析.md)

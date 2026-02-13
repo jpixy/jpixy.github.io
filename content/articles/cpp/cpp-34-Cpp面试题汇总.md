@@ -1,6 +1,7 @@
 +++
-title = "34. C++ Interview Questions Summary"
+title = "C++ Interview Questions Summary"
 date = 2026-01-21
+weight = 34000
 description = "C++面试题全面汇总，涵盖语言基础、模板、并发、STL、C++20/23新特性等200+高频题目"
 [taxonomies]
 tags = ["C++", "面试题", "汇总"]
@@ -1263,5 +1264,5 @@ inspect(x) {
 
 ## 相关文章
 
-- [上一篇：Coroutines and User-Space Scheduling](/articles/cpp/cpp-33-C++协程与用户态调度/)
-- [下一篇：Interview - Language Basics](/articles/cpp/cpp-35-C++面试题-语言基础篇/)
+- [上一篇：Coroutines and User-Space Scheduling](@/articles/cpp/cpp-33-C++协程与用户态调度.md)
+- [下一篇：Interview - Language Basics](@/articles/cpp/cpp-35-C++面试题-语言基础篇.md)

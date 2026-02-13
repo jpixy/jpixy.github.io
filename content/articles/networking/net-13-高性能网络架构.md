@@ -1,6 +1,7 @@
 +++
-title = "13.高性能网络架构"
+title = "高性能网络架构"
 date = 2026-01-19
+weight = 13000
 description = "高性能网络设计：负载均衡、CDN、网络加速、零拷贝、内核旁路技术"
 [taxonomies]
 tags = ["网络", "高性能", "架构"]
@@ -373,5 +374,5 @@ DPDK：网卡 → DPDK PMD → 用户态应用
 
 ## 相关文章
 
-- [上一篇：网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
-- [下一篇：HTTP协议详解](/articles/networking/net-14-HTTP协议详解/)
+- [上一篇：网络虚拟化技术](@/articles/networking/net-12-网络虚拟化技术.md)
+- [下一篇：HTTP协议详解](@/articles/networking/net-14-HTTP协议详解.md)

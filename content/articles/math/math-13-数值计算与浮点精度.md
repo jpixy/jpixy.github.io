@@ -1,7 +1,8 @@
 +++
-title = "13.数值计算与浮点精度(HFT)"
+title = "数值计算与浮点精度(HFT)"
 description = "深入讲解金融系统的数值计算：IEEE 754标准、浮点比较陷阱、数值稳定性算法、Kahan求和、定点数与金融精度要求"
 date = 2026-01-21
+weight = 13000
 draft = false
 [taxonomies]
 tags = ["数值计算", "浮点数", "IEEE754", "金融精度", "HFT"]
@@ -782,4 +783,4 @@ double process_price_branchless(double price, double min_tick) {
 
 ## 相关文章
 
-- [上一篇：统计套利与因子模型(HFT)](/articles/math/math-12-统计套利与因子模型/)
+- [上一篇：统计套利与因子模型(HFT)](@/articles/math/math-12-统计套利与因子模型.md)

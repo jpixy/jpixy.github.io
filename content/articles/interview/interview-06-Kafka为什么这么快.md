@@ -1,6 +1,7 @@
 +++
-title = "06.Kafka为什么这么快"
+title = "Kafka为什么这么快"
 slug = "interview-Kafka为什么这么快"
+weight = 6000
 +++
 
 # Kafka 为什么这么快？
@@ -805,5 +806,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：MySQL分库分表实践](/articles/interview/interview-05-MySQL分库分表/)
-- [下一篇：分布式事务解决方案](/articles/interview/interview-07-分布式事务方案/)
+- [上一篇：MySQL分库分表实践](@/articles/interview/interview-05-MySQL分库分表.md)
+- [下一篇：分布式事务解决方案](@/articles/interview/interview-07-分布式事务方案.md)

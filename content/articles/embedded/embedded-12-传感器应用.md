@@ -1,6 +1,7 @@
 +++
-title = "12.嵌入式传感器应用"
+title = "嵌入式传感器应用"
 date = 2026-01-19
+weight = 12000
 description = "嵌入式传感器全解：温湿度、IMU、GPS、光电传感器原理、选型与数据处理"
 [taxonomies]
 tags = ["embedded", "sensor", "imu", "gps", "temperature", "signal-processing"]
@@ -378,5 +379,5 @@ $GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,47.0,M,,*47
 
 ## 相关文章
 
-- [上一篇：嵌入式面试指南](/articles/embedded/embedded-11-嵌入式面试指南/)
-- [下一篇：嵌入式电源与电池管理](/articles/embedded/embedded-13-电源与电池管理/)
+- [上一篇：嵌入式面试指南](@/articles/embedded/embedded-11-嵌入式面试指南.md)
+- [下一篇：嵌入式电源与电池管理](@/articles/embedded/embedded-13-电源与电池管理.md)

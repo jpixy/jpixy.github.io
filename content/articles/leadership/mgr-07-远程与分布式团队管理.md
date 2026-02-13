@@ -1,6 +1,7 @@
 +++
-title = "07.远程与分布式团队管理"
+title = "远程与分布式团队管理"
 date = 2025-01-15
+weight = 7000
 description = "后疫情时代的远程团队管理指南：异步协作、分布式沟通、远程1:1、团队建设、信任构建"
 [taxonomies]
 tags = ["leadership", "management", "remote-work", "distributed-teams", "interview"]
@@ -482,5 +483,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：故障应急与On-Call管理](/articles/leadership/mgr-06-故障应急与OnCall管理/)
-- [下一篇：技术领导力与架构治理](/articles/leadership/mgr-08-技术领导力与架构治理/)
+- [上一篇：故障应急与On-Call管理](@/articles/leadership/mgr-06-故障应急与OnCall管理.md)
+- [下一篇：技术领导力与架构治理](@/articles/leadership/mgr-08-技术领导力与架构治理.md)

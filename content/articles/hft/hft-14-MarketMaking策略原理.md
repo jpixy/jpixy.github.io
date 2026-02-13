@@ -1,7 +1,8 @@
 +++
-title = "14.Market Making策略原理"
+title = "Market Making策略原理"
 slug = "hft-14-MarketMaking策略原理"
 date = 2026-01-21
+weight = 14000
 description = "深入剖析做市商策略，包括做市商模型、库存管理、价差设置、风险控制和对冲策略"
 [taxonomies]
 tags = ["HFT", "做市商", "MarketMaking", "策略", "风控"]
@@ -585,5 +586,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)
-- [下一篇：HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)
+- [上一篇：Order Book实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)
+- [下一篇：HFT风控系统设计](@/articles/hft/hft-15-HFT风控系统设计.md)

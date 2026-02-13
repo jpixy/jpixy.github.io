@@ -1,7 +1,8 @@
 +++
-title = "09.Rust与C/C++互操作"
+title = "Rust与C/C++互操作"
 slug = "rust-10-Rust与C-C++互操作"
 date = 2026-01-21
+weight = 9000
 description = "深入剖析Rust与C/C++的互操作技术，包括FFI声明、bindgen/cbindgen、内存传递、回调函数和ABI兼容"
 [taxonomies]
 tags = ["Rust", "FFI", "C++", "互操作", "HFT"]
@@ -646,5 +647,5 @@ fn main() {
 
 ## 相关文章
 
-- [上一篇：unsafe Rust完全指南](/articles/rust/rust-08-unsafe-Rust完全指南/)
-- [下一篇：Rust内存布局与对齐](/articles/rust/rust-10-Rust内存布局与对齐/)
+- [上一篇：unsafe Rust完全指南](@/articles/rust/rust-08-unsafe-Rust完全指南.md)
+- [下一篇：Rust内存布局与对齐](@/articles/rust/rust-10-Rust内存布局与对齐.md)

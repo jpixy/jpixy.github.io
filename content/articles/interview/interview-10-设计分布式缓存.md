@@ -1,7 +1,8 @@
 +++
-title = "10.如何设计一个分布式缓存系统"
+title = "如何设计一个分布式缓存系统"
 description = "分布式缓存架构设计：数据分片、一致性哈希、缓存策略与高可用方案"
 date = 2025-01-16
+weight = 10000
 [taxonomies]
 tags = ["interview", "system-design", "cache", "redis", "distributed"]
 +++
@@ -287,5 +288,5 @@ A：官方建议不超过1000个节点。Gossip协议在节点太多时效率下
 
 ## 相关文章
 
-- [上一篇：如何设计一个分布式ID生成器](/articles/interview/interview-09-设计分布式ID生成器/)
-- [下一篇：如何设计一个消息队列](/articles/interview/interview-11-设计消息队列/)
+- [上一篇：如何设计一个分布式ID生成器](@/articles/interview/interview-09-设计分布式ID生成器.md)
+- [下一篇：如何设计一个消息队列](@/articles/interview/interview-11-设计消息队列.md)

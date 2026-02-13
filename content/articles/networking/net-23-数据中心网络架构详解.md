@@ -1,7 +1,8 @@
 +++
-title = "23.数据中心网络架构详解"
+title = "数据中心网络架构详解"
 description = "数据中心网络架构深度解析：大二层/大三层、Spine-Leaf、VXLAN、BGP EVPN、Underlay/Overlay、SDN等核心概念与实践"
 date = 2026-01-27
+weight = 23000
 draft = false
 [taxonomies]
 tags = ["Networking", "DataCenter", "VXLAN", "BGP", "EVPN", "SpineLeaf", "SDN"]
@@ -11,7 +12,7 @@ tags = ["Networking", "DataCenter", "VXLAN", "BGP", "EVPN", "SpineLeaf", "SDN"]
 
 本文深入介绍现代数据中心网络架构，包括大二层/大三层概念、Spine-Leaf 架构、Overlay 网络技术等。
 
-> **前置知识**：本文假设读者了解 MAC 地址、ARP、VLAN、STP 等二层网络基础。如需复习，请参阅：[二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/)
+> **前置知识**：本文假设读者了解 MAC 地址、ARP、VLAN、STP 等二层网络基础。如需复习，请参阅：[二层三层网络基础详解](@/articles/networking/net-22-二层三层网络基础详解.md)
 
 ---
 
@@ -1316,14 +1317,14 @@ ip route show | grep nexthop
 ## 相关文章
 
 ### 基础概念
-- [二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/) - STP、VLAN、VXLAN、ARP、MAC 等基础概念详解
-- [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/) - 概念速查
+- [二层三层网络基础详解](@/articles/networking/net-22-二层三层网络基础详解.md) - STP、VLAN、VXLAN、ARP、MAC 等基础概念详解
+- [网络核心概念索引](@/articles/00-glossary/glossary-02-networking-concepts.md) - 概念速查
 
 ### 专题深入
-- [RDMA与InfiniBand详解](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [DPU 与智能网卡技术详解](/articles/networking/net-24-DPU与智能网卡技术详解/)
-- [用户态网络协议栈设计](/articles/networking/net-25-用户态网络协议栈设计/)
-- [CXL 与新型内存互联技术](/articles/networking/net-26-CXL与新型内存互联技术/)
-- [网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
-- [OpenvSwitch介绍](/articles/networking/net-03-OpenvSwitch介绍/)
-- [AI基础设施详解](/articles/linux/linux-15-AI基础设施详解/)
+- [RDMA与InfiniBand详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [DPU 与智能网卡技术详解](@/articles/networking/net-24-DPU与智能网卡技术详解.md)
+- [用户态网络协议栈设计](@/articles/networking/net-25-用户态网络协议栈设计.md)
+- [CXL 与新型内存互联技术](@/articles/networking/net-26-CXL与新型内存互联技术.md)
+- [网络虚拟化技术](@/articles/networking/net-12-网络虚拟化技术.md)
+- [OpenvSwitch介绍](@/articles/networking/net-03-OpenvSwitch介绍.md)
+- [AI基础设施详解](@/articles/linux/linux-15-AI基础设施详解.md)

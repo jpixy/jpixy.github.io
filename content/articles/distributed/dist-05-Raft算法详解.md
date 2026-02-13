@@ -1,6 +1,7 @@
 +++
-title = "05.Raft算法详解"
+title = "Raft算法详解"
 date = 2026-01-20
+weight = 5000
 description = "Raft共识算法：Leader选举、日志复制、安全性保证"
 [taxonomies]
 tags = ["分布式", "Raft", "共识"]
@@ -268,5 +269,5 @@ Raft是工程中最常用的共识算法。理解其设计可以帮助正确使�
 
 ## 相关文章
 
-- [上一篇：Paxos算法详解](/articles/distributed/dist-04-Paxos算法详解/)
-- [下一篇：分布式存储](/articles/distributed/dist-06-分布式存储/)
+- [上一篇：Paxos算法详解](@/articles/distributed/dist-04-Paxos算法详解.md)
+- [下一篇：分布式存储](@/articles/distributed/dist-06-分布式存储.md)

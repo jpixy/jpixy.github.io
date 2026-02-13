@@ -1,7 +1,8 @@
 +++
-title = "17.HFT面试题-算法与数据结构"
+title = "HFT面试题-算法与数据结构"
 slug = "hft-17-HFT面试题-算法与数据结构"
 date = 2026-01-21
+weight = 23000
 description = "HFT算法与数据结构面试题，包括时间序列、Order Book、滑动窗口和概率统计"
 [taxonomies]
 tags = ["HFT", "面试", "算法", "数据结构", "低延迟"]
@@ -638,5 +639,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：HFT面试题-系统设计](/articles/hft/hft-22-HFT面试题-系统设计/)
-- [下一篇：HFT面试题-网络与协议](/articles/hft/hft-24-HFT面试题-网络与协议/)
+- [上一篇：HFT面试题-系统设计](@/articles/hft/hft-22-HFT面试题-系统设计.md)
+- [下一篇：HFT面试题-网络与协议](@/articles/hft/hft-24-HFT面试题-网络与协议.md)

@@ -1,7 +1,8 @@
 +++
-title = "01 - HPC 概述与发展史"
+title = "HPC 概述与发展史"
 description = "高性能计算的概念、发展历程与 AI 时代的融合"
 date = 2025-02-06
+weight = 1000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -348,6 +349,6 @@ graph TB
 
 ## 相关文章
 
-- [下一篇：02 - 并行计算基础](/articles/hpc/hpc-02-并行计算基础/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
+- [下一篇：02 - 并行计算基础](@/articles/hpc/hpc-02-并行计算基础.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)

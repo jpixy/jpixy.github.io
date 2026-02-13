@@ -1,6 +1,7 @@
 +++
-title = "10.SRE工具链详解"
+title = "SRE工具链详解"
 date = 2026-01-19
+weight = 10000
 description = "SRE核心工具实战：Prometheus监控、Grafana可视化、AlertManager告警、PagerDuty事故管理"
 [taxonomies]
 tags = ["SRE", "Prometheus", "Grafana", "监控"]
@@ -475,5 +476,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：自动化与Toil消除](/articles/sre/sre-09-自动化与Toil消除/)
-- [下一篇：分布式系统可靠性设计](/articles/sre/sre-11-分布式系统可靠性设计/)
+- [上一篇：自动化与Toil消除](@/articles/sre/sre-09-自动化与Toil消除.md)
+- [下一篇：分布式系统可靠性设计](@/articles/sre/sre-11-分布式系统可靠性设计.md)

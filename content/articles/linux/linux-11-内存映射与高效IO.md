@@ -1,8 +1,9 @@
 +++
-title = "11.内存映射与高效IO(HFT)"
+title = "内存映射与高效IO(HFT)"
 slug = "linux-11-内存映射与高效IO"
 description = "深入讲解Linux高效IO：mmap原理与陷阱、Huge Pages、THP透明大页、O_DIRECT直接IO、AIO与零拷贝技术"
 date = 2026-01-21
+weight = 11000
 draft = false
 [taxonomies]
 tags = ["Linux", "mmap", "Huge Pages", "IO", "零拷贝", "HFT"]
@@ -912,5 +913,5 @@ void io_uring_batch_example(void) {
 
 ## 相关文章
 
-- [上一篇：Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
-- [下一篇：内核与系统组件详解](/articles/linux/linux-12-内核与系统组件详解/)
+- [上一篇：Linux时间子系统(HFT)](@/articles/linux/linux-10-Linux时间子系统.md)
+- [下一篇：内核与系统组件详解](@/articles/linux/linux-12-内核与系统组件详解.md)

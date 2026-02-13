@@ -1,8 +1,9 @@
 +++
-title = "09.概率数据结构详解(HFT)"
+title = "概率数据结构详解(HFT)"
 slug = "algo-09-概率数据结构详解"
 description = "深入讲解概率数据结构：Bloom Filter、Count-Min Sketch、HyperLogLog、Cuckoo Filter、Skip List及其在HFT中的应用"
 date = 2026-01-21
+weight = 9000
 draft = false
 [taxonomies]
 tags = ["数据结构", "Bloom Filter", "HyperLogLog", "概率算法", "HFT"]
@@ -679,12 +680,12 @@ using PriceLevel = SkipList<int64_t, int64_t>;  // 价格 -> 数量
 
 ## 概念速查
 
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - Bloom Filter、哈希表等概念速查
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - 低延迟系统设计概念速查
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - Bloom Filter、哈希表等概念速查
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md) - 低延迟系统设计概念速查
 
 ---
 
 ## 相关文章
 
-- [上一篇：算法面试指南](/articles/algorithm/algo-08-算法面试指南/)
-- [下一篇：在线算法与流式计算(HFT)](/articles/algorithm/algo-10-在线算法与流式计算/)
+- [上一篇：算法面试指南](@/articles/algorithm/algo-08-算法面试指南.md)
+- [下一篇：在线算法与流式计算(HFT)](@/articles/algorithm/algo-10-在线算法与流式计算.md)

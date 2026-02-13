@@ -1,6 +1,7 @@
 +++
-title = "06.故障应急与On-Call管理"
+title = "故障应急与On-Call管理"
 date = 2025-01-15
+weight = 6000
 description = "技术管理者事故响应指南：On-Call制度设计、事故处理流程、Blameless Postmortem、SLA/SLO管理"
 [taxonomies]
 tags = ["leadership", "management", "incident-response", "on-call", "sre", "interview"]
@@ -452,5 +453,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：团队冲突与管理挑战详解](/articles/leadership/mgr-05-团队冲突与管理挑战/)
-- [下一篇：远程与分布式团队管理](/articles/leadership/mgr-07-远程与分布式团队管理/)
+- [上一篇：团队冲突与管理挑战详解](@/articles/leadership/mgr-05-团队冲突与管理挑战.md)
+- [下一篇：远程与分布式团队管理](@/articles/leadership/mgr-07-远程与分布式团队管理.md)

@@ -1,6 +1,7 @@
 +++
-title = "03.内存管理"
+title = "内存管理"
 date = 2026-01-19
+weight = 3000
 description = "Linux内存管理：虚拟内存、mmap、内存分配、内存映射"
 [taxonomies]
 tags = ["Linux", "内存", "mmap"]
@@ -230,5 +231,5 @@ Linux支持2MB或1GB的大页。减少页表项数量，减少TLB miss。
 
 ## 相关文章
 
-- [上一篇：进程与线程](/articles/linux/linux-02-进程与线程/)
-- [下一篇：文件系统与I/O](/articles/linux/linux-04-文件系统与IO/)
+- [上一篇：进程与线程](@/articles/linux/linux-02-进程与线程.md)
+- [下一篇：文件系统与I/O](@/articles/linux/linux-04-文件系统与IO.md)

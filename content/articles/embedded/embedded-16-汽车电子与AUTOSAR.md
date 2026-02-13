@@ -1,6 +1,7 @@
 +++
-title = "16.汽车电子与AUTOSAR"
+title = "汽车电子与AUTOSAR"
 date = 2026-01-19
+weight = 16000
 description = "汽车电子开发全景：ECU架构、CAN/LIN网络、AUTOSAR规范、功能安全ISO 26262详解"
 [taxonomies]
 tags = ["embedded", "automotive", "autosar", "can", "iso26262", "functional-safety"]
@@ -514,5 +515,5 @@ UDS（Unified Diagnostic Services，ISO 14229）是统一诊断协议。
 
 ## 相关文章
 
-- [上一篇：PCB设计基础](/articles/embedded/embedded-15-PCB设计基础/)
-- [下一篇：嵌入式电机控制](/articles/embedded/embedded-17-电机控制/)
+- [上一篇：PCB设计基础](@/articles/embedded/embedded-15-PCB设计基础.md)
+- [下一篇：嵌入式电机控制](@/articles/embedded/embedded-17-电机控制.md)

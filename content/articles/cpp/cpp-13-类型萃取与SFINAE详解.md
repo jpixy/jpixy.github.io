@@ -1,7 +1,8 @@
 +++
-title = "13. Type Traits and SFINAE"
+title = "Type Traits and SFINAE"
 slug = "cpp-18-类型萃取与SFINAE详解"
 date = 2026-01-21
+weight = 13000
 description = "深入剖析C++类型萃取、SFINAE、std::enable_if、Concepts等模板元编程核心技术"
 [taxonomies]
 tags = ["C++", "模板", "SFINAE", "类型萃取", "Concepts", "泛型编程"]
@@ -303,5 +304,5 @@ void sendMessage(const T& msg) {
 
 ## 相关文章
 
-- [上一篇：Compile-Time Computation and constexpr](/articles/cpp/cpp-12-编译期计算与constexpr/)
-- [下一篇：Exception Handling and Performance](/articles/cpp/cpp-14-异常处理机制与性能开销/)
+- [上一篇：Compile-Time Computation and constexpr](@/articles/cpp/cpp-12-编译期计算与constexpr.md)
+- [下一篇：Exception Handling and Performance](@/articles/cpp/cpp-14-异常处理机制与性能开销.md)

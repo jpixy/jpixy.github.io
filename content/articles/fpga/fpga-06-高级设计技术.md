@@ -1,6 +1,7 @@
 +++
-title = "06.高级设计技术"
+title = "高级设计技术"
 date = 2026-01-20
+weight = 6000
 description = "FPGA高级技术：流水线、资源共享、高层次综合、验证方法"
 [taxonomies]
 tags = ["FPGA", "流水线", "HLS"]
@@ -247,5 +248,5 @@ tags = ["FPGA", "流水线", "HLS"]
 
 ## 相关文章
 
-- [上一篇：时序约束与分析](/articles/fpga/fpga-05-时序约束与分析/)
-- [下一篇：FPGA与嵌入式集成](/articles/fpga/fpga-07-FPGA与嵌入式集成/)
+- [上一篇：时序约束与分析](@/articles/fpga/fpga-05-时序约束与分析.md)
+- [下一篇：FPGA与嵌入式集成](@/articles/fpga/fpga-07-FPGA与嵌入式集成.md)

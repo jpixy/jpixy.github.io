@@ -1,7 +1,8 @@
 +++
-title = "51.NumPy高性能编程"
+title = "NumPy高性能编程"
 slug = "py-52-NumPy高性能编程"
 date = 2026-01-21
+weight = 51000
 description = "深入剖析NumPy的高性能编程技术，包括向量化、广播、内存布局、ufunc、NumPy C API和numexpr"
 [taxonomies]
 tags = ["Python", "NumPy", "性能优化", "向量化", "量化"]
@@ -485,5 +486,5 @@ class FastOrderBook:
 
 ## 相关文章
 
-- [上一篇：Python内存优化详解](/articles/python/py-50-Python内存优化详解/)
-- [下一篇：Pandas性能优化](/articles/python/py-52-Pandas性能优化/)
+- [上一篇：Python内存优化详解](@/articles/python/py-50-Python内存优化详解.md)
+- [下一篇：Pandas性能优化](@/articles/python/py-52-Pandas性能优化.md)

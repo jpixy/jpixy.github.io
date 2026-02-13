@@ -1,7 +1,8 @@
 +++
-title = "19. Branch Prediction and Hot Path (HFT)"
+title = "Branch Prediction and Hot Path (HFT)"
 slug = "cpp-24-HFT分支预测与热路径优化"
 date = 2026-01-21
+weight = 19000
 description = "深入剖析CPU分支预测机制、分支优化技术、Branchless编程，HFT低延迟系统核心优化技术"
 [taxonomies]
 tags = ["C++", "分支预测", "性能优化", "HFT", "低延迟", "Branchless"]
@@ -392,5 +393,5 @@ inline int min_value(int a, int b) {
 
 ## 相关文章
 
-- [上一篇：SIMD Programming (HFT)](/articles/cpp/cpp-18-HFT-SIMD编程详解/)
-- [下一篇：Cache-Friendly Data Structures (HFT)](/articles/cpp/cpp-20-HFT缓存友好数据结构设计/)
+- [上一篇：SIMD Programming (HFT)](@/articles/cpp/cpp-18-HFT-SIMD编程详解.md)
+- [下一篇：Cache-Friendly Data Structures (HFT)](@/articles/cpp/cpp-20-HFT缓存友好数据结构设计.md)

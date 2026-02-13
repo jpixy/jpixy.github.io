@@ -1,6 +1,7 @@
 +++
-title = "23.AI底层开发路线图"
+title = "AI底层开发路线图"
 date = 2026-02-06
+weight = 23000
 description = "不做调参侠：如何深入AI底层原理，从框架源码到Kernel开发，成为真正的AI系统工程师"
 [taxonomies]
 tags = ["cuda", "ai-infra", "deep-learning", "kernel", "career"]
@@ -516,7 +517,7 @@ __global__ void add_kernel(T* result, const T* a, const T* b, int n) {
 
 ## 相关文章
 
-- [上一篇：22 - CUDA 实战应用场景详解](/articles/ai/ai-22-CUDA实战应用场景详解/)
-- [下一篇：24 - GPU Kernel 开发详解](/articles/ai/ai-24-GPU-Kernel开发详解/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [16 - 推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
+- [上一篇：22 - CUDA 实战应用场景详解](@/articles/ai/ai-22-CUDA实战应用场景详解.md)
+- [下一篇：24 - GPU Kernel 开发详解](@/articles/ai/ai-24-GPU-Kernel开发详解.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [16 - 推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "05. Performance Optimization"
+title = "Performance Optimization"
 date = 2026-01-19
+weight = 5000
 description = "C++性能优化：编译器优化、内存优化、缓存友好、SIMD、性能分析工具"
 [taxonomies]
 tags = ["C++", "性能", "优化"]
@@ -412,5 +413,5 @@ for (int i = 0; i < n; i++) {
 
 ## 相关文章
 
-- [上一篇：Concurrency and Multithreading](/articles/cpp/cpp-04-并发编程详解/)
-- [下一篇：STL Containers and Algorithms](/articles/cpp/cpp-06-STL容器与算法/)
+- [上一篇：Concurrency and Multithreading](@/articles/cpp/cpp-04-并发编程详解.md)
+- [下一篇：STL Containers and Algorithms](@/articles/cpp/cpp-06-STL容器与算法.md)

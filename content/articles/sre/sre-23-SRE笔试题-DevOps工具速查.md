@@ -1,6 +1,7 @@
 +++
-title = "23.SRE笔试题-DevOps工具速查"
+title = "SRE笔试题-DevOps工具速查"
 date = 2026-01-21
+weight = 23000
 description = "SRE面试DevOps工具速查：Docker容器、Terraform基础设施、Git版本控制，核心命令与考点"
 [taxonomies]
 tags = ["SRE", "面试", "Docker", "Terraform", "Git", "DevOps"]
@@ -414,5 +415,5 @@ git merge feature                    # 合并
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-Kubernetes速查](/articles/sre/sre-22-SRE笔试题-Kubernetes速查/)
-- [下一篇：SRE笔试题-概率与智力题](/articles/sre/sre-24-SRE笔试题-概率与智力题/)
+- [上一篇：SRE笔试题-Kubernetes速查](@/articles/sre/sre-22-SRE笔试题-Kubernetes速查.md)
+- [下一篇：SRE笔试题-概率与智力题](@/articles/sre/sre-24-SRE笔试题-概率与智力题.md)

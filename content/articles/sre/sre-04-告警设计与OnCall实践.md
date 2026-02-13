@@ -1,6 +1,7 @@
 +++
-title = "04.告警设计与On-Call实践"
+title = "告警设计与On-Call实践"
 date = 2026-01-19
+weight = 4000
 description = "告警体系设计：告警规则设计原则、告警疲劳治理、On-Call轮值机制、事故响应流程"
 [taxonomies]
 tags = ["SRE", "告警", "On-Call"]
@@ -406,5 +407,5 @@ SEV1/SEV2事故需要指定IC：
 
 ## 相关文章
 
-- [上一篇：可观测性体系建设](/articles/sre/sre-03-可观测性体系建设/)
-- [下一篇：故障管理与事后复盘](/articles/sre/sre-05-故障管理与事后复盘/)
+- [上一篇：可观测性体系建设](@/articles/sre/sre-03-可观测性体系建设.md)
+- [下一篇：故障管理与事后复盘](@/articles/sre/sre-05-故障管理与事后复盘.md)

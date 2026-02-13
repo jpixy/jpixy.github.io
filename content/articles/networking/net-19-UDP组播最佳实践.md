@@ -1,8 +1,9 @@
 +++
-title = "19.UDP组播最佳实践(HFT)"
+title = "UDP组播最佳实践(HFT)"
 slug = "net-19-UDP组播最佳实践"
 description = "深入讲解UDP组播：IGMP协议、组播路由、PIM、组播可靠性、Market Data分发与组播丢包处理"
 date = 2026-01-21
+weight = 19000
 draft = false
 [taxonomies]
 tags = ["UDP", "组播", "IGMP", "Market Data", "HFT"]
@@ -644,5 +645,5 @@ UDP组播最佳实践：
 
 ## 相关文章
 
-- [上一篇：TCP调优深入详解(HFT)](/articles/networking/net-18-TCP调优深入详解/)
-- [下一篇：io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
+- [上一篇：TCP调优深入详解(HFT)](@/articles/networking/net-18-TCP调优深入详解.md)
+- [下一篇：io_uring详解(HFT)](@/articles/networking/net-20-io_uring详解.md)

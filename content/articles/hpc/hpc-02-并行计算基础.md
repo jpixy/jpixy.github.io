@@ -1,7 +1,8 @@
 +++
-title = "02 - 并行计算基础"
+title = "并行计算基础"
 description = "并行计算的核心概念、模型与性能分析"
 date = 2025-02-06
+weight = 2000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -410,6 +411,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：01 - HPC 概述与发展史](/articles/hpc/hpc-01-HPC概述与发展史/)
-- [下一篇：03 - MPI 分布式编程](/articles/hpc/hpc-03-MPI分布式编程/)
-- [21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
+- [上一篇：01 - HPC 概述与发展史](@/articles/hpc/hpc-01-HPC概述与发展史.md)
+- [下一篇：03 - MPI 分布式编程](@/articles/hpc/hpc-03-MPI分布式编程.md)
+- [21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)

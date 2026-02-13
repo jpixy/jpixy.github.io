@@ -1,6 +1,7 @@
 +++
-title = "08.嵌入式项目实战案例"
+title = "嵌入式项目实战案例"
 date = 2026-01-19
+weight = 8000
 description = "嵌入式实战项目：智能温控器、电机控制、数据采集器、物联网网关完整开发流程"
 [taxonomies]
 tags = ["embedded", "project", "iot", "motor-control", "sensor"]
@@ -388,5 +389,5 @@ int main(void) {
 
 ## 相关文章
 
-- [上一篇：嵌入式调试与故障排查](/articles/embedded/embedded-07-调试与故障排查/)
-- [下一篇：嵌入式Linux驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
+- [上一篇：嵌入式调试与故障排查](@/articles/embedded/embedded-07-调试与故障排查.md)
+- [下一篇：嵌入式Linux驱动开发](@/articles/embedded/embedded-09-嵌入式Linux驱动开发.md)

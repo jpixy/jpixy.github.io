@@ -1,6 +1,6 @@
 +++
 title = "Leadership & Management"
-sort_by = "title"
+sort_by = "weight"
 template = "section.html"
 
 [extra]

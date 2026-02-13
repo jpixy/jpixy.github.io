@@ -1,6 +1,7 @@
 +++
-title = "17.模型部署与Serving详解"
+title = "模型部署与Serving详解"
 date = 2025-01-15
+weight = 17000
 description = "AI 模型生产部署全流程：模型格式、容器化、服务框架、监控运维"
 [taxonomies]
 tags = ["ai", "deployment", "serving", "mlops", "docker", "kubernetes"]
@@ -344,5 +345,5 @@ start_http_server(9090)
 
 ## 相关文章
 
-- [上一篇：推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
-- [下一篇：边缘AI与端侧部署详解](/articles/ai/ai-18-边缘AI与端侧部署详解/)
+- [上一篇：推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)
+- [下一篇：边缘AI与端侧部署详解](@/articles/ai/ai-18-边缘AI与端侧部署详解.md)

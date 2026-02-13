@@ -1,6 +1,7 @@
 +++
-title = "03.Staff级别面试项目选择与技术亮点分析"
+title = "Staff级别面试项目选择与技术亮点分析"
 slug = "insights-Staff级别面试项目选择与技术亮点分析"
+weight = 3000
 +++
 
 # Staff 级别面试：项目选择与技术亮点分析
@@ -407,5 +408,5 @@ R - Result (结果)
 
 ## 相关文章
 
-- [上一篇：Kubernetes平台工程与云原生应用管理学习路线](/articles/insights/insights-02-K8s平台工程学习路线/)
-- [下一篇：企业级云VPN服务架构设计与技术深度解析](/articles/insights/insights-04-云VPN服务架构设计/)
+- [上一篇：Kubernetes平台工程与云原生应用管理学习路线](@/articles/insights/insights-02-K8s平台工程学习路线.md)
+- [下一篇：企业级云VPN服务架构设计与技术深度解析](@/articles/insights/insights-04-云VPN服务架构设计.md)

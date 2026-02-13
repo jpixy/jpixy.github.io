@@ -1,6 +1,7 @@
 +++
-title = "20 - 极速交易系统详解：CTP vs 飞马 vs 飞创"
+title = "极速交易系统详解：CTP vs 飞马 vs 飞创"
 date = 2025-01-17
+weight = 20000
 description = "深入解析中国期货市场的交易系统：CTP、飞马(Femas)、飞创(X-Speed)的对比，以及外资HFT公司在中国的布局"
 [taxonomies]
 tags = ["quant", "CTP", "Femas", "X-Speed", "HFT", "low-latency", "china-market"]
@@ -681,5 +682,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：19 - CTP 期货开户与期货公司选择](/articles/quant/quant-19-CTP期货开户与期货公司选择/)
-- [下一篇：21 - 量化开发技术栈选择](/articles/quant/quant-21-量化开发技术栈选择/)
+- [上一篇：19 - CTP 期货开户与期货公司选择](@/articles/quant/quant-19-CTP期货开户与期货公司选择.md)
+- [下一篇：21 - 量化开发技术栈选择](@/articles/quant/quant-21-量化开发技术栈选择.md)

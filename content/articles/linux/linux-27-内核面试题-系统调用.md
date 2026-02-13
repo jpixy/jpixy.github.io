@@ -1,6 +1,7 @@
 +++
-title = "27.内核面试题-系统调用"
+title = "内核面试题-系统调用"
 date = 2026-01-31
+weight = 27000
 description = "Linux内核系统调用面试题：syscall机制、vDSO、性能优化深度解析"
 [taxonomies]
 tags = ["Linux", "内核", "面试", "系统调用", "vDSO"]
@@ -702,5 +703,5 @@ tracepoint:syscalls:sys_exit_open {
 
 ## 相关文章
 
-- [上一篇：内核面试题-中断处理](/articles/linux/linux-26-内核面试题-中断处理/)
-- [下一篇：内核笔试题-文件系统与VFS](/articles/linux/linux-28-内核笔试题-文件系统与VFS/)
+- [上一篇：内核面试题-中断处理](@/articles/linux/linux-26-内核面试题-中断处理.md)
+- [下一篇：内核笔试题-文件系统与VFS](@/articles/linux/linux-28-内核笔试题-文件系统与VFS.md)

@@ -1,7 +1,8 @@
 +++
-title = "62.金融系统合规与审计(HFT)"
+title = "金融系统合规与审计(HFT)"
 description = "深入讲解HFT系统的合规要求：日志记录、数据保留、灾备要求、MiFID II、SEC规则与审计最佳实践"
 date = 2026-01-21
+weight = 62000
 draft = false
 [taxonomies]
 tags = ["SRE", "HFT", "合规", "审计", "MiFID II"]
@@ -930,5 +931,5 @@ def check_audit_log_integrity() -> tuple:
 
 ## 相关文章
 
-- [上一篇：HFT基础设施最佳实践(HFT)](/articles/sre/sre-61-HFT基础设施最佳实践/)
-- [下一篇：交易系统故障演练(HFT)](/articles/sre/sre-63-交易系统故障演练/)
+- [上一篇：HFT基础设施最佳实践(HFT)](@/articles/sre/sre-61-HFT基础设施最佳实践.md)
+- [下一篇：交易系统故障演练(HFT)](@/articles/sre/sre-63-交易系统故障演练.md)

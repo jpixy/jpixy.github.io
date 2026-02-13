@@ -1,6 +1,7 @@
 +++
-title = "11.Rust在HFT领域的实践与必知必会"
+title = "Rust在HFT领域的实践与必知必会"
 date = 2025-01-10
+weight = 11000
 description = "Rust 语言在高频交易系统中的应用，涵盖零成本抽象、内存安全、无锁并发、网络编程等核心知识点"
 +++
 
@@ -876,5 +877,5 @@ valgrind --tool=cachegrind ./target/release/trading_engine
 
 ## 相关文章
 
-- [上一篇：低延迟系统前沿技术与新趋势](/articles/hft/hft-10-前沿技术与新趋势/)
-- [下一篇：HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)
+- [上一篇：低延迟系统前沿技术与新趋势](@/articles/hft/hft-10-前沿技术与新趋势.md)
+- [下一篇：HFT系统延迟分析方法](@/articles/hft/hft-12-HFT系统延迟分析方法.md)

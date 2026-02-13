@@ -1,6 +1,7 @@
 +++
-title = "06.Linux系统性能调优深度指南"
+title = "Linux系统性能调优深度指南"
 date = 2026-01-12
+weight = 6000
 description = "CPU Affinity、NUMA、HugePages、IRQ、内核参数的深度剖析与最佳实践"
 [taxonomies]
 tags = ["linux", "performance", "tuning", "kernel"]
@@ -964,5 +965,5 @@ update-grub && reboot
 
 ## 相关文章
 
-- [上一篇：Linux系统诊断工具深度指南](/articles/devops/linux-05-系统诊断工具指南/)
-- [下一篇：Linux存储技术深度指南](/articles/devops/linux-07-存储技术指南/)
+- [上一篇：Linux系统诊断工具深度指南](@/articles/devops/linux-05-系统诊断工具指南.md)
+- [下一篇：Linux存储技术深度指南](@/articles/devops/linux-07-存储技术指南.md)

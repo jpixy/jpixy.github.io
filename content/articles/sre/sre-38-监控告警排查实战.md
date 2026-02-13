@@ -1,6 +1,7 @@
 +++
-title = "38.监控告警排查实战"
+title = "监控告警排查实战"
 date = 2026-01-21
+weight = 38000
 description = "SRE监控告警排查完整指南：Prometheus查询、Grafana排查、告警风暴处理、监控盲区发现"
 [taxonomies]
 tags = ["SRE", "监控", "告警", "Prometheus", "Grafana", "实战"]
@@ -916,5 +917,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：应用性能分析实战](/articles/sre/sre-37-应用性能分析实战/)
-- [下一篇：DNS与CDN问题排查实战](/articles/sre/sre-39-DNS与CDN问题排查实战/)
+- [上一篇：应用性能分析实战](@/articles/sre/sre-37-应用性能分析实战.md)
+- [下一篇：DNS与CDN问题排查实战](@/articles/sre/sre-39-DNS与CDN问题排查实战.md)

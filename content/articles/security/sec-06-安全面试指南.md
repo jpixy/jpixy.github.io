@@ -1,6 +1,7 @@
 +++
-title = "06.安全面试指南"
+title = "安全面试指南"
 date = 2026-01-19
+weight = 6000
 description = "安全面试：常见问题、攻防思维、安全设计、面试技巧"
 [taxonomies]
 tags = ["安全", "面试", "指南"]
@@ -228,5 +229,5 @@ PKCE进一步增强授权码流程，防止授权码被拦截后使用。
 
 ## 相关文章
 
-- [上一篇：安全开发实践](/articles/security/sec-05-安全开发实践/)
-- [下一篇：深度包检测与入侵检测系统](/articles/security/sec-07-深度包检测与入侵检测系统/)
+- [上一篇：安全开发实践](@/articles/security/sec-05-安全开发实践.md)
+- [下一篇：深度包检测与入侵检测系统](@/articles/security/sec-07-深度包检测与入侵检测系统.md)

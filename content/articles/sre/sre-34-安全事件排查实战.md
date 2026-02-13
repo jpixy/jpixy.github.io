@@ -1,6 +1,7 @@
 +++
-title = "34.安全事件排查实战"
+title = "安全事件排查实战"
 date = 2026-01-21
+weight = 34000
 description = "SRE安全事件排查完整指南：入侵检测、异常进程、后门排查、应急响应流程"
 [taxonomies]
 tags = ["SRE", "安全", "排查", "实战", "入侵检测", "应急响应"]
@@ -782,5 +783,5 @@ systemctl disable <unnecessary_service>
 
 ## 相关文章
 
-- [上一篇：容器问题排查实战](/articles/sre/sre-33-容器问题排查实战/)
-- [下一篇：数据库问题排查实战](/articles/sre/sre-35-数据库问题排查实战/)
+- [上一篇：容器问题排查实战](@/articles/sre/sre-33-容器问题排查实战.md)
+- [下一篇：数据库问题排查实战](@/articles/sre/sre-35-数据库问题排查实战.md)

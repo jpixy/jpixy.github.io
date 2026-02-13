@@ -1,6 +1,7 @@
 +++
-title = "11.网络性能分析与调优"
+title = "网络性能分析与调优"
 date = 2026-01-19
+weight = 11000
 description = "网络性能优化：性能指标、瓶颈分析、内核参数调优、工具使用、常见问题排查"
 [taxonomies]
 tags = ["网络", "性能", "调优"]
@@ -457,5 +458,5 @@ ab -n 100000 -c 1000 http://server/
 
 ## 相关文章
 
-- [上一篇：Socket网络编程](/articles/networking/net-10-Socket网络编程/)
-- [下一篇：网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/)
+- [上一篇：Socket网络编程](@/articles/networking/net-10-Socket网络编程.md)
+- [下一篇：网络虚拟化技术](@/articles/networking/net-12-网络虚拟化技术.md)

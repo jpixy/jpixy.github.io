@@ -1,6 +1,7 @@
 +++
-title = "24.SRE笔试题-概率与智力题"
+title = "SRE笔试题-概率与智力题"
 date = 2026-01-21
+weight = 24000
 description = "SRE/Quant面试概率与智力题：马尔可夫链、期望值计算、动态决策、经典智力题，详细解答"
 [taxonomies]
 tags = ["SRE", "面试", "概率", "智力题", "Quant"]
@@ -769,5 +770,5 @@ def simulate_four_balls(trials=10000):
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-DevOps工具速查](/articles/sre/sre-23-SRE笔试题-DevOps工具速查/)
-- [下一篇：SRE笔试题-低延迟系统与C++](/articles/sre/sre-25-SRE笔试题-低延迟系统与C++/)
+- [上一篇：SRE笔试题-DevOps工具速查](@/articles/sre/sre-23-SRE笔试题-DevOps工具速查.md)
+- [下一篇：SRE笔试题-低延迟系统与C++](@/articles/sre/sre-25-SRE笔试题-低延迟系统与C++.md)

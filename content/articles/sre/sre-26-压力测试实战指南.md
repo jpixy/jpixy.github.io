@@ -1,6 +1,7 @@
 +++
-title = "26.压力测试实战指南"
+title = "压力测试实战指南"
 date = 2026-01-21
+weight = 26000
 description = "SRE压力测试完整指南：HTTP压测、数据库压测、系统基准测试，工具使用与结果分析"
 [taxonomies]
 tags = ["SRE", "压力测试", "性能", "实战", "wrk", "ab", "sysbench"]
@@ -759,5 +760,5 @@ done
 
 ## 相关文章
 
-- [上一篇：SRE笔试题-低延迟系统与C++](/articles/sre/sre-25-SRE笔试题-低延迟系统与C++/)
-- [下一篇：网络问题排查实战](/articles/sre/sre-27-网络问题排查实战/)
+- [上一篇：SRE笔试题-低延迟系统与C++](@/articles/sre/sre-25-SRE笔试题-低延迟系统与C++.md)
+- [下一篇：网络问题排查实战](@/articles/sre/sre-27-网络问题排查实战.md)

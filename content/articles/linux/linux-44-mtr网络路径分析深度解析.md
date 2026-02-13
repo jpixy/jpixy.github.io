@@ -1,6 +1,7 @@
 +++
-title = "44.mtr网络路径分析深度解析"
+title = "mtr网络路径分析深度解析"
 date = 2026-01-31
+weight = 44000
 description = "mtr深度解析：路由追踪原理、ICMP/UDP探测、丢包分析、网络诊断"
 [taxonomies]
 tags = ["Linux", "mtr", "网络", "路由追踪", "诊断"]
@@ -539,5 +540,5 @@ echo "Report generated at: $(date)" >> mtr_report.txt
 
 ## 相关文章
 
-- [上一篇：tcpdump网络抓包深度解析](/articles/linux/linux-43-tcpdump网络抓包深度解析/)
-- [网络故障排查实战](/articles/networking/net-12-网络故障排查实战/)
+- [上一篇：tcpdump网络抓包深度解析](@/articles/linux/linux-43-tcpdump网络抓包深度解析.md)
+- [网络故障排查实战](@/articles/networking/net-12-网络虚拟化技术.md)

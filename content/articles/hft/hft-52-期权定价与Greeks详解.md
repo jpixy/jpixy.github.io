@@ -1,6 +1,7 @@
 +++
-title = "52.期权定价与Greeks详解"
+title = "期权定价与Greeks详解"
 date = 2026-02-02
+weight = 52000
 description = "期权定价模型：Black-Scholes、二叉树、Greeks、对冲策略"
 [taxonomies]
 tags = ["HFT", "期权", "Greeks", "Black-Scholes", "衍生品"]
@@ -764,6 +765,6 @@ public:
 
 ## 相关文章
 
-- [波动率建模与曲面](/articles/hft/hft-53-波动率建模与曲面/)
-- [量化数学-随机过程与时间序列](/articles/hft/hft-49-量化数学-随机过程与时间序列/)
-- [HFT策略类型全景](/articles/hft/hft-39-HFT策略类型全景/)
+- [波动率建模与曲面](@/articles/hft/hft-53-波动率建模与曲面.md)
+- [量化数学-随机过程与时间序列](@/articles/hft/hft-49-量化数学-随机过程与时间序列.md)
+- [HFT策略类型全景](@/articles/hft/hft-39-HFT策略类型全景.md)

@@ -1,7 +1,8 @@
 +++
-title = "01.Redis数据结构与典型应用"
+title = "Redis数据结构与典型应用"
 description = "Redis核心数据结构：String、Hash、List、Set、ZSet的原理与应用场景"
 date = 2025-01-16
+weight = 1000
 [taxonomies]
 tags = ["interview", "database", "redis", "data-structure", "cache"]
 +++
@@ -324,4 +325,4 @@ A：使用ZSet，score为分数，member为用户ID。ZINCRBY更新分数，ZREV
 
 ## 相关文章
 
-- [下一篇：Redis为什么这么快](/articles/interview/interview-02-Redis为什么这么快/)
+- [下一篇：Redis为什么这么快](@/articles/interview/interview-02-Redis为什么这么快.md)

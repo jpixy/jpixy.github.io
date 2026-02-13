@@ -1,6 +1,7 @@
 +++
-title = "04.常用模块设计"
+title = "常用模块设计"
 date = 2026-01-20
+weight = 4000
 description = "FPGA常用模块：计数器、FIFO、UART、SPI、存储器接口"
 [taxonomies]
 tags = ["FPGA", "模块设计", "接口"]
@@ -284,5 +285,5 @@ FPGA需要专用的PHY和控制器处理复杂的时序。
 
 ## 相关文章
 
-- [上一篇：组合逻辑与时序逻辑](/articles/fpga/fpga-03-组合逻辑与时序逻辑/)
-- [下一篇：时序约束与分析](/articles/fpga/fpga-05-时序约束与分析/)
+- [上一篇：组合逻辑与时序逻辑](@/articles/fpga/fpga-03-组合逻辑与时序逻辑.md)
+- [下一篇：时序约束与分析](@/articles/fpga/fpga-05-时序约束与分析.md)

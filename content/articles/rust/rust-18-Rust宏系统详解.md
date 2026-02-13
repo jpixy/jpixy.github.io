@@ -1,6 +1,7 @@
 +++
-title = "18.Rust宏系统详解"
+title = "Rust宏系统详解"
 date = 2026-01-21
+weight = 18000
 description = "深入剖析Rust的宏系统，包括声明宏、过程宏、derive宏、属性宏以及编译期代码生成"
 [taxonomies]
 tags = ["Rust", "宏", "元编程", "过程宏", "代码生成"]
@@ -578,5 +579,5 @@ trace_macros!(false);
 
 ## 相关文章
 
-- [上一篇：Rust性能调优实战](/articles/rust/rust-17-Rust性能调优实战/)
-- [下一篇：Rust面试指南](/articles/rust/rust-19-Rust面试指南/)
+- [上一篇：Rust性能调优实战](@/articles/rust/rust-17-Rust性能调优实战.md)
+- [下一篇：Rust面试指南](@/articles/rust/rust-19-Rust面试指南.md)

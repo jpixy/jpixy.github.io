@@ -1,6 +1,7 @@
 +++
-title = "02.Web安全详解"
+title = "Web安全详解"
 date = 2026-01-19
+weight = 2000
 description = "Web安全：OWASP Top 10、XSS、SQL注入、CSRF、常见漏洞与防护"
 [taxonomies]
 tags = ["安全", "Web", "OWASP"]
@@ -207,5 +208,5 @@ Web安全需要在设计、开发、测试、运维全程关注。没有银弹�
 
 ## 相关文章
 
-- [上一篇：安全基础与威胁模型](/articles/security/sec-01-安全基础与威胁模型/)
-- [下一篇：密码学基础](/articles/security/sec-03-密码学基础/)
+- [上一篇：安全基础与威胁模型](@/articles/security/sec-01-安全基础与威胁模型.md)
+- [下一篇：密码学基础](@/articles/security/sec-03-密码学基础.md)

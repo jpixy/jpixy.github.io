@@ -1,6 +1,7 @@
 +++
-title = "04.AI相关英文"
+title = "AI相关英文"
 slug = "eng-AI相关英文"
+weight = 4000
 +++
 
 # eng AI相关英文
@@ -598,5 +599,5 @@ _"How does your team handle model versioning when using Ollama in production?"_
 
 ## 相关文章
 
-- [上一篇：Python高级知识英文面试](/articles/english/eng-03-Python高级英文面试/)
-- [下一篇：QA相关英文](/articles/english/eng-05-QA相关英文/)
+- [上一篇：Python高级知识英文面试](@/articles/english/eng-03-Python高级英文面试.md)
+- [下一篇：QA相关英文](@/articles/english/eng-05-QA相关英文.md)

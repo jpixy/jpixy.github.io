@@ -1,7 +1,8 @@
 +++
-title = "27.如何设计一个对象存储系统"
+title = "如何设计一个对象存储系统"
 description = "对象存储系统设计：元数据管理、数据分布、一致性保障与高可用架构"
 date = 2025-01-16
+weight = 27000
 [taxonomies]
 tags = ["interview", "system-design", "object-storage", "s3", "distributed"]
 +++
@@ -422,5 +423,5 @@ A：写入时等待所有副本确认；读取时从主副本读；使用一致�
 
 ## 相关文章
 
-- [上一篇：如何设计一个视频流系统](/articles/interview/interview-26-设计视频流系统/)
-- [下一篇：如何设计一个支付系统](/articles/interview/interview-28-设计支付系统/)
+- [上一篇：如何设计一个视频流系统](@/articles/interview/interview-26-设计视频流系统.md)
+- [下一篇：如何设计一个支付系统](@/articles/interview/interview-28-设计支付系统.md)

@@ -1,7 +1,8 @@
 +++
-title = "08.客户成功与续约管理"
+title = "客户成功与续约管理"
 description = "从签约到续约：客户成功体系搭建、客户健康度管理、续约增购策略"
 date = 2025-01-16
+weight = 8000
 [taxonomies]
 tags = ["sales", "business", "customer-success", "renewal", "retention"]
 +++
@@ -645,5 +646,5 @@ QBR议程（60-90分钟）：
 
 ## 相关文章
 
-- [上一篇：销售谈判与成单技巧](/articles/business/biz-07-销售谈判与成单技巧/)
-- [下一篇：渠道销售与伙伴管理](/articles/business/biz-09-渠道销售与伙伴管理/)
+- [上一篇：销售谈判与成单技巧](@/articles/business/biz-07-销售谈判与成单技巧.md)
+- [下一篇：渠道销售与伙伴管理](@/articles/business/biz-09-渠道销售与伙伴管理.md)

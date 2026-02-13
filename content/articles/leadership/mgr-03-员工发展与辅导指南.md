@@ -1,6 +1,7 @@
 +++
-title = "03.员工发展与辅导指南"
+title = "员工发展与辅导指南"
 date = 2025-01-15
+weight = 3000
 description = "作为技术管理者如何系统性地帮助团队成员成长，涵盖1:1沟通、职业发展对话、绩效辅导、导师制度等核心话题"
 [taxonomies]
 tags = ["leadership", "management", "coaching", "mentoring", "career-development"]
@@ -598,5 +599,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：技术招聘与团队组建](/articles/leadership/mgr-02-技术招聘与团队组建/)
-- [下一篇：项目交付与敏捷实践](/articles/leadership/mgr-04-项目交付与敏捷实践/)
+- [上一篇：技术招聘与团队组建](@/articles/leadership/mgr-02-技术招聘与团队组建.md)
+- [下一篇：项目交付与敏捷实践](@/articles/leadership/mgr-04-项目交付与敏捷实践.md)

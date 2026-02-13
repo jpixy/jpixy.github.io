@@ -1,6 +1,7 @@
 +++
-title = "45.netcat网络工具深度解析"
+title = "netcat网络工具深度解析"
 date = 2026-01-31
+weight = 45000
 description = "netcat深度解析：TCP/UDP连接、端口扫描、文件传输、反向Shell"
 [taxonomies]
 tags = ["Linux", "netcat", "nc", "网络", "调试"]
@@ -533,5 +534,5 @@ sudo apt install netcat-traditional
 
 ## 相关文章
 
-- [上一篇：mtr网络路径分析深度解析](/articles/linux/linux-44-mtr网络路径分析深度解析/)
-- [网络故障排查实战](/articles/networking/net-12-网络故障排查实战/)
+- [上一篇：mtr网络路径分析深度解析](@/articles/linux/linux-44-mtr网络路径分析深度解析.md)
+- [网络故障排查实战](@/articles/networking/net-12-网络虚拟化技术.md)

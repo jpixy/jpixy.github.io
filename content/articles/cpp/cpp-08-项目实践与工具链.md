@@ -1,6 +1,7 @@
 +++
-title = "08. Project Practices and Toolchain"
+title = "Project Practices and Toolchain"
 date = 2026-01-19
+weight = 8000
 description = "C++工程实践：CMake构建、单元测试、代码质量、包管理、CI/CD"
 [taxonomies]
 tags = ["C++", "CMake", "工程"]
@@ -450,5 +451,5 @@ endif()
 
 ## 相关文章
 
-- [上一篇：Design Patterns in C++](/articles/cpp/cpp-07-设计模式实践/)
-- [下一篇：Copy and Move Semantics](/articles/cpp/cpp-09-深浅拷贝与移动语义详解/)
+- [上一篇：Design Patterns in C++](@/articles/cpp/cpp-07-设计模式实践.md)
+- [下一篇：Copy and Move Semantics](@/articles/cpp/cpp-09-深浅拷贝与移动语义详解.md)

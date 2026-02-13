@@ -1,6 +1,7 @@
 +++
-title = "07.机器学习数学"
+title = "机器学习数学"
 date = 2026-01-20
+weight = 7000
 description = "机器学习数学：损失函数、正则化、降维、核方法"
 [taxonomies]
 tags = ["数学", "机器学习", "损失函数"]
@@ -244,5 +245,5 @@ Mercer定理：正定核对应某个特征空间的内积。
 
 ## 相关文章
 
-- [上一篇：数值计算](/articles/math/math-06-数值计算/)
-- [下一篇：数学面试题](/articles/math/math-08-数学面试题/)
+- [上一篇：数值计算](@/articles/math/math-06-数值计算.md)
+- [下一篇：数学面试题](@/articles/math/math-08-数学面试题.md)

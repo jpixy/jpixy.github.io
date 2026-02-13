@@ -1,6 +1,7 @@
 +++
-title = "40.证书与HTTPS问题排查实战"
+title = "证书与HTTPS问题排查实战"
 date = 2026-01-21
+weight = 40000
 description = "SRE证书与HTTPS问题排查完整指南：SSL证书过期、握手失败、证书链问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "SSL", "HTTPS", "证书", "TLS", "排查", "实战"]
@@ -820,5 +821,5 @@ echo "===== 检查完成 ====="
 
 ## 相关文章
 
-- [上一篇：DNS与CDN问题排查实战](/articles/sre/sre-39-DNS与CDN问题排查实战/)
-- [下一篇：时间同步与NTP问题排查实战](/articles/sre/sre-41-时间同步与NTP问题排查实战/)
+- [上一篇：DNS与CDN问题排查实战](@/articles/sre/sre-39-DNS与CDN问题排查实战.md)
+- [下一篇：时间同步与NTP问题排查实战](@/articles/sre/sre-41-时间同步与NTP问题排查实战.md)

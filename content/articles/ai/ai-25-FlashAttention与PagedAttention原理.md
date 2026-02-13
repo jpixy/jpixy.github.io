@@ -1,6 +1,7 @@
 +++
-title = "25.FlashAttention与PagedAttention原理"
+title = "FlashAttention与PagedAttention原理"
 date = 2026-02-06
+weight = 25000
 description = "LLM推理优化核心：FlashAttention分块算法、在线Softmax、PagedAttention内存管理、vLLM实现详解"
 [taxonomies]
 tags = ["attention", "flash-attention", "paged-attention", "vllm", "llm", "inference"]
@@ -1750,7 +1751,7 @@ V: [v1, v2, ..., vN, v_new]  — KV Cache 中所有 value + 新 value
 
 ## 相关文章
 
-- [上一篇：24 - GPU Kernel 开发详解](/articles/ai/ai-24-GPU-Kernel开发详解/)
-- [下一篇：26 - ROCm 与 AMD GPU 开发](/articles/ai/ai-26-ROCm与AMD-GPU开发/)
-- [16 - 推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
-- [19 - DeepSeek 推理优化技术详解](/articles/ai/ai-19-DeepSeek推理优化技术详解/)
+- [上一篇：24 - GPU Kernel 开发详解](@/articles/ai/ai-24-GPU-Kernel开发详解.md)
+- [下一篇：26 - ROCm 与 AMD GPU 开发](@/articles/ai/ai-26-ROCm与AMD-GPU开发.md)
+- [16 - 推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)
+- [19 - DeepSeek 推理优化技术详解](@/articles/ai/ai-19-DeepSeek推理优化技术详解.md)

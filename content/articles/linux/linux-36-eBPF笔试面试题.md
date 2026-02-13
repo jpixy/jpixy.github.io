@@ -1,6 +1,7 @@
 +++
-title = "36.eBPF笔试面试题"
+title = "eBPF笔试面试题"
 date = 2026-02-02
+weight = 36000
 description = "eBPF笔试面试题：程序编写、Map操作、XDP、性能分析"
 [taxonomies]
 tags = ["Linux", "eBPF", "笔试", "面试", "XDP"]
@@ -747,7 +748,7 @@ bpftool prog load prog.o /sys/fs/bpf/test verbose
 
 ## 相关文章
 
-- [上一篇：eBPF技术深度解析](/articles/linux/linux-35-eBPF技术深度解析/)
-- [下一篇：perf性能分析工具深度解析](/articles/linux/linux-37-perf性能分析工具深度解析/)
-- [Linux内核网络栈详解](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [上一篇：eBPF技术深度解析](@/articles/linux/linux-35-eBPF技术深度解析.md)
+- [下一篇：perf性能分析工具深度解析](@/articles/linux/linux-37-perf性能分析工具深度解析.md)
+- [Linux内核网络栈详解](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

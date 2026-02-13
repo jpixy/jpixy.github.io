@@ -1,8 +1,9 @@
 +++
-title = "09.Linux内核网络栈详解(HFT)"
+title = "Linux内核网络栈详解(HFT)"
 slug = "linux-09-Linux内核网络栈详解"
 description = "深入讲解Linux内核网络栈：sk_buff结构、netfilter框架、conntrack连接跟踪、TCP状态机、软中断与NAPI机制"
 date = 2026-01-21
+weight = 9000
 draft = false
 [taxonomies]
 tags = ["Linux", "网络栈", "内核", "sk_buff", "NAPI", "HFT"]
@@ -608,5 +609,5 @@ Linux网络栈的核心要点：
 
 ## 相关文章
 
-- [上一篇：性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
-- [下一篇：Linux时间子系统(HFT)](/articles/linux/linux-10-Linux时间子系统/)
+- [上一篇：性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)
+- [下一篇：Linux时间子系统(HFT)](@/articles/linux/linux-10-Linux时间子系统.md)

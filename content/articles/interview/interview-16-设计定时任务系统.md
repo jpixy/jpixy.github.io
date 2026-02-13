@@ -1,7 +1,8 @@
 +++
-title = "16.如何设计一个定时任务系统"
+title = "如何设计一个定时任务系统"
 description = "分布式定时任务系统设计：任务调度、分片执行、失败处理与高可用方案"
 date = 2025-01-16
+weight = 16000
 [taxonomies]
 tags = ["interview", "system-design", "scheduler", "distributed", "cron"]
 +++
@@ -408,5 +409,5 @@ A：构建DAG描述依赖关系；前置任务完成才触发后续任务；记�
 
 ## 相关文章
 
-- [上一篇：如何设计一个限流系统](/articles/interview/interview-15-设计限流系统/)
-- [下一篇：如何设计一个高性能定时器系统](/articles/interview/interview-17-设计高性能定时器/)
+- [上一篇：如何设计一个限流系统](@/articles/interview/interview-15-设计限流系统.md)
+- [下一篇：如何设计一个高性能定时器系统](@/articles/interview/interview-17-设计高性能定时器.md)

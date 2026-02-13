@@ -1,7 +1,8 @@
 +++
-title = "22.二层三层网络基础详解"
+title = "二层三层网络基础详解"
 description = "网络基础概念深度解析：STP生成树协议、VLAN与VXLAN关系、MAC地址、ARP协议、二层交换与三层路由、802.1Q标签、广播域、MTU、链路聚合等核心知识"
 date = 2026-01-28
+weight = 22000
 draft = false
 [taxonomies]
 tags = ["Networking", "STP", "VLAN", "VXLAN", "ARP", "Layer2", "Layer3", "Foundation"]
@@ -594,7 +595,7 @@ graph TD
 
 **→ 现代数据中心几乎不用 STP，改用 Spine-Leaf 架构。**
 
-详细文章：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
+详细文章：[数据中心网络架构详解](@/articles/networking/net-23-数据中心网络架构详解.md)
 
 ---
 
@@ -701,7 +702,7 @@ VNI = 24 bit = 可支持约 1600 万个隔离网络
 4. VM1 → VM2 时，VTEP1 查表直接封装发给 VTEP2
 - **优点**: 零泛洪，可扩展到数万主机
 
-详细文章：[数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
+详细文章：[数据中心网络架构详解](@/articles/networking/net-23-数据中心网络架构详解.md)
 
 ---
 
@@ -1019,23 +1020,23 @@ iBGP vs eBGP:
 
 ### 详细专题
 
-- [数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/) - Spine-Leaf、VXLAN、BGP EVPN 深入
-- [网络虚拟化技术](/articles/networking/net-12-网络虚拟化技术/) - OVS、Linux Bridge
-- [RDMA 与 InfiniBand 详解](/articles/networking/net-21-RDMA与InfiniBand详解/) - 高性能网络
+- [数据中心网络架构详解](@/articles/networking/net-23-数据中心网络架构详解.md) - Spine-Leaf、VXLAN、BGP EVPN 深入
+- [网络虚拟化技术](@/articles/networking/net-12-网络虚拟化技术.md) - OVS、Linux Bridge
+- [RDMA 与 InfiniBand 详解](@/articles/networking/net-21-RDMA与InfiniBand详解.md) - 高性能网络
 
 ### 概念速查
 
-- [网络核心概念索引](/articles/00-glossary/glossary-02-networking-concepts/) - 概念快速查阅
+- [网络核心概念索引](@/articles/00-glossary/glossary-02-networking-concepts.md) - 概念快速查阅
 
 ### TCP/IP 协议栈
 
-- [TCP/IP 协议栈基础](/articles/networking/net-06-TCPIP协议栈基础/)
-- [TCP 协议详解](/articles/networking/net-07-TCP协议详解/)
-- [Ethernet 基础](/articles/networking/net-01-Ethernet基础/)
+- [TCP/IP 协议栈基础](@/articles/networking/net-06-TCPIP协议栈基础.md)
+- [TCP 协议详解](@/articles/networking/net-07-TCP协议详解.md)
+- [Ethernet 基础](@/articles/networking/net-01-Ethernet基础.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：RDMA与InfiniBand详解(HFT)](/articles/networking/net-21-RDMA与InfiniBand详解/)
-- [下一篇：数据中心网络架构详解](/articles/networking/net-23-数据中心网络架构详解/)
+- [上一篇：RDMA与InfiniBand详解(HFT)](@/articles/networking/net-21-RDMA与InfiniBand详解.md)
+- [下一篇：数据中心网络架构详解](@/articles/networking/net-23-数据中心网络架构详解.md)

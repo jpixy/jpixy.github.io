@@ -1,6 +1,7 @@
 +++
-title = "11.OS笔试题-同步与死锁"
+title = "OS笔试题-同步与死锁"
 date = 2026-01-31
+weight = 11000
 description = "操作系统同步与死锁笔试题：互斥、信号量、死锁检测、经典同步问题"
 [taxonomies]
 tags = ["操作系统", "笔试", "同步", "死锁", "信号量"]
@@ -1098,8 +1099,8 @@ void consumer() {
 
 ## 相关文章
 
-- [上一篇：OS笔试题-内存管理](/articles/os/os-10-OS笔试题-内存管理/)
-- [下一篇：OS面试题-进程与线程](/articles/os/os-12-OS面试题-进程与线程/)
+- [上一篇：OS笔试题-内存管理](@/articles/os/os-10-OS笔试题-内存管理.md)
+- [下一篇：OS面试题-进程与线程](@/articles/os/os-12-OS面试题-进程与线程.md)
 
 **知识基础**：
-- [并发与同步](/articles/os/os-07-并发与同步/)
+- [并发与同步](@/articles/os/os-07-并发与同步.md)

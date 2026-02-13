@@ -1,6 +1,7 @@
 +++
-title = "18.交易所撮合引擎原理"
+title = "交易所撮合引擎原理"
 date = 2026-01-21
+weight = 18000
 description = "深入剖析交易所撮合引擎，包括撮合算法、订单类型、Queue Position、Exchange Fees和Maker/Taker"
 [taxonomies]
 tags = ["HFT", "交易所", "撮合引擎", "订单类型", "做市"]
@@ -468,5 +469,5 @@ ROI计算：
 
 ## 相关文章
 
-- [上一篇：Solarflare/Onload与FPGA网卡](/articles/hft/hft-17-Solarflare与FPGA网卡/)
-- [下一篇：全球主要交易所技术对比](/articles/hft/hft-19-全球主要交易所技术对比/)
+- [上一篇：Solarflare/Onload与FPGA网卡](@/articles/hft/hft-17-Solarflare与FPGA网卡.md)
+- [下一篇：全球主要交易所技术对比](@/articles/hft/hft-19-全球主要交易所技术对比.md)

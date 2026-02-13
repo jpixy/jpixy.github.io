@@ -1,6 +1,7 @@
 +++
-title = "57.iptables/nftables防火墙深度解析"
+title = "iptables/nftables防火墙深度解析"
 date = 2026-01-31
+weight = 57000
 description = "iptables/nftables深度解析：包过滤、NAT、状态跟踪、安全配置"
 [taxonomies]
 tags = ["Linux", "iptables", "nftables", "防火墙", "安全"]
@@ -420,6 +421,6 @@ iptables-save | iptables-restore-translate -f /etc/nftables.conf
 
 ## 相关文章
 
-- [上一篇：tc流量控制深度解析](/articles/linux/linux-56-tc流量控制深度解析/)
-- [下一篇：以太网与 PHY 驱动开发](/articles/linux/linux-58-以太网与PHY驱动开发/)
-- [网络安全基础](/articles/security/sec-01-网络安全基础/)
+- [上一篇：tc流量控制深度解析](@/articles/linux/linux-56-tc流量控制深度解析.md)
+- [下一篇：以太网与 PHY 驱动开发](@/articles/linux/linux-58-以太网与PHY驱动开发.md)
+- [网络安全基础](@/articles/security/sec-01-安全基础与威胁模型.md)

@@ -1,6 +1,7 @@
 +++
-title = "01.分布式系统基础"
+title = "分布式系统基础"
 date = 2026-01-20
+weight = 1000
 description = "分布式系统基础：系统模型、故障类型、设计目标、挑战"
 [taxonomies]
 tags = ["分布式", "系统模型", "故障"]
@@ -209,4 +210,4 @@ CAP的扩展：如果有分区（P），选择可用性（A）还是一致性（
 
 ## 相关文章
 
-- [下一篇：时间与顺序](/articles/distributed/dist-02-时间与顺序/)
+- [下一篇：时间与顺序](@/articles/distributed/dist-02-时间与顺序.md)

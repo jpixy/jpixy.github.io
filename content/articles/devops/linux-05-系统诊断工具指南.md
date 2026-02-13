@@ -1,6 +1,7 @@
 +++
-title = "05.Linux系统诊断工具深度指南"
+title = "Linux系统诊断工具深度指南"
 date = 2026-01-12
+weight = 5000
 description = "strace、lsof、perf、bpftrace的深度剖析与实战技巧"
 [taxonomies]
 tags = ["linux", "debugging", "performance", "tracing"]
@@ -928,5 +929,5 @@ bpftrace -e 'tracepoint:...'      # eBPF 跟踪
 
 ## 相关文章
 
-- [上一篇：如何添加新硬盘扩展LVM](/articles/devops/devops-04-添加硬盘扩展LVM/)
-- [下一篇：Linux系统性能调优深度指南](/articles/devops/linux-06-系统性能调优指南/)
+- [上一篇：如何添加新硬盘扩展LVM](@/articles/devops/devops-04-添加硬盘扩展LVM.md)
+- [下一篇：Linux系统性能调优深度指南](@/articles/devops/linux-06-系统性能调优指南.md)

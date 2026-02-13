@@ -1,6 +1,6 @@
 +++
 title = "FPGA & HDL"
-sort_by = "title"
+sort_by = "weight"
 
 [extra]
 protected = true

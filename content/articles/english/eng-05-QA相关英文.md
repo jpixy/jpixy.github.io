@@ -1,6 +1,7 @@
 +++
-title = "05.QA相关英文"
+title = "QA相关英文"
 slug = "eng-QA相关英文"
+weight = 5000
 +++
 
 # eng QA相关英文
@@ -349,5 +350,5 @@ public class LoginPage {
 
 ## 相关文章
 
-- [上一篇：AI相关英文](/articles/english/eng-04-AI相关英文/)
-- [下一篇：缺点当成优点表达](/articles/english/eng-06-缺点当优点表达/)
+- [上一篇：AI相关英文](@/articles/english/eng-04-AI相关英文.md)
+- [下一篇：缺点当成优点表达](@/articles/english/eng-06-缺点当优点表达.md)

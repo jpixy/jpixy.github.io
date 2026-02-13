@@ -1,6 +1,7 @@
 +++
-title = "06.TCP/IP协议栈基础"
+title = "TCP/IP协议栈基础"
 date = 2026-01-19
+weight = 6000
 description = "TCP/IP协议栈全景：OSI与TCP/IP模型、各层协议功能、数据封装与解封装、网络通信原理"
 [taxonomies]
 tags = ["网络", "TCP/IP", "协议"]
@@ -377,5 +378,5 @@ ip neigh show             # 查看ARP表
 
 ## 相关文章
 
-- [上一篇：eBPF详解](/articles/networking/net-05-eBPF详解/)
-- [下一篇：TCP协议详解](/articles/networking/net-07-TCP协议详解/)
+- [上一篇：eBPF详解](@/articles/networking/net-05-eBPF详解.md)
+- [下一篇：TCP协议详解](@/articles/networking/net-07-TCP协议详解.md)

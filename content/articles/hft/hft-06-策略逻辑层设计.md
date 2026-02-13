@@ -1,6 +1,7 @@
 +++
-title = "06.策略逻辑层设计"
+title = "策略逻辑层设计"
 date = 2026-01-13
+weight = 6000
 description = "高频交易策略层深度解析：信号计算、风控集成、决策引擎与低延迟实现"
 [taxonomies]
 tags = ["hft", "architecture", "strategy", "trading"]
@@ -430,5 +431,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：数据采集层设计](/articles/hft/hft-05-数据采集层设计/)
-- [下一篇：执行层设计](/articles/hft/hft-07-执行层设计/)
+- [上一篇：数据采集层设计](@/articles/hft/hft-05-数据采集层设计.md)
+- [下一篇：执行层设计](@/articles/hft/hft-07-执行层设计.md)

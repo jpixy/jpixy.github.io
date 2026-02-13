@@ -1,6 +1,7 @@
 +++
-title = "02.Redis为什么这么快"
+title = "Redis为什么这么快"
 slug = "interview-Redis为什么这么快"
+weight = 2000
 +++
 
 # Redis 为什么这么快？
@@ -579,5 +580,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：Redis数据结构与典型应用](/articles/interview/interview-01-Redis数据结构与应用/)
-- [下一篇：Redis高可用架构](/articles/interview/interview-03-Redis高可用架构/)
+- [上一篇：Redis数据结构与典型应用](@/articles/interview/interview-01-Redis数据结构与应用.md)
+- [下一篇：Redis高可用架构](@/articles/interview/interview-03-Redis高可用架构.md)

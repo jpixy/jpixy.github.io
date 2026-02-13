@@ -1,6 +1,7 @@
 +++
-title = "11.嵌入式面试指南"
+title = "嵌入式面试指南"
 date = 2026-01-19
+weight = 11000
 description = "嵌入式工程师面试全攻略：高频技术问题、项目经验包装、简历优化与谈薪技巧"
 [taxonomies]
 tags = ["embedded", "interview", "career", "resume", "salary"]
@@ -398,5 +399,5 @@ DMA（Direct Memory Access）是不经过CPU直接在外设与内存间传输数
 
 ## 相关文章
 
-- [上一篇：无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)
-- [下一篇：嵌入式传感器应用](/articles/embedded/embedded-12-传感器应用/)
+- [上一篇：无线通信与物联网协议](@/articles/embedded/embedded-10-无线通信与物联网协议.md)
+- [下一篇：嵌入式传感器应用](@/articles/embedded/embedded-12-传感器应用.md)

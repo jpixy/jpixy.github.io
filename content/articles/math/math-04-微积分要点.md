@@ -1,6 +1,7 @@
 +++
-title = "04.微积分要点"
+title = "微积分要点"
 date = 2026-01-20
+weight = 4000
 description = "微积分：导数、梯度、积分、优化、泰勒展开"
 [taxonomies]
 tags = ["数学", "微积分", "优化"]
@@ -248,5 +249,5 @@ L2正则化对应梯度增加权重衰减项。
 
 ## 相关文章
 
-- [上一篇：统计学基础](/articles/math/math-03-统计学基础/)
-- [下一篇：信息论基础](/articles/math/math-05-信息论基础/)
+- [上一篇：统计学基础](@/articles/math/math-03-统计学基础.md)
+- [下一篇：信息论基础](@/articles/math/math-05-信息论基础.md)

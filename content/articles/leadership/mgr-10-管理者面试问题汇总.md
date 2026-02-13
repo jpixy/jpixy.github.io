@@ -1,6 +1,7 @@
 +++
-title = "10.管理者面试高频问题汇总"
+title = "管理者面试高频问题汇总"
 date = 2025-01-15
+weight = 10000
 description = "技术管理者面试中常见的问题汇总及回答策略，涵盖领导力、团队建设、决策能力等维度"
 [taxonomies]
 tags = ["leadership", "management", "interview", "career"]
@@ -453,4 +454,4 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：高级管理话题-组织预算与向上管理](/articles/leadership/mgr-09-组织预算与向上管理/)
+- [上一篇：高级管理话题-组织预算与向上管理](@/articles/leadership/mgr-09-组织预算与向上管理.md)

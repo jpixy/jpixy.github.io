@@ -1,7 +1,8 @@
 +++
-title = "12.HFT系统延迟分析方法"
+title = "HFT系统延迟分析方法"
 slug = "hft-12-HFT系统延迟分析方法"
 date = 2026-01-21
+weight = 12000
 description = "深入剖析HFT系统延迟分析，包括延迟分解、测量点设计、百分位延迟、Tick-to-Trade和硬件时间戳"
 [taxonomies]
 tags = ["HFT", "延迟分析", "性能优化", "时间戳", "低延迟"]
@@ -565,5 +566,5 @@ private:
 
 ## 相关文章
 
-- [上一篇：Rust在HFT领域的实践与必知必会](/articles/hft/hft-11-Rust在HFT的实践/)
-- [下一篇：Order Book实现详解](/articles/hft/hft-13-OrderBook实现详解/)
+- [上一篇：Rust在HFT领域的实践与必知必会](@/articles/hft/hft-11-Rust在HFT的实践.md)
+- [下一篇：Order Book实现详解](@/articles/hft/hft-13-OrderBook实现详解.md)

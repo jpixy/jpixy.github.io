@@ -1,6 +1,7 @@
 +++
-title = "07.执行层设计"
+title = "执行层设计"
 date = 2026-01-13
+weight = 7000
 description = "高频交易执行层深度解析：订单管理、智能路由、协议编码与极致低延迟优化"
 [taxonomies]
 tags = ["hft", "architecture", "execution", "order-routing"]
@@ -465,5 +466,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：策略逻辑层设计](/articles/hft/hft-06-策略逻辑层设计/)
-- [下一篇：流水线技术详解](/articles/hft/hft-08-流水线技术详解/)
+- [上一篇：策略逻辑层设计](@/articles/hft/hft-06-策略逻辑层设计.md)
+- [下一篇：流水线技术详解](@/articles/hft/hft-08-流水线技术详解.md)

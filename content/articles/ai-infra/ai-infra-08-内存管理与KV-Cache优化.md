@@ -1,7 +1,8 @@
 +++
-title = "08 - 内存管理与 KV Cache 优化"
+title = "内存管理与 KV Cache 优化"
 description = "深入理解 LLM 推理中的显存管理和 KV Cache 优化技术"
 date = 2025-02-06
+weight = 8000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -400,6 +401,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：07 - 推理调度与 Batching 策略](/articles/ai-infra/infra-07-推理调度与Batching策略/)
-- [下一篇：09 - 推理引擎性能调优](/articles/ai-infra/infra-09-推理引擎性能调优/)
-- [25 - FlashAttention 与 PagedAttention 原理](/articles/ai/ai-25-FlashAttention与PagedAttention原理/)
+- [上一篇：07 - 推理调度与 Batching 策略](@/articles/ai-infra/ai-infra-07-推理调度与Batching策略.md)
+- [下一篇：09 - 推理引擎性能调优](@/articles/ai-infra/ai-infra-09-推理引擎性能调优.md)
+- [25 - FlashAttention 与 PagedAttention 原理](@/articles/ai/ai-25-FlashAttention与PagedAttention原理.md)

@@ -1,7 +1,8 @@
 +++
-title = "18.国际化与出海销售"
+title = "国际化与出海销售"
 description = "企业出海策略、海外市场拓展、跨文化销售与本地化运营"
 date = 2025-01-16
+weight = 18000
 [taxonomies]
 tags = ["sales", "business", "global", "international", "expansion"]
 +++
@@ -623,4 +624,4 @@ tags = ["sales", "business", "global", "international", "expansion"]
 
 ## 相关文章
 
-- [上一篇：市场活动策划与执行](/articles/business/biz-17-市场活动策划与执行/)
+- [上一篇：市场活动策划与执行](@/articles/business/biz-17-市场活动策划与执行.md)

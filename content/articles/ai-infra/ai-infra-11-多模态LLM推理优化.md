@@ -1,7 +1,8 @@
 +++
-title = "11 - 多模态 LLM 推理优化"
+title = "多模态 LLM 推理优化"
 description = "语音、图像与文本多模态大模型推理系统设计与优化实战"
 date = 2025-02-07
+weight = 11000
 updated = 2025-02-07
 draft = false
 [taxonomies]
@@ -754,7 +755,7 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：10 - 从零构建推理引擎](/articles/ai-infra/infra-10-从零构建推理引擎/)
-- [02 - LLM 推理优化全景](/articles/ai-infra/infra-02-LLM推理优化全景/)
-- [07 - 推理调度与 Batching 策略](/articles/ai-infra/infra-07-推理调度与Batching策略/)
-- [08 - 内存管理与 KV Cache 优化](/articles/ai-infra/infra-08-内存管理与KV-Cache优化/)
+- [上一篇：10 - 从零构建推理引擎](@/articles/ai-infra/ai-infra-10-从零构建推理引擎.md)
+- [02 - LLM 推理优化全景](@/articles/ai-infra/ai-infra-02-LLM推理优化全景.md)
+- [07 - 推理调度与 Batching 策略](@/articles/ai-infra/ai-infra-07-推理调度与Batching策略.md)
+- [08 - 内存管理与 KV Cache 优化](@/articles/ai-infra/ai-infra-08-内存管理与KV-Cache优化.md)

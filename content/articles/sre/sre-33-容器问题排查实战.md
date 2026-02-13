@@ -1,6 +1,7 @@
 +++
-title = "33.容器问题排查实战"
+title = "容器问题排查实战"
 date = 2026-01-21
+weight = 33000
 description = "SRE容器问题排查完整指南：Docker容器故障、Kubernetes Pod问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "Docker", "Kubernetes", "容器", "排查", "实战"]
@@ -693,5 +694,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：日志分析与故障定位实战](/articles/sre/sre-32-日志分析与故障定位实战/)
-- [下一篇：安全事件排查实战](/articles/sre/sre-34-安全事件排查实战/)
+- [上一篇：日志分析与故障定位实战](@/articles/sre/sre-32-日志分析与故障定位实战.md)
+- [下一篇：安全事件排查实战](@/articles/sre/sre-34-安全事件排查实战.md)

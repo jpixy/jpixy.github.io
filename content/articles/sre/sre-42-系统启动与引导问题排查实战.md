@@ -1,6 +1,7 @@
 +++
-title = "42.系统启动与引导问题排查实战"
+title = "系统启动与引导问题排查实战"
 date = 2026-01-21
+weight = 42000
 description = "SRE系统启动问题排查完整指南：GRUB修复、启动失败、initramfs问题的定位与解决"
 [taxonomies]
 tags = ["SRE", "启动", "GRUB", "systemd", "排查", "实战"]
@@ -604,5 +605,5 @@ echo "===== 诊断完成 ====="
 
 ## 相关文章
 
-- [上一篇：时间同步与NTP问题排查实战](/articles/sre/sre-41-时间同步与NTP问题排查实战/)
-- [下一篇：软件包与依赖问题排查实战](/articles/sre/sre-43-软件包与依赖问题排查实战/)
+- [上一篇：时间同步与NTP问题排查实战](@/articles/sre/sre-41-时间同步与NTP问题排查实战.md)
+- [下一篇：软件包与依赖问题排查实战](@/articles/sre/sre-43-软件包与依赖问题排查实战.md)

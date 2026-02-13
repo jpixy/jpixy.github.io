@@ -1,7 +1,8 @@
 +++
-title = "17.市场活动策划与执行"
+title = "市场活动策划与执行"
 description = "B2B市场活动类型、策划流程、执行管理与ROI评估"
 date = 2025-01-16
+weight = 17000
 [taxonomies]
 tags = ["marketing", "business", "event", "lead-generation", "roi"]
 +++
@@ -591,5 +592,5 @@ CPL = 活动成本 / 线索数量
 
 ## 相关文章
 
-- [上一篇：品牌建设与公关传播](/articles/business/biz-16-品牌建设与公关传播/)
-- [下一篇：国际化与出海销售](/articles/business/biz-18-国际化与出海销售/)
+- [上一篇：品牌建设与公关传播](@/articles/business/biz-16-品牌建设与公关传播.md)
+- [下一篇：国际化与出海销售](@/articles/business/biz-18-国际化与出海销售.md)

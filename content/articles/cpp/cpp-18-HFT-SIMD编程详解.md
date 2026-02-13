@@ -1,6 +1,7 @@
 +++
-title = "18. SIMD Programming (HFT)"
+title = "SIMD Programming (HFT)"
 date = 2026-01-21
+weight = 18000
 description = "深入剖析SIMD向量化编程，包括SSE、AVX、AVX-512指令集，intrinsics使用，HFT低延迟优化核心技术"
 [taxonomies]
 tags = ["C++", "SIMD", "AVX", "性能优化", "HFT", "向量化"]
@@ -362,5 +363,5 @@ bool hasAVX512() {
 
 ## 相关文章
 
-- [上一篇：Lock-Free Data Structures (HFT)](/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解/)
-- [下一篇：Branch Prediction and Hot Path (HFT)](/articles/cpp/cpp-19-HFT分支预测与热路径优化/)
+- [上一篇：Lock-Free Data Structures (HFT)](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
+- [下一篇：Branch Prediction and Hot Path (HFT)](@/articles/cpp/cpp-19-HFT分支预测与热路径优化.md)

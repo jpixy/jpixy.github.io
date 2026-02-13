@@ -1,6 +1,7 @@
 +++
-title = "51.blktrace块设备追踪深度解析"
+title = "blktrace块设备追踪深度解析"
 date = 2026-01-31
+weight = 51000
 description = "blktrace深度解析：块设备IO追踪、IO栈分析、延迟诊断"
 [taxonomies]
 tags = ["Linux", "blktrace", "IO", "块设备", "性能"]
@@ -361,5 +362,5 @@ blkparse -i trace | less
 
 ## 相关文章
 
-- [上一篇：lsof进程分析深度解析](/articles/linux/linux-50-lsof进程分析深度解析/)
-- [fio磁盘IO性能测试深度解析](/articles/linux/linux-42-fio磁盘IO性能测试深度解析/)
+- [上一篇：lsof进程分析深度解析](@/articles/linux/linux-50-lsof进程分析深度解析.md)
+- [fio磁盘IO性能测试深度解析](@/articles/linux/linux-42-fio磁盘IO性能测试深度解析.md)

@@ -1,6 +1,7 @@
 +++
-title = "25.内核面试题-同步机制"
+title = "内核面试题-同步机制"
 date = 2026-01-31
+weight = 25000
 description = "Linux内核同步机制面试题：Spinlock、Mutex、RCU、内存屏障深度解析"
 [taxonomies]
 tags = ["Linux", "内核", "面试", "同步", "RCU"]
@@ -789,5 +790,5 @@ u64 get_jiffies_64(void) {
 
 ## 相关文章
 
-- [上一篇：内核面试题-进程调度](/articles/linux/linux-24-内核面试题-进程调度/)
-- [下一篇：内核面试题-中断处理](/articles/linux/linux-26-内核面试题-中断处理/)
+- [上一篇：内核面试题-进程调度](@/articles/linux/linux-24-内核面试题-进程调度.md)
+- [下一篇：内核面试题-中断处理](@/articles/linux/linux-26-内核面试题-中断处理.md)

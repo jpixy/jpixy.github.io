@@ -1,7 +1,8 @@
 +++
-title = "63.交易系统故障演练(HFT)"
+title = "交易系统故障演练(HFT)"
 description = "深入讲解HFT系统故障演练方法：混沌工程、故障注入、市场异常模拟、DR切换演练与最佳实践"
 date = 2026-01-21
+weight = 63000
 draft = false
 [taxonomies]
 tags = ["SRE", "HFT", "混沌工程", "故障演练", "容灾"]
@@ -1022,5 +1023,5 @@ continuous_improvement:
 
 ## 相关文章
 
-- [上一篇：金融系统合规与审计(HFT)](/articles/sre/sre-62-金融系统合规与审计/)
-- [下一篇：SRE面试题-HFT专项(HFT)](/articles/sre/sre-64-SRE面试题-HFT专项/)
+- [上一篇：金融系统合规与审计(HFT)](@/articles/sre/sre-62-金融系统合规与审计.md)
+- [下一篇：SRE面试题-HFT专项(HFT)](@/articles/sre/sre-64-SRE面试题-HFT专项.md)

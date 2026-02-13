@@ -1,6 +1,7 @@
 +++
-title = "05.故障管理与事后复盘"
+title = "故障管理与事后复盘"
 date = 2026-01-19
+weight = 5000
 description = "事故全生命周期管理：事故分级与响应、根因分析方法、Blameless事后复盘、改进项跟踪"
 [taxonomies]
 tags = ["SRE", "故障管理", "事后复盘"]
@@ -391,5 +392,5 @@ Why 5: 为什么Review没检查？
 
 ## 相关文章
 
-- [上一篇：告警设计与On-Call实践](/articles/sre/sre-04-告警设计与OnCall实践/)
-- [下一篇：容量规划与性能工程](/articles/sre/sre-06-容量规划与性能工程/)
+- [上一篇：告警设计与On-Call实践](@/articles/sre/sre-04-告警设计与OnCall实践.md)
+- [下一篇：容量规划与性能工程](@/articles/sre/sre-06-容量规划与性能工程.md)

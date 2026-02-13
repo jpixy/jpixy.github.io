@@ -1,6 +1,7 @@
 +++
-title = "01. C vs C++ Memory Management"
+title = "C vs C++ Memory Management"
 slug = "cpp-C和C++在内存管理上的对比"
+weight = 1000
 +++
 
 # C和C++在内存管理上的对比
@@ -276,4 +277,4 @@ RAII是一种编程技术，通过将资源的获取与对象的生命周期绑�
 
 ## 相关文章
 
-- [下一篇：Modern C++ Features](/articles/cpp/cpp-02-现代Cpp特性详解/)
+- [下一篇：Modern C++ Features](@/articles/cpp/cpp-02-现代Cpp特性详解.md)

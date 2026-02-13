@@ -1,6 +1,7 @@
 +++
-title = "18.OS面试题-I/O系统"
+title = "OS面试题-I/O系统"
 date = 2026-01-31
+weight = 18000
 description = "操作系统I/O系统面试题：设备管理、DMA、I/O调度器、中断处理深度解析"
 [taxonomies]
 tags = ["操作系统", "面试", "I/O", "DMA", "设备驱动"]
@@ -976,4 +977,4 @@ iounmap(base);
 
 ## 导航
 
-- [上一篇：OS笔试题-磁盘与IO调度](/articles/os/os-17-OS笔试题-磁盘与IO调度/)
+- [上一篇：OS笔试题-磁盘与IO调度](@/articles/os/os-17-OS笔试题-磁盘与IO调度.md)

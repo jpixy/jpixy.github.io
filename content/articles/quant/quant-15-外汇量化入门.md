@@ -1,6 +1,7 @@
 +++
-title = "15 - 外汇量化入门"
+title = "外汇量化入门"
 date = 2025-01-15
+weight = 15000
 description = "外汇量化交易入门：市场特点、货币对、杠杆风险、常见策略"
 [taxonomies]
 tags = ["quant", "forex", "currency", "leverage", "carry-trade"]
@@ -355,5 +356,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：14 - 量化交易常见错误案例](/articles/quant/quant-14-量化交易常见错误案例/)
-- [下一篇：16 - 市场微结构](/articles/quant/quant-16-市场微结构/)
+- [上一篇：14 - 量化交易常见错误案例](@/articles/quant/quant-14-量化交易常见错误案例.md)
+- [下一篇：16 - 市场微结构](@/articles/quant/quant-16-市场微结构.md)

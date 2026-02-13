@@ -1,6 +1,7 @@
 +++
-title = "31.Linux容器基础详解"
+title = "Linux容器基础详解"
 date = 2026-02-02
+weight = 31000
 description = "Linux容器技术：Namespace隔离、Cgroups资源控制、UnionFS、容器运行时原理"
 [taxonomies]
 tags = ["Linux", "容器", "Docker", "Namespace", "Cgroups"]
@@ -1022,6 +1023,6 @@ A:
 
 ## 相关文章
 
-- [上一篇：Linux设备驱动模型详解](/articles/linux/linux-30-Linux设备驱动模型详解/)
-- [下一篇：内核模块编程指南](/articles/linux/linux-32-内核模块编程指南/)
-- [Kubernetes 架构与核心概念](/articles/cloud-native/k8s-01-架构与核心概念/)
+- [上一篇：Linux设备驱动模型详解](@/articles/linux/linux-30-Linux设备驱动模型详解.md)
+- [下一篇：内核模块编程指南](@/articles/linux/linux-32-内核模块编程指南.md)
+- [Kubernetes 架构与核心概念](@/articles/cloud-native/k8s-01-架构与核心概念.md)

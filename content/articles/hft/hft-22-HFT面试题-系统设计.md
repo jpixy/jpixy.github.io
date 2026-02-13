@@ -1,7 +1,8 @@
 +++
-title = "16.HFT面试题-系统设计"
+title = "HFT面试题-系统设计"
 slug = "hft-16-HFT面试题-系统设计"
 date = 2026-01-21
+weight = 22000
 description = "HFT系统设计面试题，包括交易系统架构、延迟优化、容错设计和市场数据处理"
 [taxonomies]
 tags = ["HFT", "面试", "系统设计", "架构", "低延迟"]
@@ -477,5 +478,5 @@ class AsyncMetrics {
 
 ## 相关文章
 
-- [上一篇：交易系统容错与恢复](/articles/hft/hft-21-交易系统容错与恢复/)
-- [下一篇：HFT面试题-算法与数据结构](/articles/hft/hft-23-HFT面试题-算法与数据结构/)
+- [上一篇：交易系统容错与恢复](@/articles/hft/hft-21-交易系统容错与恢复.md)
+- [下一篇：HFT面试题-算法与数据结构](@/articles/hft/hft-23-HFT面试题-算法与数据结构.md)

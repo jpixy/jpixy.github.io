@@ -1,6 +1,7 @@
 +++
-title = "03.树与图"
+title = "树与图"
 date = 2026-01-19
+weight = 3000
 description = "树结构：二叉树、BST、AVL、红黑树；图算法：遍历、最短路径、拓扑排序"
 [taxonomies]
 tags = ["算法", "树", "图"]
@@ -463,5 +464,5 @@ def prim(n, graph):
 
 ## 相关文章
 
-- [上一篇：排序与搜索](/articles/algorithm/algo-02-排序与搜索/)
-- [下一篇：动态规划](/articles/algorithm/algo-04-动态规划/)
+- [上一篇：排序与搜索](@/articles/algorithm/algo-02-排序与搜索.md)
+- [下一篇：动态规划](@/articles/algorithm/algo-04-动态规划.md)

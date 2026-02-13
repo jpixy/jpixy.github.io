@@ -1,6 +1,7 @@
 +++
-title = "03.组合逻辑与时序逻辑"
+title = "组合逻辑与时序逻辑"
 date = 2026-01-20
+weight = 3000
 description = "数字电路基础：组合逻辑、时序逻辑、触发器、状态机"
 [taxonomies]
 tags = ["FPGA", "数字电路", "状态机"]
@@ -234,5 +235,5 @@ FPGA设计优先使用触发器。锁存器通常是设计错误的结果。
 
 ## 相关文章
 
-- [上一篇：Verilog语法基础](/articles/fpga/fpga-02-Verilog语法基础/)
-- [下一篇：常用模块设计](/articles/fpga/fpga-04-常用模块设计/)
+- [上一篇：Verilog语法基础](@/articles/fpga/fpga-02-Verilog语法基础.md)
+- [下一篇：常用模块设计](@/articles/fpga/fpga-04-常用模块设计.md)

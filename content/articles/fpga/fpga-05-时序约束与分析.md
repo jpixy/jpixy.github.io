@@ -1,6 +1,7 @@
 +++
-title = "05.时序约束与分析"
+title = "时序约束与分析"
 date = 2026-01-20
+weight = 5000
 description = "时序分析：建立保持时间、时钟约束、时序报告、优化方法"
 [taxonomies]
 tags = ["FPGA", "时序", "约束"]
@@ -286,5 +287,5 @@ Pblock约束关键逻辑区域。
 
 ## 相关文章
 
-- [上一篇：常用模块设计](/articles/fpga/fpga-04-常用模块设计/)
-- [下一篇：高级设计技术](/articles/fpga/fpga-06-高级设计技术/)
+- [上一篇：常用模块设计](@/articles/fpga/fpga-04-常用模块设计.md)
+- [下一篇：高级设计技术](@/articles/fpga/fpga-06-高级设计技术.md)

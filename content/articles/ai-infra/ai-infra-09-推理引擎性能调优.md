@@ -1,7 +1,8 @@
 +++
-title = "09 - 推理引擎性能调优"
+title = "推理引擎性能调优"
 description = "系统化的 LLM 推理性能分析与优化方法"
 date = 2025-02-06
+weight = 9000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -352,6 +353,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：08 - 内存管理与 KV Cache 优化](/articles/ai-infra/infra-08-内存管理与KV-Cache优化/)
-- [下一篇：10 - 从零构建推理引擎](/articles/ai-infra/infra-10-从零构建推理引擎/)
-- [02 - LLM 推理优化全景](/articles/ai-infra/infra-02-LLM推理优化全景/)
+- [上一篇：08 - 内存管理与 KV Cache 优化](@/articles/ai-infra/ai-infra-08-内存管理与KV-Cache优化.md)
+- [下一篇：10 - 从零构建推理引擎](@/articles/ai-infra/ai-infra-10-从零构建推理引擎.md)
+- [02 - LLM 推理优化全景](@/articles/ai-infra/ai-infra-02-LLM推理优化全景.md)

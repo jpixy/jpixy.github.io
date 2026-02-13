@@ -1,7 +1,8 @@
 +++
-title = "07 - 推理调度与 Batching 策略"
+title = "推理调度与 Batching 策略"
 description = "深入理解 LLM 推理系统的调度算法和批处理策略"
 date = 2025-02-06
+weight = 7000
 updated = 2025-02-06
 draft = false
 [taxonomies]
@@ -457,6 +458,6 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：06 - Triton Inference Server 实战](/articles/ai-infra/infra-06-Triton-Inference-Server实战/)
-- [下一篇：08 - 内存管理与 KV Cache 优化](/articles/ai-infra/infra-08-内存管理与KV-Cache优化/)
-- [03 - vLLM 架构与源码解析](/articles/ai-infra/infra-03-vLLM架构与源码解析/)
+- [上一篇：06 - Triton Inference Server 实战](@/articles/ai-infra/ai-infra-06-Triton-Inference-Server实战.md)
+- [下一篇：08 - 内存管理与 KV Cache 优化](@/articles/ai-infra/ai-infra-08-内存管理与KV-Cache优化.md)
+- [03 - vLLM 架构与源码解析](@/articles/ai-infra/ai-infra-03-vLLM架构与源码解析.md)

@@ -1,6 +1,7 @@
 +++
-title = "02.时间与顺序"
+title = "时间与顺序"
 date = 2026-01-20
+weight = 2000
 description = "分布式时间：物理时钟、逻辑时钟、向量时钟、因果序"
 [taxonomies]
 tags = ["分布式", "时钟", "因果序"]
@@ -243,5 +244,5 @@ CockroachDB、TiDB等分布式数据库使用。
 
 ## 相关文章
 
-- [上一篇：分布式系统基础](/articles/distributed/dist-01-分布式系统基础/)
-- [下一篇：一致性模型详解](/articles/distributed/dist-03-一致性模型详解/)
+- [上一篇：分布式系统基础](@/articles/distributed/dist-01-分布式系统基础.md)
+- [下一篇：一致性模型详解](@/articles/distributed/dist-03-一致性模型详解.md)

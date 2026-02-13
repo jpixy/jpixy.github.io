@@ -1,6 +1,7 @@
 +++
-title = "01.为什么Docker容器删除后内部的日志或文件会随之消失"
+title = "为什么Docker容器删除后内部的日志或文件会随之消失"
 slug = "dkr-为什么Docker容器删除后内部的日志或文件会随之消失"
+weight = 1000
 +++
 
 # dkr 为什么Docker容器删除后内部的日志或文件会随之消失
@@ -82,4 +83,4 @@ docker run -d --name mycontainer -v /host/path:/container/path myimage
 
 ## 相关文章
 
-- [上一篇：Helm Chart面试题汇总](/articles/cloud-native/helm-01-HelmChart面试题汇总/)
+- [上一篇：Helm Chart面试题汇总](@/articles/cloud-native/helm-01-HelmChart面试题汇总.md)

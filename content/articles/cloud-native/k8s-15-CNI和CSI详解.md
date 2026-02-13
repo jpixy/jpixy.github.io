@@ -1,6 +1,7 @@
 +++
-title = "15.Kubernetes CNI和CSI详解"
+title = "Kubernetes CNI和CSI详解"
 slug = "k8s-KubernetesCNI和CSI详解"
+weight = 17000
 +++
 
 # Kubernetes CNI 和 CSI 详解
@@ -118,5 +119,5 @@ parameters:
 
 ## 相关文章
 
-- [上一篇：Kubernetes CSI详解](/articles/cloud-native/k8s-14-CSI详解/)
-- [下一篇：PV和PVC详解](/articles/cloud-native/k8s-16-PV和PVC详解/)
+- [上一篇：Kubernetes CSI详解](@/articles/cloud-native/k8s-14-CSI详解.md)
+- [下一篇：PV和PVC详解](@/articles/cloud-native/k8s-16-PV和PVC详解.md)

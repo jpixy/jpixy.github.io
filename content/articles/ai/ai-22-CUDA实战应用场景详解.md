@@ -1,6 +1,7 @@
 +++
-title = "22.CUDA实战应用场景详解"
+title = "CUDA实战应用场景详解"
 date = 2026-02-06
+weight = 22000
 description = "CUDA能做什么：从图像处理到深度学习，从科学计算到量化交易，详解GPU加速的实际应用领域"
 [taxonomies]
 tags = ["cuda", "gpu", "deep-learning", "hpc", "image-processing"]
@@ -1012,7 +1013,7 @@ __global__ void sumReduction(
 
 ## 相关文章
 
-- [上一篇：21 - CUDA 入门与 GPU 编程基础](/articles/ai/ai-21-CUDA入门与GPU编程基础/)
-- [下一篇：23 - AI 底层开发路线图](/articles/ai/ai-23-AI底层开发路线图/)
-- [16 - 推理框架优化技术详解](/articles/ai/ai-16-推理框架优化技术详解/)
-- [14 - 分布式训练优化详解](/articles/ai/ai-14-分布式训练优化详解/)
+- [上一篇：21 - CUDA 入门与 GPU 编程基础](@/articles/ai/ai-21-CUDA入门与GPU编程基础.md)
+- [下一篇：23 - AI 底层开发路线图](@/articles/ai/ai-23-AI底层开发路线图.md)
+- [16 - 推理框架优化技术详解](@/articles/ai/ai-16-推理框架优化技术详解.md)
+- [14 - 分布式训练优化详解](@/articles/ai/ai-14-分布式训练优化详解.md)

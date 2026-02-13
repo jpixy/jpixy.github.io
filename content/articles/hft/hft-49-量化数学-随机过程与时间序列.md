@@ -1,6 +1,7 @@
 +++
-title = "49.量化数学-随机过程与时间序列"
+title = "量化数学-随机过程与时间序列"
 date = 2026-02-02
+weight = 49000
 description = "量化进阶：随机过程、布朗运动、时间序列分析、ARIMA、GARCH"
 [taxonomies]
 tags = ["HFT", "量化", "随机过程", "时间序列", "GARCH"]
@@ -864,6 +865,6 @@ A: 金融时间序列的波动率具有聚集性（volatility clustering），GA
 
 ## 相关文章
 
-- [量化数学-概率统计基础](/articles/hft/hft-48-量化数学-概率统计基础/)
-- [市场微结构深度解析](/articles/hft/hft-38-市场微结构深度解析/)
-- [HFT策略类型全景](/articles/hft/hft-39-HFT策略类型全景/)
+- [量化数学-概率统计基础](@/articles/hft/hft-48-量化数学-概率统计基础.md)
+- [市场微结构深度解析](@/articles/hft/hft-38-市场微结构深度解析.md)
+- [HFT策略类型全景](@/articles/hft/hft-39-HFT策略类型全景.md)

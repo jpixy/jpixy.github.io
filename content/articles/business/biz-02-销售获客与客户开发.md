@@ -1,7 +1,8 @@
 +++
-title = "02.销售获客与客户开发"
+title = "销售获客与客户开发"
 description = "详解销售如何获取客户：公司线索、人脉开发、持续获客策略"
 date = 2025-01-16
+weight = 2000
 [taxonomies]
 tags = ["sales", "business", "customer-acquisition", "networking", "lead-generation"]
 +++
@@ -454,5 +455,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：企业部门职能与协作详解](/articles/business/biz-01-企业部门职能与协作详解/)
-- [下一篇：销售市场开拓策略](/articles/business/biz-03-销售市场开拓策略/)
+- [上一篇：企业部门职能与协作详解](@/articles/business/biz-01-企业部门职能与协作详解.md)
+- [下一篇：销售市场开拓策略](@/articles/business/biz-03-销售市场开拓策略.md)

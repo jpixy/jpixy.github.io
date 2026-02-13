@@ -1,7 +1,8 @@
 +++
-title = "24.如何设计一个即时通讯系统"
+title = "如何设计一个即时通讯系统"
 description = "IM系统架构设计：长连接、消息投递、已读回执与群聊设计"
 date = 2025-01-16
+weight = 24000
 [taxonomies]
 tags = ["interview", "system-design", "im", "websocket", "chat"]
 +++
@@ -343,5 +344,5 @@ A：多台Gateway服务器，每台支持10万+连接。使用路由服务管理
 
 ## 相关文章
 
-- [上一篇：如何设计一个Feed流系统](/articles/interview/interview-23-设计Feed流系统/)
-- [下一篇：如何设计一个通知推送系统](/articles/interview/interview-25-设计通知推送系统/)
+- [上一篇：如何设计一个Feed流系统](@/articles/interview/interview-23-设计Feed流系统.md)
+- [下一篇：如何设计一个通知推送系统](@/articles/interview/interview-25-设计通知推送系统.md)

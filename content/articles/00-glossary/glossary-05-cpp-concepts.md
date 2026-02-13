@@ -1,7 +1,8 @@
 +++
-title = "05.C++ Concepts"
+title = "C++ Concepts"
 description = "C++核心概念速查：RAII、移动语义、模板元编程、内存模型等关键概念详解"
 date = 2026-01-26
+weight = 5000
 draft = false
 [taxonomies]
 tags = ["Glossary", "C++", "Modern C++", "Reference"]
@@ -58,7 +59,7 @@ void process() {
 - `std::lock_guard` / `std::unique_lock`
 - `std::fstream`
 
-**详细文章**：[C++智能指针底层与陷阱](/articles/ccpp/cpp-21-智能指针底层与陷阱/)
+**详细文章**：[C++智能指针底层与陷阱](@/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化.md)
 
 ---
 
@@ -97,7 +98,7 @@ class Widget : public std::enable_shared_from_this<Widget> {
 };
 ```
 
-**详细文章**：[C++智能指针底层与陷阱](/articles/ccpp/cpp-21-智能指针底层与陷阱/)
+**详细文章**：[C++智能指针底层与陷阱](@/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化.md)
 
 ---
 
@@ -213,7 +214,7 @@ public:
 - STL容器在扩容时只有noexcept移动才会使用移动
 - 否则退化为拷贝以保证异常安全
 
-**详细文章**：[深浅拷贝与移动语义详解](/articles/ccpp/cpp-14-深浅拷贝与移动语义详解/)
+**详细文章**：[深浅拷贝与移动语义详解](@/articles/cpp/cpp-14-异常处理机制与性能开销.md)
 
 **C++ vs Python 深浅拷贝对比**：
 
@@ -239,7 +240,7 @@ b = a           # 同一对象
 b[0] = 100      # a 也变了！
 ```
 
-> 详细对比见 [Python核心概念索引 - 深浅拷贝](/articles/00-glossary/glossary-06-python-concepts/#53-shallow-copy-vs-deep-copy-浅拷贝与深拷贝)
+> 详细对比见 [Python核心概念索引 - 深浅拷贝](@/articles/00-glossary/glossary-06-python-concepts.md#5-3-shallow-copy-vs-deep-copy-qian-kao-bei-yu-shen-kao-bei)
 
 ---
 
@@ -298,7 +299,7 @@ Widget makeWidget() {
 }
 ```
 
-**详细文章**：[深浅拷贝与移动语义详解](/articles/ccpp/cpp-14-深浅拷贝与移动语义详解/)
+**详细文章**：[深浅拷贝与移动语义详解](@/articles/cpp/cpp-14-异常处理机制与性能开销.md)
 
 ---
 
@@ -336,7 +337,7 @@ template<std::floating_point T>
 T process(T value) { return value * 2.5; }
 ```
 
-**详细文章**：[类型萃取与SFINAE详解](/articles/ccpp/cpp-18-类型萃取与SFINAE详解/)
+**详细文章**：[类型萃取与SFINAE详解](@/articles/cpp/cpp-18-HFT-SIMD编程详解.md)
 
 ---
 
@@ -374,7 +375,7 @@ static_assert(x == 120);
 - 配置验证在编译期完成
 - 减少运行时计算
 
-**详细文章**：[编译期计算与constexpr](/articles/ccpp/cpp-17-编译期计算与constexpr/)
+**详细文章**：[编译期计算与constexpr](@/articles/cpp/cpp-17-HFT-Lock-Free数据结构详解.md)
 
 ---
 
@@ -424,7 +425,7 @@ public:
 };
 ```
 
-**详细文章**：[虚函数与多态底层实现](/articles/ccpp/cpp-16-虚函数与多态底层实现/)
+**详细文章**：[虚函数与多态底层实现](@/articles/cpp/cpp-16-智能指针底层与陷阱.md)
 
 ---
 
@@ -667,7 +668,7 @@ public:
 };
 ```
 
-**详细文章**：[HFT-Lock-Free数据结构详解](/articles/ccpp/cpp-22-HFT-Lock-Free数据结构详解/)
+**详细文章**：[HFT-Lock-Free数据结构详解](@/articles/cpp/cpp-22-HFT高精度时间测量.md)
 
 ---
 
@@ -765,7 +766,7 @@ auto p = std::make_unique<int>(42);
 auto f = [p = std::move(p)]() { return *p; };
 ```
 
-**详细文章**：[Lambda与函数对象详解](/articles/ccpp/cpp-36-Lambda与函数对象详解/)
+**详细文章**：[Lambda与函数对象详解](@/articles/cpp/cpp-36-C++面试题-内存与对象模型.md)
 
 ---
 
@@ -885,7 +886,7 @@ std::convertible_to<T, U>  // 可转换
 std::invocable<F, Args...> // 可调用
 ```
 
-**详细文章**：[C++20/23新特性详解](/articles/ccpp/cpp-35-C++20-23新特性详解/)
+**详细文章**：[C++20/23新特性详解](@/articles/cpp/cpp-35-C++面试题-语言基础篇.md)
 
 ---
 
@@ -950,20 +951,20 @@ struct task {
          handle.destroy() → 释放帧
 ```
 
-**详细文章**：[C++协程与用户态调度](/articles/ccpp/cpp-43-C++协程与用户态调度/)
+**详细文章**：[C++协程与用户态调度](@/articles/cpp/cpp-43-C++面试题-内存与对象模型.md)
 
 ---
 
 ## 六、延伸阅读
 
-- [Python核心概念索引](/articles/00-glossary/glossary-06-python-concepts/)
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/)
-- [C++面试题汇总](/articles/ccpp/cpp-05-Cpp面试题汇总/)
-- [C++20/23新特性详解](/articles/ccpp/cpp-35-C++20-23新特性详解/)
+- [Python核心概念索引](@/articles/00-glossary/glossary-06-python-concepts.md)
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md)
+- [C++面试题汇总](@/articles/cpp/cpp-05-性能优化技术.md)
+- [C++20/23新特性详解](@/articles/cpp/cpp-35-C++面试题-语言基础篇.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：HFT Concepts](/articles/00-glossary/glossary-04-hft-concepts/)
-- [下一篇：Python Concepts](/articles/00-glossary/glossary-06-python-concepts/)
+- [上一篇：HFT Concepts](@/articles/00-glossary/glossary-04-hft-concepts.md)
+- [下一篇：Python Concepts](@/articles/00-glossary/glossary-06-python-concepts.md)

@@ -1,7 +1,8 @@
 +++
-title = "06.Python Concepts"
+title = "Python Concepts"
 description = "Python核心概念速查：GIL、装饰器、生成器、深浅拷贝、模块变量、Python与C++易混淆概念对比详解"
 date = 2026-01-26
+weight = 6000
 draft = false
 [taxonomies]
 tags = ["Glossary", "Python", "C++", "Comparison", "Reference"]
@@ -51,7 +52,7 @@ Py_BEGIN_ALLOW_THREADS
 Py_END_ALLOW_THREADS
 ```
 
-**详细文章**：[Python性能优化-多进程与GIL](/articles/python/py-50-Python性能优化-多进程与GIL/)
+**详细文章**：[Python性能优化-多进程与GIL](@/articles/python/py-50-Python内存优化详解.md)
 
 ---
 
@@ -121,7 +122,7 @@ class Database:
     pass
 ```
 
-**详细文章**：[Python装饰器详解](/articles/python/py-04-装饰器详解/)
+**详细文章**：[Python装饰器详解](@/articles/python/py-04-装饰器详解.md)
 
 ---
 
@@ -201,7 +202,7 @@ with file_manager('data.txt', 'r') as f:
     content = f.read()
 ```
 
-**详细文章**：[Python上下文管理器](/articles/python/py-06-上下文管理器/)
+**详细文章**：[Python上下文管理器](@/articles/python/py-06-上下文管理器.md)
 
 ---
 
@@ -344,7 +345,7 @@ db2 = Database()
 assert db1 is db2  # 同一实例
 ```
 
-**详细文章**：[Python元类与元编程](/articles/python/py-19-元类与元编程/)
+**详细文章**：[Python元类与元编程](@/articles/python/py-19-元类与元编程.md)
 
 ---
 
@@ -430,7 +431,7 @@ print(sys.getsizeof(WithSlots()))  # ~48 bytes
 # 大量实例时差异明显
 ```
 
-**详细文章**：[Python内存优化详解](/articles/python/py-51-Python内存优化详解/)
+**详细文章**：[Python内存优化详解](@/articles/python/py-51-NumPy高性能编程.md)
 
 ---
 
@@ -504,7 +505,7 @@ results = asyncio.run(main())
 - 多线程：线程切换有系统开销
 - asyncio更适合大量并发连接
 
-**详细文章**：[Python异步编程详解](/articles/python/py-56-Python异步编程详解/)
+**详细文章**：[Python异步编程详解](@/articles/python/py-56-高难度面试问题.md)
 
 ---
 
@@ -548,7 +549,7 @@ col = np.arange(1000).reshape(1, -1)
 matrix = row + col  # 无需循环
 ```
 
-**详细文章**：[NumPy高性能编程](/articles/python/py-52-NumPy高性能编程/)
+**详细文章**：[NumPy高性能编程](@/articles/python/py-52-Pandas性能优化.md)
 
 ---
 
@@ -590,7 +591,7 @@ def fast_sum(cnp.ndarray[cnp.float64_t, ndim=1] arr):
     return total
 ```
 
-**详细文章**：[Python性能优化-Cython详解](/articles/python/py-48-Python性能优化-Cython详解/)
+**详细文章**：[Python性能优化-Cython详解](@/articles/python/py-48-Python性能优化-Numba详解.md)
 
 ---
 
@@ -624,7 +625,7 @@ def parallel_sum(arr):
     return total
 ```
 
-**详细文章**：[Python性能优化-Numba详解](/articles/python/py-49-Python性能优化-Numba详解/)
+**详细文章**：[Python性能优化-Numba详解](@/articles/python/py-49-Python性能优化-多进程与GIL.md)
 
 ---
 
@@ -817,7 +818,7 @@ print(gc.get_stats())
 gc.disable()
 ```
 
-**详细文章**：[Python垃圾回收机制与内存泄漏防范](/articles/python/py-18-垃圾回收与内存/)
+**详细文章**：[Python垃圾回收机制与内存泄漏防范](@/articles/python/py-18-垃圾回收与内存.md)
 
 ---
 
@@ -1057,7 +1058,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.resolve()
 ```
 
-**详细文章**：[Python双下划线变量详解](/articles/python/py-57-Python双下划线变量详解/)
+**详细文章**：[Python双下划线变量详解](@/articles/python/py-57-Python量化面试题.md)
 
 ---
 
@@ -2224,15 +2225,15 @@ void outer() {
 
 ## 八、延伸阅读
 
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/)
-- [Rust核心概念索引](/articles/00-glossary/glossary-07-rust-concepts/)
-- [Python高难度面试问题](/articles/python/py-21-高难度面试问题/)
-- [Python量化面试题](/articles/python/py-55-Python量化面试题/)
-- [Python双下划线变量详解](/articles/python/py-57-Python双下划线变量详解/)
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md)
+- [Rust核心概念索引](@/articles/00-glossary/glossary-07-rust-concepts.md)
+- [Python高难度面试问题](@/articles/python/py-21-pytest标签marker.md)
+- [Python量化面试题](@/articles/python/py-55-Python双下划线变量详解.md)
+- [Python双下划线变量详解](@/articles/python/py-57-Python量化面试题.md)
 
 ---
 
 ## 相关文章
 
-- [上一篇：C++ Concepts](/articles/00-glossary/glossary-05-cpp-concepts/)
-- [下一篇：Rust Concepts](/articles/00-glossary/glossary-07-rust-concepts/)
+- [上一篇：C++ Concepts](@/articles/00-glossary/glossary-05-cpp-concepts.md)
+- [下一篇：Rust Concepts](@/articles/00-glossary/glossary-07-rust-concepts.md)

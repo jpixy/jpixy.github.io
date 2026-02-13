@@ -1,6 +1,7 @@
 +++
-title = "10.低延迟系统前沿技术与新趋势"
+title = "低延迟系统前沿技术与新趋势"
 date = 2025-01-10
+weight = 10000
 description = "高频交易领域近年来涌现的新技术与最佳实践，包括 FPGA、eBPF/XDP、io_uring、C++20/23、智能网卡等"
 +++
 
@@ -578,5 +579,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：定点运算详解](/articles/hft/hft-09-定点运算详解/)
-- [下一篇：Rust在HFT领域的实践与必知必会](/articles/hft/hft-11-Rust在HFT的实践/)
+- [上一篇：定点运算详解](@/articles/hft/hft-09-定点运算详解.md)
+- [下一篇：Rust在HFT领域的实践与必知必会](@/articles/hft/hft-11-Rust在HFT的实践.md)

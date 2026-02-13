@@ -1,6 +1,7 @@
 +++
-title = "05.I/O系统"
+title = "I/O系统"
 date = 2026-01-20
+weight = 5000
 description = "I/O系统：设备驱动、中断处理、DMA、块设备与字符设备"
 [taxonomies]
 tags = ["操作系统", "I/O", "驱动"]
@@ -263,5 +264,5 @@ I/O系统是操作系统与外部世界交互的桥梁。理解其机制对于�
 
 ## 相关文章
 
-- [上一篇：文件系统](/articles/os/os-04-文件系统/)
-- [下一篇：虚拟化技术](/articles/os/os-06-虚拟化技术/)
+- [上一篇：文件系统](@/articles/os/os-04-文件系统.md)
+- [下一篇：虚拟化技术](@/articles/os/os-06-虚拟化技术.md)

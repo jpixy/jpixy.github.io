@@ -1,6 +1,7 @@
 +++
-title = "37.perf性能分析工具深度解析"
+title = "perf性能分析工具深度解析"
 date = 2026-01-31
+weight = 37000
 description = "perf工具深度解析：PMU硬件原理、采样机制、调用栈采集、火焰图生成与解读"
 [taxonomies]
 tags = ["Linux", "perf", "性能分析", "PMU", "火焰图"]
@@ -1328,8 +1329,8 @@ $ perf record -z ./program  # 启用压缩
 
 ## 相关文章
 
-- [上一篇：eBPF笔试面试题](/articles/linux/linux-36-eBPF笔试面试题/)
-- [下一篇：Valgrind内存分析工具深度解析](/articles/linux/linux-38-Valgrind内存分析工具深度解析/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
-- [HFT笔试题-性能分析](/articles/hft/hft-29-HFT笔试题-性能分析/)
-- [应用性能分析实战](/articles/sre/sre-37-应用性能分析实战/)
+- [上一篇：eBPF笔试面试题](@/articles/linux/linux-36-eBPF笔试面试题.md)
+- [下一篇：Valgrind内存分析工具深度解析](@/articles/linux/linux-38-Valgrind内存分析工具深度解析.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)
+- [HFT笔试题-性能分析](@/articles/hft/hft-29-HFT笔试题-性能分析.md)
+- [应用性能分析实战](@/articles/sre/sre-37-应用性能分析实战.md)

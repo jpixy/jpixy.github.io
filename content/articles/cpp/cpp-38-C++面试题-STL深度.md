@@ -1,6 +1,7 @@
 +++
-title = "38. Interview - STL Deep Dive"
+title = "Interview - STL Deep Dive"
 date = 2026-01-21
+weight = 38000
 description = "C++ STL深度面试题汇总，包括容器、迭代器、算法、函数对象等核心概念"
 [taxonomies]
 tags = ["C++", "面试题", "STL", "容器", "算法"]
@@ -374,5 +375,5 @@ void emplace_back(Args&&... args) {
 
 ## 相关文章
 
-- [上一篇：Interview - Concurrency and Multithreading](/articles/cpp/cpp-37-C++面试题-并发与多线程/)
-- [下一篇：Interview - System Design (HFT)](/articles/cpp/cpp-39-HFT-C++面试题-系统设计篇/)
+- [上一篇：Interview - Concurrency and Multithreading](@/articles/cpp/cpp-37-C++面试题-并发与多线程.md)
+- [下一篇：Interview - System Design (HFT)](@/articles/cpp/cpp-39-HFT-C++面试题-系统设计篇.md)

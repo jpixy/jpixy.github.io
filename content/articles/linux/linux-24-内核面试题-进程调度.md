@@ -1,6 +1,7 @@
 +++
-title = "24.内核面试题-进程调度"
+title = "内核面试题-进程调度"
 date = 2026-01-31
+weight = 24000
 description = "Linux内核进程调度面试题：CFS算法、vruntime、实时调度、上下文切换深度解析"
 [taxonomies]
 tags = ["Linux", "内核", "面试", "调度", "CFS"]
@@ -731,5 +732,5 @@ echo 1 > /proc/irq/<irq>/smp_affinity  # 绑定到 CPU 0
 
 ## 相关文章
 
-- [上一篇：内核面试题-内存管理](/articles/linux/linux-23-内核面试题-内存管理/)
-- [下一篇：内核面试题-同步机制](/articles/linux/linux-25-内核面试题-同步机制/)
+- [上一篇：内核面试题-内存管理](@/articles/linux/linux-23-内核面试题-内存管理.md)
+- [下一篇：内核面试题-同步机制](@/articles/linux/linux-25-内核面试题-同步机制.md)

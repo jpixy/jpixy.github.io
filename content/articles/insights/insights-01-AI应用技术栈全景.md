@@ -1,6 +1,7 @@
 +++
-title = "01.AI应用技术栈全景与实践指南"
+title = "AI应用技术栈全景与实践指南"
 slug = "insights-AI应用技术栈全景与实践指南"
+weight = 1000
 +++
 
 # AI 应用技术栈全景与实践指南
@@ -969,4 +970,4 @@ Q: 需要集成外部系统？
 
 ## 相关文章
 
-- [下一篇：Kubernetes平台工程与云原生应用管理学习路线](/articles/insights/insights-02-K8s平台工程学习路线/)
+- [下一篇：Kubernetes平台工程与云原生应用管理学习路线](@/articles/insights/insights-02-K8s平台工程学习路线.md)

@@ -1,6 +1,7 @@
 +++
-title = "01.IC到管理的角色转型"
+title = "IC到管理的角色转型"
 date = 2025-01-15
+weight = 1000
 description = "从个人贡献者到技术管理者的转型指南：心态转变、常见陷阱、新官上任、持续发展"
 [taxonomies]
 tags = ["leadership", "management", "career", "transition", "interview"]
@@ -666,4 +667,4 @@ graph TB
 
 ## 相关文章
 
-- [下一篇：技术招聘与团队组建](/articles/leadership/mgr-02-技术招聘与团队组建/)
+- [下一篇：技术招聘与团队组建](@/articles/leadership/mgr-02-技术招聘与团队组建.md)

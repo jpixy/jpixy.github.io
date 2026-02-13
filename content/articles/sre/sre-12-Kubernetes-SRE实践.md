@@ -1,6 +1,7 @@
 +++
-title = "12.Kubernetes SRE实践"
+title = "Kubernetes SRE实践"
 date = 2026-01-19
+weight = 12000
 description = "K8s可靠性运维：资源管理、健康检查、故障排查、高可用部署、运维自动化"
 [taxonomies]
 tags = ["SRE", "Kubernetes", "云原生"]
@@ -494,5 +495,5 @@ K8s SRE的核心：**让Kubernetes自动化地保证服务可靠性**，而不�
 
 ## 相关文章
 
-- [上一篇：分布式系统可靠性设计](/articles/sre/sre-11-分布式系统可靠性设计/)
-- [下一篇：数据库可靠性工程](/articles/sre/sre-13-数据库可靠性工程/)
+- [上一篇：分布式系统可靠性设计](@/articles/sre/sre-11-分布式系统可靠性设计.md)
+- [下一篇：数据库可靠性工程](@/articles/sre/sre-13-数据库可靠性工程.md)

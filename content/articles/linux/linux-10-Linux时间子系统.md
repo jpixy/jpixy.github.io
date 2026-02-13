@@ -1,8 +1,9 @@
 +++
-title = "10.Linux时间子系统(HFT)"
+title = "Linux时间子系统(HFT)"
 slug = "linux-10-Linux时间子系统"
 description = "深入讲解Linux时间子系统：时钟源、TSC、HPET、PTP精确时间协议、时间精度、clocksource与nohz模式"
 date = 2026-01-21
+weight = 10000
 draft = false
 [taxonomies]
 tags = ["Linux", "时间", "TSC", "PTP", "HFT"]
@@ -646,5 +647,5 @@ Linux时间子系统的核心要点：
 
 ## 相关文章
 
-- [上一篇：Linux内核网络栈详解(HFT)](/articles/linux/linux-09-Linux内核网络栈详解/)
-- [下一篇：内存映射与高效IO(HFT)](/articles/linux/linux-11-内存映射与高效IO/)
+- [上一篇：Linux内核网络栈详解(HFT)](@/articles/linux/linux-09-Linux内核网络栈详解.md)
+- [下一篇：内存映射与高效IO(HFT)](@/articles/linux/linux-11-内存映射与高效IO.md)

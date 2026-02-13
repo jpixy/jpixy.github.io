@@ -1,6 +1,7 @@
 +++
-title = "19.全球主要交易所技术对比"
+title = "全球主要交易所技术对比"
 date = 2026-01-21
+weight = 19000
 description = "全球主要交易所技术栈对比，包括CME/NASDAQ/NYSE等的协议特点、延迟数据和Co-location"
 [taxonomies]
 tags = ["HFT", "交易所", "CME", "NASDAQ", "NYSE"]
@@ -354,5 +355,5 @@ Co-location成本：
 
 ## 相关文章
 
-- [上一篇：交易所撮合引擎原理](/articles/hft/hft-18-交易所撮合引擎原理/)
-- [下一篇：高性能序列化技术](/articles/hft/hft-20-高性能序列化技术/)
+- [上一篇：交易所撮合引擎原理](@/articles/hft/hft-18-交易所撮合引擎原理.md)
+- [下一篇：高性能序列化技术](@/articles/hft/hft-20-高性能序列化技术.md)

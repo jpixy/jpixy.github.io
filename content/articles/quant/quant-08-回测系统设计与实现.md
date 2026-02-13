@@ -1,6 +1,7 @@
 +++
-title = "08 - 回测系统设计与实现"
+title = "回测系统设计与实现"
 date = 2025-01-15
+weight = 8000
 description = "量化交易回测系统架构设计：事件驱动 vs 向量化、核心模块、常见陷阱、自建框架实战"
 [taxonomies]
 tags = ["quant", "backtesting", "system-design", "event-driven", "vectorized"]
@@ -721,5 +722,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：07 - 机器学习量化实战](/articles/quant/quant-07-机器学习量化实战/)
-- [下一篇：09 - 从回测到实盘](/articles/quant/quant-09-从回测到实盘/)
+- [上一篇：07 - 机器学习量化实战](@/articles/quant/quant-07-机器学习量化实战.md)
+- [下一篇：09 - 从回测到实盘](@/articles/quant/quant-09-从回测到实盘.md)

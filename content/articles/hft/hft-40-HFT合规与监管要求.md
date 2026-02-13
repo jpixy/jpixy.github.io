@@ -1,6 +1,7 @@
 +++
-title = "40.HFT合规与监管要求"
+title = "HFT合规与监管要求"
 date = 2026-02-02
+weight = 40000
 description = "HFT合规：MiFID II、Reg NMS、市场滥用、交易报告、最佳执行"
 [taxonomies]
 tags = ["HFT", "合规", "监管", "MiFID", "风控"]
@@ -681,6 +682,6 @@ A: 在执行客户订单时，综合考虑价格、成本、速度、成交可�
 
 ## 相关文章
 
-- [上一篇：HFT策略类型全景](/articles/hft/hft-39-HFT策略类型全景/)
-- [HFT风控系统设计](/articles/hft/hft-15-HFT风控系统设计/)
-- [交易系统容错与恢复](/articles/hft/hft-21-交易系统容错与恢复/)
+- [上一篇：HFT策略类型全景](@/articles/hft/hft-39-HFT策略类型全景.md)
+- [HFT风控系统设计](@/articles/hft/hft-15-HFT风控系统设计.md)
+- [交易系统容错与恢复](@/articles/hft/hft-21-交易系统容错与恢复.md)

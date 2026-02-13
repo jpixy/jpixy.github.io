@@ -1,6 +1,7 @@
 +++
-title = "01.Go语言基础"
+title = "Go语言基础"
 date = 2026-01-19
+weight = 1000
 description = "Go语言入门：语法基础、数据类型、控制结构、函数、包管理"
 [taxonomies]
 tags = ["Go", "基础", "入门"]
@@ -463,4 +464,4 @@ Go语言简洁高效，是云原生时代的首选语言之一。
 
 ## 相关文章
 
-- [下一篇：接口与面向对象](/articles/golang/go-02-接口与面向对象/)
+- [下一篇：接口与面向对象](@/articles/golang/go-02-接口与面向对象.md)

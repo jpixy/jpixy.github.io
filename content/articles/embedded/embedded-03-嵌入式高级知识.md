@@ -1,6 +1,7 @@
 +++
-title = "03.嵌入式高级知识"
+title = "嵌入式高级知识"
 date = 2026-01-19
+weight = 3000
 description = "嵌入式高级主题：低功耗设计、Bootloader开发、安全机制、性能优化、可靠性设计"
 [taxonomies]
 tags = ["embedded", "bootloader", "low-power", "security", "optimization"]
@@ -773,5 +774,5 @@ void run_all_selftests(void) {
 
 ## 相关文章
 
-- [上一篇：嵌入式必知必会](/articles/embedded/embedded-02-嵌入式必知必会/)
-- [下一篇：嵌入式开发环境与工具链](/articles/embedded/embedded-04-开发环境与工具链/)
+- [上一篇：嵌入式必知必会](@/articles/embedded/embedded-02-嵌入式必知必会.md)
+- [下一篇：嵌入式开发环境与工具链](@/articles/embedded/embedded-04-开发环境与工具链.md)

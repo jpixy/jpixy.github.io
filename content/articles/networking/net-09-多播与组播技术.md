@@ -1,6 +1,7 @@
 +++
-title = "09.多播与组播技术"
+title = "多播与组播技术"
 date = 2026-01-19
+weight = 9000
 description = "多播组播详解：多播原理、IGMP协议、多播路由、应用场景与编程实现"
 [taxonomies]
 tags = ["网络", "多播", "组播"]
@@ -420,5 +421,5 @@ socat UDP4-RECVFROM:5000,ip-add-membership=239.192.1.100:eth0 -
 
 ## 相关文章
 
-- [上一篇：UDP与可靠UDP](/articles/networking/net-08-UDP与可靠UDP/)
-- [下一篇：Socket网络编程](/articles/networking/net-10-Socket网络编程/)
+- [上一篇：UDP与可靠UDP](@/articles/networking/net-08-UDP与可靠UDP.md)
+- [下一篇：Socket网络编程](@/articles/networking/net-10-Socket网络编程.md)

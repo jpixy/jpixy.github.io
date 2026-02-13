@@ -1,6 +1,7 @@
 +++
-title = "19.802.11 WiFi 协议详解"
+title = "802.11 WiFi 协议详解"
 date = 2026-01-21
+weight = 19000
 description = "802.11 WiFi 协议全景：从 802.11a 到 802.11be (WiFi 7)，PHY/MAC 层原理、驱动架构、调试与优化"
 [taxonomies]
 tags = ["embedded", "wifi", "802.11", "wireless", "networking", "driver"]
@@ -1368,7 +1369,7 @@ network={
 
 ## 相关文章
 
-- [上一篇：18 - 嵌入式测试与质量](/articles/embedded/embedded-18-嵌入式测试与质量/)
-- [下一篇：20 - U-Boot 与 Bootloader 详解](/articles/embedded/embedded-20-U-Boot与Bootloader详解/)
-- [10 - 无线通信与物联网协议](/articles/embedded/embedded-10-无线通信与物联网协议/)
-- [09 - 嵌入式 Linux 驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
+- [上一篇：18 - 嵌入式测试与质量](@/articles/embedded/embedded-18-嵌入式测试与质量.md)
+- [下一篇：20 - U-Boot 与 Bootloader 详解](@/articles/embedded/embedded-20-U-Boot与Bootloader详解.md)
+- [10 - 无线通信与物联网协议](@/articles/embedded/embedded-10-无线通信与物联网协议.md)
+- [09 - 嵌入式 Linux 驱动开发](@/articles/embedded/embedded-09-嵌入式Linux驱动开发.md)

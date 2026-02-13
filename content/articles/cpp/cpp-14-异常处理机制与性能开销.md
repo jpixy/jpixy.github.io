@@ -1,6 +1,7 @@
 +++
-title = "14. Exception Handling and Performance"
+title = "Exception Handling and Performance"
 date = 2026-01-21
+weight = 14000
 description = "深入剖析C++异常处理的底层实现、性能开销分析、noexcept优化，以及HFT系统中的异常策略"
 [taxonomies]
 tags = ["C++", "异常处理", "性能优化", "HFT", "noexcept"]
@@ -381,5 +382,5 @@ g++ -fno-rtti source.cpp
 
 ## 相关文章
 
-- [上一篇：Type Traits and SFINAE](/articles/cpp/cpp-13-类型萃取与SFINAE详解/)
-- [下一篇：Custom Memory Allocators (HFT)](/articles/cpp/cpp-15-HFT自定义内存分配器设计/)
+- [上一篇：Type Traits and SFINAE](@/articles/cpp/cpp-13-类型萃取与SFINAE详解.md)
+- [下一篇：Custom Memory Allocators (HFT)](@/articles/cpp/cpp-15-HFT自定义内存分配器设计.md)

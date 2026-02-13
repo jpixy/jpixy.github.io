@@ -1,7 +1,8 @@
 +++
-title = "11.时间序列分析详解(HFT)"
+title = "时间序列分析详解(HFT)"
 description = "深入讲解金融时间序列分析：AR/MA/ARIMA/SARIMA、GARCH/EGARCH、协整检验、均值回归、Kalman滤波与状态空间模型"
 date = 2026-01-21
+weight = 11000
 draft = false
 [taxonomies]
 tags = ["时间序列", "ARIMA", "GARCH", "协整", "量化", "HFT"]
@@ -742,5 +743,5 @@ signals, zscore = strategy.generate_signals(ou_series)
 
 ## 相关文章
 
-- [上一篇：期权定价与Greeks详解(HFT)](/articles/math/math-10-期权定价与Greeks详解/)
-- [下一篇：统计套利与因子模型(HFT)](/articles/math/math-12-统计套利与因子模型/)
+- [上一篇：期权定价与Greeks详解(HFT)](@/articles/math/math-10-期权定价与Greeks详解.md)
+- [下一篇：统计套利与因子模型(HFT)](@/articles/math/math-12-统计套利与因子模型.md)

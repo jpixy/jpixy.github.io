@@ -1,7 +1,8 @@
 +++
-title = "50.Python内存优化详解"
+title = "Python内存优化详解"
 slug = "py-51-Python内存优化详解"
 date = 2026-01-21
+weight = 50000
 description = "深入剖析Python的内存优化技术，包括__slots__、memoryview、array模块、内存分析工具和对象大小"
 [taxonomies]
 tags = ["Python", "内存优化", "性能", "__slots__", "memoryview"]
@@ -530,5 +531,5 @@ class ManualSlotOrder:
 
 ## 相关文章
 
-- [上一篇：Python性能优化-多进程与GIL](/articles/python/py-49-Python性能优化-多进程与GIL/)
-- [下一篇：NumPy高性能编程](/articles/python/py-51-NumPy高性能编程/)
+- [上一篇：Python性能优化-多进程与GIL](@/articles/python/py-49-Python性能优化-多进程与GIL.md)
+- [下一篇：NumPy高性能编程](@/articles/python/py-51-NumPy高性能编程.md)

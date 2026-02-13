@@ -1,6 +1,7 @@
 +++
-title = "19. Cache-Friendly C Programming (HFT)"
+title = "Cache-Friendly C Programming (HFT)"
 date = 2026-01-30
+weight = 19000
 description = "Optimizing C code for CPU cache performance in low-latency systems"
 [taxonomies]
 tags = ["C", "HFT", "Cache", "Performance", "Low-Latency"]
@@ -363,5 +364,5 @@ static inline double get_best_ask(const OrderBook *ob) {
 
 ## 相关文章
 
-- [上一篇：Lock-Free Ring Buffer (HFT)](/articles/c/c-18-Ring-Buffer/)
-- [下一篇：C Written Test Questions](/articles/c/c-20-C-Written-Test-Questions/)
+- [上一篇：Lock-Free Ring Buffer (HFT)](@/articles/c/c-18-Ring-Buffer.md)
+- [下一篇：C Written Test Questions](@/articles/c/c-20-C-Written-Test-Questions.md)

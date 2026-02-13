@@ -1,6 +1,7 @@
 +++
-title = "14.Kubernetes CSI详解"
+title = "Kubernetes CSI详解"
 slug = "k8s-KubernetesCSI详解"
+weight = 16000
 +++
 
 # Kubernetes CSI (Container Storage Interface) 详解
@@ -145,5 +146,5 @@ CSI 的引入使 Kubernetes 存储生态系统变得更加丰富和灵活，是�
 
 ## 相关文章
 
-- [上一篇：Kubernetes CNI详解](/articles/cloud-native/k8s-13-CNI详解/)
-- [下一篇：Kubernetes CNI和CSI详解](/articles/cloud-native/k8s-15-CNI和CSI详解/)
+- [上一篇：Kubernetes CNI详解](@/articles/cloud-native/k8s-13-CNI详解.md)
+- [下一篇：Kubernetes CNI和CSI详解](@/articles/cloud-native/k8s-15-CNI和CSI详解.md)

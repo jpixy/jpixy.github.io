@@ -1,6 +1,7 @@
 +++
-title = "05.网络是计算存储网络三大件的瓶颈吗"
+title = "网络是计算存储网络三大件的瓶颈吗"
 slug = "insights-网络是计算存储网络三大件的瓶颈吗"
+weight = 5000
 +++
 
 # 网络是计算、存储、网络三大件的瓶颈吗？
@@ -88,5 +89,5 @@ slug = "insights-网络是计算存储网络三大件的瓶颈吗"
 
 ## 相关文章
 
-- [上一篇：企业级云VPN服务架构设计与技术深度解析](/articles/insights/insights-04-云VPN服务架构设计/)
-- [下一篇：高性能网络与协议栈优化技术全景](/articles/insights/insights-06-高性能网络优化/)
+- [上一篇：企业级云VPN服务架构设计与技术深度解析](@/articles/insights/insights-04-云VPN服务架构设计.md)
+- [下一篇：高性能网络与协议栈优化技术全景](@/articles/insights/insights-06-高性能网络优化.md)

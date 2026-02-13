@@ -1,6 +1,7 @@
 +++
-title = "08.Linux网络技术深度指南"
+title = "Linux网络技术深度指南"
 date = 2026-01-12
+weight = 8000
 description = "TCP/IP协议栈、DNS、Multicast、tcpdump、eBPF网络编程深度剖析"
 [taxonomies]
 tags = ["linux", "networking", "tcp", "ebpf"]
@@ -998,5 +999,5 @@ iperf3 -s / iperf3 -c <server>
 
 ## 相关文章
 
-- [上一篇：Linux存储技术深度指南](/articles/devops/linux-07-存储技术指南/)
-- [下一篇：Linux安全加固深度指南](/articles/devops/linux-09-安全加固指南/)
+- [上一篇：Linux存储技术深度指南](@/articles/devops/linux-07-存储技术指南.md)
+- [下一篇：Linux安全加固深度指南](@/articles/devops/linux-09-安全加固指南.md)

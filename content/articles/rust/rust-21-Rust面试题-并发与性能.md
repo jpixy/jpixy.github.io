@@ -1,6 +1,7 @@
 +++
-title = "20.Rust面试题-并发与性能"
+title = "Rust面试题-并发与性能"
 date = 2026-01-21
+weight = 21000
 description = "Rust面试中关于并发和性能的常见问题，包括Send/Sync、数据竞争预防、async深入、性能陷阱等"
 [taxonomies]
 tags = ["Rust", "面试", "并发", "性能", "async"]
@@ -577,4 +578,4 @@ fn uninit_array<const N: usize>() -> [i32; N] {
 
 ## 相关文章
 
-- [上一篇：Rust面试题-所有权与生命周期](/articles/rust/rust-20-Rust面试题-所有权与生命周期/)
+- [上一篇：Rust面试题-所有权与生命周期](@/articles/rust/rust-20-Rust面试题-所有权与生命周期.md)

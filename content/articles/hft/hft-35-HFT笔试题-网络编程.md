@@ -1,6 +1,7 @@
 +++
-title = "35.HFT笔试题-网络编程"
+title = "HFT笔试题-网络编程"
 date = 2026-01-31
+weight = 35000
 description = "HFT网络编程笔试题：Socket编程、TCP/UDP优化、I/O多路复用、零拷贝、内核旁路深度解析"
 [taxonomies]
 tags = ["HFT", "笔试", "网络编程", "Socket", "DPDK", "零拷贝"]
@@ -1768,5 +1769,5 @@ mindmap
 
 ## 导航
 
-- [上一篇：HFT面试题-网络优化](/articles/hft/hft-34-HFT面试题-网络优化/)
-- [下一篇：HFT笔试题-SIMD与向量化](/articles/hft/hft-36-HFT笔试题-SIMD与向量化/)
+- [上一篇：HFT面试题-网络优化](@/articles/hft/hft-34-HFT面试题-网络优化.md)
+- [下一篇：HFT笔试题-SIMD与向量化](@/articles/hft/hft-36-HFT笔试题-SIMD与向量化.md)

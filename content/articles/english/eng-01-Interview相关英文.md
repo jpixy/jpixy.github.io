@@ -1,6 +1,7 @@
 +++
-title = "01.Interview相关英文"
+title = "Interview相关英文"
 slug = "eng-Interview相关英文"
+weight = 1000
 +++
 
 # eng Interview相关英文
@@ -281,4 +282,4 @@ Use **Floyd’s Cycle-Finding Algorithm** (tortoise and hare):
 
 ## 相关文章
 
-- [下一篇：Python基础知识英文面试](/articles/english/eng-02-Python基础英文面试/)
+- [下一篇：Python基础知识英文面试](@/articles/english/eng-02-Python基础英文面试.md)

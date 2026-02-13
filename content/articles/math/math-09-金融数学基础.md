@@ -1,7 +1,8 @@
 +++
-title = "09.金融数学基础(HFT)"
+title = "金融数学基础(HFT)"
 description = "深入讲解量化金融的数学基础：随机过程、布朗运动、伊藤引理、几何布朗运动、鞅论与随机微分方程"
 date = 2026-01-21
+weight = 9000
 draft = false
 [taxonomies]
 tags = ["金融数学", "随机过程", "布朗运动", "伊藤引理", "量化", "HFT"]
@@ -535,5 +536,5 @@ Girsanov定理提供了从真实测度到风险中性测度转换的数学基础
 
 ## 相关文章
 
-- [上一篇：数学面试题](/articles/math/math-08-数学面试题/)
-- [下一篇：期权定价与Greeks详解(HFT)](/articles/math/math-10-期权定价与Greeks详解/)
+- [上一篇：数学面试题](@/articles/math/math-08-数学面试题.md)
+- [下一篇：期权定价与Greeks详解(HFT)](@/articles/math/math-10-期权定价与Greeks详解.md)

@@ -1,7 +1,8 @@
 +++
-title = "07.销售谈判与成单技巧"
+title = "销售谈判与成单技巧"
 description = "To B销售谈判核心技巧：如何报价、如何让步、如何促单成交"
 date = 2025-01-16
+weight = 7000
 [taxonomies]
 tags = ["sales", "business", "negotiation", "closing", "pricing"]
 +++
@@ -746,5 +747,5 @@ tags = ["sales", "business", "negotiation", "closing", "pricing"]
 
 ## 相关文章
 
-- [上一篇：To B销售全流程详解](/articles/business/biz-06-To-B销售全流程详解/)
-- [下一篇：客户成功与续约管理](/articles/business/biz-08-客户成功与续约管理/)
+- [上一篇：To B销售全流程详解](@/articles/business/biz-06-To-B销售全流程详解.md)
+- [下一篇：客户成功与续约管理](@/articles/business/biz-08-客户成功与续约管理.md)

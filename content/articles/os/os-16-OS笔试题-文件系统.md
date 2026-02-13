@@ -1,6 +1,7 @@
 +++
-title = "16.OS笔试题-文件系统"
+title = "OS笔试题-文件系统"
 date = 2026-01-31
+weight = 16000
 description = "操作系统文件系统笔试题：inode、目录结构、硬软链接、VFS、文件描述符深度解析"
 [taxonomies]
 tags = ["操作系统", "笔试", "文件系统", "inode", "VFS"]
@@ -1601,5 +1602,5 @@ mindmap
 
 ## 导航
 
-- [上一篇：OS面试题-并发同步](/articles/os/os-15-OS面试题-并发同步/)
-- [下一篇：OS笔试题-磁盘与IO调度](/articles/os/os-17-OS笔试题-磁盘与IO调度/)
+- [上一篇：OS面试题-并发同步](@/articles/os/os-15-OS面试题-并发同步.md)
+- [下一篇：OS笔试题-磁盘与IO调度](@/articles/os/os-17-OS笔试题-磁盘与IO调度.md)

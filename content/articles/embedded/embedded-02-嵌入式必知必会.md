@@ -1,6 +1,7 @@
 +++
-title = "02.嵌入式必知必会"
+title = "嵌入式必知必会"
 date = 2026-01-19
+weight = 2000
 description = "嵌入式开发核心概念：内存管理、中断机制、外设驱动、启动流程、位操作等必备知识"
 [taxonomies]
 tags = ["embedded", "mcu", "memory", "interrupt", "peripheral"]
@@ -637,5 +638,5 @@ uint32_t read_unaligned(uint8_t *ptr) {
 
 ## 相关文章
 
-- [上一篇：嵌入式开发入门指南](/articles/embedded/embedded-01-嵌入式入门/)
-- [下一篇：嵌入式高级知识](/articles/embedded/embedded-03-嵌入式高级知识/)
+- [上一篇：嵌入式开发入门指南](@/articles/embedded/embedded-01-嵌入式入门.md)
+- [下一篇：嵌入式高级知识](@/articles/embedded/embedded-03-嵌入式高级知识.md)

@@ -1,6 +1,7 @@
 +++
-title = "17.如何设计一个高性能定时器系统"
+title = "如何设计一个高性能定时器系统"
 slug = "interview-如何设计一个高性能定时器系统"
+weight = 17000
 +++
 
 # 如何设计一个高性能定时器系统
@@ -1226,5 +1227,5 @@ return expired
 
 ## 相关文章
 
-- [上一篇：如何设计一个定时任务系统](/articles/interview/interview-16-设计定时任务系统/)
-- [下一篇：如何设计一个配置中心](/articles/interview/interview-18-设计配置中心/)
+- [上一篇：如何设计一个定时任务系统](@/articles/interview/interview-16-设计定时任务系统.md)
+- [下一篇：如何设计一个配置中心](@/articles/interview/interview-18-设计配置中心.md)

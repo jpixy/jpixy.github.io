@@ -1,6 +1,7 @@
 +++
-title = "05.Web开发实践"
+title = "Web开发实践"
 date = 2026-01-19
+weight = 5000
 description = "Go Web开发：框架选型、RESTful API、数据库操作、认证授权、部署"
 [taxonomies]
 tags = ["Go", "Web", "API"]
@@ -472,5 +473,5 @@ Go Web开发生态成熟，标准库强大，第三方库丰富，是构建高�
 
 ## 相关文章
 
-- [上一篇：标准库精选](/articles/golang/go-04-标准库精选/)
-- [下一篇：性能优化](/articles/golang/go-06-性能优化/)
+- [上一篇：标准库精选](@/articles/golang/go-04-标准库精选.md)
+- [下一篇：性能优化](@/articles/golang/go-06-性能优化.md)

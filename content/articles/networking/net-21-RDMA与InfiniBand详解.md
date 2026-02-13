@@ -1,8 +1,9 @@
 +++
-title = "21.RDMA与InfiniBand详解(HFT)"
+title = "RDMA与InfiniBand详解(HFT)"
 slug = "net-21-RDMA与InfiniBand详解"
 description = "深入讲解RDMA技术：RDMA原语(send/recv/read/write)、Verbs API、QP与MR、延迟对比及RoCE配置"
 date = 2026-01-21
+weight = 21000
 draft = false
 [taxonomies]
 tags = ["RDMA", "InfiniBand", "低延迟", "HFT", "高性能网络"]
@@ -624,5 +625,5 @@ RDMA是HFT基础设施的重要组成部分，适用于交易服务器间的低�
 
 ## 相关文章
 
-- [上一篇：io_uring详解(HFT)](/articles/networking/net-20-io_uring详解/)
-- [下一篇：二层三层网络基础详解](/articles/networking/net-22-二层三层网络基础详解/)
+- [上一篇：io_uring详解(HFT)](@/articles/networking/net-20-io_uring详解.md)
+- [下一篇：二层三层网络基础详解](@/articles/networking/net-22-二层三层网络基础详解.md)

@@ -1,6 +1,7 @@
 +++
-title = "05.回溯与贪心"
+title = "回溯与贪心"
 date = 2026-01-19
+weight = 5000
 description = "回溯算法：模板与剪枝；贪心算法：思想与经典问题"
 [taxonomies]
 tags = ["算法", "回溯", "贪心"]
@@ -456,5 +457,5 @@ def erase_overlap_intervals(intervals):
 
 ## 相关文章
 
-- [上一篇：动态规划](/articles/algorithm/algo-04-动态规划/)
-- [下一篇：常见算法技巧](/articles/algorithm/algo-06-常见算法技巧/)
+- [上一篇：动态规划](@/articles/algorithm/algo-04-动态规划.md)
+- [下一篇：常见算法技巧](@/articles/algorithm/algo-06-常见算法技巧.md)

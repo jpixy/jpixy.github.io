@@ -1,7 +1,8 @@
 +++
-title = "22. High-Precision Timing (HFT)"
+title = "High-Precision Timing (HFT)"
 slug = "cpp-27-HFT高精度时间测量"
 date = 2026-01-21
+weight = 22000
 description = "深入剖析高精度时间测量技术，包括RDTSC、clock_gettime、PTP同步，HFT低延迟系统核心技术"
 [taxonomies]
 tags = ["C++", "时间测量", "RDTSC", "PTP", "HFT", "低延迟"]
@@ -416,5 +417,5 @@ public:
 
 ## 相关文章
 
-- [上一篇：CPU Affinity and NUMA (HFT)](/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化/)
-- [下一篇：Compiler Optimization and Profiling (HFT)](/articles/cpp/cpp-23-HFT编译器优化与Profile/)
+- [上一篇：CPU Affinity and NUMA (HFT)](@/articles/cpp/cpp-21-HFT-CPU亲和性与NUMA优化.md)
+- [下一篇：Compiler Optimization and Profiling (HFT)](@/articles/cpp/cpp-23-HFT编译器优化与Profile.md)

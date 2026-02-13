@@ -1,6 +1,7 @@
 +++
-title = "01.Linux系统编程概述"
+title = "Linux系统编程概述"
 date = 2026-01-19
+weight = 1000
 description = "Linux系统编程基础：系统调用、用户态与内核态、ABI与API"
 [taxonomies]
 tags = ["Linux", "系统编程", "系统调用"]
@@ -369,4 +370,4 @@ Linux内核对用户空间ABI有严格的稳定性承诺："我们不破坏用�
 
 ## 相关文章
 
-- [下一篇：进程与线程](/articles/linux/linux-02-进程与线程/)
+- [下一篇：进程与线程](@/articles/linux/linux-02-进程与线程.md)

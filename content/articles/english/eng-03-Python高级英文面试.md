@@ -1,6 +1,7 @@
 +++
-title = "03.Python高级知识英文面试"
+title = "Python高级知识英文面试"
 slug = "eng-Py高级知识英文面试"
+weight = 3000
 +++
 
 # eng Py高级知识英文面试
@@ -244,5 +245,5 @@ These questions cover advanced Python concepts while maintaining natural intervi
 
 ## 相关文章
 
-- [上一篇：Python基础知识英文面试](/articles/english/eng-02-Python基础英文面试/)
-- [下一篇：AI相关英文](/articles/english/eng-04-AI相关英文/)
+- [上一篇：Python基础知识英文面试](@/articles/english/eng-02-Python基础英文面试.md)
+- [下一篇：AI相关英文](@/articles/english/eng-04-AI相关英文.md)

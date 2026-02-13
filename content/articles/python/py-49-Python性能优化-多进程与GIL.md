@@ -1,7 +1,8 @@
 +++
-title = "49.Python性能优化-多进程与GIL"
+title = "Python性能优化-多进程与GIL"
 slug = "py-50-Python性能优化-多进程与GIL"
 date = 2026-01-21
+weight = 49000
 description = "深入剖析Python的GIL机制，包括multiprocessing、共享内存、进程池、GIL绕过策略和异步IO"
 [taxonomies]
 tags = ["Python", "GIL", "多进程", "并发", "性能优化"]
@@ -588,5 +589,5 @@ if __name__ == '__main__':
 
 ## 相关文章
 
-- [上一篇：Python性能优化-Numba详解](/articles/python/py-48-Python性能优化-Numba详解/)
-- [下一篇：Python内存优化详解](/articles/python/py-50-Python内存优化详解/)
+- [上一篇：Python性能优化-Numba详解](@/articles/python/py-48-Python性能优化-Numba详解.md)
+- [下一篇：Python内存优化详解](@/articles/python/py-50-Python内存优化详解.md)

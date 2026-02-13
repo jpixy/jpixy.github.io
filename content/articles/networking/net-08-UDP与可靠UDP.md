@@ -1,6 +1,7 @@
 +++
-title = "08.UDP与可靠UDP"
+title = "UDP与可靠UDP"
 date = 2026-01-19
+weight = 8000
 description = "UDP协议详解：UDP特性与应用场景、可靠UDP实现方案、QUIC协议、KCP等"
 [taxonomies]
 tags = ["网络", "UDP", "QUIC"]
@@ -316,5 +317,5 @@ WiFi(IP-A) → 4G(IP-B) = 连接继续（Connection ID不变）
 
 ## 相关文章
 
-- [上一篇：TCP协议详解](/articles/networking/net-07-TCP协议详解/)
-- [下一篇：多播与组播技术](/articles/networking/net-09-多播与组播技术/)
+- [上一篇：TCP协议详解](@/articles/networking/net-07-TCP协议详解.md)
+- [下一篇：多播与组播技术](@/articles/networking/net-09-多播与组播技术.md)

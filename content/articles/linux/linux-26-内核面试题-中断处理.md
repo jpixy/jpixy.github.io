@@ -1,6 +1,7 @@
 +++
-title = "26.内核面试题-中断处理"
+title = "内核面试题-中断处理"
 date = 2026-01-31
+weight = 26000
 description = "Linux内核中断处理面试题：中断流程、下半部机制、中断亲和性深度解析"
 [taxonomies]
 tags = ["Linux", "内核", "面试", "中断", "Softirq"]
@@ -709,5 +710,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：内核面试题-同步机制](/articles/linux/linux-25-内核面试题-同步机制/)
-- [下一篇：内核面试题-系统调用](/articles/linux/linux-27-内核面试题-系统调用/)
+- [上一篇：内核面试题-同步机制](@/articles/linux/linux-25-内核面试题-同步机制.md)
+- [下一篇：内核面试题-系统调用](@/articles/linux/linux-27-内核面试题-系统调用.md)

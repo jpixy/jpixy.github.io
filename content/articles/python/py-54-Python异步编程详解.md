@@ -1,7 +1,8 @@
 +++
-title = "54.Python异步编程详解"
+title = "Python异步编程详解"
 slug = "py-56-Python异步编程详解"
 date = 2026-01-21
+weight = 54000
 description = "深入剖析Python异步编程，包括asyncio深入、事件循环原理、协程vs回调、aiohttp、uvloop、异步陷阱和并发模式"
 [taxonomies]
 tags = ["Python", "asyncio", "异步编程", "并发", "性能优化"]
@@ -653,5 +654,5 @@ async def process_batch(items, batch_size=100):
 
 ## 相关文章
 
-- [上一篇：时序数据处理专题](/articles/python/py-53-时序数据处理专题/)
-- [下一篇：Python双下划线变量详解](/articles/python/py-55-Python双下划线变量详解/)
+- [上一篇：时序数据处理专题](@/articles/python/py-53-时序数据处理专题.md)
+- [下一篇：Python双下划线变量详解](@/articles/python/py-55-Python双下划线变量详解.md)

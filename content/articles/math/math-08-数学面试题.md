@@ -1,6 +1,7 @@
 +++
-title = "08.数学面试题"
+title = "数学面试题"
 date = 2026-01-20
+weight = 8000
 description = "数学面试：高频问题、概念解释、计算题、证明题"
 [taxonomies]
 tags = ["数学", "面试", "指南"]
@@ -288,5 +289,5 @@ I(X;Y) = H(X) - H(X|Y) ≥ 0
 
 ## 相关文章
 
-- [上一篇：机器学习数学](/articles/math/math-07-机器学习数学/)
-- [下一篇：金融数学基础(HFT)](/articles/math/math-09-金融数学基础/)
+- [上一篇：机器学习数学](@/articles/math/math-07-机器学习数学.md)
+- [下一篇：金融数学基础(HFT)](@/articles/math/math-09-金融数学基础.md)

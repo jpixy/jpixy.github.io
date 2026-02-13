@@ -1,7 +1,8 @@
 +++
-title = "13.Order Book实现详解"
+title = "Order Book实现详解"
 slug = "hft-13-OrderBook实现详解"
 date = 2026-01-21
+weight = 13000
 description = "深入剖析Order Book的实现，包括数据结构选择、价格级别管理、快速查找、增量更新和内存优化"
 [taxonomies]
 tags = ["HFT", "OrderBook", "数据结构", "低延迟", "交易系统"]
@@ -589,13 +590,13 @@ void benchmark_orderbook() {
 
 ## 概念速查
 
-- [算法与数据结构概念索引](/articles/00-glossary/glossary-03-algorithm-concepts/) - 红黑树、哈希表、对象池等概念速查
-- [HFT核心概念索引](/articles/00-glossary/glossary-04-hft-concepts/) - OrderBook、低延迟等概念速查
-- [C++核心概念索引](/articles/00-glossary/glossary-05-cpp-concepts/) - 内存管理、智能指针等概念速查
+- [算法与数据结构概念索引](@/articles/00-glossary/glossary-03-algorithm-concepts.md) - 红黑树、哈希表、对象池等概念速查
+- [HFT核心概念索引](@/articles/00-glossary/glossary-04-hft-concepts.md) - OrderBook、低延迟等概念速查
+- [C++核心概念索引](@/articles/00-glossary/glossary-05-cpp-concepts.md) - 内存管理、智能指针等概念速查
 
 ---
 
 ## 相关文章
 
-- [上一篇：HFT系统延迟分析方法](/articles/hft/hft-12-HFT系统延迟分析方法/)
-- [下一篇：Market Making策略原理](/articles/hft/hft-14-MarketMaking策略原理/)
+- [上一篇：HFT系统延迟分析方法](@/articles/hft/hft-12-HFT系统延迟分析方法.md)
+- [下一篇：Market Making策略原理](@/articles/hft/hft-14-MarketMaking策略原理.md)

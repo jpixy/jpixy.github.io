@@ -1,7 +1,8 @@
 +++
-title = "14.HFT-Rust Lock-Free编程"
+title = "HFT-Rust Lock-Free编程"
 slug = "rust-15-HFT-Rust-Lock-Free编程"
 date = 2026-01-21
+weight = 14000
 description = "深入剖析Rust的Lock-Free编程技术，包括std::sync::atomic、crossbeam、无锁队列、Arc开销和parking_lot"
 [taxonomies]
 tags = ["Rust", "Lock-Free", "并发", "原子操作", "HFT"]
@@ -623,5 +624,5 @@ impl BatchCounter {
 
 ## 相关文章
 
-- [上一篇：no_std与嵌入式Rust](/articles/rust/rust-13-no_std与嵌入式Rust/)
-- [下一篇：HFT-Rust SIMD编程](/articles/rust/rust-15-HFT-Rust-SIMD编程/)
+- [上一篇：no_std与嵌入式Rust](@/articles/rust/rust-13-no_std与嵌入式Rust.md)
+- [下一篇：HFT-Rust SIMD编程](@/articles/rust/rust-15-HFT-Rust-SIMD编程.md)

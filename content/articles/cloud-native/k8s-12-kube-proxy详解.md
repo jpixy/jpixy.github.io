@@ -1,6 +1,7 @@
 +++
-title = "12.kube-proxy详解"
+title = "kube-proxy详解"
 slug = "k8s-kube-proxy详解"
+weight = 14000
 +++
 
 # Kubernetes kube-proxy 详解
@@ -171,5 +172,5 @@ kube-proxy 作为 Kubernetes 服务发现和负载均衡的基础组件，虽然
 
 ## 相关文章
 
-- [上一篇：Pod生命周期及Pending问题排查指南](/articles/cloud-native/k8s-11-Pod生命周期与问题排查/)
-- [下一篇：Kubernetes CNI详解](/articles/cloud-native/k8s-13-CNI详解/)
+- [上一篇：Pod生命周期及Pending问题排查指南](@/articles/cloud-native/k8s-11-Pod生命周期与问题排查.md)
+- [下一篇：Kubernetes CNI详解](@/articles/cloud-native/k8s-13-CNI详解.md)

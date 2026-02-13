@@ -1,6 +1,7 @@
 +++
-title = "50.lsof进程分析深度解析"
+title = "lsof进程分析深度解析"
 date = 2026-01-31
+weight = 50000
 description = "lsof深度解析：文件描述符、进程打开文件、网络连接、故障排查"
 [taxonomies]
 tags = ["Linux", "lsof", "进程", "文件描述符", "调试"]
@@ -474,5 +475,5 @@ fuser -k /var/log/syslog
 
 ## 相关文章
 
-- [上一篇：ftrace内核追踪深度解析](/articles/linux/linux-49-ftrace内核追踪深度解析/)
-- [性能分析与调试](/articles/linux/linux-08-性能分析与调试/)
+- [上一篇：ftrace内核追踪深度解析](@/articles/linux/linux-49-ftrace内核追踪深度解析.md)
+- [性能分析与调试](@/articles/linux/linux-08-性能分析与调试.md)

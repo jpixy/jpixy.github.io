@@ -1,6 +1,7 @@
 +++
-title = "31. CPU Microarchitecture Optimization (HFT)"
+title = "CPU Microarchitecture Optimization (HFT)"
 date = 2026-01-21
+weight = 31000
 description = "深入剖析CPU微架构对HFT性能的影响，包括流水线、乱序执行、ILP、µop缓存、分支预测等核心概念"
 [taxonomies]
 tags = ["C++", "CPU", "微架构", "性能优化", "HFT", "低延迟"]
@@ -443,5 +444,5 @@ bool isValidOrder(const Order& o) {
 
 ## 相关文章
 
-- [上一篇：Build Systems and Toolchain](/articles/cpp/cpp-30-C++构建系统与工具链/)
-- [下一篇：Memory Hierarchy and Bandwidth (HFT)](/articles/cpp/cpp-32-HFT内存层次与带宽优化/)
+- [上一篇：Build Systems and Toolchain](@/articles/cpp/cpp-30-C++构建系统与工具链.md)
+- [下一篇：Memory Hierarchy and Bandwidth (HFT)](@/articles/cpp/cpp-32-HFT内存层次与带宽优化.md)

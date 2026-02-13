@@ -1,6 +1,7 @@
 +++
-title = "30.HFT笔试题-缓存友好编程"
+title = "HFT笔试题-缓存友好编程"
 date = 2026-01-31
+weight = 30000
 description = "HFT缓存友好编程笔试题：缓存层次、伪共享、数据布局、预取优化"
 [taxonomies]
 tags = ["HFT", "笔试", "缓存", "性能优化", "低延迟"]
@@ -1148,5 +1149,5 @@ void *worker_v3(void *arg) {
 
 ## 相关文章
 
-- [上一篇：HFT笔试题-性能分析](/articles/hft/hft-29-HFT笔试题-性能分析/)
-- [下一篇：HFT面试题-CPU与缓存优化](/articles/hft/hft-31-HFT面试题-CPU与缓存优化/)
+- [上一篇：HFT笔试题-性能分析](@/articles/hft/hft-29-HFT笔试题-性能分析.md)
+- [下一篇：HFT面试题-CPU与缓存优化](@/articles/hft/hft-31-HFT面试题-CPU与缓存优化.md)

@@ -1,6 +1,7 @@
 +++
-title = "17.中断与系统调用详解"
+title = "中断与系统调用详解"
 date = 2026-01-31
+weight = 17000
 description = "Linux中断机制、系统调用实现、进程调度与切换、用户态内核态上下文"
 [taxonomies]
 tags = ["Linux", "内核", "中断", "系统调用", "进程调度"]
@@ -563,5 +564,5 @@ A:
 
 ## 相关文章
 
-- [上一篇：内核内存管理详解](/articles/linux/linux-16-内核内存管理详解/)
-- [下一篇：内核同步机制详解](/articles/linux/linux-18-内核同步机制详解/)
+- [上一篇：内核内存管理详解](@/articles/linux/linux-16-内核内存管理详解.md)
+- [下一篇：内核同步机制详解](@/articles/linux/linux-18-内核同步机制详解.md)

@@ -1,4 +1,4 @@
 +++
 title = "Embedded Development"
-sort_by = "title"
+sort_by = "weight"
 +++

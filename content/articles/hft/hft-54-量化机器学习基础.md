@@ -1,6 +1,7 @@
 +++
-title = "54.量化机器学习基础"
+title = "量化机器学习基础"
 date = 2026-02-02
+weight = 54000
 description = "量化ML：监督学习、时间序列预测、过拟合防范、回测陷阱"
 [taxonomies]
 tags = ["HFT", "机器学习", "量化", "预测", "回测"]
@@ -929,6 +930,6 @@ $$
 
 ## 相关文章
 
-- [量化因子模型与特征工程](/articles/hft/hft-55-量化因子模型与特征工程/)
-- [量化数学-概率统计基础](/articles/hft/hft-48-量化数学-概率统计基础/)
-- [HFT笔试题-策略回测](/articles/hft/hft-45-HFT笔试题-策略回测/)
+- [量化因子模型与特征工程](@/articles/hft/hft-55-量化因子模型与特征工程.md)
+- [量化数学-概率统计基础](@/articles/hft/hft-48-量化数学-概率统计基础.md)
+- [HFT笔试题-策略回测](@/articles/hft/hft-45-HFT笔试题-策略回测.md)

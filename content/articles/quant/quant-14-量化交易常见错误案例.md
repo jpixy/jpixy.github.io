@@ -1,6 +1,7 @@
 +++
-title = "14 - 量化交易常见错误案例"
+title = "量化交易常见错误案例"
 date = 2025-01-15
+weight = 14000
 description = "量化交易失败案例分析：过拟合、回测陷阱、风险管理失败、心理错误等教训总结"
 [taxonomies]
 tags = ["quant", "mistakes", "lessons", "risk-management", "overfitting"]
@@ -398,5 +399,5 @@ graph TB
 
 ## 相关文章
 
-- [上一篇：13 - 组合构建与优化](/articles/quant/quant-13-组合构建与优化/)
-- [下一篇：15 - 外汇量化入门](/articles/quant/quant-15-外汇量化入门/)
+- [上一篇：13 - 组合构建与优化](@/articles/quant/quant-13-组合构建与优化.md)
+- [下一篇：15 - 外汇量化入门](@/articles/quant/quant-15-外汇量化入门.md)

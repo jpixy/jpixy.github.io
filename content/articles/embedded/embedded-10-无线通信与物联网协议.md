@@ -1,6 +1,7 @@
 +++
-title = "10.无线通信与物联网协议"
+title = "无线通信与物联网协议"
 date = 2026-01-19
+weight = 10000
 description = "嵌入式无线通信全景：WiFi、蓝牙BLE、LoRa、NB-IoT、ZigBee、UWB技术选型与MQTT协议详解"
 [taxonomies]
 tags = ["embedded", "iot", "wifi", "ble", "lora", "mqtt", "nb-iot", "uwb"]
@@ -680,5 +681,5 @@ Broker保存主题的最后一条消息：
 
 ## 相关文章
 
-- [上一篇：嵌入式Linux驱动开发](/articles/embedded/embedded-09-嵌入式Linux驱动开发/)
-- [下一篇：嵌入式面试指南](/articles/embedded/embedded-11-嵌入式面试指南/)
+- [上一篇：嵌入式Linux驱动开发](@/articles/embedded/embedded-09-嵌入式Linux驱动开发.md)
+- [下一篇：嵌入式面试指南](@/articles/embedded/embedded-11-嵌入式面试指南.md)

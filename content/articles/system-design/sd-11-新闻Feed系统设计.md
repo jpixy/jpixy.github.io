@@ -1,6 +1,7 @@
 +++
-title = "11.新闻Feed系统设计 (Twitter/微博)"
+title = "新闻Feed系统设计 (Twitter/微博)"
 date = 2026-01-28
+weight = 11000
 description = "系统设计面试真题：新闻Feed系统完整设计，包含推拉模式、Feed排序、热点处理、Timeline架构"
 [taxonomies]
 tags = ["系统设计", "面试", "Feed", "Timeline", "推拉模式"]
@@ -517,6 +518,6 @@ graph TB
 
 ## 相关文章
 
-- [系统设计面试指南](/articles/system-design/sd-08-系统设计面试指南/)
-- [高并发系统设计](/articles/system-design/sd-03-高并发系统设计/)
-- [缓存设计详解](/articles/system-design/sd-05-缓存设计详解/)
+- [系统设计面试指南](@/articles/system-design/sd-08-系统设计面试指南.md)
+- [高并发系统设计](@/articles/system-design/sd-03-高并发系统设计.md)
+- [缓存设计详解](@/articles/system-design/sd-05-缓存设计详解.md)
