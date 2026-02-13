@@ -1,5 +1,5 @@
 +++
-title = "Lambda and Function Objects"
+title = "26. Lambda and Function Objects"
 slug = "cpp-36-Lambda与函数对象详解"
 date = 2026-01-21
 weight = 26000

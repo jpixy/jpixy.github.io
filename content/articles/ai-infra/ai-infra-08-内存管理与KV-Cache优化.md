@@ -1,5 +1,5 @@
 +++
-title = "内存管理与 KV Cache 优化"
+title = "08. 内存管理与 KV Cache 优化"
 description = "深入理解 LLM 推理中的显存管理和 KV Cache 优化技术"
 date = 2025-02-06
 weight = 8000

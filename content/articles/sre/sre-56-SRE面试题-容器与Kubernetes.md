@@ -1,5 +1,5 @@
 +++
-title = "SRE面试题-容器与Kubernetes"
+title = "56. SRE面试题-容器与Kubernetes"
 date = 2026-01-21
 weight = 56000
 description = "SRE面试必备：Docker原理、Kubernetes架构、Pod调度、故障排查等核心问题详解"

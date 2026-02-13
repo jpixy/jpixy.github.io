@@ -1,5 +1,5 @@
 +++
-title = "Redis高可用架构"
+title = "03. Redis高可用架构"
 description = "Redis高可用方案：主从复制、哨兵模式、集群模式的原理与最佳实践"
 date = 2025-01-16
 weight = 3000

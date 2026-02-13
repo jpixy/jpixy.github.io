@@ -1,5 +1,5 @@
 +++
-title = "树与图"
+title = "03. 树与图"
 date = 2026-01-19
 weight = 3000
 description = "树结构：二叉树、BST、AVL、红黑树；图算法：遍历、最短路径、拓扑排序"

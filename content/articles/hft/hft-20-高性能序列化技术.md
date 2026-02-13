@@ -1,5 +1,5 @@
 +++
-title = "高性能序列化技术"
+title = "20. 高性能序列化技术"
 date = 2026-01-21
 weight = 20000
 description = "深入剖析高性能序列化技术，包括SBE、FlatBuffers、Cap'n Proto、零拷贝解析和性能对比"

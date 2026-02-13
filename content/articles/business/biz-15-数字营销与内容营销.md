@@ -1,5 +1,5 @@
 +++
-title = "数字营销与内容营销"
+title = "15. 数字营销与内容营销"
 description = "B2B数字营销策略、内容营销、SEO/SEM、社交媒体与营销自动化"
 date = 2025-01-16
 weight = 15000

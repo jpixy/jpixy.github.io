@@ -1,5 +1,5 @@
 +++
-title = "BIOS与硬件级调优指南"
+title = "12. BIOS与硬件级调优指南"
 date = 2026-01-12
 weight = 12000
 description = "C-States、P-States、Turbo Boost等硬件级性能调优的深度剖析"

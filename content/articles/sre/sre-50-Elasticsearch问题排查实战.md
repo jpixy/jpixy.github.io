@@ -1,5 +1,5 @@
 +++
-title = "Elasticsearch问题排查实战"
+title = "50. Elasticsearch问题排查实战"
 date = 2026-01-21
 weight = 50000
 description = "SRE Elasticsearch问题排查完整指南：集群健康、分片问题、索引性能、查询优化"

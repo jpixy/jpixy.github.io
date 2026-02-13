@@ -1,5 +1,5 @@
 +++
-title = "DNS详解"
+title = "15. DNS详解"
 date = 2026-01-19
 weight = 15000
 description = "DNS深入解析：解析原理、记录类型、DNS架构、性能优化、安全防护"

@@ -1,5 +1,5 @@
 +++
-title = "集群作业调度系统"
+title = "06. 集群作业调度系统"
 description = "理解 GPU 集群的作业调度与资源管理"
 date = 2025-02-06
 weight = 6000

@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-DevOps工具速查"
+title = "23. SRE笔试题-DevOps工具速查"
 date = 2026-01-21
 weight = 23000
 description = "SRE面试DevOps工具速查：Docker容器、Terraform基础设施、Git版本控制，核心命令与考点"

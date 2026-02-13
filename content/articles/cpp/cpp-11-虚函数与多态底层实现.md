@@ -1,5 +1,5 @@
 +++
-title = "Virtual Functions and Polymorphism"
+title = "11. Virtual Functions and Polymorphism"
 slug = "cpp-16-虚函数与多态底层实现"
 date = 2026-01-21
 weight = 11000

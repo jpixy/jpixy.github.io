@@ -1,5 +1,5 @@
 +++
-title = "系统启动与引导问题排查实战"
+title = "42. 系统启动与引导问题排查实战"
 date = 2026-01-21
 weight = 42000
 description = "SRE系统启动问题排查完整指南：GRUB修复、启动失败、initramfs问题的定位与解决"

@@ -1,5 +1,5 @@
 +++
-title = "SRE组织与文化"
+title = "14. SRE组织与文化"
 date = 2026-01-19
 weight = 14000
 description = "SRE组织建设：团队模式、与开发协作、文化推广、成熟度评估、职业发展"

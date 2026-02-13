@@ -1,5 +1,5 @@
 +++
-title = "AI & ML Terminology Pronunciation Guide"
+title = "09. AI & ML Terminology Pronunciation Guide"
 description = "AI与机器学习领域英文术语发音指南：业界标准读法、音标、简明概念释义"
 date = 2026-02-13
 weight = 9000

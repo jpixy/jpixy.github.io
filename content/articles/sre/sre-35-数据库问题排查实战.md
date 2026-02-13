@@ -1,5 +1,5 @@
 +++
-title = "数据库问题排查实战"
+title = "35. 数据库问题排查实战"
 date = 2026-01-21
 weight = 35000
 description = "SRE数据库问题排查完整指南：MySQL/PostgreSQL慢查询、锁问题、连接问题的定位与解决"

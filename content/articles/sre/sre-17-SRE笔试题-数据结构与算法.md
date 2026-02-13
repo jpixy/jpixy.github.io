@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-数据结构与算法"
+title = "17. SRE笔试题-数据结构与算法"
 date = 2026-01-21
 weight = 17000
 description = "SRE面试笔试题精选：LRU缓存、布隆过滤器、优先队列、滑动窗口、图算法等，Python3完整解答"

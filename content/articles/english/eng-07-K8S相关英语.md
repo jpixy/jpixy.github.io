@@ -1,5 +1,5 @@
 +++
-title = "K8S相关英语"
+title = "07. K8S相关英语"
 slug = "k8s-K8S相关英语"
 weight = 7000
 +++

@@ -1,5 +1,5 @@
 +++
-title = "CPU问题排查实战"
+title = "28. CPU问题排查实战"
 date = 2026-01-21
 weight = 28000
 description = "SRE CPU问题排查完整指南：CPU使用率高、软中断/硬中断、上下文切换、NUMA问题、Steal时间的定位与解决"

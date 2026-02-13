@@ -1,5 +1,5 @@
 +++
-title = "C vs C++ Memory Management"
+title = "01. C vs C++ Memory Management"
 slug = "cpp-C和C++在内存管理上的对比"
 weight = 1000
 +++

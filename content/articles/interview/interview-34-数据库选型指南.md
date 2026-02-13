@@ -1,5 +1,5 @@
 +++
-title = "数据库选型指南"
+title = "34. 数据库选型指南"
 description = "数据库选型：关系型、NoSQL、NewSQL的特点对比与场景选择"
 date = 2025-01-16
 weight = 34000

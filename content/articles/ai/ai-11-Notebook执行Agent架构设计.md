@@ -1,5 +1,5 @@
 +++
-title = "Notebook执行Agent架构设计"
+title = "11. Notebook执行Agent架构设计"
 date = 2025-01-13
 weight = 11000
 description = "基于LangGraph设计一个AI Agent，自动将无法一键执行的Notebook改写为可自动化执行的版本"

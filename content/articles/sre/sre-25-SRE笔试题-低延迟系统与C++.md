@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-低延迟系统与C++"
+title = "25. SRE笔试题-低延迟系统与C++"
 date = 2026-01-21
 weight = 25000
 description = "HFT/SRE面试低延迟系统考点：CPU缓存、NUMA、无锁编程、内核旁路、尾延迟优化，C++核心知识"

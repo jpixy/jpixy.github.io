@@ -1,5 +1,5 @@
 +++
-title = "缓存问题排查实战"
+title = "46. 缓存问题排查实战"
 date = 2026-01-21
 weight = 46000
 description = "SRE缓存问题排查完整指南：Redis、Memcached连接问题、内存淘汰、主从同步、性能问题排查"

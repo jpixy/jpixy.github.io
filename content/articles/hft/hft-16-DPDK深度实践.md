@@ -1,5 +1,5 @@
 +++
-title = "DPDK深度实践"
+title = "16. DPDK深度实践"
 slug = "hft-20-DPDK深度实践"
 date = 2026-01-21
 weight = 16000

@@ -1,5 +1,5 @@
 +++
-title = "Rust内存布局与对齐"
+title = "10. Rust内存布局与对齐"
 date = 2026-01-21
 weight = 10000
 description = "深入剖析Rust的内存布局机制，包括repr属性、ZST、DST、内存对齐、union类型及其在HFT中的应用"

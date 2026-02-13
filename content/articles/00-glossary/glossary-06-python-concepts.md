@@ -1,5 +1,5 @@
 +++
-title = "Python Concepts"
+title = "06. Python Concepts"
 description = "Python核心概念速查：GIL、装饰器、生成器、深浅拷贝、模块变量、Python与C++易混淆概念对比详解"
 date = 2026-01-26
 weight = 6000

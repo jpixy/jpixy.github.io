@@ -1,5 +1,5 @@
 +++
-title = "嵌入式Linux驱动开发"
+title = "09. 嵌入式Linux驱动开发"
 date = 2026-01-19
 weight = 9000
 description = "嵌入式Linux驱动开发：字符设备、平台驱动、设备树、内核模块、Buildroot/Yocto"

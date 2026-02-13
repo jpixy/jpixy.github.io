@@ -1,5 +1,5 @@
 +++
-title = "边缘AI与端侧部署详解"
+title = "18. 边缘AI与端侧部署详解"
 date = 2025-01-15
 weight = 18000
 description = "边缘设备AI部署全解析：移动端、IoT、浏览器部署技术与实践"

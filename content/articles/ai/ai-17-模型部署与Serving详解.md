@@ -1,5 +1,5 @@
 +++
-title = "模型部署与Serving详解"
+title = "17. 模型部署与Serving详解"
 date = 2025-01-15
 weight = 17000
 description = "AI 模型生产部署全流程：模型格式、容器化、服务框架、监控运维"

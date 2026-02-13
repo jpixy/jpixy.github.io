@@ -1,5 +1,5 @@
 +++
-title = "IP封禁系统设计 (IP Blocking System)"
+title = "14. IP封禁系统设计 (IP Blocking System)"
 date = 2026-01-29
 weight = 14000
 description = "系统设计面试真题：大规模IP封禁系统完整设计，包含IPv4 Bitmap、IPv6 Radix Tree、多层缓存、实时同步、灰度上线"

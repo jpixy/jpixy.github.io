@@ -1,5 +1,5 @@
 +++
-title = "LLM 推理优化全景"
+title = "02. LLM 推理优化全景"
 description = "系统梳理 LLM 推理优化的各个维度，从算子到系统的完整视角"
 date = 2025-02-06
 weight = 2000

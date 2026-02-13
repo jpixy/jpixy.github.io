@@ -1,5 +1,5 @@
 +++
-title = "Compiler Optimization and Profiling (HFT)"
+title = "23. Compiler Optimization and Profiling (HFT)"
 date = 2026-01-21
 weight = 23000
 description = "深入剖析编译器优化技术、PGO、LTO、性能分析工具，HFT低延迟系统优化核心技术"

@@ -1,5 +1,5 @@
 +++
-title = "内核内存分配器详解"
+title = "33. 内核内存分配器详解"
 date = 2026-02-02
 weight = 33000
 description = "Linux内核内存分配：Buddy System、Slab/Slub、kmalloc、页回收、OOM"

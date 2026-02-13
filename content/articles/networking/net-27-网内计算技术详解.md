@@ -1,5 +1,5 @@
 +++
-title = "网内计算技术详解"
+title = "27. 网内计算技术详解"
 description = "In-Network Computing 原理、架构与应用：让网络设备参与计算"
 date = 2025-02-07
 weight = 27000

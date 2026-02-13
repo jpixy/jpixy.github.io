@@ -1,5 +1,5 @@
 +++
-title = "Lock-Free Ring Buffer (HFT)"
+title = "18. Lock-Free Ring Buffer (HFT)"
 date = 2026-01-30
 weight = 18000
 description = "High-performance lock-free ring buffer implementation for low-latency systems"

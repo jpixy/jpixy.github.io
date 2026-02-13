@@ -1,5 +1,5 @@
 +++
-title = "FPGA基础概念"
+title = "01. FPGA基础概念"
 date = 2026-01-20
 weight = 1000
 description = "FPGA入门：可编程逻辑、架构组成、开发流程、应用场景"

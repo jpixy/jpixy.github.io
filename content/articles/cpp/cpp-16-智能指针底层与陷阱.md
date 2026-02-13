@@ -1,5 +1,5 @@
 +++
-title = "Smart Pointers Internals and Pitfalls"
+title = "16. Smart Pointers Internals and Pitfalls"
 slug = "cpp-21-智能指针底层与陷阱"
 date = 2026-01-21
 weight = 16000

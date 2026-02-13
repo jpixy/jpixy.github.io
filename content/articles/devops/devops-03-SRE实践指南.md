@@ -1,5 +1,5 @@
 +++
-title = "SRE实践指南"
+title = "03. SRE实践指南"
 description = "站点可靠性工程：SRE核心理念、容量规划、变更管理与事故响应"
 date = 2025-01-16
 weight = 3000

@@ -1,5 +1,5 @@
 +++
-title = "消息队列问题排查实战"
+title = "45. 消息队列问题排查实战"
 date = 2026-01-21
 weight = 45000
 description = "SRE消息队列问题排查完整指南：Kafka、RabbitMQ、Redis队列的积压、延迟、故障排查"

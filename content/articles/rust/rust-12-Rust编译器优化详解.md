@@ -1,5 +1,5 @@
 +++
-title = "Rust编译器优化详解"
+title = "12. Rust编译器优化详解"
 date = 2026-01-21
 weight = 12000
 description = "深入剖析Rust编译器的优化机制，包括LLVM优化、MIR、单态化、内联控制、LTO/ThinLTO等"

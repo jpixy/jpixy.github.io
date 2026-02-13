@@ -1,5 +1,5 @@
 +++
-title = "内核笔试题-文件系统与VFS"
+title = "28. 内核笔试题-文件系统与VFS"
 date = 2026-01-31
 weight = 28000
 description = "Linux内核文件系统与VFS笔试题：VFS架构、inode、dentry、页缓存、文件操作深度解析"

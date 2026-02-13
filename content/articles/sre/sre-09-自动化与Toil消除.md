@@ -1,5 +1,5 @@
 +++
-title = "自动化与Toil消除"
+title = "09. 自动化与Toil消除"
 date = 2026-01-19
 weight = 9000
 description = "SRE自动化实践：Toil的识别与量化、自动化策略、工具链建设、自愈系统设计"

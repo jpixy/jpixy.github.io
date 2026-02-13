@@ -1,5 +1,5 @@
 +++
-title = "新闻Feed系统设计 (Twitter/微博)"
+title = "11. 新闻Feed系统设计 (Twitter/微博)"
 date = 2026-01-28
 weight = 11000
 description = "系统设计面试真题：新闻Feed系统完整设计，包含推拉模式、Feed排序、热点处理、Timeline架构"

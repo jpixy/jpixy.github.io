@@ -1,5 +1,5 @@
 +++
-title = "服务注册发现与API网关"
+title = "33. 服务注册发现与API网关"
 description = "微服务核心组件：服务注册发现原理、API网关设计与负载均衡策略"
 date = 2025-01-16
 weight = 33000

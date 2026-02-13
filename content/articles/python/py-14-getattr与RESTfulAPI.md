@@ -1,5 +1,5 @@
 +++
-title = "__getattr__与RESTful API的最佳实践"
+title = "14. __getattr__与RESTful API的最佳实践"
 slug = "py-__getattr__与RESTfulAPI的最佳实践"
 weight = 14000
 +++

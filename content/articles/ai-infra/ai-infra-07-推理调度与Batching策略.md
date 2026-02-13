@@ -1,5 +1,5 @@
 +++
-title = "推理调度与 Batching 策略"
+title = "07. 推理调度与 Batching 策略"
 description = "深入理解 LLM 推理系统的调度算法和批处理策略"
 date = 2025-02-06
 weight = 7000

@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-概率与智力题"
+title = "24. SRE笔试题-概率与智力题"
 date = 2026-01-21
 weight = 24000
 description = "SRE/Quant面试概率与智力题：马尔可夫链、期望值计算、动态决策、经典智力题，详细解答"

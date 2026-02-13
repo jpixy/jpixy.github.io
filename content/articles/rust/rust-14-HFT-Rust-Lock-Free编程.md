@@ -1,5 +1,5 @@
 +++
-title = "HFT-Rust Lock-Free编程"
+title = "14. HFT-Rust Lock-Free编程"
 slug = "rust-15-HFT-Rust-Lock-Free编程"
 date = 2026-01-21
 weight = 14000

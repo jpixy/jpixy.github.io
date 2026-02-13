@@ -1,5 +1,5 @@
 +++
-title = "内核面试题-系统调用"
+title = "27. 内核面试题-系统调用"
 date = 2026-01-31
 weight = 27000
 description = "Linux内核系统调用面试题：syscall机制、vDSO、性能优化深度解析"

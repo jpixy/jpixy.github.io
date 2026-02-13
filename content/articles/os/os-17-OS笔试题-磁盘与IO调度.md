@@ -1,5 +1,5 @@
 +++
-title = "OS笔试题-磁盘与IO调度"
+title = "17. OS笔试题-磁盘与IO调度"
 date = 2026-01-31
 weight = 17000
 description = "操作系统磁盘与IO调度笔试题：磁盘结构、调度算法、缓冲区管理、DMA深度解析"

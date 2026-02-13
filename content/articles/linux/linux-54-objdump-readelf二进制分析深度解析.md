@@ -1,5 +1,5 @@
 +++
-title = "objdump/readelf二进制分析深度解析"
+title = "54. objdump/readelf二进制分析深度解析"
 date = 2026-01-31
 weight = 54000
 description = "objdump/readelf深度解析：ELF格式、反汇编、符号表、调试信息"

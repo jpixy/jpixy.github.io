@@ -1,5 +1,5 @@
 +++
-title = "HFT笔试题-无锁数据结构"
+title = "28. HFT笔试题-无锁数据结构"
 date = 2026-01-31
 weight = 28000
 description = "HFT无锁数据结构笔试题：CAS原理、SPSC队列、无锁栈、ABA问题、内存序"

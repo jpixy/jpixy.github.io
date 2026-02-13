@@ -1,5 +1,5 @@
 +++
-title = "Raft算法详解"
+title = "05. Raft算法详解"
 date = 2026-01-20
 weight = 5000
 description = "Raft共识算法：Leader选举、日志复制、安全性保证"

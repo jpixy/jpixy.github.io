@@ -1,5 +1,5 @@
 +++
-title = "Python性能优化-Cython详解"
+title = "47. Python性能优化-Cython详解"
 slug = "py-48-Python性能优化-Cython详解"
 date = 2026-01-21
 weight = 47000

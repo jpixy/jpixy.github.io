@@ -1,5 +1,5 @@
 +++
-title = "GDB调试器深度解析"
+title = "40. GDB调试器深度解析"
 date = 2026-01-31
 weight = 40000
 description = "GDB深度解析：调试原理、断点机制、多线程调试、核心转储分析、远程调试"

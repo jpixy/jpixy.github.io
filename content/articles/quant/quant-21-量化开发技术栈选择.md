@@ -1,5 +1,5 @@
 +++
-title = "量化开发技术栈选择：Python vs C++ vs Rust"
+title = "21. 量化开发技术栈选择：Python vs C++ vs Rust"
 date = 2025-01-18
 weight = 21000
 description = "深入分析个人量化交易的编程语言选择：Python、C++、Rust的优劣对比，中国大陆与国际市场的接口支持情况"

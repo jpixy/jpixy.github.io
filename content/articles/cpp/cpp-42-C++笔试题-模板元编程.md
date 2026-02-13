@@ -1,5 +1,5 @@
 +++
-title = "C++笔试题-模板元编程"
+title = "42. C++笔试题-模板元编程"
 date = 2026-01-31
 weight = 42000
 description = "C++模板元编程笔试题：模板特化、SFINAE、constexpr、类型萃取"

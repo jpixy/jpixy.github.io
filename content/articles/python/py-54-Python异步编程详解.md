@@ -1,5 +1,5 @@
 +++
-title = "Python异步编程详解"
+title = "54. Python异步编程详解"
 slug = "py-56-Python异步编程详解"
 date = 2026-01-21
 weight = 54000

@@ -1,5 +1,5 @@
 +++
-title = "Cache-Friendly C Programming (HFT)"
+title = "19. Cache-Friendly C Programming (HFT)"
 date = 2026-01-30
 weight = 19000
 description = "Optimizing C code for CPU cache performance in low-latency systems"

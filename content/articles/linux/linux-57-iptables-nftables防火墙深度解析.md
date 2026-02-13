@@ -1,5 +1,5 @@
 +++
-title = "iptables/nftables防火墙深度解析"
+title = "57. iptables/nftables防火墙深度解析"
 date = 2026-01-31
 weight = 57000
 description = "iptables/nftables深度解析：包过滤、NAT、状态跟踪、安全配置"

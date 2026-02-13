@@ -1,5 +1,5 @@
 +++
-title = "MySQL分库分表实践"
+title = "05. MySQL分库分表实践"
 description = "分库分表方案设计：垂直拆分、水平拆分、分片策略与数据迁移"
 date = 2025-01-16
 weight = 5000

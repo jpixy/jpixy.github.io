@@ -1,5 +1,5 @@
 +++
-title = "可观测性体系建设"
+title = "03. 可观测性体系建设"
 date = 2026-01-19
 weight = 3000
 description = "可观测性三大支柱：Metrics指标体系、Logs日志管理、Traces分布式追踪，以及统一可观测性平台建设"

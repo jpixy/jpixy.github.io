@@ -1,5 +1,5 @@
 +++
-title = "内核笔试题-同步机制"
+title = "21. 内核笔试题-同步机制"
 date = 2026-01-31
 weight = 21000
 description = "Linux内核同步机制笔试题：Spinlock实现、RCU原理、内存屏障、死锁分析"

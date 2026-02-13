@@ -1,5 +1,5 @@
 +++
-title = "Project Practices and Toolchain"
+title = "08. Project Practices and Toolchain"
 date = 2026-01-19
 weight = 8000
 description = "C++工程实践：CMake构建、单元测试、代码质量、包管理、CI/CD"

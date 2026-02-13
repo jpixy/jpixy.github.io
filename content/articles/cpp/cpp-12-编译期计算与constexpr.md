@@ -1,5 +1,5 @@
 +++
-title = "Compile-Time Computation and constexpr"
+title = "12. Compile-Time Computation and constexpr"
 slug = "cpp-17-编译期计算与constexpr"
 date = 2026-01-21
 weight = 12000

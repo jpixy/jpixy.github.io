@@ -1,5 +1,5 @@
 +++
-title = "SRE面试题-Linux系统基础"
+title = "54. SRE面试题-Linux系统基础"
 date = 2026-01-21
 weight = 54000
 description = "SRE面试必备：Linux进程线程、内存管理、文件系统、信号处理等核心问题详解"

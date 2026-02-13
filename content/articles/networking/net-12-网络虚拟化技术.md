@@ -1,5 +1,5 @@
 +++
-title = "网络虚拟化技术"
+title = "12. 网络虚拟化技术"
 date = 2026-01-19
 weight = 12000
 description = "网络虚拟化详解：Linux虚拟网络设备、VLAN、VXLAN、网络命名空间、容器网络"

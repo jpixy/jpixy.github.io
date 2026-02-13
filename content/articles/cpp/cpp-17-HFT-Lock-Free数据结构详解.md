@@ -1,5 +1,5 @@
 +++
-title = "Lock-Free Data Structures (HFT)"
+title = "17. Lock-Free Data Structures (HFT)"
 slug = "cpp-22-HFT-Lock-Free数据结构详解"
 date = 2026-01-21
 weight = 17000

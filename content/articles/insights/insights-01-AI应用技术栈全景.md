@@ -1,5 +1,5 @@
 +++
-title = "AI应用技术栈全景与实践指南"
+title = "01. AI应用技术栈全景与实践指南"
 slug = "insights-AI应用技术栈全景与实践指南"
 weight = 1000
 +++

@@ -1,5 +1,5 @@
 +++
-title = "C Written Test Questions"
+title = "20. C Written Test Questions"
 date = 2026-01-30
 weight = 20000
 description = "C语言笔试真题：选择题、填空题、编程题、调试题"

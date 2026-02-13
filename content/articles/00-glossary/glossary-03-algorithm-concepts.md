@@ -1,5 +1,5 @@
 +++
-title = "Algorithm & Data Structure Concepts"
+title = "03. Algorithm & Data Structure Concepts"
 description = "算法与数据结构核心概念速查：复杂度分析、树结构对比、图论算法、贪心与动态规划、LeetCode常见题目Python3解法"
 date = 2026-01-26
 weight = 3000

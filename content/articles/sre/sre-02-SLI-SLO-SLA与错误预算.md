@@ -1,5 +1,5 @@
 +++
-title = "SLI/SLO/SLA与错误预算"
+title = "02. SLI/SLO/SLA与错误预算"
 date = 2026-01-19
 weight = 2000
 description = "服务质量量化体系：SLI指标设计、SLO目标制定、SLA契约管理、错误预算机制与实践"

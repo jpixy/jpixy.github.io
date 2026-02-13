@@ -1,5 +1,5 @@
 +++
-title = "CUDA实战应用场景详解"
+title = "22. CUDA实战应用场景详解"
 date = 2026-02-06
 weight = 22000
 description = "CUDA能做什么：从图像处理到深度学习，从科学计算到量化交易，详解GPU加速的实际应用领域"

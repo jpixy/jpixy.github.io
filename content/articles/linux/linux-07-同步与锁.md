@@ -1,5 +1,5 @@
 +++
-title = "同步与锁"
+title = "07. 同步与锁"
 date = 2026-01-19
 weight = 7000
 description = "Linux同步机制：互斥锁、读写锁、条件变量、信号量、futex"

@@ -1,5 +1,5 @@
 +++
-title = "CPU Microarchitecture Optimization (HFT)"
+title = "31. CPU Microarchitecture Optimization (HFT)"
 date = 2026-01-21
 weight = 31000
 description = "深入剖析CPU微架构对HFT性能的影响，包括流水线、乱序执行、ILP、µop缓存、分支预测等核心概念"

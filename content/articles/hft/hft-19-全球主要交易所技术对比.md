@@ -1,5 +1,5 @@
 +++
-title = "全球主要交易所技术对比"
+title = "19. 全球主要交易所技术对比"
 date = 2026-01-21
 weight = 19000
 description = "全球主要交易所技术栈对比，包括CME/NASDAQ/NYSE等的协议特点、延迟数据和Co-location"

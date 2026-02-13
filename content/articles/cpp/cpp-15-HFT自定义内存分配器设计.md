@@ -1,5 +1,5 @@
 +++
-title = "Custom Memory Allocators (HFT)"
+title = "15. Custom Memory Allocators (HFT)"
 slug = "cpp-20-HFT自定义内存分配器设计"
 date = 2026-01-21
 weight = 15000

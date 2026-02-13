@@ -1,5 +1,5 @@
 +++
-title = "Rust语言基础"
+title = "01. Rust语言基础"
 date = 2026-01-19
 weight = 1000
 description = "Rust入门：语法基础、数据类型、控制流、函数、模块系统"

@@ -1,5 +1,5 @@
 +++
-title = "内存问题排查实战"
+title = "29. 内存问题排查实战"
 date = 2026-01-21
 weight = 29000
 description = "SRE内存问题排查完整指南：内存泄漏、OOM、Swap深度分析、Slab缓存问题的定位与解决"

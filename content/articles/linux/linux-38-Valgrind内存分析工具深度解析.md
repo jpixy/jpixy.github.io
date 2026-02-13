@@ -1,5 +1,5 @@
 +++
-title = "Valgrind内存分析工具深度解析"
+title = "38. Valgrind内存分析工具深度解析"
 date = 2026-01-31
 weight = 38000
 description = "Valgrind深度解析：工作原理、Memcheck内存检测、Helgrind线程分析、Cachegrind缓存分析"

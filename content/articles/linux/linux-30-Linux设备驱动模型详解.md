@@ -1,5 +1,5 @@
 +++
-title = "Linux设备驱动模型详解"
+title = "30. Linux设备驱动模型详解"
 date = 2026-02-02
 weight = 30000
 description = "Linux设备驱动模型：kobject、kset、ktype、sysfs、udev、设备树、平台设备"

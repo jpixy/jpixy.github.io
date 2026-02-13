@@ -1,5 +1,5 @@
 +++
-title = "Triton Inference Server 实战"
+title = "06. Triton Inference Server 实战"
 description = "企业级 AI 模型服务化部署指南"
 date = 2025-02-06
 weight = 6000

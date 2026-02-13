@@ -1,5 +1,5 @@
 +++
-title = "以太网与 PHY 驱动开发"
+title = "58. 以太网与 PHY 驱动开发"
 date = 2026-01-21
 weight = 58000
 description = "Linux 以太网驱动开发完整指南：net_device 架构、NAPI、PHY 驱动、MAC 驱动、DMA 描述符、ethtool 接口"

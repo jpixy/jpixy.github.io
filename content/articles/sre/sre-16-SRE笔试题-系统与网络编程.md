@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-系统与网络编程"
+title = "16. SRE笔试题-系统与网络编程"
 date = 2026-01-21
 weight = 16000
 description = "SRE面试笔试题精选：Linux系统编程、网络编程、进程管理、并发处理，Python3完整解答"

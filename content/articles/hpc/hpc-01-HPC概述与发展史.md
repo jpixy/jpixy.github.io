@@ -1,5 +1,5 @@
 +++
-title = "HPC 概述与发展史"
+title = "01. HPC 概述与发展史"
 description = "高性能计算的概念、发展历程与 AI 时代的融合"
 date = 2025-02-06
 weight = 1000

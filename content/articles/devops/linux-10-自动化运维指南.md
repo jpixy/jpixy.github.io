@@ -1,5 +1,5 @@
 +++
-title = "Linux自动化运维深度指南"
+title = "10. Linux自动化运维深度指南"
 date = 2026-01-12
 weight = 10000
 description = "Ansible、Terraform、Python自动化的核心概念、架构设计与最佳实践"

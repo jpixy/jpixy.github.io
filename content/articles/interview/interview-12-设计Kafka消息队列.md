@@ -1,5 +1,5 @@
 +++
-title = "如何设计一个类似Kafka的消息队列"
+title = "12. 如何设计一个类似Kafka的消息队列"
 slug = "interview-如何设计一个类似Kafka的消息队列"
 weight = 12000
 +++

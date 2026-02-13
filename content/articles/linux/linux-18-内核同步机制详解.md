@@ -1,5 +1,5 @@
 +++
-title = "内核同步机制详解"
+title = "18. 内核同步机制详解"
 date = 2026-01-31
 weight = 18000
 description = "Linux内核同步：Spinlock多核实现、读写锁、信号量、RCU原理、内存屏障"

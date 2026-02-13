@@ -1,5 +1,5 @@
 +++
-title = "MySQL索引原理与查询优化"
+title = "04. MySQL索引原理与查询优化"
 description = "MySQL索引深度解析：B+树原理、索引类型、查询优化与执行计划分析"
 date = 2025-01-16
 weight = 4000

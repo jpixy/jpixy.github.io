@@ -1,5 +1,5 @@
 +++
-title = "DPDK详解"
+title = "04. DPDK详解"
 slug = "net-DPDK详解"
 weight = 4000
 +++

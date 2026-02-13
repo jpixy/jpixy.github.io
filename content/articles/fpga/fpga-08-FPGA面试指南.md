@@ -1,5 +1,5 @@
 +++
-title = "FPGA面试指南"
+title = "08. FPGA面试指南"
 date = 2026-01-20
 weight = 8000
 description = "FPGA面试：常见问题、设计题、时序分析、调试方法"

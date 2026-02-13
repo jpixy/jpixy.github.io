@@ -1,5 +1,5 @@
 +++
-title = "STL Containers and Algorithms"
+title = "06. STL Containers and Algorithms"
 date = 2026-01-19
 weight = 6000
 description = "STL详解：序列容器、关联容器、容器适配器、迭代器、常用算法"

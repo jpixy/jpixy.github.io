@@ -1,5 +1,5 @@
 +++
-title = "AI C++ 工程师职业路径"
+title = "29. AI C++ 工程师职业路径"
 description = "从技能要求到学习路线，全面解析 AI 领域 C++ 工程师的职业发展"
 date = 2025-02-06
 weight = 29000

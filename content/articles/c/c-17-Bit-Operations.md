@@ -1,5 +1,5 @@
 +++
-title = "Bit Operations and Tricks"
+title = "17. Bit Operations and Tricks"
 date = 2026-01-30
 weight = 17000
 description = "Essential bit manipulation techniques for systems programming and interviews"

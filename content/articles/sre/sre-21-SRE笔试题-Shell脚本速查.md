@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-Shell脚本速查"
+title = "21. SRE笔试题-Shell脚本速查"
 date = 2026-01-21
 weight = 21000
 description = "SRE面试Shell脚本常见题目速查：日志分析、进程管理、文本处理、系统监控，核心命令与要点"

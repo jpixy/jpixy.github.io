@@ -1,5 +1,5 @@
 +++
-title = "计算机视觉与OpenCV实战"
+title = "27. 计算机视觉与OpenCV实战"
 date = 2026-02-06
 weight = 27000
 description = "OpenCV图像处理全攻略：从基础操作到目标检测YOLO，GPU加速与实时视频流处理"

@@ -1,5 +1,5 @@
 +++
-title = "Cache-Friendly Data Structures (HFT)"
+title = "20. Cache-Friendly Data Structures (HFT)"
 slug = "cpp-25-HFT缓存友好数据结构设计"
 date = 2026-01-21
 weight = 20000

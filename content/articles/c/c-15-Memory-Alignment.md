@@ -1,5 +1,5 @@
 +++
-title = "Memory Alignment and Struct Packing"
+title = "15. Memory Alignment and Struct Packing"
 date = 2026-01-30
 weight = 15000
 description = "Deep dive into memory alignment, struct padding, and packing techniques in C"

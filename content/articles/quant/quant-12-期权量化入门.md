@@ -1,5 +1,5 @@
 +++
-title = "期权量化入门"
+title = "12. 期权量化入门"
 date = 2025-01-15
 weight = 12000
 description = "期权量化交易基础：期权定价、Greeks、波动率交易、常见期权策略"

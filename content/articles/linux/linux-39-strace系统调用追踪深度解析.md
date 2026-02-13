@@ -1,5 +1,5 @@
 +++
-title = "strace系统调用追踪深度解析"
+title = "39. strace系统调用追踪深度解析"
 date = 2026-01-31
 weight = 39000
 description = "strace深度解析：ptrace原理、系统调用追踪、性能分析、故障排查实战"

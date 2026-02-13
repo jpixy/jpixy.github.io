@@ -1,5 +1,5 @@
 +++
-title = "Linux网络技术深度指南"
+title = "08. Linux网络技术深度指南"
 date = 2026-01-12
 weight = 8000
 description = "TCP/IP协议栈、DNS、Multicast、tcpdump、eBPF网络编程深度剖析"

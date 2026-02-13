@@ -1,5 +1,5 @@
 +++
-title = "HFT面试题-CPU与缓存优化"
+title = "31. HFT面试题-CPU与缓存优化"
 date = 2026-01-31
 weight = 31000
 description = "HFT CPU与缓存优化面试题：缓存层次、CPU亲和性、分支预测、SIMD深度解析"

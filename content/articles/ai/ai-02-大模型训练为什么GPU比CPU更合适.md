@@ -1,5 +1,5 @@
 +++
-title = "大模型训练为什么GPU比CPU更合适"
+title = "02. 大模型训练为什么GPU比CPU更合适"
 slug = "ai-大模型训练为什么GPU比CPU更合适"
 weight = 2000
 +++

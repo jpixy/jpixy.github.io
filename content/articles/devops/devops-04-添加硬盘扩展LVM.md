@@ -1,5 +1,5 @@
 +++
-title = "如何添加新硬盘扩展LVM"
+title = "04. 如何添加新硬盘扩展LVM"
 slug = "devops-如何添加新硬盘扩展LVM"
 weight = 4000
 +++

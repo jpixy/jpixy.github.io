@@ -1,5 +1,5 @@
 +++
-title = "Networking Concepts"
+title = "02. Networking Concepts"
 description = "网络核心概念速查：二层三层基础(MAC/ARP/VLAN/STP/VXLAN)、TCP/IP、Socket编程、高性能网络、数据中心架构(大二层/大三层/VXLAN/BGP EVPN/SDN)等关键概念详解"
 date = 2026-01-27
 weight = 2000

@@ -1,5 +1,5 @@
 +++
-title = "HFT系统延迟分析方法"
+title = "12. HFT系统延迟分析方法"
 slug = "hft-12-HFT系统延迟分析方法"
 date = 2026-01-21
 weight = 12000

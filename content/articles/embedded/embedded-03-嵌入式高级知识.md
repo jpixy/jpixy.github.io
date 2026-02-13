@@ -1,5 +1,5 @@
 +++
-title = "嵌入式高级知识"
+title = "03. 嵌入式高级知识"
 date = 2026-01-19
 weight = 3000
 description = "嵌入式高级主题：低功耗设计、Bootloader开发、安全机制、性能优化、可靠性设计"

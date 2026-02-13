@@ -1,5 +1,5 @@
 +++
-title = "期权定价与Greeks详解"
+title = "52. 期权定价与Greeks详解"
 date = 2026-02-02
 weight = 52000
 description = "期权定价模型：Black-Scholes、二叉树、Greeks、对冲策略"

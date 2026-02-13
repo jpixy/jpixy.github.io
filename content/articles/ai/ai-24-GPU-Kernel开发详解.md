@@ -1,5 +1,5 @@
 +++
-title = "GPU Kernel开发详解"
+title = "24. GPU Kernel开发详解"
 date = 2026-02-06
 weight = 24000
 description = "高性能GPU Kernel开发：从GEMM到Attention，深入理解Tensor Core、内存优化、CUTLASS架构"

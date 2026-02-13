@@ -1,5 +1,5 @@
 +++
-title = "FPGA与嵌入式集成"
+title = "07. FPGA与嵌入式集成"
 date = 2026-01-20
 weight = 7000
 description = "SoC设计：FPGA+处理器、AXI总线、软硬件协同、Zynq实践"

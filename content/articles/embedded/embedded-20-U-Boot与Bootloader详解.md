@@ -1,5 +1,5 @@
 +++
-title = "U-Boot 与 Bootloader 详解"
+title = "20. U-Boot 与 Bootloader 详解"
 date = 2026-01-21
 weight = 20000
 description = "嵌入式 Bootloader 完整指南：U-Boot 原理、配置、移植、调试，从上电到内核启动的全流程"

@@ -1,5 +1,5 @@
 +++
-title = "Rust面试题-所有权与生命周期"
+title = "20. Rust面试题-所有权与生命周期"
 slug = "rust-19-Rust面试题-所有权与生命周期"
 date = 2026-01-21
 weight = 20000

@@ -1,5 +1,5 @@
 +++
-title = "A股程序化交易接口：QMT 与 Ptrade 详解"
+title = "24. A股程序化交易接口：QMT 与 Ptrade 详解"
 date = 2025-01-21
 weight = 24000
 description = "A股程序化交易接口完整指南：QMT（迅投）和 Ptrade（恒生）的详细介绍、申请条件、使用方法、代码示例及选型建议"

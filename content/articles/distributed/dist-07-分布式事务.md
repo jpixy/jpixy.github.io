@@ -1,5 +1,5 @@
 +++
-title = "分布式事务"
+title = "07. 分布式事务"
 date = 2026-01-20
 weight = 7000
 description = "分布式事务：2PC、3PC、Saga、TCC、最终一致性"

@@ -1,5 +1,5 @@
 +++
-title = "Testing and Debugging"
+title = "28. Testing and Debugging"
 date = 2026-01-21
 weight = 28000
 description = "深入剖析C++测试框架和调试工具，包括GTest/GMock、Sanitizers、Valgrind、GDB高级技巧等"

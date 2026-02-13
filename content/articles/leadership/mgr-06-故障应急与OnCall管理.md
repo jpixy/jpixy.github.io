@@ -1,5 +1,5 @@
 +++
-title = "故障应急与On-Call管理"
+title = "06. 故障应急与On-Call管理"
 date = 2025-01-15
 weight = 6000
 description = "技术管理者事故响应指南：On-Call制度设计、事故处理流程、Blameless Postmortem、SLA/SLO管理"

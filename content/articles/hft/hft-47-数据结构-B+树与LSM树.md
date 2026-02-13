@@ -1,5 +1,5 @@
 +++
-title = "数据结构-B+树与LSM树"
+title = "47. 数据结构-B+树与LSM树"
 date = 2026-02-02
 weight = 47000
 description = "存储数据结构：B+树、LSM树、时间序列存储、磁盘优化"

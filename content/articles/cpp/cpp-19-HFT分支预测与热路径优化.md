@@ -1,5 +1,5 @@
 +++
-title = "Branch Prediction and Hot Path (HFT)"
+title = "19. Branch Prediction and Hot Path (HFT)"
 slug = "cpp-24-HFT分支预测与热路径优化"
 date = 2026-01-21
 weight = 19000

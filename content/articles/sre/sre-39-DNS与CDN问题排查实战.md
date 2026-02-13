@@ -1,5 +1,5 @@
 +++
-title = "DNS与CDN问题排查实战"
+title = "39. DNS与CDN问题排查实战"
 date = 2026-01-21
 weight = 39000
 description = "SRE DNS与CDN问题排查完整指南：域名解析故障、CDN缓存问题、DNS劫持检测与处理"

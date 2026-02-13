@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-Kubernetes速查"
+title = "22. SRE笔试题-Kubernetes速查"
 date = 2026-01-21
 weight = 22000
 description = "SRE面试Kubernetes常见题目速查：kubectl命令、故障排查、资源管理、YAML配置要点"

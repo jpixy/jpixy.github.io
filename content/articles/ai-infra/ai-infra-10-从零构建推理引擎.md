@@ -1,5 +1,5 @@
 +++
-title = "从零构建推理引擎"
+title = "10. 从零构建推理引擎"
 description = "实战项目：用 C++ 实现简化版 LLM 推理引擎"
 date = 2025-02-06
 weight = 10000

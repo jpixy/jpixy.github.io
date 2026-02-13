@@ -1,5 +1,5 @@
 +++
-title = "DPU 与智能网卡技术详解"
+title = "24. DPU 与智能网卡技术详解"
 description = "数据处理单元（DPU）架构、应用场景与编程开发深度解析"
 date = 2025-02-07
 weight = 24000

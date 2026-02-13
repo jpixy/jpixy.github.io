@@ -1,5 +1,5 @@
 +++
-title = "Linux高级工程师必备技能详解"
+title = "11. Linux高级工程师必备技能详解"
 date = 2026-01-12
 weight = 11000
 description = "面向HFT/量化交易等高性能场景的Linux系统工程师核心技能清单"

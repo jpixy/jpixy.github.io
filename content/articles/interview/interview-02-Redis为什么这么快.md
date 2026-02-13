@@ -1,5 +1,5 @@
 +++
-title = "Redis为什么这么快"
+title = "02. Redis为什么这么快"
 slug = "interview-Redis为什么这么快"
 weight = 2000
 +++

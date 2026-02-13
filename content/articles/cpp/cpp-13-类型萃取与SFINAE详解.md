@@ -1,5 +1,5 @@
 +++
-title = "Type Traits and SFINAE"
+title = "13. Type Traits and SFINAE"
 slug = "cpp-18-类型萃取与SFINAE详解"
 date = 2026-01-21
 weight = 13000

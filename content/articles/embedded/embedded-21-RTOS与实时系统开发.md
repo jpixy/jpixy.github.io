@@ -1,5 +1,5 @@
 +++
-title = "RTOS与实时系统开发"
+title = "21. RTOS与实时系统开发"
 date = 2026-02-06
 weight = 21000
 description = "实时操作系统详解：FreeRTOS、Zephyr任务调度、实时约束、与Linux PREEMPT_RT对比"

@@ -1,5 +1,5 @@
 +++
-title = "IB 盈透证券 C++ 量化交易实战"
+title = "25. IB 盈透证券 C++ 量化交易实战"
 date = 2026-02-06
 weight = 25000
 description = "Interactive Brokers C++ API 完整指南：开户、权限开通、API 配置、最佳交易品类、从入门到实战的完整教程"

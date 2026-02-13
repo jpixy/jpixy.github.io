@@ -1,5 +1,5 @@
 +++
-title = "证书与HTTPS问题排查实战"
+title = "40. 证书与HTTPS问题排查实战"
 date = 2026-01-21
 weight = 40000
 description = "SRE证书与HTTPS问题排查完整指南：SSL证书过期、握手失败、证书链问题的定位与解决"

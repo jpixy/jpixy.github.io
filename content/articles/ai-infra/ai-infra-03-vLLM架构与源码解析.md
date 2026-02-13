@@ -1,5 +1,5 @@
 +++
-title = "vLLM 架构与源码解析"
+title = "03. vLLM 架构与源码解析"
 description = "深入理解 vLLM 的核心架构、关键组件和实现原理"
 date = 2025-02-06
 weight = 3000

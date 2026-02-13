@@ -1,5 +1,5 @@
 +++
-title = "Linux存储技术深度指南"
+title = "07. Linux存储技术深度指南"
 date = 2026-01-12
 weight = 7000
 description = "SAN存储、LVM逻辑卷、文件系统调优的深度剖析与最佳实践"

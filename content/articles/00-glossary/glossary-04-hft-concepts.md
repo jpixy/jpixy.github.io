@@ -1,5 +1,5 @@
 +++
-title = "HFT Concepts"
+title = "04. HFT Concepts"
 description = "HFT核心概念速查索引：高频交易系统的关键技术概念详解，包括延迟优化、网络技术、交易系统设计等"
 date = 2026-01-26
 weight = 4000

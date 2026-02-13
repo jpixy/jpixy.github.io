@@ -1,5 +1,5 @@
 +++
-title = "Go语言基础"
+title = "01. Go语言基础"
 date = 2026-01-19
 weight = 1000
 description = "Go语言入门：语法基础、数据类型、控制结构、函数、包管理"

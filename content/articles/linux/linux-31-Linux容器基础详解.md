@@ -1,5 +1,5 @@
 +++
-title = "Linux容器基础详解"
+title = "31. Linux容器基础详解"
 date = 2026-02-02
 weight = 31000
 description = "Linux容器技术：Namespace隔离、Cgroups资源控制、UnionFS、容器运行时原理"

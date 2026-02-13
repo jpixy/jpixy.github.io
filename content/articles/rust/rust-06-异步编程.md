@@ -1,5 +1,5 @@
 +++
-title = "异步编程"
+title = "06. 异步编程"
 slug = "rust-06-异步编程"
 date = 2026-01-19
 weight = 6000

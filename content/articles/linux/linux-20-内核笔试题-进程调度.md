@@ -1,5 +1,5 @@
 +++
-title = "内核笔试题-进程调度"
+title = "20. 内核笔试题-进程调度"
 date = 2026-01-31
 weight = 20000
 description = "Linux内核进程调度笔试题：CFS算法、vruntime计算、实时调度、上下文切换"

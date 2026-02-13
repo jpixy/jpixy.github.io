@@ -1,5 +1,5 @@
 +++
-title = "Linux系统诊断工具深度指南"
+title = "05. Linux系统诊断工具深度指南"
 date = 2026-01-12
 weight = 5000
 description = "strace、lsof、perf、bpftrace的深度剖析与实战技巧"

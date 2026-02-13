@@ -1,5 +1,5 @@
 +++
-title = "HFT面试题-内存优化"
+title = "32. HFT面试题-内存优化"
 date = 2026-01-31
 weight = 32000
 description = "HFT内存优化面试题：大页、预分配、对象池、内存对齐、NUMA深度解析"

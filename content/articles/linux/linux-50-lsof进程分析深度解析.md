@@ -1,5 +1,5 @@
 +++
-title = "lsof进程分析深度解析"
+title = "50. lsof进程分析深度解析"
 date = 2026-01-31
 weight = 50000
 description = "lsof深度解析：文件描述符、进程打开文件、网络连接、故障排查"

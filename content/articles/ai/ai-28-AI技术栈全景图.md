@@ -1,5 +1,5 @@
 +++
-title = "AI 技术栈全景图"
+title = "28. AI 技术栈全景图"
 description = "从应用到硬件的完整分层，理解 AI 系统全貌与岗位定位"
 date = 2025-02-06
 weight = 28000

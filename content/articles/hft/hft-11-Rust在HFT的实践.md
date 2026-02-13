@@ -1,5 +1,5 @@
 +++
-title = "Rust在HFT领域的实践与必知必会"
+title = "11. Rust在HFT领域的实践与必知必会"
 date = 2025-01-10
 weight = 11000
 description = "Rust 语言在高频交易系统中的应用，涵盖零成本抽象、内存安全、无锁并发、网络编程等核心知识点"

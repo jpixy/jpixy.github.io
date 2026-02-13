@@ -1,5 +1,5 @@
 +++
-title = "Python性能优化-Numba详解"
+title = "48. Python性能优化-Numba详解"
 slug = "py-49-Python性能优化-Numba详解"
 date = 2026-01-21
 weight = 48000

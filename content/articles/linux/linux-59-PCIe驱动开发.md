@@ -1,5 +1,5 @@
 +++
-title = "PCIe 驱动开发"
+title = "59. PCIe 驱动开发"
 date = 2026-01-21
 weight = 59000
 description = "Linux PCIe 驱动开发完整指南：PCIe 基础、配置空间、BAR、DMA、MSI/MSI-X 中断、驱动开发实战"

@@ -1,5 +1,5 @@
 +++
-title = "Trait对象与动态分发"
+title = "11. Trait对象与动态分发"
 slug = "rust-12-Trait对象与动态分发"
 date = 2026-01-21
 weight = 11000

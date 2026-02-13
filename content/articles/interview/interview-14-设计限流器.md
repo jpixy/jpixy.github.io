@@ -1,5 +1,5 @@
 +++
-title = "如何设计一个限流器"
+title = "14. 如何设计一个限流器"
 slug = "interview-如何设计一个限流器"
 weight = 14000
 +++

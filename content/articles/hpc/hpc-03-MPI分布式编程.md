@@ -1,5 +1,5 @@
 +++
-title = "MPI 分布式编程"
+title = "03. MPI 分布式编程"
 description = "深入理解 MPI 编程模型与分布式计算实践"
 date = 2025-02-06
 weight = 3000

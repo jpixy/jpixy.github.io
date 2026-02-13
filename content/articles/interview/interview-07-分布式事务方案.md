@@ -1,5 +1,5 @@
 +++
-title = "分布式事务解决方案"
+title = "07. 分布式事务解决方案"
 description = "分布式事务：2PC、TCC、Saga模式的原理与最佳实践"
 date = 2025-01-16
 weight = 7000

@@ -1,5 +1,5 @@
 +++
-title = "HFT笔试题-SIMD与向量化"
+title = "36. HFT笔试题-SIMD与向量化"
 date = 2026-01-31
 weight = 36000
 description = "HFT SIMD与向量化笔试题：SSE/AVX指令集、内存对齐、向量化计算、编译器自动向量化深度解析"

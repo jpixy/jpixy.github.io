@@ -1,5 +1,5 @@
 +++
-title = "如何设计一个分布式锁"
+title = "08. 如何设计一个分布式锁"
 description = "分布式锁设计：Redis、ZooKeeper、数据库实现方案对比与生产实践"
 date = 2025-01-16
 weight = 8000

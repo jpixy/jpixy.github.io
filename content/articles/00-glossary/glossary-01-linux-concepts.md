@@ -1,5 +1,5 @@
 +++
-title = "Linux & System Concepts"
+title = "01. Linux & System Concepts"
 description = "Linux系统核心概念速查：进程、内存、IO模型、调度，以及内核/Glibc/Systemd/调试工具/存储/AI基础设施概念索引"
 date = 2026-01-26
 weight = 1000

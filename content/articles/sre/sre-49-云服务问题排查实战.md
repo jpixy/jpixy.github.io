@@ -1,5 +1,5 @@
 +++
-title = "云服务问题排查实战"
+title = "49. 云服务问题排查实战"
 date = 2026-01-21
 weight = 49000
 description = "SRE云服务问题排查完整指南：AWS、阿里云、GCP常见问题的定位与解决"

@@ -1,5 +1,5 @@
 +++
-title = "Rust与C/C++互操作"
+title = "09. Rust与C/C++互操作"
 slug = "rust-10-Rust与C-C++互操作"
 date = 2026-01-21
 weight = 9000

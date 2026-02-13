@@ -1,5 +1,5 @@
 +++
-title = "SIMD Programming (HFT)"
+title = "18. SIMD Programming (HFT)"
 date = 2026-01-21
 weight = 18000
 description = "深入剖析SIMD向量化编程，包括SSE、AVX、AVX-512指令集，intrinsics使用，HFT低延迟优化核心技术"

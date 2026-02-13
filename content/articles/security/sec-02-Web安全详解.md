@@ -1,5 +1,5 @@
 +++
-title = "Web安全详解"
+title = "02. Web安全详解"
 date = 2026-01-19
 weight = 2000
 description = "Web安全：OWASP Top 10、XSS、SQL注入、CSRF、常见漏洞与防护"

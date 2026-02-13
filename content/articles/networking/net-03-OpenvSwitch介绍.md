@@ -1,5 +1,5 @@
 +++
-title = "Open vSwitch详解"
+title = "03. Open vSwitch详解"
 description = "OVS架构、核心组件、OpenFlow流表、OVSDB、数据转发流程、DPDK加速与生产实践"
 date = 2025-01-16
 weight = 3000

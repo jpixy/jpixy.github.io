@@ -1,5 +1,5 @@
 +++
-title = "eBPF技术深度解析"
+title = "35. eBPF技术深度解析"
 date = 2026-02-02
 weight = 35000
 description = "eBPF原理、程序类型、Map、验证器、CO-RE、应用场景"

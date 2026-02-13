@@ -1,5 +1,5 @@
 +++
-title = "eBPF笔试面试题"
+title = "36. eBPF笔试面试题"
 date = 2026-02-02
 weight = 36000
 description = "eBPF笔试面试题：程序编写、Map操作、XDP、性能分析"

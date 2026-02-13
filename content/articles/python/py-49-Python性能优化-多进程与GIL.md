@@ -1,5 +1,5 @@
 +++
-title = "Python性能优化-多进程与GIL"
+title = "49. Python性能优化-多进程与GIL"
 slug = "py-50-Python性能优化-多进程与GIL"
 date = 2026-01-21
 weight = 49000

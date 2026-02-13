@@ -1,5 +1,5 @@
 +++
-title = "Rust Concepts"
+title = "07. Rust Concepts"
 description = "Rust核心概念速查：所有权、借用、生命周期、trait、unsafe等关键概念详解"
 date = 2026-01-26
 weight = 7000

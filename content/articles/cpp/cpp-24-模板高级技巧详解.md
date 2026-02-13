@@ -1,5 +1,5 @@
 +++
-title = "Advanced Template Techniques"
+title = "24. Advanced Template Techniques"
 date = 2026-01-21
 weight = 24000
 description = "深入剖析C++模板高级技术，包括变参模板、模板特化、CRTP深入、Expression Templates、Tag Dispatch等核心技术"

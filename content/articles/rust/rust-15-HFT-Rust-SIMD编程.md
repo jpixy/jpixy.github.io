@@ -1,5 +1,5 @@
 +++
-title = "HFT-Rust SIMD编程"
+title = "15. HFT-Rust SIMD编程"
 date = 2026-01-21
 weight = 15000
 description = "深入剖析Rust的SIMD编程技术，包括std::simd、packed_simd、portable_simd以及向量化优化案例"

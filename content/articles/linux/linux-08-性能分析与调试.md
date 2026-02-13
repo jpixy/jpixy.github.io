@@ -1,5 +1,5 @@
 +++
-title = "性能分析与调试"
+title = "08. 性能分析与调试"
 date = 2026-01-19
 weight = 8000
 description = "Linux性能分析：perf、strace、调试工具、/proc文件系统"

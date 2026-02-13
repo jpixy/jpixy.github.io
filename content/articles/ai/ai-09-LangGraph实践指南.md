@@ -1,5 +1,5 @@
 +++
-title = "LangGraph实践指南"
+title = "09. LangGraph实践指南"
 date = 2025-01-13
 weight = 9000
 description = "通过实战案例学习LangGraph，掌握状态机设计、循环控制、条件分支等核心技能"

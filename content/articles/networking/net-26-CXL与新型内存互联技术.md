@@ -1,5 +1,5 @@
 +++
-title = "CXL 与新型内存互联技术"
+title = "26. CXL 与新型内存互联技术"
 description = "Compute Express Link 技术深度解析：内存扩展、池化与异构计算"
 date = 2025-02-07
 weight = 26000

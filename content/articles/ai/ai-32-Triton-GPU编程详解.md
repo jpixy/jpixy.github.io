@@ -1,5 +1,5 @@
 +++
-title = "Triton GPU 编程详解"
+title = "32. Triton GPU 编程详解"
 description = "OpenAI Triton 语言深度解析：从入门到实战，简化 GPU Kernel 开发"
 date = 2025-02-07
 weight = 32000

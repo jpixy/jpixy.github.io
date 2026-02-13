@@ -1,5 +1,5 @@
 +++
-title = "Volatile and Memory Barriers (HFT)"
+title = "16. Volatile and Memory Barriers (HFT)"
 date = 2026-01-30
 weight = 16000
 description = "Understanding volatile, memory barriers, and compiler/CPU reordering in high-performance C code"

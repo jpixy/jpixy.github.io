@@ -1,5 +1,5 @@
 +++
-title = "内核参数调优实战"
+title = "53. 内核参数调优实战"
 date = 2026-01-21
 weight = 53000
 description = "SRE内核参数调优完整指南：sysctl、ulimit、网络/内存/文件系统调优"

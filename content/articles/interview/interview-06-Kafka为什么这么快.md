@@ -1,5 +1,5 @@
 +++
-title = "Kafka为什么这么快"
+title = "06. Kafka为什么这么快"
 slug = "interview-Kafka为什么这么快"
 weight = 6000
 +++

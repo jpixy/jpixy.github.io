@@ -1,5 +1,5 @@
 +++
-title = "内存映射与高效IO(HFT)"
+title = "11. 内存映射与高效IO(HFT)"
 slug = "linux-11-内存映射与高效IO"
 description = "深入讲解Linux高效IO：mmap原理与陷阱、Huge Pages、THP透明大页、O_DIRECT直接IO、AIO与零拷贝技术"
 date = 2026-01-21

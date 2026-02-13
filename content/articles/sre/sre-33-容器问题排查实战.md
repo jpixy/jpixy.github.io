@@ -1,5 +1,5 @@
 +++
-title = "容器问题排查实战"
+title = "33. 容器问题排查实战"
 date = 2026-01-21
 weight = 33000
 description = "SRE容器问题排查完整指南：Docker容器故障、Kubernetes Pod问题的定位与解决"

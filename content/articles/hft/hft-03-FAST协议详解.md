@@ -1,5 +1,5 @@
 +++
-title = "FAST协议详解"
+title = "03. FAST协议详解"
 date = 2026-01-13
 weight = 3000
 description = "FIX Adapted for Streaming协议深度解析：编码机制、压缩原理与行情分发优化"

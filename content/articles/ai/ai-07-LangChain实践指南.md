@@ -1,5 +1,5 @@
 +++
-title = "LangChain实践指南"
+title = "07. LangChain实践指南"
 date = 2026-01-13
 weight = 7000
 description = "LangChain框架深度实践：核心概念、链式调用、RAG实现、Agent开发与生产部署"

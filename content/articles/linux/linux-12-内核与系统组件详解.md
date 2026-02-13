@@ -1,5 +1,5 @@
 +++
-title = "内核与系统组件详解"
+title = "12. 内核与系统组件详解"
 description = "Linux操作系统核心组件深度解析：内核架构与编译、Glibc内存分配器、Systemd服务管理、工具链与编译流程"
 date = 2026-01-27
 weight = 12000

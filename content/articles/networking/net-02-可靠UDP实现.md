@@ -1,5 +1,5 @@
 +++
-title = "可靠UDP传输详解"
+title = "02. 可靠UDP传输详解"
 description = "可靠UDP实现原理、ARQ机制、QUIC/KCP/UDT协议对比、FEC前向纠错与生产实践"
 date = 2025-01-16
 weight = 2000

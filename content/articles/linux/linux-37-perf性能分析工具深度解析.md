@@ -1,5 +1,5 @@
 +++
-title = "perf性能分析工具深度解析"
+title = "37. perf性能分析工具深度解析"
 date = 2026-01-31
 weight = 37000
 description = "perf工具深度解析：PMU硬件原理、采样机制、调用栈采集、火焰图生成与解读"

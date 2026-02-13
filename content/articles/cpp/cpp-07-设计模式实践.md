@@ -1,5 +1,5 @@
 +++
-title = "Design Patterns in C++"
+title = "07. Design Patterns in C++"
 date = 2026-01-19
 weight = 7000
 description = "C++设计模式：创建型、结构型、行为型模式的现代C++实现"

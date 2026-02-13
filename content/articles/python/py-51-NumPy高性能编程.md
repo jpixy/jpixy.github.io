@@ -1,5 +1,5 @@
 +++
-title = "NumPy高性能编程"
+title = "51. NumPy高性能编程"
 slug = "py-52-NumPy高性能编程"
 date = 2026-01-21
 weight = 51000

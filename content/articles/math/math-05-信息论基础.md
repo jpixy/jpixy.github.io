@@ -1,5 +1,5 @@
 +++
-title = "信息论基础"
+title = "05. 信息论基础"
 date = 2026-01-20
 weight = 5000
 description = "信息论：熵、互信息、KL散度、交叉熵"

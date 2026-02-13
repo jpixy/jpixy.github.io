@@ -1,5 +1,5 @@
 +++
-title = "内核笔试题-中断与系统调用"
+title = "22. 内核笔试题-中断与系统调用"
 date = 2026-01-31
 weight = 22000
 description = "Linux内核中断与系统调用笔试题：中断处理流程、下半部机制、syscall实现、vDSO"

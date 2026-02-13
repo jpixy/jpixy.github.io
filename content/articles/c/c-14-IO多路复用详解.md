@@ -1,5 +1,5 @@
 +++
-title = "IO多路复用详解：原理、实现与对比"
+title = "14. IO多路复用详解：原理、实现与对比"
 date = 2026-01-31
 weight = 14000
 description = "深入剖析select、poll、epoll、io_uring的底层原理与内核实现，揭示高性能IO的设计思想"

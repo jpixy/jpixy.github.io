@@ -1,5 +1,5 @@
 +++
-title = "从 CUDA 算子到推理系统"
+title = "30. 从 CUDA 算子到推理系统"
 description = "理解 CUDA 算子与推理系统的关系，明确技术发展方向"
 date = 2025-02-06
 weight = 30000

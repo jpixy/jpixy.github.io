@@ -1,5 +1,5 @@
 +++
-title = "数据中心网络架构详解"
+title = "23. 数据中心网络架构详解"
 description = "数据中心网络架构深度解析：大二层/大三层、Spine-Leaf、VXLAN、BGP EVPN、Underlay/Overlay、SDN等核心概念与实践"
 date = 2026-01-27
 weight = 23000

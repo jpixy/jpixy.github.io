@@ -1,5 +1,5 @@
 +++
-title = "常用模块设计"
+title = "04. 常用模块设计"
 date = 2026-01-20
 weight = 4000
 description = "FPGA常用模块：计数器、FIFO、UART、SPI、存储器接口"

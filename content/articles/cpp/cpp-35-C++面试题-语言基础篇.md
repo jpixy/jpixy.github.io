@@ -1,5 +1,5 @@
 +++
-title = "Interview - Language Basics"
+title = "35. Interview - Language Basics"
 date = 2026-01-21
 weight = 35000
 description = "C++语言基础面试题汇总，包括基本类型、引用与指针、const、类型转换、作用域等核心概念"

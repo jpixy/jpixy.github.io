@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-SQL与数据库"
+title = "19. SRE笔试题-SQL与数据库"
 date = 2026-01-21
 weight = 19000
 description = "SRE面试笔试题精选：SQL查询、日志分析、慢查询优化、索引设计、死锁检测，Python3完整解答"

@@ -1,5 +1,5 @@
 +++
-title = "Python双下划线变量详解"
+title = "55. Python双下划线变量详解"
 description = "Python模块级双下划线变量详解：__name__、__main__、__file__、__all__等核心概念"
 date = 2026-01-27
 weight = 55000

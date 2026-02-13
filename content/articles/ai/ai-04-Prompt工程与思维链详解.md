@@ -1,5 +1,5 @@
 +++
-title = "Prompt工程与思维链详解"
+title = "04. Prompt工程与思维链详解"
 date = 2026-01-13
 weight = 4000
 description = "Prompt Engineering深度解析：提示设计原则、思维链推理、高级技巧与实战模式"

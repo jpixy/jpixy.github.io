@@ -1,5 +1,5 @@
 +++
-title = "Web开发实践"
+title = "05. Web开发实践"
 date = 2026-01-19
 weight = 5000
 description = "Go Web开发：框架选型、RESTful API、数据库操作、认证授权、部署"

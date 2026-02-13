@@ -1,5 +1,5 @@
 +++
-title = "crash内核崩溃分析深度解析"
+title = "48. crash内核崩溃分析深度解析"
 date = 2026-01-31
 weight = 48000
 description = "crash深度解析：内核转储分析、vmcore调试、内核数据结构、故障排查"

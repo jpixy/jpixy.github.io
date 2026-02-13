@@ -1,5 +1,5 @@
 +++
-title = "SRE面试指南"
+title = "65. SRE面试指南"
 date = 2026-01-19
 weight = 65000
 description = "SRE面试准备：技术问题、系统设计、场景题、行为问题、简历优化与面试技巧"

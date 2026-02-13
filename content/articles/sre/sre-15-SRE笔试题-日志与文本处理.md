@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-日志与文本处理"
+title = "15. SRE笔试题-日志与文本处理"
 date = 2026-01-21
 weight = 15000
 description = "SRE面试笔试题精选：日志分析、文本处理、正则表达式、数据统计，Python3完整解答"

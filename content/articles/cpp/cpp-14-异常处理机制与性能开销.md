@@ -1,5 +1,5 @@
 +++
-title = "Exception Handling and Performance"
+title = "14. Exception Handling and Performance"
 date = 2026-01-21
 weight = 14000
 description = "深入剖析C++异常处理的底层实现、性能开销分析、noexcept优化，以及HFT系统中的异常策略"

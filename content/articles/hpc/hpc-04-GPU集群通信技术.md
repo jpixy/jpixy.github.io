@@ -1,5 +1,5 @@
 +++
-title = "GPU 集群通信技术"
+title = "04. GPU 集群通信技术"
 description = "深入理解 GPU 集群的通信架构与优化技术"
 date = 2025-02-06
 weight = 4000

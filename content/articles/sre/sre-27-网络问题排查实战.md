@@ -1,5 +1,5 @@
 +++
-title = "网络问题排查实战"
+title = "27. 网络问题排查实战"
 date = 2026-01-21
 weight = 27000
 description = "SRE网络问题排查完整指南：连接失败、延迟高、丢包、MTU、TCP连接状态、Idle连接问题的定位与解决"

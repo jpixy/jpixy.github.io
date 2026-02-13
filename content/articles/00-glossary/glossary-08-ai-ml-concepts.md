@@ -1,5 +1,5 @@
 +++
-title = "AI & Machine Learning Concepts"
+title = "08. AI & Machine Learning Concepts"
 description = "AI与机器学习核心概念速查：模型、训练、推理、前向计算、梯度、损失函数、Transformer、RAG、Agent、模型格式等全链路术语索引"
 date = 2026-02-11
 weight = 8000

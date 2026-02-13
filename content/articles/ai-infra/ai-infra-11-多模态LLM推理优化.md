@@ -1,5 +1,5 @@
 +++
-title = "多模态 LLM 推理优化"
+title = "11. 多模态 LLM 推理优化"
 description = "语音、图像与文本多模态大模型推理系统设计与优化实战"
 date = 2025-02-07
 weight = 11000

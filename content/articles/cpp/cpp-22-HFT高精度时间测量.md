@@ -1,5 +1,5 @@
 +++
-title = "High-Precision Timing (HFT)"
+title = "22. High-Precision Timing (HFT)"
 slug = "cpp-27-HFT高精度时间测量"
 date = 2026-01-21
 weight = 22000

@@ -1,5 +1,5 @@
 +++
-title = "存储与文件系统详解"
+title = "14. 存储与文件系统详解"
 description = "Linux存储技术深度解析：VFS架构、NVMe驱动原理、SPDK用户态存储、FUSE用户态文件系统开发"
 date = 2026-01-27
 weight = 14000

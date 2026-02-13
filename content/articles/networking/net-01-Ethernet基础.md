@@ -1,5 +1,5 @@
 +++
-title = "Ethernet基础与帧结构详解"
+title = "01. Ethernet基础与帧结构详解"
 description = "以太网帧结构、MAC地址、VLAN、以太网类型演进、MTU/Jumbo Frame、流量控制与交换机转发原理"
 date = 2025-01-16
 weight = 1000

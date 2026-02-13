@@ -1,5 +1,5 @@
 +++
-title = "Kubernetes SRE实践"
+title = "12. Kubernetes SRE实践"
 date = 2026-01-19
 weight = 12000
 description = "K8s可靠性运维：资源管理、健康检查、故障排查、高可用部署、运维自动化"

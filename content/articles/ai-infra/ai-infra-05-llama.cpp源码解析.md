@@ -1,5 +1,5 @@
 +++
-title = "llama.cpp 源码解析"
+title = "05. llama.cpp 源码解析"
 description = "深入理解纯 C/C++ 实现的 LLM 推理引擎"
 date = 2025-02-06
 weight = 5000

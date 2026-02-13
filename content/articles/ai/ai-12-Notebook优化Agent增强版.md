@@ -1,5 +1,5 @@
 +++
-title = "Notebook优化Agent增强版"
+title = "12. Notebook优化Agent增强版"
 date = 2025-01-14
 weight = 12000
 description = "在基础版Notebook优化Agent上，集成RAG知识检索和MCP协议，实现更智能的错误诊断和修复"

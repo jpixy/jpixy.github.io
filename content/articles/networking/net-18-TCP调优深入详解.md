@@ -1,5 +1,5 @@
 +++
-title = "TCP调优深入详解(HFT)"
+title = "18. TCP调优深入详解(HFT)"
 slug = "net-18-TCP调优深入详解"
 description = "深入讲解Linux TCP性能调优：内核参数、拥塞控制算法(BBR/CUBIC)、快速路径、零拷贝(sendfile/splice)与低延迟优化"
 date = 2026-01-21

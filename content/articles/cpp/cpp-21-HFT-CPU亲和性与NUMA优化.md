@@ -1,5 +1,5 @@
 +++
-title = "CPU Affinity and NUMA (HFT)"
+title = "21. CPU Affinity and NUMA (HFT)"
 slug = "cpp-26-HFT-CPU亲和性与NUMA优化"
 date = 2026-01-21
 weight = 21000

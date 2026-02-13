@@ -1,5 +1,5 @@
 +++
-title = "Kubernetes平台工程与云原生应用管理学习路线"
+title = "02. Kubernetes平台工程与云原生应用管理学习路线"
 slug = "insights-Kubernetes平台工程与云原生应用管理学习路线"
 weight = 2000
 +++

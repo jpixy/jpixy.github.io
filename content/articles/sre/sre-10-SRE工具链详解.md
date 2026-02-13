@@ -1,5 +1,5 @@
 +++
-title = "SRE工具链详解"
+title = "10. SRE工具链详解"
 date = 2026-01-19
 weight = 10000
 description = "SRE核心工具实战：Prometheus监控、Grafana可视化、AlertManager告警、PagerDuty事故管理"

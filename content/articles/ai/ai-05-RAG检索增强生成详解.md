@@ -1,5 +1,5 @@
 +++
-title = "RAG检索增强生成详解"
+title = "05. RAG检索增强生成详解"
 date = 2026-01-13
 weight = 5000
 description = "Retrieval-Augmented Generation深度解析：架构设计、向量检索、分块策略、重排序与生产实践"

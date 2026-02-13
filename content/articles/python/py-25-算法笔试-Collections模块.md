@@ -1,5 +1,5 @@
 +++
-title = "算法笔试-Collections模块"
+title = "25. 算法笔试-Collections模块"
 date = 2026-01-21
 weight = 25000
 description = "Python3算法笔试必备：Counter、defaultdict、deque、OrderedDict详解"

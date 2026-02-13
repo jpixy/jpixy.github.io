@@ -1,5 +1,5 @@
 +++
-title = "Paxos算法详解"
+title = "04. Paxos算法详解"
 date = 2026-01-20
 weight = 4000
 description = "Paxos共识算法：基本Paxos、Multi-Paxos、实现挑战"

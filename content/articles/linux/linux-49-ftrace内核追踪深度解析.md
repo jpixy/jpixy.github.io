@@ -1,5 +1,5 @@
 +++
-title = "ftrace内核追踪深度解析"
+title = "49. ftrace内核追踪深度解析"
 date = 2026-01-31
 weight = 49000
 description = "ftrace深度解析：函数追踪、事件追踪、延迟分析、内核调试"

@@ -1,5 +1,5 @@
 +++
-title = "AI相关英文"
+title = "04. AI相关英文"
 slug = "eng-AI相关英文"
 weight = 4000
 +++

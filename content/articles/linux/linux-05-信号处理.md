@@ -1,5 +1,5 @@
 +++
-title = "信号处理"
+title = "05. 信号处理"
 date = 2026-01-19
 weight = 5000
 description = "Linux信号机制：信号类型、处理方式、可靠信号、信号安全"

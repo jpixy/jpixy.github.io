@@ -1,5 +1,5 @@
 +++
-title = "SRE面试题-数据库与缓存"
+title = "57. SRE面试题-数据库与缓存"
 date = 2026-01-21
 weight = 57000
 description = "SRE面试必备：MySQL索引优化、事务隔离级别、Redis数据结构、缓存问题等核心问题详解"

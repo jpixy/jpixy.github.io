@@ -1,5 +1,5 @@
 +++
-title = "Linux系统性能调优深度指南"
+title = "06. Linux系统性能调优深度指南"
 date = 2026-01-12
 weight = 6000
 description = "CPU Affinity、NUMA、HugePages、IRQ、内核参数的深度剖析与最佳实践"

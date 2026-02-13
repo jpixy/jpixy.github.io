@@ -1,5 +1,5 @@
 +++
-title = "Memory Hierarchy and Bandwidth (HFT)"
+title = "32. Memory Hierarchy and Bandwidth (HFT)"
 date = 2026-01-21
 weight = 32000
 description = "深入剖析内存层次结构对HFT性能的影响，包括DRAM时序、内存带宽、Memory-bound分析、NUMA优化等"

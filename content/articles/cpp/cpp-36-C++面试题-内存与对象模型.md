@@ -1,5 +1,5 @@
 +++
-title = "Interview - Memory and Object Model"
+title = "36. Interview - Memory and Object Model"
 date = 2026-01-21
 weight = 36000
 description = "C++内存管理与对象模型面试题汇总，包括内存布局、构造析构、虚函数表、继承等核心概念"

@@ -1,5 +1,5 @@
 +++
-title = "ROCm与AMD GPU开发"
+title = "26. ROCm与AMD GPU开发"
 date = 2026-02-06
 weight = 26000
 description = "AMD GPU开发指南：ROCm平台、HIP编程、MIOpen、与CUDA的迁移对比，适用于MI系列GPU开发"

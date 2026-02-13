@@ -1,5 +1,5 @@
 +++
-title = "CUDA入门与GPU编程基础"
+title = "21. CUDA入门与GPU编程基础"
 date = 2026-02-06
 weight = 21000
 description = "从零开始学习CUDA：GPU架构、编程模型、内存层次、并行思维，附完整入门路线图"

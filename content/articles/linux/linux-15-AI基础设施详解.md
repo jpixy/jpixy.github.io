@@ -1,5 +1,5 @@
 +++
-title = "AI基础设施详解"
+title = "15. AI基础设施详解"
 description = "AI底层基础设施深度解析：GPU架构与CUDA编程、NVIDIA驱动管理、RDMA网络原理与编程、高性能计算优化"
 date = 2026-01-27
 weight = 15000

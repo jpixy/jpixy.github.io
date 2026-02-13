@@ -1,5 +1,5 @@
 +++
-title = "Coroutines and User-Space Scheduling"
+title = "33. Coroutines and User-Space Scheduling"
 slug = "cpp-43-C++协程与用户态调度"
 date = 2026-01-21
 weight = 33000

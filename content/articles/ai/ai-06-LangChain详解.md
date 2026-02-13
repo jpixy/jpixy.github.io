@@ -1,5 +1,5 @@
 +++
-title = "LangChain详解"
+title = "06. LangChain详解"
 date = 2025-01-13
 weight = 6000
 description = "深入理解LangChain的核心概念、组件架构和最佳实践，从入门到精通"

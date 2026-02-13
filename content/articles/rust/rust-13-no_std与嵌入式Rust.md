@@ -1,5 +1,5 @@
 +++
-title = "no_std与嵌入式Rust"
+title = "13. no_std与嵌入式Rust"
 date = 2026-01-21
 weight = 13000
 description = "深入剖析Rust的no_std环境，包括alloc crate、全局分配器、panic handler、嵌入式HAL等"

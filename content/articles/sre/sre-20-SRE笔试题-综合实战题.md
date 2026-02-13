@@ -1,5 +1,5 @@
 +++
-title = "SRE笔试题-综合实战题"
+title = "20. SRE笔试题-综合实战题"
 date = 2026-01-21
 weight = 20000
 description = "SRE面试笔试题精选：接近真实场景的综合题目，故障排查、系统设计、自动化脚本，Python3完整解答"

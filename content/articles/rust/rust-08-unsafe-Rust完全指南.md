@@ -1,5 +1,5 @@
 +++
-title = "unsafe Rust完全指南"
+title = "08. unsafe Rust完全指南"
 slug = "rust-09-unsafe-Rust完全指南"
 date = 2026-01-21
 weight = 8000

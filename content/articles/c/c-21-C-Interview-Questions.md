@@ -1,5 +1,5 @@
 +++
-title = "C Interview Questions"
+title = "21. C Interview Questions"
 date = 2026-01-30
 weight = 21000
 description = "C语言高频面试题：指针、内存、预处理、数据结构、算法"

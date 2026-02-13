@@ -1,5 +1,5 @@
 +++
-title = "To B销售全流程详解"
+title = "06. To B销售全流程详解"
 description = "企业级销售从线索到回款的完整流程、关键节点与最佳实践"
 date = 2025-01-16
 weight = 6000

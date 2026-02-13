@@ -1,5 +1,5 @@
 +++
-title = "AI底层开发路线图"
+title = "23. AI底层开发路线图"
 date = 2026-02-06
 weight = 23000
 description = "不做调参侠：如何深入AI底层原理，从框架源码到Kernel开发，成为真正的AI系统工程师"

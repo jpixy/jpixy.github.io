@@ -1,5 +1,5 @@
 +++
-title = "CI/CD最佳实践"
+title = "01. CI/CD最佳实践"
 description = "持续集成与持续部署：流水线设计、分支策略、自动化测试与发布策略"
 date = 2025-01-16
 weight = 1000

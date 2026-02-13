@@ -1,5 +1,5 @@
 +++
-title = "Verilog语法基础"
+title = "02. Verilog语法基础"
 date = 2026-01-20
 weight = 2000
 description = "Verilog入门：模块结构、数据类型、运算符、赋值语句"

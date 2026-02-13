@@ -1,5 +1,5 @@
 +++
-title = "内核调试工具详解"
+title = "13. 内核调试工具详解"
 description = "Linux内核调试与追踪工具深度解析：Crash崩溃分析、GDB高级调试、Ftrace函数追踪、BPFtrace可编程追踪"
 date = 2026-01-27
 weight = 13000

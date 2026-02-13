@@ -1,5 +1,5 @@
 +++
-title = "负载均衡深入排查实战"
+title = "51. 负载均衡深入排查实战"
 date = 2026-01-21
 weight = 51000
 description = "SRE负载均衡深入排查完整指南：Nginx、HAProxy、Envoy高级配置与问题排查"

@@ -1,5 +1,5 @@
 +++
-title = "LangGraph详解"
+title = "08. LangGraph详解"
 date = 2025-01-13
 weight = 8000
 description = "深入理解LangGraph的核心概念、与LangChain的区别联系，以及如何构建复杂的AI Agent工作流"

@@ -1,5 +1,5 @@
 +++
-title = "嵌入式Rust"
+title = "07. 嵌入式Rust"
 date = 2026-01-19
 weight = 7000
 description = "嵌入式Rust：no_std开发、裸机编程、HAL抽象、常用外设、RTOS集成"
