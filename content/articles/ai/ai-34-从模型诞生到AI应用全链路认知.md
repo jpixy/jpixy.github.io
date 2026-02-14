@@ -61,6 +61,8 @@ toc = true
 | **为什么 Transformer 取代了 RNN/LSTM？Attention 是什么？** | V (5.7) | RNN 串行+长程遗忘 vs Transformer 全局并行；Attention 直觉（圆桌会议类比）。 |
 | **为什么需要导出到 ONNX/GGUF？不能直接用 PyTorch 推理吗？** | V (5.7) | 依赖、性能、跨语言、量化对比；何时用哪种格式。 |
 | 业界最佳实践：一条龙如何真实实现？框架、格式(ONNX 等)？ | VI | 训练框架与流程、模型格式表、推理与部署、RAG/Agent 组件、一条龙对应。 |
+| **Ollama 是什么？在一条龙中处于什么位置？** | VI (路线 B 第 4 步) | "LLM 的 Docker"——本地一键跑模型的推理工具；底层 llama.cpp；vs vLLM/TRT-LLM/API 选型对比。 |
+| **个人能走通一条龙吗？训练迈得过去吗？** | 独立文章 [ai-37](@/articles/ai/ai-37-个人AI大模型学习实操路线.md) | 10 个阶段的个人实操路线：手搓网络→小 GPT→微调→推理→RAG→Agent→评估→部署，0 元即可开始。 |
 | 大模型和传统 ML 本质不同？为什么大模型这么成功？ | VII | 传统 ML vs 大模型对比、本质区别表、为何影响更大。 |
 | **传统 ML 在 2026 年还有用吗？能替代大模型吗？** | VII (7.5) | ML 至今主力场景、硬件对比、速度/成本差 100 万倍、共存而非取代。 |
 | **为什么 ML 感觉比大模型难得多？** | VII (7.6) | ML 难度暴露在你面前，LLM 难度藏在模型里；全栈 vs 最后一公里；ML 工程师壁垒更高。 |
@@ -2545,6 +2547,7 @@ flowchart TD
 | **TGI** | HuggingFace 官方，支持 Flash Attention | HuggingFace 生态 |
 | **TensorRT-LLM** | TensorRT + 定制 Kernel | NVIDIA GPU 极致性能 |
 | **llama.cpp** | 纯 C++ + 量化 | 本地/边缘/CPU 推理 |
+| **Ollama** | llama.cpp 封装 + 模型管理 + API | 个人开发调试、本地一键部署（"LLM 的 Docker"） |
 | **Triton Inference Server** | 多模型管理 + 动态 Batching | 生产级多模型服务 |
 
 ---
@@ -2665,12 +2668,87 @@ flowchart TD
   优点：数据不外传、无 API 费用、可定制
   缺点：需要 GPU（7B 模型需要 ~16GB 显存）
 
-方案 3：本地 CPU 推理（无 GPU 也能跑）
-  # 用 llama.cpp 的量化模型
+方案 3：Ollama —— 本地一键跑大模型（推荐个人开发者首选）
+  # 安装后一行命令拉取并运行模型
+  ollama pull llama3          # 下载模型，类似 docker pull
+  ollama run llama3           # 交互式对话
+  ollama serve                # 启动 API 服务（默认 localhost:11434）
+
+  # 应用代码调用（兼容 OpenAI API 格式，零改动）
+  client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+  response = client.chat.completions.create(
+      model="llama3",
+      messages=[{"role": "user", "content": prompt}]
+  )
+  优点：安装零配置、自动管理模型文件、自动利用 GPU/CPU、API 兼容 OpenAI
+  缺点：单用户场景，不适合生产高并发
+
+方案 4：本地 CPU 推理（Ollama 的底层，需要手动管理）
+  # 直接用 llama.cpp 的量化模型
   ./llama-server -m qwen2.5-7b-instruct-q4_k_m.gguf --port 8080
-  优点：消费级电脑就能跑、无需 GPU
-  缺点：速度慢（几 token/秒）、只适合个人使用或演示
+  优点：极致轻量、可深度定制
+  缺点：需要手动下载/转换模型、速度慢（几 token/秒）
 ```
+
+> **Ollama 是什么？** 一句话：**"LLM 界的 Docker"**。就像 Docker 让你 `docker pull nginx` 一行命令跑起 Web 服务器，Ollama 让你 `ollama pull llama3` 一行命令跑起大模型。底层用的是 llama.cpp（纯 C++ 推理引擎），但 Ollama 把模型下载、格式管理、GPU/CPU 调度、API 暴露全部封装好了——**装上就能用，不需要装 PyTorch、不需要配 CUDA**。
+
+#### Ollama 在一条龙中的位置
+
+```
+你的 RAG / Agent / LangChain 应用
+         ↑ 调用 OpenAI 兼容 API
+    ┌────────────────┐
+    │    Ollama       │  ← 本地推理运行时（中间层）
+    │  管理模型文件    │     自动下载、加载、量化推理、暴露 API
+    │  底层: llama.cpp │
+    └────────────────┘
+         ↑ 加载
+    GGUF 量化模型文件
+    （Llama 3 / Qwen 2.5 / DeepSeek / Mistral …）
+```
+
+#### Ollama vs 其他推理方案：怎么选？
+
+| 方案 | 类比 | 适用场景 | 优势 | 局限 |
+|------|------|---------|------|------|
+| **OpenAI / Claude API** | 叫外卖 | 最快开始、不想运维 | 零运维、模型最强 | 数据外传、按量付费、依赖第三方 |
+| **Ollama** | 家庭厨房 | 个人开发调试、隐私敏感、离线使用、学习探索 | 一行命令、零配置、自动 GPU/CPU | 单用户、吞吐量低、不适合生产高并发 |
+| **vLLM** | 中央厨房 | 生产环境、高并发 API 服务 | PagedAttention、连续批处理、高吞吐 | 需要 GPU 服务器、配置复杂 |
+| **TensorRT-LLM** | 米其林厨房 | NVIDIA GPU 上榨干极致性能 | 最高吞吐和最低延迟 | 仅限 NVIDIA、配置门槛最高 |
+| **llama.cpp** | 自己搭灶台 | 需要极致定制、嵌入式/边缘设备 | 极轻量、跨平台、可深度定制 | 手动管理一切 |
+
+#### Ollama 常用命令速查
+
+```bash
+# 安装（macOS/Linux 一行搞定）
+curl -fsSL https://ollama.com/install.sh | sh
+
+# 模型管理
+ollama pull llama3.1:8b       # 下载 Llama 3.1 8B（约 4.7GB）
+ollama pull qwen2.5:7b        # 下载 Qwen 2.5 7B
+ollama pull deepseek-r1:7b    # 下载 DeepSeek R1 7B
+ollama list                    # 查看已下载的模型
+ollama rm llama3.1:8b         # 删除模型
+
+# 使用
+ollama run llama3.1:8b        # 交互式对话（终端）
+ollama serve                   # 启动 API 服务器（后台）
+
+# API 调用（兼容 OpenAI 格式）
+curl http://localhost:11434/v1/chat/completions \
+  -d '{"model": "llama3.1:8b", "messages": [{"role": "user", "content": "hello"}]}'
+```
+
+#### Ollama 的硬件要求
+
+| 模型规模 | 量化 | 最低内存/显存 | 速度（消费级） | 适合场景 |
+|---------|------|-------------|--------------|---------|
+| 1.5B~3B | Q4 | 2~4 GB | 快（>30 token/s） | 简单任务、嵌入式 |
+| 7B~8B | Q4 | 4~6 GB | 中等（10~25 token/s） | 个人开发调试（最佳平衡点） |
+| 13B~14B | Q4 | 8~12 GB | 较慢（5~15 token/s） | 需要更好效果 |
+| 70B | Q4 | 40~48 GB | 慢（1~5 token/s） | 需要高端显卡或纯 CPU（很慢） |
+
+> **实践建议**：对于个人开发者，**Ollama + 7B/8B 量化模型**是性价比最高的本地方案。一台 16GB 内存的 MacBook 就能流畅运行。开发阶段用 Ollama，生产上线换 vLLM 或云 API——代码几乎不用改（都兼容 OpenAI API 格式）。
 
 **第 5 步：应用编排（你的核心代码工作）**
 
